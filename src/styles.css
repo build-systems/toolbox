@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+:root {
+    --primary: #67E0D7;
+    --primary90: #67E0D7E5;
+    --primary30: #67e0d84D;
+    --secondary: #F55CAF;
+    --secondary80: #F55CAFCC;
+    --secondary35: #F55CAF59;
+    --secondary30: #F55CAF4D;
+    --bg-primary: #222;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #333;
+}
+
+* {
+    box-sizing: border-box;
+    color: var(--primary);
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Montserrat", sans-serif;
+    background-color: var(--bg-primary);
+}
+
+body::-webkit-scrollbar {
+    width: 0.1rem;
+}
+body::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+body::-webkit-scrollbar-thumb {
+    background: var(--primary);
+}
+
+body {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
