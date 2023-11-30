@@ -1,0 +1,102 @@
+<div class="container-input">
+    <h2>Inputs</h2>
+    <div class="input-project card">
+        <h3>Input Project</h3>
+        <form [formGroup]="projektForm">
+            <label>
+                Wohnfläche
+                <input type="number" formControlName="wohnfläche" />
+            </label>
+            <label>
+                Anzahl Wohnungen
+                <input type="number" formControlName="anzahlWohnungen" />
+            </label>
+            <label>
+                Energiestandard
+                <input type="radio" formControlName="energiestandard" />
+            </label>
+            <label>
+                Konstruktion
+                <input type="radio" formControlName="konstruktion" />
+            </label>
+            <label>
+                Zertifizierung
+                <input type="radio" formControlName="zertifizierung" />
+            </label>
+        </form>
+    </div>
+    <div class="input-specific card">
+        <h3>Input Specifics</h3>
+        <form [formGroup]="neubauForm">
+            <label>
+                Keller
+                <input type="radio" formControlName="keller" />
+            </label>
+            <label>
+                Stellplätze
+                <input type="radio" formControlName="stellplätze" />
+            </label>
+            <label>
+                Red Garage
+                <input type="radio" formControlName="redGarage" />
+            </label>
+            <label>
+                Aufzugsanlage
+                <input type="radio" formControlName="aufzugsanlage" />
+            </label>
+            <label>
+                Barrierefreiheit
+                <input type="radio" formControlName="barrierefreiheit" />
+            </label>
+            <label>
+                Dachbegrünung
+                <input type="radio" formControlName="dachbegrünung" />
+            </label>
+            <label>
+                Baustellenlogistik
+                <input type="radio" formControlName="baustellenlogistik" />
+            </label>
+            <label>
+                Energetischer
+                <input type="radio" formControlName="energetischer" />
+            </label>
+            <label>
+                Stanndard
+                <input type="radio" formControlName="stanndard" />
+            </label>
+            <label>
+                Außenanlagen
+                <input type="radio" formControlName="außenanlagen" />
+            </label>
+            <label>
+                Grundstücksbezogene Kosten
+                <input type="radio" formControlName="grundstücksbezogeneKosten" />
+            </label>
+            <label>
+                Baunebenkosten (excl. Finanzierung)
+                <input type="radio" formControlName="baunebenkostenKeinFin" />
+            </label>
+        </form>
+    </div>
+    <div class="input-loan card">
+        <h3>Input Loan</h3>
+        <form [formGroup]="darlehen">
+            <label>
+                KalkRealzins
+                <input type="range" step="1" min="0" max="100" formControlName="kalkRealzins" />
+            </label>
+            <label>
+                Kreditlaufzeit
+                <input type="number" formControlName="kreditlaufzeit" />
+            </label>
+            <label>
+                KfW-Darlehen
+                <input type="radio" formControlName="kfWDarlehen" />
+            </label>
+            <label>
+                Bank-Darlehen
+                <input type="radio" formControlName="bankDarlehen" />
+            </label>
+        </form>
+    </div>
+</div>

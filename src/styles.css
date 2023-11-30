@@ -8,9 +8,11 @@
     --secondary80: #F55CAFCC;
     --secondary35: #F55CAF59;
     --secondary30: #F55CAF4D;
-    --bg-primary: #222;
-    --bg-secondary: #1a1a1a;
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #222;
     --bg-tertiary: #333;
+
+    --layout-padding: 3.12rem;
 }
 
 * {
@@ -35,9 +37,16 @@ body::-webkit-scrollbar-thumb {
     background: var(--primary);
 }
 
-body {
-    display: grid;
-    grid-template-columns: auto auto;
+h1 {
+    font-weight: 200;
+}
+
+h2 {
+    font-weight: 200;
+}
+
+h3 {
+    font-weight: 200;
 }
 
 a {
@@ -46,4 +55,28 @@ a {
 
 li {
     list-style: none;
+}
+
+.card {
+    /* Border */
+    border: 1px solid transparent;
+    border-radius: 20px;
+    background: 
+      linear-gradient(to right, var(--bg-primary), var(--bg-primary)), 
+      linear-gradient(135deg, var(--primary), var(--primary90)); 
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    
+    /* Other styles */
+    padding: 10px;
+    margin: 6px;
+}
+
+form {
+display: flex;
+flex-direction: column;
+}
+
+.ng-tool {
+    width: 100%;
 }

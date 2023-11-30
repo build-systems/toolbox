@@ -1,0 +1,33 @@
+.container-input {
+    display: flex;
+}
+
+legend {
+    margin-left: 10px;
+    background: var(--bg-primary);
+}
+
+form {
+    & fieldset {
+        padding-top: 5px;
+        padding-bottom: 10px;
+        /* border-radius: 10px; */
+        border-style: none;
+        & legend {
+            margin-left: 0px;
+        }
+    }
+}
+
+input {
+    margin-right: 5px;
+}
+
+.radio {
+    display: flex;
+    align-items: center;
+}
+
+/* input[type="radio"] {
+    display: none;
+} */
