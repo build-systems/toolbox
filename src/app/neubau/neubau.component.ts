@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NeubauInputComponent } from '../neubau-input/neubau-input.component';
 import { OutputComponent } from '../output/output.component';
+import { ParameterProjektComponent } from '../parameter-projekt/parameter-projekt.component';
+import { ParameterNeubauComponent } from '../parameter-neubau/parameter-neubau.component';
+import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darlehen.component';
 
 @Component({
   selector: 'app-neubau',
   standalone: true,
-  imports: [CommonModule, NeubauInputComponent, OutputComponent],
+  imports: [CommonModule, OutputComponent, ParameterProjektComponent, ParameterNeubauComponent, ParameterDarlehenComponent],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {
@@ -14,5 +16,5 @@ import { OutputComponent } from '../output/output.component';
   }
 })
 export class NeubauComponent {
-
+  title = "Neubau";
 }

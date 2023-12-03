@@ -1,0 +1,22 @@
+<div class="input-loan card">
+    <form [formGroup]="darlehen">
+        <label   for="kalkRealzins">Kalkulationszinssatz (Realzins)</label>
+        <input type="range" step="1" min="0" max="100" id="kalkRealzins" formControlName="kalkRealzins" />
+        <label for="kreditlaufzeit">Kreditlaufzeit</label>
+        <input type="number" id="kreditlaufzeit" formControlName="kreditlaufzeit" />
+        <fieldset>
+            <legend>KfW-Darlehen</legend>
+            <span *ngFor="let item of kfWDarlehen" class="radio">
+                <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kfWDarlehen" formControlName="kfWDarlehen" [ngModel]="defaultKfWDarlehen"/>
+                <label for="{{item.id}}">{{item.value}}</label>
+            </span>
+        </fieldset>
+        <fieldset>
+            <legend>Bank-Darlehen</legend>
+            <span *ngFor="let item of bankDarlehen" class="radio">
+                <input type="radio" id="{{item.id}}" value="{{item.value}}" name="bankDarlehen" formControlName="bankDarlehen" [ngModel]="defaultBankDarlehen"/>
+                <label for="{{item.id}}">{{item.value}}</label>
+            </span>
+        </fieldset>
+    </form>
+</div>

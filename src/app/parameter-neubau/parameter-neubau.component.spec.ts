@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NeubauInputComponent } from './neubau-input.component';
+import { ParameterNeubauComponent } from './parameter-neubau.component';
 
-describe('NeubauInputComponent', () => {
-  let component: NeubauInputComponent;
-  let fixture: ComponentFixture<NeubauInputComponent>;
+describe('ParameterNeubauComponent', () => {
+  let component: ParameterNeubauComponent;
+  let fixture: ComponentFixture<ParameterNeubauComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NeubauInputComponent]
+      imports: [ParameterNeubauComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NeubauInputComponent);
+    fixture = TestBed.createComponent(ParameterNeubauComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

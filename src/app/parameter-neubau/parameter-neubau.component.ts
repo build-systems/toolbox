@@ -3,20 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-neubau-input',
+  selector: 'app-parameter-neubau',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './neubau-input.component.html',
-  styleUrl: './neubau-input.component.css'
+  templateUrl: './parameter-neubau.component.html',
+  styleUrl: './parameter-neubau.component.css'
 })
-export class NeubauInputComponent {
-  projektForm = new FormGroup({
-    wohnfläche: new FormControl(''),
-    anzahlWohnungen: new FormControl(''),
-    energiestandard: new FormControl(''),
-    konstruktion: new FormControl(''),
-    zertifizierung: new FormControl(''),
-  });
+export class ParameterNeubauComponent {
   neubauForm = new FormGroup({
     keller: new FormControl(''),
     stellplätze: new FormControl(''),
@@ -31,10 +24,4 @@ export class NeubauInputComponent {
     grundstücksbezogeneKosten: new FormControl(''),
     baunebenkostenKeinFin: new FormControl(''),
   });
-  darlehen = new FormGroup({
-    kalkRealzins: new FormControl(''),
-    kreditlaufzeit: new FormControl(''),
-    kfWDarlehen: new FormControl(''),
-    bankDarlehen: new FormControl(''),
-  })
 }

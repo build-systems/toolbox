@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SanierungInputComponent } from '../sanierung-input/sanierung-input.component';
 import { OutputComponent } from '../output/output.component';
+import { ParameterProjektComponent } from '../parameter-projekt/parameter-projekt.component';
+import { ParameterSanierungComponent } from '../parameter-sanierung/parameter-sanierung.component';
+import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darlehen.component';
 
 @Component({
   selector: 'app-sanierung',
   standalone: true,
-  imports: [CommonModule, SanierungInputComponent, OutputComponent],
+  imports: [CommonModule, OutputComponent, ParameterProjektComponent, ParameterSanierungComponent, ParameterDarlehenComponent],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',
   host: {
@@ -14,5 +16,10 @@ import { OutputComponent } from '../output/output.component';
   }
 })
 export class SanierungComponent {
+  title = "Sanierung";
 
+  wohnflaeche = '';
+  sendWohnflaeche(wohnflaeche: any) {
+    this.wohnflaeche = wohnflaeche;
+  }
 }

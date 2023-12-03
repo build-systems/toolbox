@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
 :root {
-    --primary: #67E0D7;
-    --primary90: #67E0D7E5;
-    --primary30: #67e0d84D;
+    /* --primary: #67E0D7; */
+    --primary: white;
+    /* --primary90: #67E0D7E5; */
+    --primary90: rgba(255, 255, 255, 0.9);
+    /* --primary30: #67e0d84D; */
+    --primary30: rgba(255, 255, 255, 0.3);
     --secondary: #F55CAF;
     --secondary80: #F55CAFCC;
     --secondary35: #F55CAF59;
@@ -12,7 +15,7 @@
     --bg-secondary: #222;
     --bg-tertiary: #333;
 
-    --layout-padding: 3.12rem;
+    --layout-padding: 2rem;
 }
 
 * {
@@ -37,7 +40,14 @@ body::-webkit-scrollbar-thumb {
     background: var(--primary);
 }
 
+.title {
+    padding-left: 50px;
+    padding-top: var(--layout-padding);
+    padding-bottom: var(--layout-padding);
+}
+
 h1 {
+    font-size: 54px;
     font-weight: 200;
 }
 
@@ -58,9 +68,8 @@ li {
 }
 
 .card {
-    /* Border */
-    border: 1px solid transparent;
-    border-radius: 20px;
+    /* border: 1px solid transparent; */
+    /* border-radius: 20px; */
     background: 
       linear-gradient(to right, var(--bg-primary), var(--bg-primary)), 
       linear-gradient(135deg, var(--primary), var(--primary90)); 
@@ -68,8 +77,14 @@ li {
     background-origin: padding-box, border-box;
     
     /* Other styles */
-    padding: 10px;
-    margin: 6px;
+}
+
+input {
+    color: #222;
+}
+
+fieldset {
+    border-style: none;
 }
 
 form {
@@ -77,6 +92,29 @@ display: flex;
 flex-direction: column;
 }
 
+
 .ng-tool {
     width: 100%;
+    max-height: 100svh;
+}
+
+.container-tool {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    padding-right: var(--layout-padding);
+    padding-left: var(--layout-padding);
+    gap: var(--layout-padding);
+}
+
+.container-input {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1;
+}
+
+.container-output {
+    display: flex;
+    flex-direction: column;
+    gap: var(--layout-padding);
 }

@@ -1,0 +1,29 @@
+<div class="input-project card">
+    <form [formGroup]="projektForm">
+        <label for="wohnflaeche">Wohnfläche</label>
+        <input type="number" id="wohnflaeche" formControlName="wohnflaeche" (change)="sendWohnflaeche( projektForm.value.wohnflaeche )" />
+        <label for="anzahlWohnungen">Anzahl Wohnungen</label>
+        <input type="number" id="anzahlWohnungen" formControlName="anzahlWohnungen" />
+        <fieldset>
+            <legend>Energiestandard</legend>
+            <span *ngFor="let item of energiestandard" class="radio">
+                <input type="radio" id="{{item.id}}" value="{{item.value}}" name="energiestandard" formControlName="energiestandard" [ngModel]="defaultEnergiestandard"/>
+                <label for="{{item.id}}">{{item.value}}</label>
+            </span>
+        </fieldset>
+        <fieldset>
+            <legend>Konstruktion</legend>
+            <span *ngFor="let item of konstruktion" class="radio">
+                <input type="radio" id="{{item.id}}" value="{{item.value}}" name="konstruktion" formControlName="konstruktion" [ngModel]="defaultKonstruktion"/>
+                <label for="{{item.id}}">{{item.value}}</label>
+            </span>
+        </fieldset>
+        <fieldset>
+            <legend>Zertifizierung</legend>
+            <span *ngFor="let item of zertifizierung" class="radio">
+                <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zertifizierung" formControlName="zertifizierung" [ngModel]="defaultZertifizierung"/>
+                <label for="{{item.id}}">{{item.value}}</label>
+            </span>
+        </fieldset>
+    </form>
+</div>

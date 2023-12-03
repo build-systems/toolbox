@@ -1,4 +1,15 @@
+<div class="title">
+    <h1>{{ title }}</h1>
+</div>
 <div class="container-tool">
-    <app-sanierung-input class="ng-input"></app-sanierung-input>
-    <app-output class="ng-output"></app-output>
+    <div class="container-input">
+        <div class="progress-bar">Progress bar</div>
+        <div>
+            <app-parameter-projekt (sendWohnflaecheEvent)="sendWohnflaeche($event)"></app-parameter-projekt>
+            <div>TEST: {{ wohnflaeche }}</div>
+            <app-parameter-sanierung></app-parameter-sanierung>
+            <app-parameter-darlehen></app-parameter-darlehen>
+        </div>
+    </div>
+    <app-output class="container-output"></app-output>
 </div>
