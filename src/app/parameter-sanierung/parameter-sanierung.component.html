@@ -1,18 +1,15 @@
-    <fieldset class="input-specific card">
-        <legend>Input Specifics</legend>
-        <form [formGroup]="sanierungForm">
-            <label for="worstPerformingBuilding">Worst-Performing Building</label>
-            <input type="checkbox" id="worstPerformingBuilding" formControlName="worstPerformingBuilding" />
-            <label for="serielleSanierung">Serielle Sanierung</label>
-            <input type="checkbox" id="serielleSanierung" formControlName="serielleSanierung" />
-            <fieldset>
-                <legend>Zustand Bestand</legend>
-                <span *ngFor="let item of zustandBestand" class="radio">
-                    <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zustandBestand" formControlName="zustandBestand" [ngModel]="defaultZustandBestand"/>
-                    <label for="{{item.id}}">{{item.value}}</label>
-                </span>
-            </fieldset>
-                <label for="eeKlasse">EE-Klasse</label>
-                <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
-        </form>
+<form [formGroup]="sanierungForm">
+    <label for="worstPerformingBuilding">Worst-Performing Building</label>
+    <input type="checkbox" id="worstPerformingBuilding" formControlName="worstPerformingBuilding" />
+    <label for="serielleSanierung">Serielle Sanierung</label>
+    <input type="checkbox" id="serielleSanierung" formControlName="serielleSanierung" />
+    <fieldset>
+        <legend>Zustand Bestand</legend>
+        <span *ngFor="let item of zustandBestand" class="radio">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zustandBestand" formControlName="zustandBestand" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
     </fieldset>
+        <label for="eeKlasse">EE-Klasse</label>
+        <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
+</form>

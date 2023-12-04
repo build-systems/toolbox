@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,7 +10,6 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './parameter-sanierung.component.css'
 })
 export class ParameterSanierungComponent {
-  defaultZustandBestand = "Unsaniert";
   zustandBestand = [
     {id: "1", value: "Unsaniert"},
     {id: "2", value: "Teilsaniert"},
@@ -18,9 +17,17 @@ export class ParameterSanierungComponent {
   ]
 
   sanierungForm = new FormGroup({
-    worstPerformingBuilding: new FormControl(''),
-    serielleSanierung: new FormControl(''),
-    zustandBestand: new FormControl(''),
-    eeKlasse: new FormControl(''),
+    worstPerformingBuilding: new FormControl(true),
+    serielleSanierung: new FormControl(true),
+    zustandBestand: new FormControl('Unsaniert'),
+    eeKlasse: new FormControl(true),
   })
+
+  @Output() formSanierungChanged = new EventEmitter<any>();
+
+  constructor() {
+    this.sanierungForm.valueChanges.subscribe((values) => {
+      this.formSanierungChanged.emit(values);
+    });
+  }
 }

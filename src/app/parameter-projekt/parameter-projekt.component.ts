@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './parameter-projekt.component.css'
 })
 export class ParameterProjektComponent {
-  defaultEnergiestandard = "EH 40";
+  // defaultEnergiestandard = "EH 40";
   energiestandard = [
     {id: "1", value: "EH 40"},
     {id: "2", value: "EH 55"},
@@ -19,28 +19,29 @@ export class ParameterProjektComponent {
     {id: "5", value: "EH 115"},
   ]
 
-  defaultKonstruktion = "Konventionell";
   konstruktion = [
     {id: "1", value: "Konventionell"},
     {id: "2", value: "Holzbau"}
   ]
 
-  defaultZertifizierung = "Keine Zertifizierung";
   zertifizierung = [
     {id: "1", value: "Keine Zertifizierung"},
     {id: "2", value: "QNG"}
   ]
 
   projektForm = new FormGroup({
-    wohnflaeche: new FormControl<string | null>(''),
-    anzahlWohnungen: new FormControl(''),
-    energiestandard: new FormControl(''),
-    konstruktion: new FormControl(''),
-    zertifizierung: new FormControl(''),
+    wohnflaeche: new FormControl('5000'),
+    anzahlWohnungen: new FormControl('50'),
+    energiestandard: new FormControl('EH 40'),
+    konstruktion: new FormControl('Konventionell'),
+    zertifizierung: new FormControl('Keine Zertifizierung'),
   });
 
-  @Output() sendWohnflaecheEvent = new EventEmitter<any>();
-  sendWohnflaeche(value: any) {
-    this.sendWohnflaecheEvent.emit(value);
+  @Output() formProjektChanged = new EventEmitter<any>();
+
+  constructor() {
+    this.projektForm.valueChanges.subscribe((values) => {
+      this.formProjektChanged.emit(values);
+    });
   }
 }
