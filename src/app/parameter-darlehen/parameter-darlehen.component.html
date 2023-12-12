@@ -1,18 +1,29 @@
 <div class="input-loan card">
     <form [formGroup]="darlehenForm">
-        <label for="kalkRealzins">Kalkulationszinssatz (Realzins)</label>
-        <input type="range" step="1" min="0" max="100" id="kalkRealzins" title="{{ darlehenForm.value.kalkRealzins }}%" formControlName="kalkRealzins" />
-        <label for="kreditlaufzeit">Kreditlaufzeit</label>
-        <input type="number" id="kreditlaufzeit" formControlName="kreditlaufzeit" />
+        <h2>3. Darlehen</h2>
         <fieldset>
-            <legend>KfW-Darlehen</legend>
+            <legend>Kalkulationszinssatz (Realzins) <sup>&#9432;</sup></legend>
+            <span class="slidernumber">
+                <input type="range" formControlName="kalkRealzinsRange" min="0" max="100" step="1" class="slider" />
+                <input type="number" formControlName="kalkRealzins" min="0" max="100" step="1" />
+            </span>
+        </fieldset>
+        <fieldset>
+            <legend>Kreditlaufzeit <sup>&#9432;</sup></legend>
+            <span class="slidernumber">
+                <input type="range" formControlName="kreditlaufzeitRange" min="1" max="50" steps="1" class="slider" />
+                <input type="number" formControlName="kreditlaufzeit" min="1" max="50" steps="1" />
+            </span>
+        </fieldset>
+        <fieldset class="radio-fieldset">
+            <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
             <span *ngFor="let item of kfWDarlehen" class="radio">
                 <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kfWDarlehen" formControlName="kfWDarlehen" />
                 <label for="{{item.id}}">{{item.value}}</label>
             </span>
         </fieldset>
-        <fieldset>
-            <legend>Bank-Darlehen</legend>
+        <fieldset class="radio-fieldset">
+            <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
             <span *ngFor="let item of bankDarlehen" class="radio">
                 <input type="radio" id="{{item.id}}" value="{{item.value}}" name="bankDarlehen" formControlName="bankDarlehen" />
                 <label for="{{item.id}}">{{item.value}}</label>

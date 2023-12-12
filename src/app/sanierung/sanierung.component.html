@@ -4,49 +4,65 @@
 
 <div class="container-tool">
     <div class="container-input">
-        <div class="progress-bar">Progress bar</div>
-        <div>
-            <app-parameter-projekt (formProjektChanged)="onFormProjektChanged($event)"></app-parameter-projekt>
-            <br>
-            <app-parameter-sanierung (formSanierungChanged)="onFormSanierungChanged($event)"></app-parameter-sanierung>
-            <br>
-            <app-parameter-darlehen (formDarlehenChanged)="onFormDarlehenChanged($event)"></app-parameter-darlehen>
+        <div class="container-forms">
+            <div class="progress-bar">
+                <div [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">1</div>
+                <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
+                <div [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">2</div>
+                <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
+                <div [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">3</div>
+            </div>
+                <app-parameter-projekt [hidden]="!(currentForm === 1)" (formProjektChanged)="onFormProjektChanged($event)"></app-parameter-projekt>
+                <app-parameter-sanierung [hidden]="!(currentForm === 2)" (formSanierungChanged)="onFormSanierungChanged($event)"></app-parameter-sanierung>
+                <app-parameter-darlehen [hidden]="!(currentForm === 3)" (formDarlehenChanged)="onFormDarlehenChanged($event)"></app-parameter-darlehen>
         </div>
+        <fieldset class="progress-buttons">
+            <div class="container-button">
+                @if (currentForm > 1) {
+                    <input type="button" value="PREVIOUS" (click)="previousForm()">
+                }
+            </div>
+            <div class="container-button">
+                @if (currentForm < 3){
+                    <input type="button" value="NEXT" (click)="nextForm()">
+                }
+            </div>
+        </fieldset>
     </div>
-    <div>
-        <div>Tilgungszuschuss [%]: {{ _tilgungszuschuss }}</div>
-        <div>EE-Bonus [%]: {{ _eeBonus }}</div>
-        <div>NH-Bonus [%]: {{ _nhBonus }}</div>
-        <div>WPB-Bonus [%]: {{ _wpbBonus }}</div>
-        <div>SerSan-Bonus [%]: {{ _serSanBonus }}</div>
-        <br>
-        <div>Min Gestehungskosten [€/m²]: {{ _gestehungskosten }}</div>
-        <div>NR-Kredit [%]: {{ _nrKredit }}</div>
-        <div>Sollzins KfW [%]: {{ _sollzinsKfw }}</div>
-        <div>Max. KfW-Kredit: {{ _maxKfwKredit | currency:'EUR' }}</div>
-        <div>Gesamtgestehungskosten: {{ _gesamtgestehungskosten | currency:'EUR' }}</div>
-        <div>Foerdersumme: {{ _foerdersumme | currency:'EUR' }}</div>
-        <div>Restsumme: {{ _restsumme | currency:'EUR' }}</div>
-        <br>
-        <div>AF KfW: {{ _afKfw | number:'1.0-3' }}</div>
-        <div>AF B: {{ _afB | number:'1.0-3' }}</div>
-        <div>Zuschuss (KfW): {{ _zuschuss | currency:'EUR' }}</div>
-        <div>KfW-Kredit: {{ _kfwKredit | currency:'EUR' }}</div>
-        <div>Bank-Kredit: {{ _bankKredit | currency:'EUR' }}</div>
-        <div>Annuität KfW: {{ _annuitaetKfW | currency:'EUR' }}</div>
-        <div>Annuität B: {{ _annuitaetB | currency:'EUR' }}</div>
-        <div>EF KFW: {{ _efKfW | currency:'EUR' }}</div>
-        <div>EF B: {{ _efB | currency:'EUR' }}</div>
-        <div>Finanzierungskosten KfW: {{ _finanzierungskostenKfw | currency:'EUR' }}</div>
-        <div>Finanzierungskosten FinMarkt: {{ _finanzierungskostenMarkt | currency:'EUR' }}</div>
-        <div>Investitionskosten: {{ _investitionkosten | currency:'EUR' }}</div>
-        <br>
-        <div>GB Annuität: {{ _gbAnnuitaet | currency:'EUR' }}</div>
-        <div>GB EFD: {{ _gbEfd | currency:'EUR' }}</div>
-        <br>
-        <div>Option 1: ohne KfW {{ _ohneKfw | currency:'EUR' }}</div>
-        <div>Option 2: mit KfW {{ _mitKfw | currency:'EUR' }}</div>
-        <br>
-    </div>
-    <!-- <app-output class="container-output"></app-output> -->
+    <app-output kfwKredit={{_kfwKredit}} ></app-output>
 </div>
+<!-- <div>
+    <div>Tilgungszuschuss [%]: {{ _tilgungszuschuss }}</div>
+    <div>EE-Bonus [%]: {{ _eeBonus }}</div>
+    <div>NH-Bonus [%]: {{ _nhBonus }}</div>
+    <div>WPB-Bonus [%]: {{ _wpbBonus }}</div>
+    <div>SerSan-Bonus [%]: {{ _serSanBonus }}</div>
+    <br>
+    <div>Min Gestehungskosten [€/m²]: {{ _gestehungskosten }}</div>
+    <div>NR-Kredit [%]: {{ _nrKredit }}</div>
+    <div>Sollzins KfW [%]: {{ _sollzinsKfw }}</div>
+    <div>Max. KfW-Kredit: {{ _maxKfwKredit | currency:'EUR' }}</div>
+    <div>Gesamtgestehungskosten: {{ _gesamtgestehungskosten | currency:'EUR' }}</div>
+    <div>Foerdersumme: {{ _foerdersumme | currency:'EUR' }}</div>
+    <div>Restsumme: {{ _restsumme | currency:'EUR' }}</div>
+    <br>
+    <div>AF KfW: {{ _afKfw | number:'1.0-3' }}</div>
+    <div>AF B: {{ _afB | number:'1.0-3' }}</div>
+    <div>Zuschuss (KfW): {{ _zuschuss | currency:'EUR' }}</div>
+    <div>KfW-Kredit: {{ _kfwKredit | currency:'EUR' }}</div>
+    <div>Bank-Kredit: {{ _bankKredit | currency:'EUR' }}</div>
+    <div>Annuität KfW: {{ _annuitaetKfW | currency:'EUR' }}</div>
+    <div>Annuität B: {{ _annuitaetB | currency:'EUR' }}</div>
+    <div>EF KFW: {{ _efKfW | currency:'EUR' }}</div>
+    <div>EF B: {{ _efB | currency:'EUR' }}</div>
+    <div>Finanzierungskosten KfW: {{ _finanzierungskostenKfw | currency:'EUR' }}</div>
+    <div>Finanzierungskosten FinMarkt: {{ _finanzierungskostenMarkt | currency:'EUR' }}</div>
+    <div>Investitionskosten: {{ _investitionkosten | currency:'EUR' }}</div>
+    <br>
+    <div>GB Annuität: {{ _gbAnnuitaet | currency:'EUR' }}</div>
+    <div>GB EFD: {{ _gbEfd | currency:'EUR' }}</div>
+    <br>
+    <div>Option 1: ohne KfW {{ _ohneKfw | currency:'EUR' }}</div>
+    <div>Option 2: mit KfW {{ _mitKfw | currency:'EUR' }}</div>
+    <br>
+</div> -->

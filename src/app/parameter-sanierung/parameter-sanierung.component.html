@@ -1,15 +1,34 @@
 <form [formGroup]="sanierungForm">
-    <label for="worstPerformingBuilding">Worst-Performing Building</label>
-    <input type="checkbox" id="worstPerformingBuilding" formControlName="worstPerformingBuilding" />
-    <label for="serielleSanierung">Serielle Sanierung</label>
-    <input type="checkbox" id="serielleSanierung" formControlName="serielleSanierung" />
+    <h2>2. Sanierung</h2>
     <fieldset>
-        <legend>Zustand Bestand</legend>
-        <span *ngFor="let item of zustandBestand" class="radio">
+        <legend>Worst-Performing Building <sup>&#9432;</sup></legend>
+        <input type="checkbox" id="worstPerformingBuilding" formControlName="worstPerformingBuilding" />
+        <label for="worstPerformingBuilding" class="checkbox-container">
+            Ja
+            <span class="checkmark"></span>
+        </label>
+    </fieldset>
+    <fieldset>
+        <legend>Serielle Sanierung <sup>&#9432;</sup></legend>
+        <input type="checkbox" id="serielleSanierung" formControlName="serielleSanierung" />
+        <label for="serielleSanierung" class="checkbox-container">
+            Ja
+            <span class="checkmark"></span>
+        </label>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Zustand Bestand <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of zustandBestand">
             <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zustandBestand" formControlName="zustandBestand" />
             <label for="{{item.id}}">{{item.value}}</label>
         </span>
     </fieldset>
-        <label for="eeKlasse">EE-Klasse</label>
+    <fieldset>
+        <legend>EE-Klasse <sup>&#9432;</sup></legend>
         <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
+        <label for="eeKlasse" class="checkbox-container">
+            Ja
+            <span class="checkmark"></span>
+        </label>
+    </fieldset>
 </form>

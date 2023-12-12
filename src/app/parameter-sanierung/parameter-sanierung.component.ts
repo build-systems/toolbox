@@ -11,9 +11,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class ParameterSanierungComponent {
   zustandBestand = [
-    {id: "1", value: "Unsaniert"},
-    {id: "2", value: "Teilsaniert"},
-    {id: "3", value: "Umfassend saniert"}
+    {id: "zusbest1", value: "Unsaniert"},
+    {id: "zusbest2", value: "Teilsaniert"},
+    {id: "zusbest3", value: "Umfassend saniert"}
   ]
 
   sanierungForm = new FormGroup({

@@ -1,26 +1,37 @@
 <div class="input-project card">
     <form [formGroup]="projektForm">
-        <label for="wohnflaeche">Wohnfläche</label>
-        <input type="number" id="wohnflaeche" formControlName="wohnflaeche" />
-        <label for="anzahlWohnungen">Anzahl Wohnungen</label>
-        <input type="number" id="anzahlWohnungen" formControlName="anzahlWohnungen" />
+        <h2>1. Projekt</h2>
         <fieldset>
-            <legend>Energiestandard</legend>
-            <span *ngFor="let item of energiestandard" class="radio">
+            <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
+            <span class="slidernumber">
+                <input type="range" formControlName="wohnflaecheRange" min="100" max="50000" step="100" class="slider" />
+                <input type="number" formControlName="wohnflaeche" min="100" max="50000" step="1" />
+            </span>
+        </fieldset>
+        <fieldset>
+            <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
+            <span class="slidernumber">
+                <input type="range" formControlName="anzahlWohnungenRange" min="1" max="1000" step="1" class="slider" />
+                <input type="number" formControlName="anzahlWohnungen" min="1" max="1000" step="1" />
+            </span>
+        </fieldset>
+        <fieldset class="radio-fieldset">
+            <legend>Energiestandard <sup>&#9432;</sup></legend>
+            <span *ngFor="let item of energiestandard">
                 <input type="radio" id="{{item.id}}" value="{{item.value}}" name="energiestandard" formControlName="energiestandard"/>
                 <label for="{{item.id}}">{{item.value}}</label>
             </span>
         </fieldset>
-        <fieldset>
-            <legend>Konstruktion</legend>
-            <span *ngFor="let item of konstruktion" class="radio">
+        <fieldset class="radio-fieldset">
+            <legend>Konstruktion <sup>&#9432;</sup></legend>
+            <span *ngFor="let item of konstruktion">
                 <input type="radio" id="{{item.id}}" value="{{item.value}}" name="konstruktion" formControlName="konstruktion" />
                 <label for="{{item.id}}">{{item.value}}</label>
             </span>
         </fieldset>
-        <fieldset>
-            <legend>Zertifizierung</legend>
-            <span *ngFor="let item of zertifizierung" class="radio">
+        <fieldset class="radio-fieldset">
+            <legend>Zertifizierung <sup>&#9432;</sup></legend>
+            <span *ngFor="let item of zertifizierung">
                 <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zertifizierung" formControlName="zertifizierung" />
                 <label for="{{item.id}}">{{item.value}}</label>
             </span>

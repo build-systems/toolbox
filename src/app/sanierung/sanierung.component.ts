@@ -17,6 +17,18 @@ import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darl
 })
 export class SanierungComponent {
   title = "Sanierung";
+  
+  // Handle form page
+  currentForm = 1;
+  nForms = 3;
+  nextForm() {
+    if (this.currentForm + 1 <= this.nForms)
+      this.currentForm += 1;
+  }
+  previousForm() {
+    if (this.currentForm - 1 >= 1)
+      this.currentForm -= 1;
+  }
 
   // Project parameters
   wohnflaeche = 5000;

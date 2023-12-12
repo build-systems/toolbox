@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
 
 :root {
     /* --primary: #67E0D7; */
@@ -7,15 +8,16 @@
     --primary90: rgba(255, 255, 255, 0.9);
     /* --primary30: #67e0d84D; */
     --primary30: rgba(255, 255, 255, 0.3);
-    --secondary: #F55CAF;
-    --secondary80: #F55CAFCC;
-    --secondary35: #F55CAF59;
-    --secondary30: #F55CAF4D;
+    --secondary: aquamarine;
     --bg-primary: #1a1a1a;
     --bg-secondary: #222;
     --bg-tertiary: #333;
 
     --layout-padding: 2rem;
+
+    --slider-handle-diameter: 1rem;
+    --button-height: 2.2rem;
+    --button-radius: 0.5rem;
 }
 
 * {
@@ -23,6 +25,8 @@
     color: var(--primary);
     margin: 0;
     padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 html {
@@ -68,53 +72,334 @@ li {
 }
 
 .card {
-    /* border: 1px solid transparent; */
-    /* border-radius: 20px; */
-    background: 
+    background:
       linear-gradient(to right, var(--bg-primary), var(--bg-primary)), 
       linear-gradient(135deg, var(--primary), var(--primary90)); 
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
-    
-    /* Other styles */
+    gap: 5px;
 }
-
-input {
-    color: #222;
-}
-
-/* fieldset {
-    border-style: none;
-} */
-
-form {
-display: flex;
-flex-direction: column;
-}
-
 
 .ng-tool {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-height: 100svh;
+    margin-bottom: var(--layout-padding);
 }
 
 .container-tool {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
+    display: grid;
+    flex-grow: 1;
+    grid-template-columns: 1fr 2fr;
     padding-right: var(--layout-padding);
     padding-left: var(--layout-padding);
     gap: var(--layout-padding);
+    /* border: 1px solid green; */
 }
 
 .container-input {
     display: flex;
+    justify-content: space-between;
     flex-direction: column;
     flex-shrink: 1;
+    /* border: 1px solid white; */
 }
 
-.container-output {
+.ng-output {
+    /* border: 1px solid red; */
+}
+
+.output-numbers {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+input {
+    background-color: var(--bg-secondary);
+    font-family: "Inconsolata", sans-serif;
+    font-size: 1rem;
+}
+
+label {
+    font-family: "Inconsolata", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+fieldset {
+    margin-top: 1rem;
+    padding-top: 0.25rem;
+    border-style: none;
+}
+
+form {
     display: flex;
     flex-direction: column;
-    gap: var(--layout-padding);
+}
+
+.slidernumber {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input[type=range]{
+        flex-grow: 1;
+        margin-right: 3ch;
+        cursor: pointer; /* Cursor on hover */
+    }
+    input[type=number]{
+        width: 5rem;
+        height: var(--button-height);
+        text-align: center;
+        border-radius: var(--button-radius);
+        border: 1px solid white;
+    }
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--bg-tertiary);
+    outline: none;
+    opacity: 0.5; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: var(--slider-handle-diameter); /* Set a specific slider handle width */
+    height: var(--slider-handle-diameter); /* Slider handle height */
+    border: 1px solid white;
+    border-radius: 50%;
+    background: var(--bg-secondary); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+.slider::-moz-range-thumb {
+    width: var(--slider-handle-diameter); /* Set a specific slider handle width */
+    height: var(--slider-handle-diameter); /* Slider handle height */
+    border: 1px solid white;
+    background: var(--bg-tertiary); /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+/* Remove Arrows from number input field */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+.radio-fieldset {
+    display: flex;
+    gap: var(--button-radius);
+    & span {
+        display: flex;
+        height: var(--button-height);
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        border-radius: var(--button-radius);
+        & label {
+            display: flex;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid var(--bg-tertiary);
+            border-radius: var(--button-radius);
+            cursor: pointer;
+        }
+    }
+}
+
+/* On mouse-over, add a grey background color */
+.radio-fieldset span  input:hover ~ label{
+    background-color: var(--bg-secondary);
+    border-color: var(--secondary);
+}
+/* On mouse-over, add a grey background color */
+.radio-fieldset span  input:active ~ label{
+    background-color: var(--bg-tertiary);
+    border-color: var(--secondary);
+}
+
+/* When the checkbox is checked, add a blue background */
+.radio-fieldset span input:checked ~ label{
+    background-color: var(--bg-tertiary);
+    border-color: white;
+}
+
+input[type=checkbox] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-container {
+    position: relative;
+    display: flex;
+    height: var(--button-height);
+    padding-left: 5rem;
+    align-items: center;
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--button-radius);
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    left: 2rem;
+    height: 24px;
+    width: 24px;
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 0.25rem;
+}
+
+/* On mouse-over, add a grey background color */
+input[type=checkbox]:hover ~ label .checkmark {
+    background-color: var(--bg-tertiary);
+    border-color: var(--secondary);
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover {
+    background-color: var(--bg-secondary);
+    border-color: var(--secondary);
+}
+
+/* When the checkbox is checked, add a blue background */
+input[type=checkbox]:checked ~ label .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 3px
+}
+
+/* Show the checkmark when checked */
+input[type=checkbox]:checked ~ label .checkmark:after {
+    display: block;
+}
+/* Show the checkmark when checked */
+input[type=checkbox]:checked + label {
+    background-color: var(--bg-tertiary);
+    border-color: var(--primary);
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+    left: 7px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--bg-primary);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.progress-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-button {
+    width: 49%;
+}
+
+input[type=button]:hover {
+    color: (var(--primary));
+    border: 1px solid var(--secondary);
+    background-color: var(--bg-secondary);
+}
+
+input[type=button]:active {
+    background-color: var(--bg-tertiary);
+    color: (var(--primary));
+}
+
+input[type=button] {
+    font-family: "Inconsolata", sans-serif;
+    font-size: 1.2rem;
+    color: var(--bg-primary);
+    height: var(--button-height);
+    width: 100%;
+    padding-left: var(--layout-padding);
+    padding-right: var(--layout-padding);
+    border: 1px solid var(--primary);
+    border-radius: var(--button-radius);
+    background-color: var(--primary90);
+    cursor: pointer;
+}
+
+.progress-bar {
+    counter-reset: code-steps-list;
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--layout-padding);
+}
+
+.grayed-circle {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    border: 1px solid var(--bg-tertiary);
+    position: sticky;
+}
+
+.full-circle {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    border: 1px solid var(--primary);
+    background-color: var(--bg-tertiary);
+    position: sticky;
+}
+
+.grayed-line {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--bg-tertiary);
+}
+.full-line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--primary);
 }
