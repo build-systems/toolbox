@@ -39,9 +39,11 @@ html {
 body::-webkit-scrollbar {
     width: 0.1rem;
 }
+
 body::-webkit-scrollbar-track {
     background: var(--bg-tertiary);
 }
+
 body::-webkit-scrollbar-thumb {
     background: var(--primary);
 }
@@ -75,8 +77,8 @@ li {
 
 .card {
     background:
-      linear-gradient(to right, var(--bg-primary), var(--bg-primary)), 
-      linear-gradient(135deg, var(--primary), var(--primary90)); 
+        linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
+        linear-gradient(135deg, var(--primary), var(--primary90));
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
     gap: 5px;
@@ -145,10 +147,12 @@ form {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    input[type=range]{
+
+    input[type=range] {
         flex-grow: 1;
         margin-right: 3ch;
-        cursor: pointer; /* Cursor on hover */
+        cursor: pointer;
+        /* Cursor on hover */
     }
 }
 
@@ -159,46 +163,62 @@ form {
     border-radius: 1px;
     background: var(--bg-tertiary);
     outline: none;
-    opacity: 0.5; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    opacity: 0.5;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
     transition: opacity .2s;
 }
+
 /* Mouse-over effects */
 .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-  }
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
+    /* Override default look */
     appearance: none;
-    width: var(--slider-handle-diameter); /* Set a specific slider handle width */
-    height: var(--slider-handle-diameter); /* Slider handle height */
+    width: var(--slider-handle-diameter);
+    /* Set a specific slider handle width */
+    height: var(--slider-handle-diameter);
+    /* Slider handle height */
     border: 1px solid white;
     border-radius: 50%;
-    background: var(--bg-secondary); /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    background: var(--bg-secondary);
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
 }
+
 .slider::-moz-range-thumb {
-    width: var(--slider-handle-diameter); /* Set a specific slider handle width */
-    height: var(--slider-handle-diameter); /* Slider handle height */
+    width: var(--slider-handle-diameter);
+    /* Set a specific slider handle width */
+    height: var(--slider-handle-diameter);
+    /* Slider handle height */
     border: 1px solid white;
-    background: var(--bg-tertiary); /* Green background */
-    cursor: pointer; /* Cursor on hover */
+    background: var(--bg-tertiary);
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
 }
 
 /* Remove Arrows from number input field */
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-input[type=number]{
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input[type=number] {
     width: 5rem;
     height: var(--button-height);
     text-align: center;
@@ -217,6 +237,7 @@ input[type=radio] {
 .radio-fieldset {
     display: flex;
     gap: var(--button-radius);
+
     & span {
         display: flex;
         height: var(--button-height);
@@ -224,6 +245,7 @@ input[type=radio] {
         justify-content: center;
         align-items: center;
         border-radius: var(--button-radius);
+
         & label {
             display: flex;
             margin: 0;
@@ -240,18 +262,19 @@ input[type=radio] {
 }
 
 /* On mouse-over, add a grey background color */
-.radio-fieldset span  input:hover ~ label{
+.radio-fieldset span input:hover~label {
     background-color: var(--bg-secondary);
     border-color: var(--secondary);
 }
+
 /* On mouse-over, add a grey background color */
-.radio-fieldset span  input:active ~ label{
+.radio-fieldset span input:active~label {
     background-color: var(--bg-tertiary);
     border-color: var(--secondary);
 }
 
 /* When the checkbox is checked, add a blue background */
-.radio-fieldset span input:checked ~ label{
+.radio-fieldset span input:checked~label {
     background-color: var(--bg-tertiary);
     border-color: white;
 }
@@ -285,7 +308,7 @@ input[type=checkbox] {
 }
 
 /* On mouse-over, add a grey background color */
-input[type=checkbox]:hover ~ label .checkmark {
+input[type=checkbox]:hover~label .checkmark {
     background-color: var(--bg-tertiary);
     border-color: var(--secondary);
 }
@@ -297,7 +320,7 @@ input[type=checkbox]:hover ~ label .checkmark {
 }
 
 /* When the checkbox is checked, add a blue background */
-input[type=checkbox]:checked ~ label .checkmark {
+input[type=checkbox]:checked~label .checkmark {
     background-color: var(--primary);
     border-color: var(--primary);
 }
@@ -311,11 +334,12 @@ input[type=checkbox]:checked ~ label .checkmark {
 }
 
 /* Show the checkmark when checked */
-input[type=checkbox]:checked ~ label .checkmark:after {
+input[type=checkbox]:checked~label .checkmark:after {
     display: block;
 }
+
 /* Show the checkmark when checked */
-input[type=checkbox]:checked + label {
+input[type=checkbox]:checked+label {
     background-color: var(--bg-tertiary);
     border-color: var(--primary);
 }
@@ -339,6 +363,7 @@ input[type=checkbox]:checked + label {
 
 .container-button {
     width: 49%;
+
     & input {
         font-weight: bold;
         color: var(--bg-primary);
@@ -409,8 +434,15 @@ input[type=button] {
     height: 2px;
     background-color: var(--bg-tertiary);
 }
+
 .full-line {
     flex-grow: 1;
     height: 1px;
     background-color: var(--primary);
+}
+
+.container-chart {
+    display: block;
+    width: 400px;
+    height: 400px;
 }
