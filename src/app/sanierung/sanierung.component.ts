@@ -287,7 +287,7 @@ export class SanierungComponent {
   }
 
   // #03
-  // 1. AF KFW [€]
+  // AF KFW [€]
   _afKfw = 0;
   private updateAfKfW(){
     if (this._sollzinsKfw === 0 || this.kreditlaufzeit === 0) {
@@ -297,55 +297,55 @@ export class SanierungComponent {
     }
   }
 
-  // 2. AF B [€]
+  // AF B [€]
   _afB = 0;
   private updateAfB(){
     this._afB = ( this.kalkRealzins / 100 ) * Math.pow(( 1 + this.kalkRealzins / 100 ), this.kreditlaufzeit) / (Math.pow( 1 + this.kalkRealzins / 100, this.kreditlaufzeit ) - 1);
   }
 
-  // 3. Zuschuss (KfW) [€]
+  // Zuschuss (KfW) [€]
   _zuschuss = 0;
   private updateZuschuss(){
     this._zuschuss = Math.min((this._tilgungszuschuss + this._eeBonus + this._nhBonus + this._wpbBonus + this._serSanBonus) / 100 * this._foerdersumme, ( 0.4 * this._foerdersumme ));
   }
 
-  // 4. KfW-Kredit [€]
+  // KfW-Kredit [€]
   _kfwKredit = 0;
   private updateKfwKredit(){
     this._kfwKredit = this._foerdersumme - this._zuschuss;
   }
 
-  // 5. Bank-Kredit [€]
+  // Bank-Kredit [€]
   _bankKredit = 0;
   private updateBankKredit(){
     this._bankKredit = this._restsumme;
   }
 
-  // 6. Annuität KfW [€]
+  // Annuität KfW [€]
   _annuitaetKfW = 0;
   private updateAnnuitaetKfw(){
     this._annuitaetKfW = this._afKfw * this._kfwKredit;
   }
 
-  // 7. Annuität B [€]
+  // Annuität B [€]
   _annuitaetB = 0;
   private updateAnnuitaetB(){
     this._annuitaetB = this._bankKredit * this._afB;
   }
 
-  // 8. EF KFW [€]
+  // EF KFW [€]
   _efKfW = 0;
   private updateEfKfw(){
     this._efKfW = this._kfwKredit * this._sollzinsKfw / 100 * this.kreditlaufzeit;
   }
 
-  // 9. EF B [€]
+  // EF B [€]
   _efB = 0;
   private updateEfB(){
     this._efB = this.kalkRealzins * this._restsumme / 100 * this.kreditlaufzeit;
   }
 
-  // 10. Finanzierungskosten (KfW) [€]
+  // Finanzierungskosten (KfW) [€]
   _finanzierungskostenKfw = 0;
   private updateFinanzierungskostenKfw(){
     if (this.kfWDarlehen === "Annuitätendarlehen") {
@@ -357,7 +357,7 @@ export class SanierungComponent {
     }
   }
 
-  // 11. Finazierungskosten (Finanzmarkt) [€]
+  // Finazierungskosten (Finanzmarkt) [€]
   _finanzierungskostenMarkt = 0;
   private updateFinanzierungskostenMarkt(){
     if (this.bankDarlehen === "Annuitätendarlehen") {
@@ -369,13 +369,13 @@ export class SanierungComponent {
     }
   }
 
-  // 12. Investitionskosten [€]
+  // Investitionskosten [€]
   _investitionkosten = 0;
   private updateInvestitionkosten(){
     this._investitionkosten = this.wohnflaeche * this._gestehungskosten;
   }
 
-  // #05
+  // #04
   // GB: Annuität [€]
   _gbAnnuitaet = 0;
   private updateGbAnnuitaet(){
@@ -402,6 +402,17 @@ export class SanierungComponent {
   _mitKfw = 0;
   private updateMitKfw(){
     this._mitKfw = this._finanzierungskostenKfw + this._finanzierungskostenMarkt;
+  }
+
+  // Gesamtkosten
+  _gInvestition = 0;
+  private updateGInvestition(){
+    this._gInvestition = this._investitionkosten - this._zuschuss;
+  }
+
+  _gFinanzierung = 0;
+  private updateGFinanzierung(){
+    this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenMarkt;
   }
 
   constructor(){
@@ -437,6 +448,8 @@ export class SanierungComponent {
     this.updateGbEfd();
     this.updateOhneKfw();
     this.updateMitKfw();
+    this.updateGInvestition();
+    this.updateGFinanzierung();
   }
 
   onFormProjektChanged(values: any) {

@@ -5,18 +5,30 @@
     </div>
     <div class="output-card">
         <div>Bank-Kredit</div>
-        <div>€ 2,000k</div>
+        <div>{{ bankKredit | currency:'EUR' }}</div>
     </div>
     <div class="output-card">
-        <div>Finanzierungskosten KfW</div>
-        <div>€ 2,000k</div>
+        <div>Finkosten (KfW)</div>
+        <div>{{ finanzierungskostenKfw | currency:'EUR' }}</div>
     </div>
     <div class="output-card">
-        <div>Finazierungskosten Finanzmarkt</div>
-        <div>€ 2,000k</div>
+        <div>Kosten Finanzmarkt</div>
+        <div>{{ finanzierungskostenMarkt | currency:'EUR' }}</div>
     </div>
     <div class="output-card">
         <div>Investitionskosten</div>
-        <div>€ 2,000k</div>
+        <div>{{ investitionkosten | currency:'EUR' }}</div>
+    </div>
+    <div class="output-card">
+        <div>Zuschuss (KfW)</div>
+        <div>{{ zuschuss | currency:'EUR' }}</div>
+    </div>
+    <div class="output-card">
+        <div>G. Investition</div>
+        <div>{{ gInvestition | currency:'EUR' }}</div>
+    </div>
+    <div class="output-card">
+        <div>G. Finanzierung</div>
+        <div>{{ gFinanzierung | currency:'EUR' }}</div>
     </div>
 </div>

@@ -6,6 +6,8 @@
     --primary: white;
     /* --primary90: #67E0D7E5; */
     --primary90: rgba(255, 255, 255, 0.9);
+    --primary80: rgba(255, 255, 255, 0.8);
+    --primary70: rgba(255, 255, 255, 0.7);
     /* --primary30: #67e0d84D; */
     --primary30: rgba(255, 255, 255, 0.3);
     --secondary: aquamarine;
@@ -148,13 +150,6 @@ form {
         margin-right: 3ch;
         cursor: pointer; /* Cursor on hover */
     }
-    input[type=number]{
-        width: 5rem;
-        height: var(--button-height);
-        text-align: center;
-        border-radius: var(--button-radius);
-        border: 1px solid white;
-    }
 }
 
 .slider {
@@ -201,6 +196,18 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+input[type=number]{
+    width: 5rem;
+    height: var(--button-height);
+    text-align: center;
+    border-radius: var(--button-radius);
+    border: 1px solid var(--primary);
+}
+
+input[type=number]:focus {
+    outline-color: var(--secondary);
 }
 
 input[type=radio] {
@@ -332,6 +339,17 @@ input[type=checkbox]:checked + label {
 
 .container-button {
     width: 49%;
+    & input {
+        font-weight: bold;
+        color: var(--bg-primary);
+        border: 1px solid var(--primary);
+        height: var(--button-height);
+        width: 100%;
+        padding-left: var(--layout-padding);
+        padding-right: var(--layout-padding);
+        border-radius: var(--button-radius);
+        background-color: var(--primary90);
+    }
 }
 
 input[type=button]:hover {
@@ -342,20 +360,11 @@ input[type=button]:hover {
 
 input[type=button]:active {
     background-color: var(--bg-tertiary);
-    color: (var(--primary));
+    color: var(--primary);
 }
 
 input[type=button] {
-    font-family: "Inconsolata", sans-serif;
     font-size: 1.2rem;
-    color: var(--bg-primary);
-    height: var(--button-height);
-    width: 100%;
-    padding-left: var(--layout-padding);
-    padding-right: var(--layout-padding);
-    border: 1px solid var(--primary);
-    border-radius: var(--button-radius);
-    background-color: var(--primary90);
     cursor: pointer;
 }
 
@@ -370,6 +379,7 @@ input[type=button] {
 
 .grayed-circle {
     font-size: 1.2rem;
+    font-family: "Montserrat", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -377,11 +387,12 @@ input[type=button] {
     border-radius: 50%;
     aspect-ratio: 1/1;
     border: 1px solid var(--bg-tertiary);
-    position: sticky;
+    cursor: pointer;
 }
 
 .full-circle {
     font-size: 1.2rem;
+    font-family: "Montserrat", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -390,7 +401,7 @@ input[type=button] {
     aspect-ratio: 1/1;
     border: 1px solid var(--primary);
     background-color: var(--bg-tertiary);
-    position: sticky;
+    cursor: pointer;
 }
 
 .grayed-line {

@@ -12,5 +12,12 @@ import { CommonModule } from '@angular/common';
   }
 })
 export class OutputComponent {
-  @Input() kfwKredit = ''; 
+  @Input() kfwKredit = '';
+  @Input() bankKredit = '';
+  @Input() finanzierungskostenKfw = '';
+  @Input() finanzierungskostenMarkt = '';
+  @Input() investitionkosten = '';
+  @Input() zuschuss = '';
+  @Input() gInvestition = '';
+  @Input() gFinanzierung = '';
 }

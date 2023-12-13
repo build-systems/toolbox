@@ -1,11 +1,11 @@
 <div class="input-project card">
     <form [formGroup]="projektForm">
-        <h2>1. Projekt</h2>
+        <h2>Projekt</h2>
         <fieldset>
             <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
             <span class="slidernumber">
                 <input type="range" formControlName="wohnflaecheRange" min="100" max="50000" step="100" class="slider" />
-                <input type="number" formControlName="wohnflaeche" min="100" max="50000" step="1" />
+                <input type="number" formControlName="wohnflaeche" min="100" max="50000" (keyup.enter)="onEnterKey($event)"/>
             </span>
         </fieldset>
         <fieldset>

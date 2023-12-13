@@ -69,4 +69,10 @@ export class ParameterProjektComponent implements OnInit {
       this.formProjektChanged.emit(values);
     });
   }
+
+  // Remove focus on enter
+  onEnterKey(event: any): void {
+    // Call the blur method on the target element to remove focus
+    event.target.blur();
+  }
 }

@@ -6,11 +6,11 @@
     <div class="container-input">
         <div class="container-forms">
             <div class="progress-bar">
-                <div [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">1</div>
+                <input type="button" value="1" title="Projekt" (click)="currentForm = 1" [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
                 <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
-                <div [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">2</div>
+                <input type="button" value="2" title="Sanierung" (click)="currentForm = 2" [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
                 <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
-                <div [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">3</div>
+                <input type="button" value="3" title="Darlehen" (click)="currentForm = 3" [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
             </div>
                 <app-parameter-projekt [hidden]="!(currentForm === 1)" (formProjektChanged)="onFormProjektChanged($event)"></app-parameter-projekt>
                 <app-parameter-sanierung [hidden]="!(currentForm === 2)" (formSanierungChanged)="onFormSanierungChanged($event)"></app-parameter-sanierung>
@@ -29,7 +29,7 @@
             </div>
         </fieldset>
     </div>
-    <app-output kfwKredit={{_kfwKredit}} ></app-output>
+    <app-output kfwKredit={{_kfwKredit}} bankKredit={{_bankKredit}} finanzierungskostenKfw={{_finanzierungskostenKfw}} finanzierungskostenMarkt={{_finanzierungskostenMarkt}} investitionkosten={{_investitionkosten}} zuschuss={{_zuschuss}} gInvestition={{_gInvestition}} gFinanzierung={{_gFinanzierung}}></app-output>
 </div>
 <!-- <div>
     <div>Tilgungszuschuss [%]: {{ _tilgungszuschuss }}</div>
