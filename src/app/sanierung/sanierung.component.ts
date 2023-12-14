@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OutputComponent } from '../output/output.component';
 import { ParameterProjektComponent } from '../parameter-projekt/parameter-projekt.component';
 import { ParameterSanierungComponent } from '../parameter-sanierung/parameter-sanierung.component';
 import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darlehen.component';
+import { SanierungService } from '../sanierung.service';
 
 @Component({
   selector: 'app-sanierung',
@@ -15,7 +16,7 @@ import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darl
     class: 'ng-tool'
   }
 })
-export class SanierungComponent {
+export class SanierungComponent implements OnInit {
   title = "Sanierung";
 
   // Handle form page
@@ -164,7 +165,7 @@ export class SanierungComponent {
   // EE-Bonus [%]
   _eeBonus = 0;
   _eeBonusPossible = 5;
-  private eeBonus() {
+  private updateEeBonus() {
     if (this.eeKlasse === true) {
       this._eeBonus = this._eeBonusPossible;
     } else {
@@ -175,7 +176,7 @@ export class SanierungComponent {
   // NH-Bonus [%]
   _nhBonus = 0;
   _nhBonusPossible = 5;
-  private nhBonus() {
+  private updateNhBonus() {
     if (this.zertifizierung !== "Keine Zertifizierung") {
       this._nhBonus = this._nhBonusPossible;
     } else {
@@ -186,7 +187,7 @@ export class SanierungComponent {
   // WPB-Bonus [%]
   _wpbBonus = 0;
   _wpbBonusPossible = 10;
-  private wpbBonus() {
+  private updateWpbBonus() {
     if (this.worstPerformingBuilding === true && (this.energiestandard === "EH 70" || this.energiestandard === "EH 55" || this.energiestandard === "EH 40")) {
       this._wpbBonus = this._wpbBonusPossible;
     } else {
@@ -415,15 +416,21 @@ export class SanierungComponent {
     this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenMarkt;
   }
 
-  constructor() {
+  message!: string;
+
+  constructor(private data: SanierungService) {
     this.update();
+  }
+
+  ngOnInit(): void {
+    this.data.currentMessage.subscribe(message => this.message = message)
   }
 
   update() {
     this.updateTilgungszuschuss();
-    this.eeBonus();
-    this.nhBonus();
-    this.wpbBonus();
+    this.updateEeBonus();
+    this.updateNhBonus();
+    this.updateWpbBonus();
     this.updateSerSanBonus();
     this.updateGestehungskosten();
     this.updateNrKredit();
@@ -450,6 +457,7 @@ export class SanierungComponent {
     this.updateMitKfw();
     this.updateGInvestition();
     this.updateGFinanzierung();
+    this.data.setMessage(this.wohnflaeche.toString());
   }
 
   onFormProjektChanged(values: any) {
