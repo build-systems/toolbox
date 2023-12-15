@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SanierungService } from '../sanierung.service';
 
 @Component({
   selector: 'app-form-darlehen',
@@ -13,25 +14,19 @@ export class FormDarlehenComponent implements OnInit {
   defaultkfWDarlehen = "Annuitäten";
   kfWDarlehen = [
     {id: "kfwd1", value: "kein"},
-    // {id: "kfwd1", value: "kein Darlehen"},
     {id: "kfwd2", value: "Annuitäten"},
-    // {id: "kfwd2", value: "Annuitätendarlehen"},
     {id: "kfwd3", value: "Endfälliges"}
-    // {id: "kfwd3", value: "Endfälliges Darlehen"}
   ]
   
   defaultbankDarlehen = "Annuitäten";
   bankDarlehen = [
     {id: "bankd1", value: "Annuitäten"},
-    // {id: "bankd1", value: "Annuitätendarlehen"},
     {id: "bankd2", value: "Endfälliges"}
-    // {id: "bankd2", value: "Endfälliges Darlehen"}
   ]
   
-  @Output() formDarlehenChanged = new EventEmitter<any>();
   darlehenForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private sanierungService: SanierungService) {}
 
   ngOnInit(): void {
     this.darlehenForm = this.fb.group({
@@ -43,22 +38,47 @@ export class FormDarlehenComponent implements OnInit {
       bankDarlehen: new FormControl(this.defaultbankDarlehen),
     });
 
+
+    // Kalkulationszinssatz (Realzins)    
     this.darlehenForm.get("kalkRealzinsRange")?.valueChanges.subscribe(value => {
-        this.darlehenForm.get("kalkRealzins")?.setValue(value, {emitEvent: false});
+      // Update number input when range input changes
+      this.darlehenForm.get("kalkRealzins")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setKalkRealzins(value);
     });
+    
     this.darlehenForm.get("kalkRealzins")?.valueChanges.subscribe(value => {
+      // Update range input when number input changes
       this.darlehenForm.get("kalkRealzinsRange")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService\
+      this.sanierungService.setKalkRealzins(value);
+    });
+    
+    // Kreditlaufzeit
+    this.darlehenForm.get("kreditlaufzeitRange")?.valueChanges.subscribe(value => {
+      // Update number input when range input changes
+      this.darlehenForm.get("kreditlaufzeit")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setKreditlaufzeit(value);
     });
 
-    this.darlehenForm.get("kreditlaufzeitRange")?.valueChanges.subscribe(value => {
-      this.darlehenForm.get("kreditlaufzeit")?.setValue(value, {emitEvent: false});
-    });
     this.darlehenForm.get("kreditlaufzeit")?.valueChanges.subscribe(value => {
+      // Update range input when number input changes
       this.darlehenForm.get("kreditlaufzeitRange")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setKreditlaufzeit(value);
+    });
+
+    // KfW Darlehen
+    this.darlehenForm.get("kfWDarlehen")?.valueChanges.subscribe(value => {
+      // Update the sanierungService
+      this.sanierungService.setKfWDarlehen(value);
     })
 
-    this.darlehenForm.valueChanges.subscribe((values) => {
-      this.formDarlehenChanged.emit(values);
-    });
+    // Bank Darlehen
+    this.darlehenForm.get("bankDarlehen")?.valueChanges.subscribe(value => {
+      // Update the sanierungService
+      this.sanierungService.setBankDarkehen(value);
+    })
   }
 }

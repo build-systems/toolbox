@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SanierungService } from '../sanierung.service';
 
 @Component({
   selector: 'app-form-projekt',
@@ -29,14 +30,10 @@ export class FormProjektComponent implements OnInit {
     {id: "zert2", value: "QNG"}
   ]
 
-  // Creates an output to send the values to parent component
-  @Output() formProjektChanged = new EventEmitter<any>();
   // Inititalize projekt form
   projektForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
-
-  // constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private sanierungService: SanierungService) {}
 
   ngOnInit(): void {
       this.projektForm = this.fb.group({
@@ -49,26 +46,57 @@ export class FormProjektComponent implements OnInit {
       zertifizierung: new FormControl('Keine Zertifizierung'),
     });
 
-    // Sync the wohnflaeche
+    // Wohnflaeche
     this.projektForm.get("wohnflaecheRange")?.valueChanges.subscribe(value => {
+      // Update number input when range input changes
       this.projektForm.get("wohnflaeche")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setWohnflaeche(value);
     });
+
     this.projektForm.get("wohnflaeche")?.valueChanges.subscribe(value => {
+      // Update range input when number input changes
       this.projektForm.get("wohnflaecheRange")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setWohnflaeche(value);
     });
-
-    // Sync the anzahlWohnungen
+    
+    // Anzahl WohnungenRange
     this.projektForm.get("anzahlWohnungenRange")?.valueChanges.subscribe(value => {
+      // Update number input when range input changes
       this.projektForm.get("anzahlWohnungen")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setAnzahlWohnungen(value);
     });
+    
     this.projektForm.get("anzahlWohnungen")?.valueChanges.subscribe(value => {
+      // Update range input when number input changes
       this.projektForm.get("anzahlWohnungenRange")?.setValue(value, {emitEvent: false});
+      // Also updates the sanierungService
+      this.sanierungService.setAnzahlWohnungen(value);
+    });
+    
+    // Energiestandard
+    this.projektForm.get("energiestandard")?.valueChanges.subscribe(value => {
+      // Updates the sanierungService
+      this.sanierungService.setEnergiestandard(value);
+    });
+    
+    // Konstruktion
+    this.projektForm.get("konstruktion")?.valueChanges.subscribe(value => {
+      // Updates the sanierungService
+      this.sanierungService.setKonstruktion(value);
     });
 
-    this.projektForm.valueChanges.subscribe((values) => {
-      this.formProjektChanged.emit(values);
+    // Zertifizierung
+    this.projektForm.get("zertifizierung")?.valueChanges.subscribe(value => {
+      // Updates the sanierungService
+      this.sanierungService.setZertifizierung(value);
     });
   }
+
+  // Subscribe to form changes and update the service
+
 
   // Remove focus on enter
   onEnterKey(event: any): void {

@@ -15,35 +15,103 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './chart-gkosten.component.css'
 })
 export class ChartGkostenComponent implements OnInit {
-
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  
+  zuschuss!: number;
+  investitionskosten!: number;
+  finanzierungskostenMarkt!: number;
+  finanzierungskostenKfW!: number;
+  bankKredit!: number;
+  kfwKredit!: number;
+
+  constructor(private sanierungService: SanierungService) { }
+
+  ngOnInit(): void {
+    this.sanierungService.currentZuschuss$.subscribe((value) => {
+      this.zuschuss = value;
+      this.barChartData.datasets[0].data = [
+        -value,
+        0,
+      ];
+      this.chart?.update();
+    });
+    this.sanierungService.currentInvestitionskosten$.subscribe((value) => {
+      this.investitionskosten = value;
+      this.barChartData.datasets[1].data = [
+        value,
+        0,
+      ];
+      this.chart?.update();
+    });
+    this.sanierungService.currentFinanzierungskostenMarkt$.subscribe((value) => {
+      this.finanzierungskostenMarkt = value;
+      this.barChartData.datasets[2].data = [
+        0,
+        value,
+      ];
+      this.chart?.update();
+    });
+    this.sanierungService.currentFinanzierungskostenKfw$.subscribe((value) => {
+      this.finanzierungskostenKfW = value;
+      this.barChartData.datasets[3].data = [
+        0,
+        value,
+      ];
+      this.chart?.update();
+    });
+    this.sanierungService.currentBankKredit$.subscribe((value) => {
+      this.bankKredit = value;
+      this.barChartData.datasets[4].data = [
+        0,
+        value,
+      ];
+      this.chart?.update();
+    });
+    this.sanierungService.currentKfwKredit$.subscribe((value) => {
+      this.kfwKredit = value;
+      this.barChartData.datasets[5].data = [
+        0,
+        value,
+      ];
+      this.chart?.update();
+    });
+  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      x: {},
+      x: {
+        stacked: true
+      },
       y: {
-        min: 10,
+        stacked: true,
       },
     },
     plugins: {
       legend: {
+        title: {
+          display: true,
+          text: 'Gesamtkosten [€]'
+        },
         display: true,
       },
       datalabels: {
         anchor: 'end',
-        align: 'end',
+        align: 'start',
       },
     },
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
-
   public barChartData: ChartData<'bar'> = {
-    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    labels: ['Investition', 'Finanzierung'],
     datasets: [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+      { data: [this.zuschuss, null], label: 'Zuschuss' },
+      { data: [this.investitionskosten, null], label: 'Investitionskosten' },
+      { data: [null, this.finanzierungskostenMarkt], label: 'Finanzierungskosten Markt' },
+      { data: [null, this.finanzierungskostenKfW], label: 'Finanzierungskosten KfW' },
+      { data: [null, this.bankKredit], label: 'Bank-Kredit' },
+      { data: [null, this.kfwKredit], label: 'kfw-Kredit' },
     ],
   };
 
@@ -66,28 +134,5 @@ export class ChartGkostenComponent implements OnInit {
     active?: object[];
   }): void {
     console.log(event, active);
-  }
-
-  public randomize(): void {
-    // Only Change 3 values
-    this.barChartData.datasets[0].data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      Math.round(Math.random() * 100),
-      56,
-      Math.round(Math.random() * 100),
-      40,
-    ];
-
-    this.chart?.update();
-  }
-
-  message!: string;
-  
-  constructor(private data: SanierungService) {  }
-
-  ngOnInit(): void {
-    this.data.currentMessage.subscribe(message => this.message = message)
   }
 }

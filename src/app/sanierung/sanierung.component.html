@@ -1,36 +1,36 @@
 <div class="title">
     <h1>{{ title }}</h1>
-    {{ message }}
 </div>
-
 <div class="container-tool">
     <div class="container-input">
         <div class="container-forms">
             <div class="progress-bar">
-                <input type="button" value="1" title="Projekt" (click)="currentForm = 1" [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
+                <input type="button" value="1" title="Projekt" (click)="currentForm = 1"
+                    [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
                 <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
-                <input type="button" value="2" title="Sanierung" (click)="currentForm = 2" [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
+                <input type="button" value="2" title="Sanierung" (click)="currentForm = 2"
+                    [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
                 <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
-                <input type="button" value="3" title="Darlehen" (click)="currentForm = 3" [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
+                <input type="button" value="3" title="Darlehen" (click)="currentForm = 3"
+                    [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
             </div>
-                <app-form-projekt [hidden]="!(currentForm === 1)" (formProjektChanged)="onFormProjektChanged($event)"></app-form-projekt>
-                <app-form-sanierung [hidden]="!(currentForm === 2)" (formSanierungChanged)="onFormSanierungChanged($event)"></app-form-sanierung>
-                <app-form-darlehen [hidden]="!(currentForm === 3)" (formDarlehenChanged)="onFormDarlehenChanged($event)"></app-form-darlehen>
+            <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
+            <app-form-sanierung [hidden]="!(currentForm === 2)"></app-form-sanierung>
+            <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
         </div>
         <fieldset class="progress-buttons">
             <div class="container-button">
                 @if (currentForm > 1) {
-                    <input type="button" value="PREVIOUS" (click)="previousForm()">
+                <input type="button" value="PREVIOUS" (click)="previousForm()">
                 }
             </div>
             <div class="container-button">
-                @if (currentForm < 3){
-                    <input type="button" value="NEXT" (click)="nextForm()">
-                }
+                @if (currentForm < 3){ <input type="button" value="NEXT" (click)="nextForm()">
+                    }
             </div>
         </fieldset>
     </div>
-    <app-output kfwKredit={{_kfwKredit}} bankKredit={{_bankKredit}} finanzierungskostenKfw={{_finanzierungskostenKfw}} finanzierungskostenMarkt={{_finanzierungskostenMarkt}} investitionkosten={{_investitionkosten}} zuschuss={{_zuschuss}} gInvestition={{_gInvestition}} gFinanzierung={{_gFinanzierung}}></app-output>
+    <app-output></app-output>
 </div>
 <!-- <div>
     <div>Tilgungszuschuss [%]: {{ _tilgungszuschuss }}</div>

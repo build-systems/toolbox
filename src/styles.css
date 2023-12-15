@@ -378,6 +378,7 @@ input[type=checkbox]:checked+label {
 }
 
 input[type=button]:hover {
+    font-weight: 300;
     color: (var(--primary));
     border: 1px solid var(--secondary);
     background-color: var(--bg-secondary);
@@ -403,6 +404,7 @@ input[type=button] {
 }
 
 .grayed-circle {
+    color: var(--primary30);
     font-size: 1.2rem;
     font-family: "Montserrat", sans-serif;
     display: flex;
