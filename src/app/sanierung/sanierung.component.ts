@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OutputComponent } from '../output/output.component';
-import { ParameterProjektComponent } from '../parameter-projekt/parameter-projekt.component';
-import { ParameterSanierungComponent } from '../parameter-sanierung/parameter-sanierung.component';
-import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darlehen.component';
+import { FormProjektComponent } from '../form-projekt/form-projekt.component';
+import { FormSanierungComponent } from '../form-sanierung/form-sanierung.component';
+import { FormDarlehenComponent } from '../form-darlehen/form-darlehen.component';
 import { SanierungService } from '../sanierung.service';
 
 @Component({
   selector: 'app-sanierung',
   standalone: true,
-  imports: [CommonModule, OutputComponent, ParameterProjektComponent, ParameterSanierungComponent, ParameterDarlehenComponent],
+  imports: [CommonModule, OutputComponent, FormProjektComponent, FormSanierungComponent, FormDarlehenComponent],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',
   host: {

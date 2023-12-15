@@ -8,13 +8,13 @@ import { SanierungService } from '../sanierung.service';
 
 
 @Component({
-  selector: 'app-gkosten-chart',
+  selector: 'app-chart-gkosten',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './gkosten-chart.component.html',
-  styleUrl: './gkosten-chart.component.css'
+  templateUrl: './chart-gkosten.component.html',
+  styleUrl: './chart-gkosten.component.css'
 })
-export class GkostenChartComponent implements OnInit {
+export class ChartGkostenComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 

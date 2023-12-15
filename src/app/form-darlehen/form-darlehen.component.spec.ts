@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GkostenChartComponent } from './gkosten-chart.component';
+import { FormDarlehenComponent } from './form-darlehen.component';
 
-describe('GkostenChartComponent', () => {
-  let component: GkostenChartComponent;
-  let fixture: ComponentFixture<GkostenChartComponent>;
+describe('FormDarlehenComponent', () => {
+  let component: FormDarlehenComponent;
+  let fixture: ComponentFixture<FormDarlehenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GkostenChartComponent]
+      imports: [FormDarlehenComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(GkostenChartComponent);
+    fixture = TestBed.createComponent(FormDarlehenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

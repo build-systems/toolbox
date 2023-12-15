@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-parameter-neubau',
+  selector: 'app-form-neubau',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './parameter-neubau.component.html',
-  styleUrl: './parameter-neubau.component.css'
+  templateUrl: './form-neubau.component.html',
+  styleUrl: './form-neubau.component.css'
 })
-export class ParameterNeubauComponent {
+export class FormNeubauComponent {
   neubauForm = new FormGroup({
     keller: new FormControl(''),
     stellplätze: new FormControl(''),

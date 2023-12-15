@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-parameter-sanierung',
+  selector: 'app-form-sanierung',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './parameter-sanierung.component.html',
-  styleUrl: './parameter-sanierung.component.css'
+  templateUrl: './form-sanierung.component.html',
+  styleUrl: './form-sanierung.component.css'
 })
-export class ParameterSanierungComponent {
+export class FormSanierungComponent {
   zustandBestand = [
     {id: "zusbest1", value: "Unsaniert"},
     {id: "zusbest2", value: "Teilsaniert"},

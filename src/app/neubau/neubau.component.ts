@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OutputComponent } from '../output/output.component';
-import { ParameterProjektComponent } from '../parameter-projekt/parameter-projekt.component';
-import { ParameterNeubauComponent } from '../parameter-neubau/parameter-neubau.component';
-import { ParameterDarlehenComponent } from '../parameter-darlehen/parameter-darlehen.component';
+import { FormProjektComponent } from '../form-projekt/form-projekt.component';
+import { FormNeubauComponent } from '../form-neubau/form-neubau.component';
+import { FormDarlehenComponent } from '../form-darlehen/form-darlehen.component';
 
 @Component({
   selector: 'app-neubau',
   standalone: true,
-  imports: [CommonModule, OutputComponent, ParameterProjektComponent, ParameterNeubauComponent, ParameterDarlehenComponent],
+  imports: [CommonModule, OutputComponent, FormProjektComponent, FormNeubauComponent, FormDarlehenComponent],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {

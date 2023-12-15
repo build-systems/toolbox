@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GkostenChartComponent } from '../gkosten-chart/gkosten-chart.component';
+import { ChartGkostenComponent } from '../chart-gkosten/chart-gkosten.component';
 
 @Component({
   selector: 'app-output',
   standalone: true,
-  imports: [CommonModule, GkostenChartComponent],
+  imports: [CommonModule, ChartGkostenComponent],
   templateUrl: './output.component.html',
   styleUrl: './output.component.css',
   host: {

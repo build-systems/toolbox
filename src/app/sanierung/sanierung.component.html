@@ -13,9 +13,9 @@
                 <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
                 <input type="button" value="3" title="Darlehen" (click)="currentForm = 3" [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
             </div>
-                <app-parameter-projekt [hidden]="!(currentForm === 1)" (formProjektChanged)="onFormProjektChanged($event)"></app-parameter-projekt>
-                <app-parameter-sanierung [hidden]="!(currentForm === 2)" (formSanierungChanged)="onFormSanierungChanged($event)"></app-parameter-sanierung>
-                <app-parameter-darlehen [hidden]="!(currentForm === 3)" (formDarlehenChanged)="onFormDarlehenChanged($event)"></app-parameter-darlehen>
+                <app-form-projekt [hidden]="!(currentForm === 1)" (formProjektChanged)="onFormProjektChanged($event)"></app-form-projekt>
+                <app-form-sanierung [hidden]="!(currentForm === 2)" (formSanierungChanged)="onFormSanierungChanged($event)"></app-form-sanierung>
+                <app-form-darlehen [hidden]="!(currentForm === 3)" (formDarlehenChanged)="onFormDarlehenChanged($event)"></app-form-darlehen>
         </div>
         <fieldset class="progress-buttons">
             <div class="container-button">

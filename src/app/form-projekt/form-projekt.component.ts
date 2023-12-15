@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-parameter-projekt',
+  selector: 'app-form-projekt',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './parameter-projekt.component.html',
-  styleUrl: './parameter-projekt.component.css'
+  templateUrl: './form-projekt.component.html',
+  styleUrl: './form-projekt.component.css'
 })
-export class ParameterProjektComponent implements OnInit {
+export class FormProjektComponent implements OnInit {
   defaultEnStd = "EH 40";
   energiestandard = [
     {id: "enstd1", value: "EH 40"},

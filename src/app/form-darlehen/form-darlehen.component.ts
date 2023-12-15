@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-parameter-darlehen',
+  selector: 'app-form-darlehen',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './parameter-darlehen.component.html',
-  styleUrl: './parameter-darlehen.component.css'
+  templateUrl: './form-darlehen.component.html',
+  styleUrl: './form-darlehen.component.css'
 })
-export class ParameterDarlehenComponent implements OnInit {
+export class FormDarlehenComponent implements OnInit {
   defaultkfWDarlehen = "Annuitäten";
   kfWDarlehen = [
     {id: "kfwd1", value: "kein"},
