@@ -1,1 +1,31 @@
-<p>chart-gkosten-m2 works!</p>
+<div class="container-chart">
+    <canvas height="200"
+        baseChart
+        class="chart"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [type]="barChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"
+    >
+    </canvas>
+    <div>
+        Zuschuss: {{ zuschuss | currency:'EUR' }}
+    </div>
+    <div>
+        Investitionskosten: {{ investitionskosten | currency:'EUR' }}
+    </div>
+    <div>
+        Finanzierungskosten Finanzmarkt: {{ finanzierungskostenMarkt | currency:'EUR' }}
+    </div>
+    <div>
+        Finanzierungskosten KfW: {{ finanzierungskostenKfW | currency:'EUR' }}
+    </div>
+    <div>
+        Bank Kredit: {{ bankKredit | currency:'EUR'  }}
+    </div>
+    <div>
+        KfW Kredit: {{ kfwKredit | currency:'EUR'  }}
+    </div>
+</div>

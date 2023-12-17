@@ -6,11 +6,11 @@
     <path d="M39.0701 32.911L41.937 32.9199C42.0795 35.3902 43.6684 36.8141 46.0172 36.8214C48.1867 36.8281 49.7349 35.7626 49.7402 34.0385C49.7449 32.5421 48.5992 31.8654 46.5329 31.3602L44.4666 30.8308C41.8487 30.1737 39.7081 28.6222 39.7166 25.8764C39.7256 22.9561 42.449 20.8482 45.9164 20.859C49.6309 20.8705 52.0939 23.0719 52.2822 26.3898L49.4395 26.381C49.3193 24.5355 47.9528 23.2092 45.8075 23.2026C44.0108 23.197 42.5356 24.1659 42.531 25.6381C42.5265 27.0861 43.5706 27.7383 45.54 28.2674L47.7804 28.8458C50.5241 29.5516 52.5876 30.9818 52.579 33.7761C52.5696 36.8174 49.9181 39.1532 45.9276 39.1408C41.8209 39.1329 39.2327 36.7035 39.0701 32.911Z" fill="#CDCDCD"/>
     <path d="M22.8662 29.9482H36.9121" stroke="#CDCDCD" stroke-width="2"/>
 </symbol>
-<symbol id="profile" width="60" height="60" viewBox="0 0 60 60" fill="none">
+<symbol id="profile" viewBox="0 0 60 60" fill="none">
     <path d="M7.26172 50.625C11.8005 42.7789 20.2837 37.5 29.9999 37.5C39.7161 37.5 48.1994 42.7789 52.7382 50.625" stroke="#CDCDCD" stroke-linecap="round"/>
-<circle cx="30" cy="22.5" r="15" stroke="#CDCDCD"/>
+    <circle cx="30" cy="22.5" r="15" stroke="#CDCDCD"/>
 </symbol>
-<symbol id="profile" width="43" height="38" viewBox="0 0 43 38" fill="none">
+<symbol id="profile" viewBox="0 0 43 38" fill="none">
     <rect x="0.5" y="0.5" width="14" height="14" rx="0.5" stroke="#CDCDCD" stroke-linejoin="round"/>
     <rect x="0.5" y="23.5" width="14" height="14" rx="0.5" stroke="#CDCDCD" stroke-linejoin="round"/>
     <path d="M22.5 1.5H42.5" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
@@ -20,7 +20,7 @@
     <path d="M22.5 13.5H42.5" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M22.5 36.5H42.5" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
-<symbol id="portfolio" width="60" height="60" viewBox="0 0 60 60" fill="none">
+<symbol id="portfolio" viewBox="0 0 60 60" fill="none">
     <rect x="6.5" y="11.5" width="14" height="14" rx="0.5" stroke="#CDCDCD" stroke-linejoin="round"/>
     <rect x="6.5" y="34.5" width="14" height="14" rx="0.5" stroke="#CDCDCD" stroke-linejoin="round"/>
     <path d="M27 11.5H53" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,17 +30,17 @@
     <path d="M27 25.5H53" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M27 48.5H53" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>
 </symbol>
-<symbol id="neubau" width="60" height="60" viewBox="0 0 60 60" fill="none">
+<symbol id="neubau" viewBox="0 0 60 60" fill="none">
     <path d="M30 24L32.3335 32.6665L41 35L32.3335 37.3335L30 46L27.6665 37.3335L19 35L27.6665 32.6665L30 24Z" stroke="#CDCDCD" stroke-linejoin="round"/>
     <path d="M10.4125 52.0015V26.1189L30.0618 7L49.4999 26.1189V52.0015" stroke="#CDCDCD" stroke-linecap="square" stroke-linejoin="round"/>
     <path d="M0.497559 52.5L58.4999 52.5" stroke="#CDCDCD" stroke-linecap="round"/>
 </symbol>
-<symbol id="sanierung" width="60" height="60" viewBox="0 0 60 60" fill="none">
+<symbol id="sanierung" viewBox="0 0 60 60" fill="none">
     <path d="M10.4125 52.0015V26.1189L30.0618 7L49.4999 26.1189V52.0015" stroke="#CDCDCD" stroke-linecap="square" stroke-linejoin="round"/>
     <path d="M0.497559 52.5L58.4999 52.5" stroke="#CDCDCD" stroke-linecap="round"/>
     <path d="M26.9687 27.3332L32.1542 32.5187L21.8196 42.8534L24.8112 45.845L35.1458 35.5103L39.4973 39.8618L43.3048 36.0543C41.3104 34.0599 39.316 32.0655 37.3216 30.0711C32.6982 25.4477 28.0748 25.1757 22.9075 30.343" stroke="#CDCDCD" stroke-linecap="round" stroke-linejoin="round"/>    
 </symbol>
-<symbol id="settings" width="60" height="60" viewBox="0 0 60 60" fill="none">
+<symbol id="settings" viewBox="0 0 60 60" fill="none">
     <path d="M46.3781 29.0114C46.4169 29.6699 46.4169 30.3301 46.3781 30.9886C46.351 31.4394 46.4922 31.8843 46.7745 32.2369L50.0068 36.2756C49.6359 37.4544 49.161 38.5978 48.5877 39.6925L43.4396 40.2756C42.9913 40.3254 42.5774 40.5397 42.2779 40.877C41.8394 41.3701 41.3724 41.8372 40.8793 42.2756C40.5419 42.5751 40.3277 42.989 40.2779 43.4374L39.7061 48.5809C38.6116 49.1545 37.4681 49.6294 36.2893 50L32.2483 46.7677C31.9249 46.5093 31.5232 46.3687 31.1093 46.369H31C30.3415 46.4077 29.6813 46.4077 29.0228 46.369C28.5719 46.3419 28.1271 46.4831 27.7745 46.7654L23.7244 50C22.5456 49.6291 21.4022 49.1542 20.3075 48.5809L19.7244 43.4396C19.6746 42.9913 19.4603 42.5774 19.123 42.2779C18.6299 41.8394 18.1628 41.3724 17.7244 40.8793C17.4249 40.5419 17.011 40.3277 16.5626 40.2779L11.4191 39.7039C10.8455 38.6093 10.3706 37.4659 10 36.287L13.2323 32.246C13.5146 31.8934 13.6558 31.4486 13.6287 30.9977C13.59 30.3392 13.59 29.679 13.6287 29.0205C13.6558 28.5697 13.5146 28.1248 13.2323 27.7722L10 23.7244C10.3709 22.5456 10.8458 21.4022 11.4191 20.3075L16.5604 19.7244C17.0087 19.6746 17.4226 19.4603 17.7221 19.123C18.1606 18.6299 18.6276 18.1628 19.1207 17.7244C19.4594 17.4247 19.6746 17.0098 19.7244 16.5604L20.2961 11.4191C21.3907 10.8455 22.5341 10.3706 23.713 10L27.754 13.2323C28.1066 13.5146 28.5514 13.6558 29.0023 13.6287C29.6608 13.59 30.321 13.59 30.9795 13.6287C31.4303 13.6558 31.8752 13.5146 32.2278 13.2323L36.2756 10C37.4544 10.3709 38.5978 10.8458 39.6925 11.4191L40.2756 16.5604C40.3254 17.0087 40.5397 17.4226 40.877 17.7221C41.3701 18.1606 41.8371 18.6276 42.2756 19.1207C42.5751 19.4581 42.989 19.6723 43.4374 19.7221L48.5809 20.2938C49.1545 21.3884 49.6294 22.5319 50 23.7107L46.7677 27.7517C46.4827 28.1073 46.3413 28.5567 46.3713 29.0114H46.3781Z" stroke="#CDCDCD" stroke-linejoin="round"/>
     <circle cx="30" cy="30" r="8" stroke="#CDCDCD"/>
 </symbol>

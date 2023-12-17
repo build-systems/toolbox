@@ -13,15 +13,21 @@ export class SanierungService {
   konstruktion = "Konventionell";
   zertifizierung = "Keine Zertifizierung";
 
+  // Observable for wohnflaeche
+  private wohnflaecheSource = new BehaviorSubject<number>(this.wohnflaeche);
+  currentwohnflaeche$ = this.wohnflaecheSource.asObservable();
+
   // This method is used inside the form component and is triggered everytime the form changes
   public setWohnflaeche(value: number) {
     // It gets the form value
     this.wohnflaeche = value;
+    this.wohnflaecheSource.next(value);
     // And trigger the update() method which cascade triggering all methods
     this.update();
   }
 
-  // It does the same for all form inputs
+
+  // I repeated this for all form inputs
   public setAnzahlWohnungen(value: number) {
     this.anzahlWohnungen = value;
     this.update();
@@ -57,10 +63,12 @@ export class SanierungService {
     this.serielleSanierung = value;
     this.update();
   }
+
   public setZustandBestand(text: string) {
     this.zustandBestand = text;
     this.update();
   }
+
   public setEeKlasse(value: boolean) {
     this.eeKlasse = value;
     this.update();
@@ -86,6 +94,7 @@ export class SanierungService {
     this.kfWDarlehen = text;
     this.update();
   }
+
   public setBankDarkehen(text: string) {
     this.bankDarlehen = text;
     this.update();
@@ -527,8 +536,6 @@ export class SanierungService {
     this.updateGInvestition();
     this.updateGFinanzierung();
   }
-
-
 
   constructor() {
     this.update();

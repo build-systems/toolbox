@@ -1,25 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap');
 
 :root {
-    /* --primary: #67E0D7; */
     --primary: white;
-    /* --primary90: #67E0D7E5; */
     --primary90: rgba(255, 255, 255, 0.9);
     --primary80: rgba(255, 255, 255, 0.8);
     --primary70: rgba(255, 255, 255, 0.7);
-    /* --primary30: #67e0d84D; */
     --primary30: rgba(255, 255, 255, 0.3);
     --secondary: aquamarine;
     --bg-primary: #1a1a1a;
     --bg-secondary: #222;
     --bg-tertiary: #333;
-
     --layout-padding: 2rem;
-
     --slider-handle-diameter: 1rem;
     --button-height: 2.2rem;
     --button-radius: 0.5rem;
+    --nav-sel-thickness: 2px
 }
 
 * {
@@ -33,6 +30,7 @@
 
 html {
     font-family: "Montserrat", sans-serif;
+    font-weight: 200;
     background-color: var(--bg-primary);
 }
 
@@ -49,13 +47,13 @@ body::-webkit-scrollbar-thumb {
 }
 
 .title {
-    padding-left: 50px;
-    padding-top: var(--layout-padding);
-    padding-bottom: var(--layout-padding);
+    padding-left: var(--layout-padding);
+    padding-top: calc(var(--layout-padding)/2);
+    padding-bottom: calc(var(--layout-padding)/2);
 }
 
 h1 {
-    font-size: 54px;
+    font-size: 58px;
     font-weight: 200;
 }
 
@@ -152,14 +150,13 @@ form {
         flex-grow: 1;
         margin-right: 3ch;
         cursor: pointer;
-        /* Cursor on hover */
     }
 }
 
 .slider {
     -webkit-appearance: none;
     appearance: none;
-    height: 2px;
+    height: 1px;
     border-radius: 1px;
     background: var(--bg-tertiary);
     outline: none;
@@ -191,6 +188,13 @@ form {
     /* Green background */
     cursor: pointer;
     /* Cursor on hover */
+}
+.slider:hover::-webkit-slider-thumb {
+    border-color: var(--secondary);
+}
+
+.slider:active::-webkit-slider-thumb {
+    background-color: var(--bg-tertiary);
 }
 
 .slider::-moz-range-thumb {
@@ -396,11 +400,12 @@ input[type=button] {
 
 .progress-bar {
     counter-reset: code-steps-list;
-    height: 3rem;
+    height: var(--button-height);
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--layout-padding);
+    margin-top: 5px;
 }
 
 .grayed-circle {
@@ -410,7 +415,7 @@ input[type=button] {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
+    width: var(--button-height);
     border-radius: 50%;
     aspect-ratio: 1/1;
     border: 1px solid var(--bg-tertiary);
@@ -423,7 +428,7 @@ input[type=button] {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
+    width: var(--button-height);
     border-radius: 50%;
     aspect-ratio: 1/1;
     border: 1px solid var(--primary);
