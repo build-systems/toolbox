@@ -1,31 +1,24 @@
-<div class="container-chart">
-    <canvas height="200"
-        baseChart
-        class="chart"
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [type]="barChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
-    >
-    </canvas>
+<canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
+    [type]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+</canvas>
+<!-- <details>
+    <summary>Values</summary>
     <div>
-        Zuschuss: {{ zuschuss | currency:'EUR' }}
+        Zuschuss: {{ zuschuss/wohnungsflaeche | currency:'EUR' }}
     </div>
     <div>
-        Investitionskosten: {{ investitionskosten | currency:'EUR' }}
+        Investitionskosten: {{ investitionskosten/wohnungsflaeche | currency:'EUR' }}
     </div>
     <div>
-        Finanzierungskosten Finanzmarkt: {{ finanzierungskostenMarkt | currency:'EUR' }}
+        Finanzierungskosten Finanzmarkt: {{ finanzierungskostenMarkt/wohnungsflaeche | currency:'EUR' }}
     </div>
     <div>
-        Finanzierungskosten KfW: {{ finanzierungskostenKfW | currency:'EUR' }}
+        Finanzierungskosten KfW: {{ finanzierungskostenKfW/wohnungsflaeche | currency:'EUR' }}
     </div>
     <div>
-        Bank Kredit: {{ bankKredit | currency:'EUR'  }}
+        Bank Kredit: {{ bankKredit/wohnungsflaeche | currency:'EUR' }}
     </div>
     <div>
-        KfW Kredit: {{ kfwKredit | currency:'EUR'  }}
+        KfW Kredit: {{ kfwKredit | currency:'EUR' }}
     </div>
-</div>
+</details> -->

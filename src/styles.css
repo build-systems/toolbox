@@ -93,11 +93,10 @@ li {
 .container-tool {
     display: grid;
     flex-grow: 1;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 5fr;
     padding-right: var(--layout-padding);
     padding-left: var(--layout-padding);
     gap: var(--layout-padding);
-    /* border: 1px solid green; */
 }
 
 .container-input {
@@ -106,16 +105,6 @@ li {
     flex-direction: column;
     flex-shrink: 1;
     /* border: 1px solid white; */
-}
-
-.ng-output {
-    /* border: 1px solid red; */
-}
-
-.output-numbers {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
 }
 
 input {
@@ -189,6 +178,7 @@ form {
     cursor: pointer;
     /* Cursor on hover */
 }
+
 .slider:hover::-webkit-slider-thumb {
     border-color: var(--secondary);
 }
@@ -410,8 +400,9 @@ input[type=button] {
 
 .grayed-circle {
     color: var(--primary30);
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-family: "Montserrat", sans-serif;
+    font-weight: 300;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -423,7 +414,7 @@ input[type=button] {
 }
 
 .full-circle {
-    font-size: 1.2rem;
+    font-size: 0.8rem;
     font-family: "Montserrat", sans-serif;
     display: flex;
     align-items: center;
@@ -438,7 +429,7 @@ input[type=button] {
 
 .grayed-line {
     flex-grow: 1;
-    height: 2px;
+    height: 1px;
     background-color: var(--bg-tertiary);
 }
 
@@ -448,8 +439,31 @@ input[type=button] {
     background-color: var(--primary);
 }
 
+.output {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--layout-padding);
+    flex-wrap: wrap;
+}
+
 .container-chart {
-    display: block;
-    width: 400px;
-    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    flex-grow: 1;
+    height: 300px;
+    padding: var(--layout-padding);
+    border-radius: var(--button-radius);
+    background-color: var(--bg-secondary);
+}
+
+.chart {
+    width: fit-content;
+}
+
+.details {
+    display: flex;
+    width: 100%;
 }

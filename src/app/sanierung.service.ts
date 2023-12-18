@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SanierungProjekt } from './sanierungprojekt';
+import { sanierung } from './constants';
+import tableSanierung from './tableSanierung.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SanierungService {
 
+  output!: SanierungProjekt;
+  // Declare output object
+  private outputSource = new BehaviorSubject<SanierungProjekt>(this.output);
+  currentOutput$ = this.outputSource.asObservable();
+
   // Project parameters
-  wohnflaeche = 5000;
-  anzahlWohnungen = 50;
-  energiestandard = "EH 40";
-  konstruktion = "Konventionell";
-  zertifizierung = "Keine Zertifizierung";
+  wohnflaeche: number = 5000;
+  anzahlWohnungen: number = 50;
+  energiestandard: Energiestandard = "EH 40";
+  konstruktion: Konstruktion = "Konventionell";
+  zertifizierung: Zertifizierung = "Keine Zertifizierung";
 
   // Observable for wohnflaeche
   private wohnflaecheSource = new BehaviorSubject<number>(this.wohnflaeche);
@@ -33,17 +41,17 @@ export class SanierungService {
     this.update();
   }
 
-  public setEnergiestandard(text: string) {
+  public setEnergiestandard(text: Energiestandard) {
     this.energiestandard = text;
     this.update();
   }
 
-  public setKonstruktion(text: string) {
+  public setKonstruktion(text: Konstruktion) {
     this.konstruktion = text;
     this.update();
   }
-  
-  public setZertifizierung(text: string) {
+
+  public setZertifizierung(text: Zertifizierung) {
     this.zertifizierung = text;
     this.update();
   }
@@ -51,7 +59,7 @@ export class SanierungService {
   // Sanierung parameters
   worstPerformingBuilding = true;
   serielleSanierung = true;
-  zustandBestand = "Unsaniert";
+  zustandBestand: ZustandBestand = "Unsaniert";
   eeKlasse = true;
 
   public setWpc(value: boolean) {
@@ -64,7 +72,7 @@ export class SanierungService {
     this.update();
   }
 
-  public setZustandBestand(text: string) {
+  public setZustandBestand(text: ZustandBestand) {
     this.zustandBestand = text;
     this.update();
   }
@@ -77,7 +85,7 @@ export class SanierungService {
   // Darlehen parameters
   kalkRealzins = 4;
   kreditlaufzeit = 20;
-  kfWDarlehen = 'Annuitäten';
+  kfWDarlehen: KfWDarlehen = 'Annuitäten';
   bankDarlehen = 'Annuitäten';
 
   public setKalkRealzins(value: number) {
@@ -90,109 +98,15 @@ export class SanierungService {
     this.update();
   }
 
-  public setKfWDarlehen(text: string) {
+  public setKfWDarlehen(text: KfWDarlehen) {
     this.kfWDarlehen = text;
     this.update();
   }
 
-  public setBankDarkehen(text: string) {
+  public setBankDarlehen(text: string) {
     this.bankDarlehen = text;
     this.update();
   }
-
-  // 
-  tableSanierun = [
-    {
-      "Energiestandard": "EH 115",
-      "ZustandBestand": "Unsaniert",
-      "Min": 350,
-      "Max": 630
-    },
-    {
-      "Energiestandard": "EH 115",
-      "ZustandBestand": "Teilsaniert",
-      "Min": 300,
-      "Max": 480
-    },
-    {
-      "Energiestandard": "EH 115",
-      "ZustandBestand": "Umfassend saniert",
-      "Min": null,
-      "Max": null
-    },
-    {
-      "Energiestandard": "EH 100",
-      "ZustandBestand": "Unsaniert",
-      "Min": 430,
-      "Max": 700
-    },
-    {
-      "Energiestandard": "EH 100",
-      "ZustandBestand": "Teilsaniert",
-      "Min": 410,
-      "Max": 620
-    },
-    {
-      "Energiestandard": "EH 100",
-      "ZustandBestand": "Umfassend saniert",
-      "Min": 190,
-      "Max": 310
-    },
-    {
-      "Energiestandard": "EH 70",
-      "ZustandBestand": "Unsaniert",
-      "Min": 520,
-      "Max": 730
-    },
-    {
-      "Energiestandard": "EH 70",
-      "ZustandBestand": "Teilsaniert",
-      "Min": 530,
-      "Max": 730
-    },
-    {
-      "Energiestandard": "EH 70",
-      "ZustandBestand": "Umfassend saniert",
-      "Min": 300,
-      "Max": 430
-    },
-    {
-      "Energiestandard": "EH 55",
-      "ZustandBestand": "Unsaniert",
-      "Min": 650,
-      "Max": 850
-    },
-    {
-      "Energiestandard": "EH 55",
-      "ZustandBestand": "Teilsaniert",
-      "Min": 660,
-      "Max": 870
-    },
-    {
-      "Energiestandard": "EH 55",
-      "ZustandBestand": "Umfassend saniert",
-      "Min": 490,
-      "Max": 690
-    },
-    {
-      "Energiestandard": "EH 40",
-      "ZustandBestand": "Unsaniert",
-      "Min": 760,
-      "Max": 970
-    },
-    {
-      "Energiestandard": "EH 40",
-      "ZustandBestand": "Teilsaniert",
-      "Min": 770,
-      "Max": 990
-    },
-    {
-      "Energiestandard": "EH 40",
-      "ZustandBestand": "Umfassend saniert",
-      "Min": 680,
-      "Max": 910
-    }
-  ]
 
   // Formulas
   // #01
@@ -200,13 +114,13 @@ export class SanierungService {
   _tilgungszuschuss = 0;
   private updateTilgungszuschuss() {
     if (this.energiestandard === "EH 85") {
-      this._tilgungszuschuss = 5;
+      this._tilgungszuschuss = this.constants.tilgungszuschussEH85;
     } else if (this.energiestandard === "EH 70") {
-      this._tilgungszuschuss = 10;
+      this._tilgungszuschuss = this.constants.tilgungszuschussEH70;
     } else if (this.energiestandard === "EH 55") {
-      this._tilgungszuschuss = 15;
+      this._tilgungszuschuss = this.constants.tilgungszuschussEH55;
     } else if (this.energiestandard === "EH 40") {
-      this._tilgungszuschuss = 20;
+      this._tilgungszuschuss = this.constants.tilgungszuschussEH40;
     } else {
       this._tilgungszuschuss = 0;
     }
@@ -214,10 +128,9 @@ export class SanierungService {
 
   // EE-Bonus [%]
   _eeBonus = 0;
-  _eeBonusPossible = 5;
   private updateEeBonus() {
     if (this.eeKlasse === true) {
-      this._eeBonus = this._eeBonusPossible;
+      this._eeBonus = this.constants.eeBonusPossible;
     } else {
       this._eeBonus = 0;
     }
@@ -225,10 +138,9 @@ export class SanierungService {
 
   // NH-Bonus [%]
   _nhBonus = 0;
-  _nhBonusPossible = 5;
   private updateNhBonus() {
     if (this.zertifizierung !== "Keine Zertifizierung") {
-      this._nhBonus = this._nhBonusPossible;
+      this._nhBonus = this.constants.nhBonusPossible;
     } else {
       this._nhBonus = 0;
     }
@@ -236,10 +148,9 @@ export class SanierungService {
 
   // WPB-Bonus [%]
   _wpbBonus = 0;
-  _wpbBonusPossible = 10;
   private updateWpbBonus() {
     if (this.worstPerformingBuilding === true && (this.energiestandard === "EH 70" || this.energiestandard === "EH 55" || this.energiestandard === "EH 40")) {
-      this._wpbBonus = this._wpbBonusPossible;
+      this._wpbBonus = this.constants.wpbBonusPossible;
     } else {
       this._wpbBonus = 0;
     }
@@ -247,10 +158,9 @@ export class SanierungService {
 
   // SerSan-Bonus [%]
   _serSanBonus = 0;
-  _serSanBonusPossible = 15;
   private updateSerSanBonus() {
     if (this.serielleSanierung === true && (this.energiestandard === "EH 55" || this.energiestandard === "EH 40"))
-      this._serSanBonus = this._serSanBonusPossible;
+      this._serSanBonus = this.constants.serSanBonusPossible;
     else
       this._serSanBonus = 0
   }
@@ -273,33 +183,29 @@ export class SanierungService {
       return true;
     }
     // Filter
-    const filteredData = this.tableSanierun.filter(item => filterByProperties(item, desiredProperties));
+    const filteredData = tableSanierung.filter(item => filterByProperties(item, desiredProperties));
     var tableResult = filteredData[0]["Min"] // Considering only unique results from the filter
     tableResult = (tableResult === null) ? 0 : tableResult;
     this._gestehungskosten = tableResult;
   }
 
   // NR-Kredit [%]
-  _nrLessThan10 = 0.31;
-  _nr10To20 = 1.38;
-  _nrMoreThan20 = 1.63;
-  _nrKredit = this._nrLessThan10;
+  _nrKredit = this.constants.nrLessThan10;
   updateNrKredit() {
     if (this.kreditlaufzeit < 10) {
-      this._nrKredit = this._nrLessThan10;
+      this._nrKredit = this.constants.nrLessThan10;
     } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 20) {
-      this._nrKredit = this._nr10To20
+      this._nrKredit = this.constants.nr10To20
     } else {
-      this._nrKredit = this._nrMoreThan20
+      this._nrKredit = this.constants.nrMoreThan20
     }
   }
 
   // Sollzins KFW [%]
-  _sollzinsKfwEndfälliges = 1.75;
   _sollzinsKfw = 0;
   private updateSollzinsKfw() {
-    if (this.kfWDarlehen === "Endfälliges Darlehen") {
-      this._sollzinsKfw = this._sollzinsKfwEndfälliges;
+    if (this.kfWDarlehen === "Endfälliges") {
+      this._sollzinsKfw = this.constants.sollzinsKfw_Endfälliges;
     } else if (this.kfWDarlehen === "Annuitäten") {
       this._sollzinsKfw = this._nrKredit;
     } else {
@@ -308,14 +214,12 @@ export class SanierungService {
   }
 
   // Max. KFW-Kredit [€]
-  _maxKfwKredit_Higher = 150_000;
-  _maxKfwKredit_Lower = 120_000;
-  _maxKfwKredit = this.anzahlWohnungen * this._maxKfwKredit_Lower;
+  _maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Lower;
   private updateMaxKfwKredit() {
     if (this.eeKlasse === true || this.zertifizierung !== "Keine Zertifizierung") {
-      this._maxKfwKredit = this.anzahlWohnungen * this._maxKfwKredit_Higher
+      this._maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Higher
     } else {
-      this._maxKfwKredit = this.anzahlWohnungen * this._maxKfwKredit_Lower
+      this._maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Lower
     }
   }
 
@@ -348,49 +252,28 @@ export class SanierungService {
     }
   }
 
-  // AF B [€]
-  _afB = 0;
-  private updateAfB() {
-    this._afB = (this.kalkRealzins / 100) * Math.pow((1 + this.kalkRealzins / 100), this.kreditlaufzeit) / (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
+  // AF Bank [€]
+  _afBank = 0;
+  private updateAfBank() {
+    this._afBank = (this.kalkRealzins / 100) * Math.pow((1 + this.kalkRealzins / 100), this.kreditlaufzeit) / (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
   }
-  
+
   // Zuschuss (KfW) [€]
-  _zuschuss = 0;
-  // Using RxJS to send data to the grphs and cards
-  // First creating a behaviorsubject
-  private zuschussSource = new BehaviorSubject<number>(0);
-  // Then assigning an observable
-  currentZuschuss$ = this.zuschussSource.asObservable();
+  _kfwZuschuss = 0;
   private updateZuschuss() {
-    this._zuschuss = Math.min((this._tilgungszuschuss + this._eeBonus + this._nhBonus + this._wpbBonus + this._serSanBonus) / 100 * this._foerdersumme, (0.4 * this._foerdersumme));
-    // Changing the observable here
-    this.zuschussSource.next(this._zuschuss);
+    this._kfwZuschuss = Math.min((this._tilgungszuschuss + this._eeBonus + this._nhBonus + this._wpbBonus + this._serSanBonus) / 100 * this._foerdersumme, (0.4 * this._foerdersumme));
   }
 
   // KfW-Kredit [€]
   _kfwKredit = 0;
-  // Using RxJS to send data to the grphs and cards
-  // First creating a behaviorsubject
-  private kfwKreditSource = new BehaviorSubject<number>(0);
-  // Then assigning an observable
-  currentKfwKredit$ = this.kfwKreditSource.asObservable();
   private updateKfwKredit() {
-    this._kfwKredit = this._foerdersumme - this._zuschuss;
-    // Changing the observable here
-    this.kfwKreditSource.next(this._kfwKredit);
+    this._kfwKredit = this._foerdersumme - this._kfwZuschuss;
   }
-  
+
   // Bank-Kredit [€]
   _bankKredit = 0;
-  // Using RxJS to send data to the grphs and cards
-  // First creating a behaviorsubject
-  private bankKreditSource = new BehaviorSubject<number>(0);
-  // Then assigning an observable
-  currentBankKredit$ = this.bankKreditSource.asObservable();
   private updateBankKredit() {
     this._bankKredit = this._restsumme;
-    // Changing the observable here
-    this.bankKreditSource.next(this._bankKredit);
   }
 
   // Annuität KfW [€]
@@ -399,10 +282,10 @@ export class SanierungService {
     this._annuitaetKfW = this._afKfw * this._kfwKredit;
   }
 
-  // Annuität B [€]
-  _annuitaetB = 0;
+  // Annuität Bank [€]
+  _annuitaetBank = 0;
   private updateAnnuitaetB() {
-    this._annuitaetB = this._bankKredit * this._afB;
+    this._annuitaetBank = this._bankKredit * this._afBank;
   }
 
   // EF KFW [€]
@@ -412,63 +295,46 @@ export class SanierungService {
   }
 
   // EF B [€]
-  _efB = 0;
+  _efBank = 0;
   private updateEfB() {
-    this._efB = this.kalkRealzins * this._restsumme / 100 * this.kreditlaufzeit;
+    this._efBank = this.kalkRealzins * this._restsumme / 100 * this.kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
   _finanzierungskostenKfw = 0;
-  // Using RxJS to send data to the grphs and cards
-  // First creating a behaviorsubject
-  private finanzierungskostenKfwSource = new BehaviorSubject<number>(0);
-  // Then assigning an observable
-  currentFinanzierungskostenKfw$ = this.finanzierungskostenKfwSource.asObservable();
   private updateFinanzierungskostenKfw() {
     if (this.kfWDarlehen === "Annuitäten") {
       this._finanzierungskostenKfw = this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
-    } else if (this.kfWDarlehen === "Endfälliges Darlehen") {
+    } else if (this.kfWDarlehen === "Endfälliges") {
       this._finanzierungskostenKfw = this._efKfW;
     } else {
       this._finanzierungskostenKfw = 0;
     }
-    // Changing the observable here:
-    this.finanzierungskostenKfwSource.next(this._finanzierungskostenKfw);
   }
 
   // Finazierungskosten (Finanzmarkt) [€]
-  _finanzierungskostenMarkt = 0;
-  // Using RxJS to send data to the graphs and cards
-  // First creating a behaviorsubject
-  private finanzierungskostenMarktSource = new BehaviorSubject<number>(0);
-  // Then assigning an observable
-  currentFinanzierungskostenMarkt$ = this.finanzierungskostenMarktSource.asObservable();
-  private updateFinanzierungskostenMarkt() {
+  _finanzierungskostenFinanzmarkt = 0;
+  private updateFinanzierungskostenFinanzmarkt() {
     if (this.bankDarlehen === "Annuitäten") {
-      this._finanzierungskostenMarkt = this._annuitaetB * this.kreditlaufzeit - this._bankKredit;
+      this._finanzierungskostenFinanzmarkt = this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
     } else if (this.bankDarlehen === "Endfälliges Darlehen") {
-      this._finanzierungskostenMarkt = this._efB;
+      this._finanzierungskostenFinanzmarkt = this._efBank;
     } else {
-      this._finanzierungskostenMarkt = 0;
+      this._finanzierungskostenFinanzmarkt = 0;
     }
-    // Changing the observable here:
-    this.finanzierungskostenMarktSource.next(this._finanzierungskostenMarkt);
   }
 
   // Investitionskosten [€]
-  _investitionkosten = 0;
-  private investitionskostenSource = new BehaviorSubject<number>(0);
-  currentInvestitionskosten$ = this.investitionskostenSource.asObservable();
+  _investitionskosten = 0;
   private updateInvestitionkosten() {
-    this._investitionkosten = this.wohnflaeche * this._gestehungskosten;
-    this.investitionskostenSource.next(this._investitionkosten);
+    this._investitionskosten = this.wohnflaeche * this._gestehungskosten;
   }
 
   // #04
   // GB: Annuität [€]
   _gbAnnuitaet = 0;
   private updateGbAnnuitaet() {
-    this._gbAnnuitaet = (this._foerdersumme + this._restsumme) * this._afB * this.kreditlaufzeit - (this._foerdersumme + this._restsumme);
+    this._gbAnnuitaet = (this._foerdersumme + this._restsumme) * this._afBank * this.kreditlaufzeit - (this._foerdersumme + this._restsumme);
   }
 
   // GB: EFD [€]
@@ -490,18 +356,18 @@ export class SanierungService {
   // Option 2: mit KfW [€]
   _mitKfw = 0;
   private updateMitKfw() {
-    this._mitKfw = this._finanzierungskostenKfw + this._finanzierungskostenMarkt;
+    this._mitKfw = this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
   }
 
   // Gesamtkosten
   _gInvestition = 0;
   private updateGInvestition() {
-    this._gInvestition = this._investitionkosten - this._zuschuss;
+    this._gInvestition = this._investitionskosten - this._kfwZuschuss;
   }
 
   _gFinanzierung = 0;
   private updateGFinanzierung() {
-    this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenMarkt;
+    this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
   }
 
   update() {
@@ -518,7 +384,7 @@ export class SanierungService {
     this.updateFoerdersumme();
     this.updateRestsumme();
     this.updateAfKfW();
-    this.updateAfB();
+    this.updateAfBank();
     this.updateZuschuss();
     this.updateKfwKredit();
     this.updateBankKredit();
@@ -527,7 +393,7 @@ export class SanierungService {
     this.updateEfKfw();
     this.updateEfB();
     this.updateFinanzierungskostenKfw();
-    this.updateFinanzierungskostenMarkt();
+    this.updateFinanzierungskostenFinanzmarkt();
     this.updateInvestitionkosten();
     this.updateGbAnnuitaet();
     this.updateGbEfd();
@@ -535,10 +401,74 @@ export class SanierungService {
     this.updateMitKfw();
     this.updateGInvestition();
     this.updateGFinanzierung();
+
+    this.outputSource.next(
+    this.output = {
+      // Projekt
+      wohnflaeche: this.wohnflaeche,
+      anzahlWohnungen: this.anzahlWohnungen,
+      energiestandard: this.energiestandard,
+      konstruktion: this.konstruktion,
+      zertifizierung: this.zertifizierung,
+      // Sanierung
+      worstPerformingBuilding: this.worstPerformingBuilding,
+      serielleSanierung: this.serielleSanierung,
+      zustandBestand: this.zustandBestand,
+      eeKlasse: this.eeKlasse,
+      // Dalehen
+      kalkRealzins: this.kalkRealzins,
+      kreditlaufzeit: this.kreditlaufzeit,
+      kfWDarlehen: this.kfWDarlehen,
+      bankDarlehen: this.bankDarlehen,
+      // Output
+      tilgungszuschuss: this._tilgungszuschuss,
+      eeBonus: this._eeBonus,
+      nhBonus: this._nhBonus,
+      wpbBonus: this._wpbBonus,
+      serSanBonus: this._serSanBonus,
+      gestehungskosten: this._gestehungskosten,
+      nrKredit: this._nrKredit,
+      sollzinsKfw: this._sollzinsKfw,
+      maxKfwKredit: this._maxKfwKredit,
+      gesamtgestehungskosten: this._gesamtgestehungskosten,
+      foerdersumme: this._foerdersumme,
+      restsumme: this._restsumme,
+      afKfw: this._afKfw,
+      afBank: this._afBank,
+      annuitaetKfW: this._annuitaetKfW,
+      annuitaetBank: this._annuitaetBank,
+      efKfW: this._efKfW,
+      efBank: this._efBank,
+      gbAnnuitaet: this._gbAnnuitaet,
+      gbEfd: this._gbEfd,
+      // Zusammenfassung Ergebnisse
+      kfwKredit: this._kfwKredit,
+      kfwKreditM2: this._kfwKredit / this.wohnflaeche,
+      bankKredit: this._bankKredit,
+      bankKreditM2: this._bankKredit / this.wohnflaeche,
+      finanzierungskostenKfw: this._finanzierungskostenKfw,
+      finanzierungskostenKfwM2: this._finanzierungskostenKfw / this.wohnflaeche,
+      finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
+      finanzierungskostenFinanzmarktM2: this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
+      investitionskosten: this._investitionskosten,
+      investitionskostenM2: this._investitionskosten / this.wohnflaeche,
+      kfwZuschuss: this._kfwZuschuss,
+      kfwZuschussM2: this._kfwZuschuss / this.wohnflaeche,
+      gInvestition: this._gInvestition,
+      gInvestitionM2: this._gInvestition / this.wohnflaeche,
+      gFinanzierung: this._gFinanzierung,
+      gFinanzierungM2: this._gFinanzierung / this.wohnflaeche,
+      // Vergleichsrechnung
+      ohneKfw: this._ohneKfw,
+      ohneKfwM2: this._ohneKfw / this.wohnflaeche,
+      mitKfw: this._mitKfw,
+      mitKfwM2: this._mitKfw / this.wohnflaeche,
+      differenzOhneMitKfw: this._ohneKfw - this._mitKfw,
+      differenzOhneMitKfwM2: (this._ohneKfw - this._mitKfw) / this.wohnflaeche
+    });
   }
 
-  constructor() {
+  constructor(private constants: sanierung) {
     this.update();
   }
-
 }

@@ -11,14 +11,14 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './form-darlehen.component.css'
 })
 export class FormDarlehenComponent implements OnInit {
-  defaultkfWDarlehen = "Annuitäten";
+  defaultkfWDarlehen: KfWDarlehen = "Annuitäten";
   kfWDarlehen = [
     {id: "kfwd1", value: "kein"},
     {id: "kfwd2", value: "Annuitäten"},
     {id: "kfwd3", value: "Endfälliges"}
   ]
   
-  defaultbankDarlehen = "Annuitäten";
+  defaultbankDarlehen: BankDarlehen = "Annuitäten";
   bankDarlehen = [
     {id: "bankd1", value: "Annuitäten"},
     {id: "bankd2", value: "Endfälliges"}
@@ -78,7 +78,7 @@ export class FormDarlehenComponent implements OnInit {
     // Bank Darlehen
     this.darlehenForm.get("bankDarlehen")?.valueChanges.subscribe(value => {
       // Update the sanierungService
-      this.sanierungService.setBankDarkehen(value);
+      this.sanierungService.setBankDarlehen(value);
     })
   }
 }
