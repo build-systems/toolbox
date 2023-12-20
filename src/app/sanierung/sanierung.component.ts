@@ -8,11 +8,12 @@ import { ChartGkostenM2Component } from '../chart-gkosten-m2/chart-gkosten-m2.co
 import { ChartInstallmentComponent } from '../chart-installment/chart-installment.component';
 import { ChartRepaymentComponent } from '../chart-repayment/chart-repayment.component';
 import { ChartFinanzierungskostenComponent } from '../chart-finanzierungskosten/chart-finanzierungskosten.component';
+import { OutputValuesComponent } from '../outputvalues/outputvalues.component';
 
 @Component({
   selector: 'app-sanierung',
   standalone: true,
-  imports: [CommonModule, FormProjektComponent, FormSanierungComponent, FormDarlehenComponent, ChartGkostenComponent, ChartGkostenM2Component, ChartInstallmentComponent, ChartRepaymentComponent, ChartFinanzierungskostenComponent],
+  imports: [CommonModule, FormProjektComponent, FormSanierungComponent, FormDarlehenComponent, ChartGkostenComponent, ChartGkostenM2Component, ChartInstallmentComponent, ChartRepaymentComponent, ChartFinanzierungskostenComponent, OutputValuesComponent],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',
   host: {

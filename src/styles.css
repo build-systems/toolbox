@@ -14,7 +14,7 @@
     --bg-tertiary: #333;
     --layout-padding: 2rem;
     --slider-handle-diameter: 1rem;
-    --button-height: 2.2rem;
+    --button-height: 2.6rem;
     --button-radius: 0.5rem;
     --nav-sel-thickness: 2px
 }
@@ -62,6 +62,7 @@ h2 {
 }
 
 h3 {
+    font-size: 16px;
     font-weight: 200;
 }
 
@@ -71,15 +72,6 @@ a {
 
 li {
     list-style: none;
-}
-
-.card {
-    background:
-        linear-gradient(to right, var(--bg-primary), var(--bg-primary)),
-        linear-gradient(135deg, var(--primary), var(--primary90));
-    background-clip: padding-box, border-box;
-    background-origin: padding-box, border-box;
-    gap: 5px;
 }
 
 .ng-tool {
@@ -441,26 +433,70 @@ input[type=button] {
 
 .output {
     display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: var(--layout-padding);
-    flex-wrap: wrap;
+    flex-direction: column;
+    height: 100%;
 }
 
-.container-chart {
+.values-container {
+    display: flex;
+    height: 80px;
+    width: 100%;
+    margin-bottom: calc(var(--layout-padding)/4);
+    gap: calc(var(--layout-padding)/4);
+}
+
+.card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
+    justify-content: space-around;
+    width: 100%;
     flex-grow: 1;
-    height: 300px;
-    padding: var(--layout-padding);
+    text-align: center;
+    padding: calc(var(--layout-padding)/4);
     border-radius: var(--button-radius);
     background-color: var(--bg-secondary);
+    & h3 {
+        word-break: break-all;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    & div {
+        font-size: 1.2rem;
+        font-weight: 500;   
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
 }
 
-.chart {
-    width: fit-content;
+.charts-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--layout-padding)/4);
+}
+
+.charts-wrap1 {
+    display: flex;
+    height: 50%;
+    gap: calc(var(--layout-padding)/4);
+}
+
+.charts-wrap2 {
+    display: flex;
+    height: 50%;
+    gap: calc(var(--layout-padding)/4);
+}
+
+.ng-chart {
+    width: 50%;
+    padding: calc(var(--layout-padding)/2);
+    border-radius: var(--button-radius);
+    background-color: var(--bg-secondary);
 }
 
 .details {

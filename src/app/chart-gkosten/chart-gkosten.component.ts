@@ -12,7 +12,7 @@ import { SanierungService } from '../sanierung.service';
   templateUrl: './chart-gkosten.component.html',
   styleUrl: './chart-gkosten.component.css',
   host: {
-    class: 'container-chart'
+    class: 'ng-chart chart1'
   }
 })
 export class ChartGkostenComponent implements OnInit {
@@ -36,6 +36,7 @@ export class ChartGkostenComponent implements OnInit {
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
+    maintainAspectRatio: false,
     elements: {
       line: {
         tension: 0.4,
@@ -54,7 +55,7 @@ export class ChartGkostenComponent implements OnInit {
         ticks: {
           color: '#999',
           font: {
-            size: 14,
+            size: 12,
             family: 'system-ui',
             weight: 400,
           },
@@ -75,7 +76,7 @@ export class ChartGkostenComponent implements OnInit {
         ticks: {
           color: '#999',
           font: {
-            size: 14,
+            size: 12,
             family: 'system-ui',
             weight: 400,
           },
@@ -97,7 +98,7 @@ export class ChartGkostenComponent implements OnInit {
           display: true,
           font: {
             family: 'Montserrat',
-            size: 20,
+            size: 18,
             weight: 400,
           },
           text: 'Gesamtkosten [€]'
@@ -106,12 +107,12 @@ export class ChartGkostenComponent implements OnInit {
         labels: {
           color: '#ddd',
           font: {
-            size: 14,
+            size: 12,
             family: 'system-ui',
             weight: 400,
           },
-          boxWidth: 8,
-          boxHeight: 8,
+          boxWidth: 6,
+          boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
         }
@@ -170,7 +171,7 @@ export class ChartGkostenComponent implements OnInit {
       },
       {
         data: [null, 0],
-        label: 'kfw-Kredit',
+        label: 'KfW-Kredit',
         backgroundColor: 'rgba(52, 103, 194, 0.6)',
         borderColor: 'rgb(52, 103, 194)',
         borderWidth: 1,

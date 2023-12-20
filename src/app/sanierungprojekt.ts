@@ -8,13 +8,13 @@ export interface SanierungProjekt {
     // Sanierung
     worstPerformingBuilding: boolean;
     serielleSanierung: boolean;
-    zustandBestand: string;
+    zustandBestand: ZustandBestand;
     eeKlasse: boolean;
     // Dalehen
     kalkRealzins: number;
     kreditlaufzeit: number;
     kfWDarlehen: KfWDarlehen;
-    bankDarlehen: string;
+    bankDarlehen: BankDarlehen;
     // Output
     tilgungszuschuss: number;
     eeBonus: number;

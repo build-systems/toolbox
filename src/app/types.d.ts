@@ -4,6 +4,3 @@ type Zertifizierung = "Keine Zertifizierung" | "QNG";
 type ZustandBestand = "Unsaniert" | "Teilsaniert" | "Umfassend saniert";
 type KfWDarlehen = "Annuitäten" | "Endfälliges" | "kein";
 type BankDarlehen = "Annuitäten" | "Endfälliges";
-
-
-// Continue adding other types

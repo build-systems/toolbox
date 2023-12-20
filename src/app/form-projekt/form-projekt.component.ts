@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SanierungService } from '../sanierung.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-projekt',
@@ -11,6 +12,8 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './form-projekt.component.css'
 })
 export class FormProjektComponent implements OnInit {
+  currentRoute!: string;
+
   defaultEnStd = "EH 40";
   energiestandard = [
     {id: "enstd1", value: "EH 40"},
@@ -33,12 +36,20 @@ export class FormProjektComponent implements OnInit {
   // Inititalize projekt form
   projektForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private sanierungService: SanierungService) {}
+  constructor(private fb: FormBuilder, private sanierungService: SanierungService, private router: Router) {
+    // Subscribe to its observable
+    router.events.subscribe((val) => {
+      // Check if val is NavigationEnd (it has many actions untile this last one)
+      if (val instanceof NavigationEnd)
+        // Then assign the url as a string 
+        this.currentRoute = this.router.url.toString();
+    });
+  }
 
   ngOnInit(): void {
       this.projektForm = this.fb.group({
-      wohnflaecheRange: [5000, [Validators.min(100), Validators.max(50_000)]],
-      wohnflaeche: [5000, [Validators.min(100), Validators.max(50_000)]],
+      wohnflaecheRange: [5000, [Validators.min(50), Validators.max(50_000)]],
+      wohnflaeche: [5000, [Validators.min(50), Validators.max(50_000)]],
       anzahlWohnungenRange: [50, [Validators.min(0), Validators.max(1000)]],
       anzahlWohnungen: [50, [Validators.min(0), Validators.max(1000)]],
       energiestandard: new FormControl('EH 40'),

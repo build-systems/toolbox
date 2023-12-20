@@ -86,13 +86,13 @@ export class SanierungService {
   kalkRealzins = 4;
   kreditlaufzeit = 20;
   kfWDarlehen: KfWDarlehen = 'Annuitäten';
-  bankDarlehen = 'Annuitäten';
+  bankDarlehen: BankDarlehen = 'Annuitäten';
 
   public setKalkRealzins(value: number) {
     this.kalkRealzins = value;
     this.update();
   }
-
+  
   public setKreditlaufzeit(value: number) {
     this.kreditlaufzeit = value;
     this.update();
@@ -103,7 +103,7 @@ export class SanierungService {
     this.update();
   }
 
-  public setBankDarlehen(text: string) {
+  public setBankDarlehen(text: BankDarlehen) {
     this.bankDarlehen = text;
     this.update();
   }
@@ -317,7 +317,7 @@ export class SanierungService {
   private updateFinanzierungskostenFinanzmarkt() {
     if (this.bankDarlehen === "Annuitäten") {
       this._finanzierungskostenFinanzmarkt = this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
-    } else if (this.bankDarlehen === "Endfälliges Darlehen") {
+    } else if (this.bankDarlehen === "Endfälliges") {
       this._finanzierungskostenFinanzmarkt = this._efBank;
     } else {
       this._finanzierungskostenFinanzmarkt = 0;
@@ -346,7 +346,7 @@ export class SanierungService {
   // Option 1: ohne KfW [€]
   _ohneKfw = 0;
   private updateOhneKfw() {
-    if (this.bankDarlehen === "Endfälliges Darlehen") {
+    if (this.bankDarlehen === "Endfälliges") {
       this._ohneKfw = this._gbEfd;
     } else {
       this._ohneKfw = this._gbAnnuitaet;

@@ -31,11 +31,23 @@
         </fieldset>
     </div>
     <div class="output">
-        <app-chart-gkosten></app-chart-gkosten>
-        <app-chart-gkosten-m2></app-chart-gkosten-m2>
-        <app-chart-installment></app-chart-installment>
-        <!-- <app-chart-repayment></app-chart-repayment>
-        <app-chart-finanzierungskosten></app-chart-finanzierungskosten> -->
+        <app-outputvalues></app-outputvalues>
+        <div class="charts-container">
+            <div class="charts-wrap1">
+                <!-- <div class="ng-chart"></div>
+                <div class="ng-chart"></div>
+                <div class="ng-chart"></div> -->
+                <app-chart-installment></app-chart-installment>
+                    <app-chart-repayment></app-chart-repayment>
+                    <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
+            </div>
+            <div class="charts-wrap2">
+                <!-- <div class="ng-chart"></div>
+                <div class="ng-chart"></div> -->
+                <app-chart-gkosten></app-chart-gkosten>
+                    <app-chart-gkosten-m2></app-chart-gkosten-m2>
+            </div>
+        </div>
     </div>
 </div>
 <!-- <div>
