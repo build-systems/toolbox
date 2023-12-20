@@ -11,14 +11,30 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './form-darlehen.component.css'
 })
 export class FormDarlehenComponent implements OnInit {
-  defaultkfWDarlehen: KfWDarlehen = "Annuitäten";
+  // Kalkulationszinssatz (Realzins) centralized form values
+  kalkRealzins = {
+    min: 0,
+    init: 4,
+    max: 100,
+    step: 1
+  }
+
+  // Kreditlaufzeit centralized form values
+  kreditlaufzeit = {
+    min: 0,
+    init: 20,
+    max: 50,
+    step: 1
+  }
+
+  // KfW-Darlehen centralized form values
   kfWDarlehen = [
     {id: "kfwd1", value: "kein"},
     {id: "kfwd2", value: "Annuitäten"},
     {id: "kfwd3", value: "Endfälliges"}
   ]
   
-  defaultbankDarlehen: BankDarlehen = "Annuitäten";
+  // Bank-Darlehen centralized form values
   bankDarlehen = [
     {id: "bankd1", value: "Annuitäten"},
     {id: "bankd2", value: "Endfälliges"}
@@ -30,12 +46,12 @@ export class FormDarlehenComponent implements OnInit {
 
   ngOnInit(): void {
     this.darlehenForm = this.fb.group({
-      kalkRealzinsRange: [4, [Validators.min(0), Validators.max(100)]],
-      kalkRealzins: [4, [Validators.min(0), Validators.max(100)]],
-      kreditlaufzeitRange: [20, [Validators.min(1), Validators.max(50)]],
-      kreditlaufzeit: [20, [Validators.min(1), Validators.max(50)]],
-      kfWDarlehen: new FormControl(this.defaultkfWDarlehen),
-      bankDarlehen: new FormControl(this.defaultbankDarlehen),
+      kalkRealzinsRange: [this.kalkRealzins.init, [Validators.min(this.kalkRealzins.min), Validators.max(this.kalkRealzins.max)]],
+      kalkRealzins: [this.kalkRealzins.init, [Validators.min(this.kalkRealzins.min), Validators.max(this.kalkRealzins.max)]],
+      kreditlaufzeitRange: [this.kreditlaufzeit.init, [Validators.min(this.kreditlaufzeit.min), Validators.max(this.kreditlaufzeit.max)]],
+      kreditlaufzeit: [this.kreditlaufzeit.init, [Validators.min(this.kreditlaufzeit.min), Validators.max(this.kreditlaufzeit.max)]],
+      kfWDarlehen: new FormControl(this.kfWDarlehen[0]['value']),
+      bankDarlehen: new FormControl(this.bankDarlehen[0]['value']),
     });
 
 

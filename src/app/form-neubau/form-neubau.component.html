@@ -1,52 +1,75 @@
-<div class="input-specific">
-    <form [formGroup]="neubauForm">
-        <label>
-            Keller
-            <input type="radio" formControlName="keller" />
-        </label>
-        <label>
-            Stellplätze
-            <input type="radio" formControlName="stellplätze" />
-        </label>
-        <label>
-            Red Garage
-            <input type="radio" formControlName="redGarage" />
-        </label>
-        <label>
-            Aufzugsanlage
-            <input type="radio" formControlName="aufzugsanlage" />
-        </label>
-        <label>
-            Barrierefreiheit
-            <input type="radio" formControlName="barrierefreiheit" />
-        </label>
-        <label>
-            Dachbegrünung
-            <input type="radio" formControlName="dachbegrünung" />
-        </label>
-        <label>
-            Baustellenlogistik
-            <input type="radio" formControlName="baustellenlogistik" />
-        </label>
-        <label>
-            Energetischer
-            <input type="radio" formControlName="energetischer" />
-        </label>
-        <label>
-            Stanndard
-            <input type="radio" formControlName="stanndard" />
-        </label>
-        <label>
-            Außenanlagen
-            <input type="radio" formControlName="außenanlagen" />
-        </label>
-        <label>
-            Grundstücksbezogene Kosten
-            <input type="radio" formControlName="grundstücksbezogeneKosten" />
-        </label>
-        <label>
-            Baunebenkosten (excl. Finanzierung)
-            <input type="radio" formControlName="baunebenkostenKeinFin" />
-        </label>
-    </form>
-</div>
+<form [formGroup]="neubauForm">
+    <h2>Neubau</h2>
+    <fieldset class="radio-fieldset">
+        <legend>Kellergeschoss <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of kellergeschossIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kellergeschossIn"
+                formControlName="kellergeschossIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Stellplätze <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of stellplaetzeIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="stellplaetzeIn"
+                formControlName="stellplaetzeIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Aufzugsanlage <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of aufzugsanlageIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="aufzugsanlageIn"
+                formControlName="aufzugsanlageIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Barrierefreies Bauen <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of barrierefreiheitIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="barrierefreiheitIn"
+                formControlName="barrierefreiheitIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Dachbegrünung <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of dachbegruenungIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="dachbegruenungIn"
+                formControlName="dachbegruenungIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Anspruchsvolle Baustellenlogistik <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of baustellenlogistikIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="baustellenlogistikIn"
+                formControlName="baustellenlogistikIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset class="radio-fieldset">
+        <legend>Außenanlagen <sup>&#9432;</sup></legend>
+        <span *ngFor="let item of aussenanlagenIn">
+            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="aussenanlagenIn"
+                formControlName="aussenanlagenIn" />
+            <label for="{{item.id}}">{{item.value}}</label>
+        </span>
+    </fieldset>
+    <fieldset>
+        <legend>grundstuecksbezogeneKostenRange <sup>&#9432;</sup></legend>
+        <span class="slidernumber">
+            <input type="range" formControlName="grundstuecksbezogeneKostenRange" min="{{grundstKosten.min}}" max="{{grundstKosten.max}}" step="{{grundstKosten.step}}" class="slider" />
+            <input type="number" formControlName="grundstuecksbezogeneKosten" min="{{grundstKosten.min}}" max="{{grundstKosten.max}}"
+                (keyup.enter)="onEnterKey($event)" />
+        </span>
+    </fieldset>
+    <fieldset>
+        <legend>baunebenkostenKeinFin <sup>&#9432;</sup></legend>
+        <span class="slidernumber">
+            <input type="range" formControlName="baunebenkostenKeinFinRange" min="{{baunebenkostenKeinFin.min}}" max="{{baunebenkostenKeinFin.max}}" step="{{baunebenkostenKeinFin.step}}" class="slider" />
+            <input type="number" formControlName="baunebenkostenKeinFin" min="{{baunebenkostenKeinFin.min}}" max="{{baunebenkostenKeinFin.max}}"
+                (keyup.enter)="onEnterKey($event)" />
+        </span>
+    </fieldset>
+</form>

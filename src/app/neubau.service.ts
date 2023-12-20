@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SanierungProjekt } from './sanierungprojekt';
-import { sanierung } from './constants';
-import tableSanierung from './tableSanierung.json';
+import { NeubauProjekt } from './neubauprojekt';
+import { neubau } from './constants';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SanierungService {
+export class NeubauService {
 
-  output!: SanierungProjekt;
   // Declare output object
-  private outputSource = new BehaviorSubject<SanierungProjekt>(this.output);
+  output!: NeubauProjekt;
+  // Observable
+  private outputSource = new BehaviorSubject<NeubauProjekt>(this.output);
   currentOutput$ = this.outputSource.asObservable();
 
-  // Project parameters
+  // Projekt form parameters
   wohnflaeche: number = 5000;
   anzahlWohnungen: number = 50;
   energiestandard: Energiestandard = "EH 40";
@@ -25,6 +25,8 @@ export class SanierungService {
   private wohnflaecheSource = new BehaviorSubject<number>(this.wohnflaeche);
   currentwohnflaeche$ = this.wohnflaecheSource.asObservable();
 
+
+
   // This method is used inside the form component and is triggered everytime the form changes
   public setWohnflaeche(value: number) {
     // It gets the form value
@@ -33,7 +35,6 @@ export class SanierungService {
     // And trigger the update() method which cascade triggering all methods
     this.update();
   }
-
 
   // I repeated this for all form inputs
   public setAnzahlWohnungen(value: number) {
@@ -56,29 +57,59 @@ export class SanierungService {
     this.update();
   }
 
-  // Sanierung parameters
-  worstPerformingBuilding = true;
-  serielleSanierung = true;
-  zustandBestand: ZustandBestand = "Unsaniert";
-  eeKlasse = true;
+  // Neubau form parameters
+  kellergeschossIn: Kellergeschoss = 'Vorhanden';
+  stellplaetzeIn: Stellplaetze = 'Tiefgarage';
+  aufzugsanlageIn: Aufzugsanlage = 'Vorhanden';
+  barrierefreiheitIn: BarrierefreiesBauen = 'Barrierereduziert';
+  dachbegruenungIn: Dachbegruenung = 'Vorhanden';
+  baustellenlogistikIn: AnspruchsvolleBaustellenlogistik = 'Vorhanden';
+  aussenanlagenIn: Aussenanlagen = 'Gering';
+  grundstuecksbezogeneKosten: number = 0;
+  baunebenkostenKeinFin: number = 0;
 
-  public setWpc(value: boolean) {
-    this.worstPerformingBuilding = value;
+  public setKellergeschoss(text: Kellergeschoss) {
+    this.kellergeschossIn = text;
     this.update();
   }
 
-  public setSerielleSanierung(value: boolean) {
-    this.serielleSanierung = value;
+  public setStellplaetzeIn(text: Stellplaetze) {
+    this.stellplaetzeIn = text;
     this.update();
   }
 
-  public setZustandBestand(text: ZustandBestand) {
-    this.zustandBestand = text;
+  public setAufzugsanlageIn(text: Aufzugsanlage) {
+    this.aufzugsanlageIn = text;
     this.update();
   }
 
-  public setEeKlasse(value: boolean) {
-    this.eeKlasse = value;
+  public setBarrierefreiheitIn(text: BarrierefreiesBauen) {
+    this.barrierefreiheitIn = text;
+    this.update();
+  }
+
+  public setDachbegruenungIn(text: Dachbegruenung) {
+    this.dachbegruenungIn = text;
+    this.update();
+  }
+
+  public setBaustellenlogistikIn(text: AnspruchsvolleBaustellenlogistik) {
+    this.baustellenlogistikIn = text;
+    this.update();
+  }
+
+  public setAussenanlagenIn(text: Aussenanlagen) {
+    this.aussenanlagenIn = text;
+    this.update();
+  }
+
+  public setGrundstuecksbezogeneKosten(value: number) {
+    this.grundstuecksbezogeneKosten = value;
+    this.update();
+  }
+
+  public setBaunebenkostenKeinFin(value: number) {
+    this.baunebenkostenKeinFin = value;
     this.update();
   }
 
@@ -110,94 +141,98 @@ export class SanierungService {
 
   // Formulas
   // #01
-  // Tilgungszuschuss [%]
-  private _tilgungszuschuss = 0;
-  private updateTilgungszuschuss() {
-    if (this.energiestandard === "EH 85") {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH85;
-    } else if (this.energiestandard === "EH 70") {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH70;
-    } else if (this.energiestandard === "EH 55") {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH55;
-    } else if (this.energiestandard === "EH 40") {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH40;
-    } else {
-      this._tilgungszuschuss = 0;
+  // Neubau output
+  private _kellergeschossOut = 0;
+  private updateKellergeschossOut() {
+    if (this.kellergeschossIn === 'Vorhanden') {
+      this._kellergeschossOut = this.constants.kellerVorhanden;
     }
   }
 
-  // EE-Bonus [%]
-  private _eeBonus = 0;
-  private updateEeBonus() {
-    if (this.eeKlasse === true) {
-      this._eeBonus = this.constants.eeBonusPossible;
-    } else {
-      this._eeBonus = 0;
+  private _stellplaetzeOut = 0;
+  private updateStellplaetzeOut() {
+    if (this.stellplaetzeIn === 'Garage') {
+      this._stellplaetzeOut = this.constants.stellplaetzeGarage;
+    } else if (this.stellplaetzeIn === 'Parkpalette') {
+      this._stellplaetzeOut = this.constants.stellplaetzeParkpalette;
+    } else if (this.stellplaetzeIn === 'Tiefgarage') {
+      this._stellplaetzeOut = this.constants.stellplaetzeTiefgarage;
     }
   }
 
-  // NH-Bonus [%]
-  private _nhBonus = 0;
-  private updateNhBonus() {
-    if (this.zertifizierung !== "Keine Zertifizierung") {
-      this._nhBonus = this.constants.nhBonusPossible;
-    } else {
-      this._nhBonus = 0;
+  private _redGarageOut = 0;
+  private updateRedGarageOut() {
+    if (this.kellergeschossIn === 'Vorhanden' && this.stellplaetzeIn === 'Tiefgarage') {
+      this._redGarageOut = this.constants.redGarageTrue;
     }
   }
 
-  // WPB-Bonus [%]
-  private _wpbBonus = 0;
-  private updateWpbBonus() {
-    if (this.worstPerformingBuilding === true && (this.energiestandard === "EH 70" || this.energiestandard === "EH 55" || this.energiestandard === "EH 40")) {
-      this._wpbBonus = this.constants.wpbBonusPossible;
-    } else {
-      this._wpbBonus = 0;
+  private _aufzugsanlageOut = 0;
+  private updateAufzugsanlageOut() {
+    if (this.aufzugsanlageIn === 'Vorhanden') {
+      this._aufzugsanlageOut = this.constants.aufzugsanlageVorhanden;
     }
   }
 
-  // SerSan-Bonus [%]
-  private _serSanBonus = 0;
-  private updateSerSanBonus() {
-    if (this.serielleSanierung === true && (this.energiestandard === "EH 55" || this.energiestandard === "EH 40"))
-      this._serSanBonus = this.constants.serSanBonusPossible;
-    else
-      this._serSanBonus = 0
+  private _barrierefreiheitOut = 0;
+  private updateBarrierefreiheitOut() {
+    if (this.barrierefreiheitIn === 'Barrierereduziert') {
+      this._barrierefreiheitOut = this.constants.barrierereduziert;
+    } else if (this.barrierefreiheitIn === 'Barrierefrei') {
+      this._barrierefreiheitOut = this.constants.barrierefrei;
+    } else if (this.barrierefreiheitIn === 'Barrierefrei (R)') {
+      this._barrierefreiheitOut = this.constants.barrierereduziertR;
+    }
+  }
+
+  private _dachbegruenungOut = 0;
+  private updateDachbegruenungOut() {
+    if (this.dachbegruenungIn === 'Vorhanden') {
+      this._dachbegruenungOut = this.constants.dachbegruenungVorhanden;
+    }
+  }
+
+  private _baustellenlogistikOut = 0;
+  private updateBaustellenlogistikOut() {
+    if (this.baustellenlogistikIn === 'Vorhanden') {
+      this._baustellenlogistikOut = this.constants.baustellenlogistikVorhanden;
+    }
+  }
+
+  private _aussenanlagenOut = 0;
+  private updateAussenanlagenOut() {
+    if (this.aussenanlagenIn === 'Gering') {
+      this._aussenanlagenOut = this.constants.aussenanlagenGering;
+    } else if (this.aussenanlagenIn === 'Mittel') {
+      this._aussenanlagenOut = this.constants.aussenanlagenMittel;
+    } else if (this.aussenanlagenIn === 'Hoch') {
+      this._aussenanlagenOut = this.constants.aussenanlagenHoch;
+    }
+  }
+
+  private _energetischerStandardOut = 0;
+  private updateEnergetischerStandard() {
+    if (this.energiestandard === 'EH 40') {
+      this._energetischerStandardOut = this.constants.energiestandardEH40;
+    }
   }
 
   // #02
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
-  updateGestehungskosten() {
-    const desiredProperties = {
-      "Energiestandard": this.energiestandard,
-      "ZustandBestand": this.zustandBestand
-    }
-    // Callback function
-    function filterByProperties(item: any, desiredProperties: any) {
-      for (const prop in desiredProperties) {
-        if (item[prop] !== desiredProperties[prop]) {
-          return false;
-        }
-      }
-      return true;
-    }
-    // Filter
-    const filteredData = tableSanierung.filter(item => filterByProperties(item, desiredProperties));
-    var tableResult = filteredData[0]["Min"] // Considering only unique results from the filter
-    tableResult = (tableResult === null) ? 0 : tableResult;
-    this._gestehungskosten = tableResult;
+  private updateGestehungskosten() {
+    this._gestehungskosten = 2436 + this._kellergeschossOut + this._stellplaetzeOut + this._redGarageOut + this._aufzugsanlageOut + this._barrierefreiheitOut + this._dachbegruenungOut + this._baustellenlogistikOut + this._energetischerStandardOut + this._aussenanlagenOut + this.grundstuecksbezogeneKosten + this.baunebenkostenKeinFin;
   }
 
   // NR-Kredit [%]
   private _nrKredit = this.constants.nrLessThan10;
-  updateNrKredit() {
+  private updateNrKredit() {
     if (this.kreditlaufzeit < 10) {
       this._nrKredit = this.constants.nrLessThan10;
-    } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 20) {
-      this._nrKredit = this.constants.nr10To20
+    } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 25) {
+      this._nrKredit = this.constants.nr10To25
     } else {
-      this._nrKredit = this.constants.nrMoreThan20
+      this._nrKredit = this.constants.nrMoreThan25
     }
   }
 
@@ -208,18 +243,6 @@ export class SanierungService {
       this._sollzinsKfw = this.constants.sollzinsKfw_Endfälliges;
     } else if (this.kfWDarlehen === "Annuitäten") {
       this._sollzinsKfw = this._nrKredit;
-    } else {
-      this._sollzinsKfw = 0
-    }
-  }
-
-  // Max. KFW-Kredit [€]
-  private _maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Lower;
-  private updateMaxKfwKredit() {
-    if (this.eeKlasse === true || this.zertifizierung !== "Keine Zertifizierung") {
-      this._maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Higher
-    } else {
-      this._maxKfwKredit = this.anzahlWohnungen * this.constants.maxKfwKredit_Lower
     }
   }
 
@@ -229,51 +252,39 @@ export class SanierungService {
     this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
   }
 
-  // Fördersumme [€]
-  private _foerdersumme = this._maxKfwKredit;
-  private updateFoerdersumme() {
-    this._foerdersumme = Math.min(this._maxKfwKredit, this._gesamtgestehungskosten);
+
+
+  // KfW-Kredit [€]
+  private _kfwKredit = 0;
+  private updateKfwKredit() {
+    if (this.zertifizierung === 'Keine Zertifizierung' && this.energiestandard === 'EH 40') {
+      this._kfwKredit = this.constants.kfwKredit_Lower * this.anzahlWohnungen;
+    } else if (this.zertifizierung === 'QNG' && this.energiestandard === 'EH 40') {
+      this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
+    }
   }
 
   // Restsumme [€]
   private _restsumme = 0;
   private updateRestsumme() {
-    this._restsumme = Math.max(this._gesamtgestehungskosten - this._maxKfwKredit, 0);
+    if (this.konstruktion === 'Konventionell') {
+      this._restsumme = (this.wohnflaeche * this._gestehungskosten) - this._kfwKredit;
+    } else {
+      this._restsumme = (this.wohnflaeche * this._gestehungskosten * this.constants.restsummeHolzbau) - this._kfwKredit;
+    }
   }
 
   // #03
   // AF KFW [€]
   private _afKfw = 0;
   private updateAfKfW() {
-    if (this._sollzinsKfw === 0 || this.kreditlaufzeit === 0) {
-      this._afKfw = 0;
-    } else {
-      this._afKfw = this._sollzinsKfw / 100 * Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) / (Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) - 1);
-    }
+    this._afKfw = this._sollzinsKfw / 100 * Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) / (Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) - 1);
   }
 
   // AF Bank [€]
   private _afBank = 0;
   private updateAfBank() {
     this._afBank = (this.kalkRealzins / 100) * Math.pow((1 + this.kalkRealzins / 100), this.kreditlaufzeit) / (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
-  }
-
-  // Zuschuss (KfW) [€]
-  private _kfwZuschuss = 0;
-  private updateZuschuss() {
-    this._kfwZuschuss = Math.min((this._tilgungszuschuss + this._eeBonus + this._nhBonus + this._wpbBonus + this._serSanBonus) / 100 * this._foerdersumme, (0.4 * this._foerdersumme));
-  }
-
-  // KfW-Kredit [€]
-  private _kfwKredit = 0;
-  private updateKfwKredit() {
-    this._kfwKredit = this._foerdersumme - this._kfwZuschuss;
-  }
-
-  // Bank-Kredit [€]
-  private _bankKredit = 0;
-  private updateBankKredit() {
-    this._bankKredit = this._restsumme;
   }
 
   // Annuität KfW [€]
@@ -285,7 +296,7 @@ export class SanierungService {
   // Annuität Bank [€]
   private _annuitaetBank = 0;
   private updateAnnuitaetB() {
-    this._annuitaetBank = this._bankKredit * this._afBank;
+    this._annuitaetBank = this._restsumme * this._afBank;
   }
 
   // EF KFW [€]
@@ -294,10 +305,16 @@ export class SanierungService {
     this._efKfW = this._kfwKredit * this._sollzinsKfw / 100 * this.kreditlaufzeit;
   }
 
-  // EF B [€]
+  // EF Bank [€]
   private _efBank = 0;
   private updateEfB() {
     this._efBank = this.kalkRealzins * this._restsumme / 100 * this.kreditlaufzeit;
+  }
+
+  // Bank-Kredit [€]
+  private _bankKredit = 0;
+  private updateBankKredit() {
+    this._bankKredit = this._restsumme;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -307,8 +324,6 @@ export class SanierungService {
       this._finanzierungskostenKfw = this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
     } else if (this.kfWDarlehen === "Endfälliges") {
       this._finanzierungskostenKfw = this._efKfW;
-    } else {
-      this._finanzierungskostenKfw = 0;
     }
   }
 
@@ -319,8 +334,6 @@ export class SanierungService {
       this._finanzierungskostenFinanzmarkt = this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
     } else if (this.bankDarlehen === "Endfälliges") {
       this._finanzierungskostenFinanzmarkt = this._efBank;
-    } else {
-      this._finanzierungskostenFinanzmarkt = 0;
     }
   }
 
@@ -334,13 +347,13 @@ export class SanierungService {
   // GB: Annuität [€]
   private _gbAnnuitaet = 0;
   private updateGbAnnuitaet() {
-    this._gbAnnuitaet = (this._foerdersumme + this._restsumme) * this._afBank * this.kreditlaufzeit - (this._foerdersumme + this._restsumme);
+    this._gbAnnuitaet = (this._kfwKredit + this._restsumme) * this._afBank * this.kreditlaufzeit - (this._kfwKredit + this._restsumme);
   }
 
   // GB: EFD [€]
   private _gbEfd = 0;
   private updateGbEfd() {
-    this._gbEfd = this.kalkRealzins * (this._foerdersumme + this._restsumme) / 100 * this.kreditlaufzeit;
+    this._gbEfd = this.kalkRealzins * (this._kfwKredit + this._restsumme) / 100 * this.kreditlaufzeit;
   }
 
   // Option 1: ohne KfW [€]
@@ -362,7 +375,7 @@ export class SanierungService {
   // Gesamtkosten
   private _gInvestition = 0;
   private updateGInvestition() {
-    this._gInvestition = this._investitionskosten - this._kfwZuschuss;
+    this._gInvestition = this._investitionskosten;
   }
 
   private _gFinanzierung = 0;
@@ -370,32 +383,33 @@ export class SanierungService {
     this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
   }
 
+
   update() {
-    this.updateTilgungszuschuss();
-    this.updateEeBonus();
-    this.updateNhBonus();
-    this.updateWpbBonus();
-    this.updateSerSanBonus();
+    this.updateKellergeschossOut();
+    this.updateStellplaetzeOut();
+    this.updateRedGarageOut();
+    this.updateAufzugsanlageOut();
+    this.updateBarrierefreiheitOut();
+    this.updateDachbegruenungOut();
+    this.updateBaustellenlogistikOut();
+    this.updateAussenanlagenOut();
+    this.updateEnergetischerStandard();
     this.updateGestehungskosten();
     this.updateNrKredit();
     this.updateSollzinsKfw();
-    this.updateMaxKfwKredit();
     this.updateGesamtgestehungskosten();
-    this.updateFoerdersumme();
+    this.updateKfwKredit();
     this.updateRestsumme();
     this.updateAfKfW();
     this.updateAfBank();
-    this.updateZuschuss();
-    this.updateKfwKredit();
-    this.updateBankKredit();
     this.updateAnnuitaetKfw();
     this.updateAnnuitaetB();
     this.updateEfKfw();
     this.updateEfB();
+    this.updateBankKredit();
     this.updateFinanzierungskostenKfw();
     this.updateFinanzierungskostenFinanzmarkt();
     this.updateInvestitionkosten();
-    this.updateGbAnnuitaet();
     this.updateGbEfd();
     this.updateOhneKfw();
     this.updateMitKfw();
@@ -410,28 +424,36 @@ export class SanierungService {
         energiestandard: this.energiestandard,
         konstruktion: this.konstruktion,
         zertifizierung: this.zertifizierung,
-        // Sanierung
-        worstPerformingBuilding: this.worstPerformingBuilding,
-        serielleSanierung: this.serielleSanierung,
-        zustandBestand: this.zustandBestand,
-        eeKlasse: this.eeKlasse,
+        // Neubau input
+        kellergeschossIn: this.kellergeschossIn,
+        stellplaetzeIn: this.stellplaetzeIn,
+        aufzugsanlageIn: this.aufzugsanlageIn,
+        barrierefreiheitIn: this.barrierefreiheitIn,
+        dachbegruenungIn: this.dachbegruenungIn,
+        baustellenlogistikIn: this.baustellenlogistikIn,
+        aussenanlagenIn: this.aussenanlagenIn,
+        grundstuecksbezogeneKosten: this.grundstuecksbezogeneKosten,
+        baunebenkostenKeinFin: this.baunebenkostenKeinFin,
+        // Neubau output
+        kellergeschossOut: this._kellergeschossOut,
+        stellplaetzeOut: this._stellplaetzeOut,
+        redGarageOut: this._redGarageOut,
+        aufzugsanlageOut: this._aufzugsanlageOut,
+        barrierefreiheitOut: this._barrierefreiheitOut,
+        dachbegruenungOut: this._dachbegruenungOut,
+        baustellenlogistikOut: this._baustellenlogistikOut,
+        aussenanlagenOut: this._aussenanlagenOut,
+        energetischerStandard: this._energetischerStandardOut,
         // Dalehen
         kalkRealzins: this.kalkRealzins,
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,
         bankDarlehen: this.bankDarlehen,
         // Output
-        tilgungszuschuss: this._tilgungszuschuss,
-        eeBonus: this._eeBonus,
-        nhBonus: this._nhBonus,
-        wpbBonus: this._wpbBonus,
-        serSanBonus: this._serSanBonus,
         gestehungskosten: this._gestehungskosten,
         nrKredit: this._nrKredit,
         sollzinsKfw: this._sollzinsKfw,
-        maxKfwKredit: this._maxKfwKredit,
         gesamtgestehungskosten: this._gesamtgestehungskosten,
-        foerdersumme: this._foerdersumme,
         restsumme: this._restsumme,
         afKfw: this._afKfw,
         afBank: this._afBank,
@@ -452,8 +474,6 @@ export class SanierungService {
         finanzierungskostenFinanzmarktM2: this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
         investitionskosten: this._investitionskosten,
         investitionskostenM2: this._investitionskosten / this.wohnflaeche,
-        kfwZuschuss: this._kfwZuschuss,
-        kfwZuschussM2: this._kfwZuschuss / this.wohnflaeche,
         gInvestition: this._gInvestition,
         gInvestitionM2: this._gInvestition / this.wohnflaeche,
         gFinanzierung: this._gFinanzierung,
@@ -468,7 +488,7 @@ export class SanierungService {
       });
   }
 
-  constructor(private constants: sanierung) {
+  constructor(private constants: neubau) {
     this.update();
   }
 }

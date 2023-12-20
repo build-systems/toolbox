@@ -77,26 +77,44 @@ li {
 .ng-tool {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-height: 100svh;
-    margin-bottom: var(--layout-padding);
+    height: 100svh;
+    padding-bottom: var(--layout-padding);
 }
 
 .container-tool {
+    flex: 1;
     display: grid;
-    flex-grow: 1;
-    grid-template-columns: 2fr 5fr;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
     padding-right: var(--layout-padding);
     padding-left: var(--layout-padding);
-    gap: var(--layout-padding);
+    gap: calc(var(--layout-padding)/2);
+    overflow-y: auto;
 }
 
 .container-input {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
-    flex-shrink: 1;
-    /* border: 1px solid white; */
+    overflow-y: auto;
+}
+
+.container-forms {
+    flex: 1;
+    padding-left: 2px;
+    padding-right: calc(var(--layout-padding)/2);
+    overflow-y: auto;
+}
+
+.container-forms::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0.2rem rgba(0, 0, 0, 0.3);
+    background-color: var(--bg-tertiary);
+}
+
+.container-forms::-webkit-scrollbar {
+    width: 0.2rem;
+}
+
+.container-forms::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
 }
 
 input {
@@ -112,7 +130,7 @@ label {
 }
 
 fieldset {
-    margin-top: 1rem;
+    margin-top: clamp(0.5rem, 0.9rem, 1.2rem);
     padding-top: 0.25rem;
     border-style: none;
 }
@@ -388,6 +406,8 @@ input[type=button] {
     align-items: center;
     margin-bottom: var(--layout-padding);
     margin-top: 5px;
+    padding-left: calc(var(--layout-padding)/2);
+    padding-right: calc(var(--layout-padding)/2);
 }
 
 .grayed-circle {
@@ -484,16 +504,21 @@ input[type=button] {
     display: flex;
     height: 50%;
     gap: calc(var(--layout-padding)/4);
+    & .ng-chart {
+        width: clamp(20%, 33%, 50%);
+    }
 }
 
 .charts-wrap2 {
     display: flex;
     height: 50%;
     gap: calc(var(--layout-padding)/4);
+    & .ng-chart {
+        width: clamp(20%, 50%, 50%);
+    }
 }
 
 .ng-chart {
-    width: 50%;
     padding: calc(var(--layout-padding)/2);
     border-radius: var(--button-radius);
     background-color: var(--bg-secondary);

@@ -14,7 +14,23 @@ import { NavigationEnd, Router } from '@angular/router';
 export class FormProjektComponent implements OnInit {
   currentRoute!: string;
 
-  defaultEnStd = "EH 40";
+  // Wohnfläche centralized form values
+  wohnflaeche = {
+    min: 50,
+    init: 5000,
+    max: 50_000,
+    step: 50
+  }
+  
+  // Anzahl Wohnungen centralized form values
+  anzahlWohnungen = {
+    min: 1,
+    init: 50,
+    max: 1000,
+    step: 1
+  }
+  
+  // Energiestandard centralized form values
   energiestandard = [
     {id: "enstd1", value: "EH 40"},
     {id: "enstd2", value: "EH 55"},
@@ -22,12 +38,14 @@ export class FormProjektComponent implements OnInit {
     {id: "enstd4", value: "EH 100"},
     {id: "enstd5", value: "EH 115"},
   ]
-
+  
+  // Konstruktion centralized form values
   konstruktion = [
     {id: "konst1", value: "Konventionell"},
     {id: "konst2", value: "Holzbau"}
   ]
-
+  
+  // Zertifizierung centralized form values
   zertifizierung = [
     {id: "zert1", value: "Keine Zertifizierung"},
     {id: "zert2", value: "QNG"}
@@ -37,9 +55,9 @@ export class FormProjektComponent implements OnInit {
   projektForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private sanierungService: SanierungService, private router: Router) {
-    // Subscribe to its observable
+    // Router observable: used to hide the 'Konstruktion' part of the form for not Neubau
     router.events.subscribe((val) => {
-      // Check if val is NavigationEnd (it has many actions untile this last one)
+      // Check if val is NavigationEnd (it has many actions until this last one)
       if (val instanceof NavigationEnd)
         // Then assign the url as a string 
         this.currentRoute = this.router.url.toString();
@@ -48,13 +66,13 @@ export class FormProjektComponent implements OnInit {
 
   ngOnInit(): void {
       this.projektForm = this.fb.group({
-      wohnflaecheRange: [5000, [Validators.min(50), Validators.max(50_000)]],
-      wohnflaeche: [5000, [Validators.min(50), Validators.max(50_000)]],
-      anzahlWohnungenRange: [50, [Validators.min(0), Validators.max(1000)]],
-      anzahlWohnungen: [50, [Validators.min(0), Validators.max(1000)]],
-      energiestandard: new FormControl('EH 40'),
-      konstruktion: new FormControl('Konventionell'),
-      zertifizierung: new FormControl('Keine Zertifizierung'),
+      wohnflaecheRange: [this.wohnflaeche.init, [Validators.min(this.wohnflaeche.min), Validators.max(this.wohnflaeche.max)]],
+      wohnflaeche: [this.wohnflaeche.init, [Validators.min(this.wohnflaeche.min), Validators.max(this.wohnflaeche.max)]],
+      anzahlWohnungenRange: [this.anzahlWohnungen.init, [Validators.min(this.anzahlWohnungen.min), Validators.max(this.anzahlWohnungen.max)]],
+      anzahlWohnungen: [this.anzahlWohnungen.init, [Validators.min(this.anzahlWohnungen.min), Validators.max(this.anzahlWohnungen.max)]],
+      energiestandard: new FormControl(this.energiestandard[0].value),
+      konstruktion: new FormControl(this.konstruktion[0].value),
+      zertifizierung: new FormControl(this.zertifizierung[0].value),
     });
 
     // Wohnflaeche
@@ -105,9 +123,6 @@ export class FormProjektComponent implements OnInit {
       this.sanierungService.setZertifizierung(value);
     });
   }
-
-  // Subscribe to form changes and update the service
-
 
   // Remove focus on enter
   onEnterKey(event: any): void {

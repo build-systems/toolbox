@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormProjektComponent } from '../form-projekt/form-projekt.component';
 import { FormNeubauComponent } from '../form-neubau/form-neubau.component';
 import { FormDarlehenComponent } from '../form-darlehen/form-darlehen.component';
+import { ChartGkostenComponent } from '../chart-gkosten/chart-gkosten.component';
+import { ChartGkostenM2Component } from '../chart-gkosten-m2/chart-gkosten-m2.component';
+import { ChartInstallmentComponent } from '../chart-installment/chart-installment.component';
+import { ChartRepaymentComponent } from '../chart-repayment/chart-repayment.component';
+import { ChartFinanzierungskostenComponent } from '../chart-finanzierungskosten/chart-finanzierungskosten.component';
+import { OutputValuesComponent } from '../outputvalues/outputvalues.component';
 
 @Component({
   selector: 'app-neubau',
   standalone: true,
-  imports: [CommonModule, FormProjektComponent, FormNeubauComponent, FormDarlehenComponent],
+  imports: [CommonModule, FormProjektComponent, FormNeubauComponent, FormDarlehenComponent, ChartGkostenComponent, ChartGkostenM2Component, ChartInstallmentComponent, ChartRepaymentComponent, ChartFinanzierungskostenComponent, OutputValuesComponent],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {
@@ -16,4 +22,16 @@ import { FormDarlehenComponent } from '../form-darlehen/form-darlehen.component'
 })
 export class NeubauComponent {
   title = "Neubau";
+
+  // Handle form page
+  currentForm = 1;
+  nForms = 3;
+  nextForm() {
+    if (this.currentForm + 1 <= this.nForms)
+      this.currentForm += 1;
+  }
+  previousForm() {
+    if (this.currentForm - 1 >= 1)
+      this.currentForm -= 1;
+  }
 }

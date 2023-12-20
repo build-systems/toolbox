@@ -25,7 +25,7 @@ export class ChartFinanzierungskostenComponent {
   ngOnInit(): void {
     this.sanierungService.currentOutput$.subscribe((value) => {
       this.output = value;
-      this.barChartData.datasets[0].data = [Math.round(this.output['kfwZuschuss']), Math.round(this.output['investitionskosten'])];
+      this.barChartData.datasets[0].data = [Math.round(this.output['ohneKfw']), Math.round(this.output['mitKfw'])];
       this.chart?.update();
     });
   }

@@ -11,6 +11,7 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './form-sanierung.component.css'
 })
 export class FormSanierungComponent implements OnInit {
+    // Zustand Bestand centralized form control
   zustandBestand = [
     {id: "zusbest1", value: "Unsaniert"},
     {id: "zusbest2", value: "Teilsaniert"},
@@ -19,20 +20,13 @@ export class FormSanierungComponent implements OnInit {
 
   sanierungForm!: FormGroup;
 
-  // sanierungForm = new FormGroup({
-  //   worstPerformingBuilding: new FormControl(true),
-  //   serielleSanierung: new FormControl(true),
-  //   zustandBestand: new FormControl('Unsaniert'),
-  //   eeKlasse: new FormControl(true),
-  // })
-  
   constructor(private fb: FormBuilder, private sanierungService: SanierungService) {  }
 
   ngOnInit(): void {
     this.sanierungForm = this.fb.group({
         worstPerformingBuilding: new FormControl(true),
         serielleSanierung: new FormControl(true),
-        zustandBestand: new FormControl('Unsaniert'),
+        zustandBestand: new FormControl(this.zustandBestand[0]['value']),
         eeKlasse: new FormControl(true),
       });
 

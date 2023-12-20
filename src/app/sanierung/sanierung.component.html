@@ -3,17 +3,17 @@
 </div>
 <div class="container-tool">
     <div class="container-input">
+        <div class="progress-bar">
+            <input type="button" value="1" title="Projekt" (click)="currentForm = 1"
+                [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
+            <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
+            <input type="button" value="2" title="Sanierung" (click)="currentForm = 2"
+                [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
+            <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
+            <input type="button" value="3" title="Darlehen" (click)="currentForm = 3"
+                [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
+        </div>
         <div class="container-forms">
-            <div class="progress-bar">
-                <input type="button" value="1" title="Projekt" (click)="currentForm = 1"
-                    [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
-                <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
-                <input type="button" value="2" title="Sanierung" (click)="currentForm = 2"
-                    [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
-                <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
-                <input type="button" value="3" title="Darlehen" (click)="currentForm = 3"
-                    [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
-            </div>
             <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
             <app-form-sanierung [hidden]="!(currentForm === 2)"></app-form-sanierung>
             <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
@@ -34,54 +34,14 @@
         <app-outputvalues></app-outputvalues>
         <div class="charts-container">
             <div class="charts-wrap1">
-                <!-- <div class="ng-chart"></div>
-                <div class="ng-chart"></div>
-                <div class="ng-chart"></div> -->
                 <app-chart-installment></app-chart-installment>
-                    <app-chart-repayment></app-chart-repayment>
-                    <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
+                <app-chart-repayment></app-chart-repayment>
+                <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
             </div>
             <div class="charts-wrap2">
-                <!-- <div class="ng-chart"></div>
-                <div class="ng-chart"></div> -->
                 <app-chart-gkosten></app-chart-gkosten>
-                    <app-chart-gkosten-m2></app-chart-gkosten-m2>
+                <app-chart-gkosten-m2></app-chart-gkosten-m2>
             </div>
         </div>
     </div>
 </div>
-<!-- <div>
-    <div>Tilgungszuschuss [%]: {{ _tilgungszuschuss }}</div>
-    <div>EE-Bonus [%]: {{ _eeBonus }}</div>
-    <div>NH-Bonus [%]: {{ _nhBonus }}</div>
-    <div>WPB-Bonus [%]: {{ _wpbBonus }}</div>
-    <div>SerSan-Bonus [%]: {{ _serSanBonus }}</div>
-    <br>
-    <div>Min Gestehungskosten [€/m²]: {{ _gestehungskosten }}</div>
-    <div>NR-Kredit [%]: {{ _nrKredit }}</div>
-    <div>Sollzins KfW [%]: {{ _sollzinsKfw }}</div>
-    <div>Max. KfW-Kredit: {{ _maxKfwKredit | currency:'EUR' }}</div>
-    <div>Gesamtgestehungskosten: {{ _gesamtgestehungskosten | currency:'EUR' }}</div>
-    <div>Foerdersumme: {{ _foerdersumme | currency:'EUR' }}</div>
-    <div>Restsumme: {{ _restsumme | currency:'EUR' }}</div>
-    <br>
-    <div>AF KfW: {{ _afKfw | number:'1.0-3' }}</div>
-    <div>AF B: {{ _afB | number:'1.0-3' }}</div>
-    <div>Zuschuss (KfW): {{ _zuschuss | currency:'EUR' }}</div>
-    <div>KfW-Kredit: {{ _kfwKredit | currency:'EUR' }}</div>
-    <div>Bank-Kredit: {{ _bankKredit | currency:'EUR' }}</div>
-    <div>Annuität KfW: {{ _annuitaetKfW | currency:'EUR' }}</div>
-    <div>Annuität B: {{ _annuitaetB | currency:'EUR' }}</div>
-    <div>EF KFW: {{ _efKfW | currency:'EUR' }}</div>
-    <div>EF B: {{ _efB | currency:'EUR' }}</div>
-    <div>Finanzierungskosten KfW: {{ _finanzierungskostenKfw | currency:'EUR' }}</div>
-    <div>Finanzierungskosten FinMarkt: {{ _finanzierungskostenMarkt | currency:'EUR' }}</div>
-    <div>Investitionskosten: {{ _investitionkosten | currency:'EUR' }}</div>
-    <br>
-    <div>GB Annuität: {{ _gbAnnuitaet | currency:'EUR' }}</div>
-    <div>GB EFD: {{ _gbEfd | currency:'EUR' }}</div>
-    <br>
-    <div>Option 1: ohne KfW {{ _ohneKfw | currency:'EUR' }}</div>
-    <div>Option 2: mit KfW {{ _mitKfw | currency:'EUR' }}</div>
-    <br>
-</div> -->

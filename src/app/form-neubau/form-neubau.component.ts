@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NeubauService } from '../neubau.service';
 
 @Component({
   selector: 'app-form-neubau',
@@ -9,19 +10,99 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './form-neubau.component.html',
   styleUrl: './form-neubau.component.css'
 })
-export class FormNeubauComponent {
-  neubauForm = new FormGroup({
-    keller: new FormControl(''),
-    stellplätze: new FormControl(''),
-    redGarage: new FormControl(''),
-    aufzugsanlage: new FormControl(''),
-    barrierefreiheit: new FormControl(''),
-    dachbegrünung: new FormControl(''),
-    baustellenlogistik: new FormControl(''),
-    energetischer: new FormControl(''),
-    stanndard: new FormControl(''),
-    außenanlagen: new FormControl(''),
-    grundstücksbezogeneKosten: new FormControl(''),
-    baunebenkostenKeinFin: new FormControl(''),
-  });
+export class FormNeubauComponent implements OnInit {
+
+  // Kellergeschoss
+  kellergeschossIn = [
+    {id: "keller1", value: "Vorhanden"},
+    {id: "keller2", value: "Nicht Vorhanden"},
+  ]
+  
+  // Stellplätze
+  stellplaetzeIn = [
+    {id: "stelpla1", value: "Tiefgarage"},
+    {id: "stelpla2", value: "Parkpalette"},
+    {id: "stelpla3", value: "Garage"},
+  ]
+  
+  // Aufzugsanlage
+  aufzugsanlageIn = [
+    {id: "aufzugs1", value: "Vorhanden"},
+    {id: "aufzugs2", value: "Nicht Vorhanden"},
+  ]
+  
+  // Barrierefreies Bauen
+  barrierefreiheitIn = [
+    {id: "barfrei1", value: "Reduziert"},
+    {id: "barfrei2", value: "Frei"},
+    {id: "barfrei3", value: "Frei (R)"},
+    {id: "barfrei4", value: "Keine Anforderungen"},
+  ]
+  // barrierefreiheitIn = [
+  //   {id: "barfrei1", value: "Barrierereduziert"},
+  //   {id: "barfrei2", value: "Barrierefrei"},
+  //   {id: "barfrei3", value: "Barrierefrei (R)"},
+  //   {id: "barfrei4", value: "Keine Anforderungen"},
+  // ]
+  
+  // Dachbegrünung
+  dachbegruenungIn = [
+    {id: "dachbeg1", value: "Vorhanden"},
+    {id: "dachbeg2", value: "Nicht Vorhanden"},
+  ]
+  
+  // Anspruchsvolle Baustellenlogistik
+  baustellenlogistikIn = [
+    {id: "baustlog1", value: "Vorhanden"},
+    {id: "baustlog2", value: "Nicht Vorhanden"},
+  ]
+  
+  // Außenanlagen
+  aussenanlagenIn = [
+    {id: "auslag1", value: "Gering"},
+    {id: "auslag2", value: "Mittel"},
+    {id: "auslag3", value: "Hoch"},
+  ]
+
+  // Grundstücksbezogene Kosten
+  grundstKosten = {
+    min: 0,
+    init: 0,
+    max: 200,
+    step: 1
+  }
+
+  // Baunebenkosten (excl. Finanzierung)
+  baunebenkostenKeinFin = {
+    min: 0,
+    init: 0,
+    max: 200,
+    step: 1
+  }
+
+  neubauForm!: FormGroup;
+
+  constructor(private fb: FormBuilder, private neubauService: NeubauService) { }
+
+  ngOnInit(): void {
+    this.neubauForm = this.fb.group({
+      kellergeschossIn: new FormControl(this.kellergeschossIn[0].value),
+      stellplaetzeIn: new FormControl(this.stellplaetzeIn[0].value),
+      aufzugsanlageIn: new FormControl(this.aufzugsanlageIn[0].value),
+      barrierefreiheitIn: new FormControl(this.barrierefreiheitIn[0].value),
+      dachbegruenungIn: new FormControl(this.dachbegruenungIn[0].value),
+      baustellenlogistikIn: new FormControl(this.baustellenlogistikIn[0].value),
+      aussenanlagenIn: new FormControl(this.aussenanlagenIn[0].value),
+      grundstuecksbezogeneKostenRange: [this.grundstKosten.init, [Validators.min(this.grundstKosten.min), Validators.max(this.grundstKosten.max)]],
+      grundstuecksbezogeneKosten: [this.grundstKosten.init, [Validators.min(this.grundstKosten.min), Validators.max(this.grundstKosten.max)]],
+      baunebenkostenKeinFinRange: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
+      baunebenkostenKeinFin: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
+    });
+  }
+
+  // Remove focus on enter
+  onEnterKey(event: any): void {
+    // Call the blur method on the target element to remove focus
+    event.target.blur();
+  }
 }

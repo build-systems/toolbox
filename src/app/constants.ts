@@ -10,8 +10,24 @@ export class neubau {
     public nrMoreThan25 = 1.02;
     public sollzinsKfw_Endfälliges = 1.14;
     public kfwKredit_Lower = 100_000;
-    public kfwKredit_Heigher = 150_000;
+    public kfwKredit_Higher = 150_000;
     public investitionBonus = 1.05;
+    public kellerVorhanden = 192-45;
+    public stellplaetzeGarage = 68;
+    public stellplaetzeParkpalette = 95;
+    public stellplaetzeTiefgarage = 490;
+    public redGarageTrue = -68;
+    public aufzugsanlageVorhanden = 93;
+    public barrierereduziert = 62;
+    public barrierefrei = 199;
+    public barrierereduziertR = 348;
+    public dachbegruenungVorhanden = 55;
+    public baustellenlogistikVorhanden = 212;
+    public aussenanlagenGering = 62;
+    public aussenanlagenMittel = 150;
+    public aussenanlagenHoch = 277;
+    public energiestandardEH40 = 294 - 138;
+    public restsummeHolzbau = 1.05;
 }
 
 @Injectable({

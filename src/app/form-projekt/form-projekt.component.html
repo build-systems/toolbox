@@ -3,16 +3,16 @@
     <fieldset>
         <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
         <span class="slidernumber">
-            <input type="range" formControlName="wohnflaecheRange" min="50" max="50000" step="50" class="slider" />
-            <input type="number" formControlName="wohnflaeche" min="50" max="50000"
+            <input type="range" formControlName="wohnflaecheRange" min="{{wohnflaeche.min}}" max="{{wohnflaeche.max}}" step="{{wohnflaeche.step}}" class="slider" />
+            <input type="number" formControlName="wohnflaeche" min="{{wohnflaeche.min}}" max="{{wohnflaeche.max}}"
                 (keyup.enter)="onEnterKey($event)" />
         </span>
     </fieldset>
     <fieldset>
         <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
         <span class="slidernumber">
-            <input type="range" formControlName="anzahlWohnungenRange" min="1" max="1000" step="1" class="slider" />
-            <input type="number" formControlName="anzahlWohnungen" min="1" max="1000" step="1" />
+            <input type="range" formControlName="anzahlWohnungenRange" min="{{anzahlWohnungen.min}}" max="{{anzahlWohnungen.max}}" step="{{anzahlWohnungen.step}}" class="slider" />
+            <input type="number" formControlName="anzahlWohnungen" min="{{anzahlWohnungen.min}}" max="{{anzahlWohnungen.max}}" step="{{anzahlWohnungen.step}}" />
         </span>
     </fieldset>
     <fieldset class="radio-fieldset">

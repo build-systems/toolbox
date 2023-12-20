@@ -3,15 +3,15 @@
     <fieldset>
         <legend>Kalkulationszinssatz (Realzins) <sup>&#9432;</sup></legend>
         <span class="slidernumber">
-            <input type="range" formControlName="kalkRealzinsRange" min="0" max="100" step="1" class="slider" />
-            <input type="number" formControlName="kalkRealzins" min="0" max="100" step="1" />
+            <input type="range" formControlName="kalkRealzinsRange" min="{{kalkRealzins.min}}" max="{{kalkRealzins.max}}" step="{{kalkRealzins.step}}" class="slider" />
+            <input type="number" formControlName="kalkRealzins" min="{{kalkRealzins.min}}" max="{{kalkRealzins.max}}" step="{{kalkRealzins.step}}" />
         </span>
     </fieldset>
     <fieldset>
         <legend>Kreditlaufzeit <sup>&#9432;</sup></legend>
         <span class="slidernumber">
-            <input type="range" formControlName="kreditlaufzeitRange" min="1" max="50" steps="1" class="slider" />
-            <input type="number" formControlName="kreditlaufzeit" min="1" max="50" steps="1" />
+            <input type="range" formControlName="kreditlaufzeitRange" min="{{kreditlaufzeit.min}}" max="{{kreditlaufzeit.max}}" step="{{kreditlaufzeit.step}}" class="slider" />
+            <input type="number" formControlName="kreditlaufzeit" min="{{kreditlaufzeit.min}}" max="{{kreditlaufzeit.max}}" step="{{kreditlaufzeit.step}}" />
         </span>
     </fieldset>
     <fieldset class="radio-fieldset">
