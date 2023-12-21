@@ -1,12 +1,37 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NeubauProjekt } from './neubauprojekt';
+import { NeubauProjekt } from './neubau/neubauprojekt';
 import { neubau } from './constants';
+import { FormProjektService } from './form-projekt/form-projekt.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NeubauService {
+
+  constructor(private constants: neubau, private formProjektService: FormProjektService) {
+    this.formProjektService.currentWohnflaeche$.subscribe((value) => {
+      this.wohnflaeche = value;
+      this.update();
+    });
+    this.formProjektService.currentAnzahlWohnungen$.subscribe((value) => {
+      this.anzahlWohnungen = value;
+      this.update();
+    });
+    this.formProjektService.currentEnergiestandard$.subscribe((value) => {
+      this.energiestandard = value;
+      this.update();
+    });
+    this.formProjektService.currentKonstruktion$.subscribe((value) => {
+      this.konstruktion = value;
+      this.update();
+    });
+    this.formProjektService.currentZertifizierung$.subscribe((value) => {
+      this.zertifizierung = value;
+      this.update();
+    });
+    this.update();
+  }
 
   // Declare output object
   output!: NeubauProjekt;
@@ -15,37 +40,11 @@ export class NeubauService {
   currentOutput$ = this.outputSource.asObservable();
 
   // Projekt form parameters
-  wohnflaeche: number = 5000;
-  anzahlWohnungen: number = 50;
-  energiestandard: Energiestandard = "EH 40";
-  konstruktion: Konstruktion = "Konventionell";
-  zertifizierung: Zertifizierung = "Keine Zertifizierung";
-
-  // Observable for wohnflaeche
-  private wohnflaecheSource = new BehaviorSubject<number>(this.wohnflaeche);
-  currentwohnflaeche$ = this.wohnflaecheSource.asObservable();
-
-
-
-  // This method is used inside the form component and is triggered everytime the form changes
-  public setWohnflaeche(value: number) {
-    // It gets the form value
-    this.wohnflaeche = value;
-    this.wohnflaecheSource.next(value);
-    // And trigger the update() method which cascade triggering all methods
-    this.update();
-  }
-
-  // I repeated this for all form inputs
-  public setAnzahlWohnungen(value: number) {
-    this.anzahlWohnungen = value;
-    this.update();
-  }
-
-  public setEnergiestandard(text: Energiestandard) {
-    this.energiestandard = text;
-    this.update();
-  }
+  wohnflaeche!: number;
+  anzahlWohnungen!: number;
+  energiestandard!: Energiestandard;
+  konstruktion!: Konstruktion;
+  zertifizierung!: Zertifizierung;
 
   public setKonstruktion(text: Konstruktion) {
     this.konstruktion = text;
@@ -114,10 +113,10 @@ export class NeubauService {
   }
 
   // Darlehen parameters
-  kalkRealzins = 4;
-  kreditlaufzeit = 20;
-  kfWDarlehen: KfWDarlehen = 'Annuitäten';
-  bankDarlehen: BankDarlehen = 'Annuitäten';
+  kalkRealzins!: number;
+  kreditlaufzeit!: number;
+  kfWDarlehen!: KfWDarlehen;
+  bankDarlehen!: BankDarlehen;
 
   public setKalkRealzins(value: number) {
     this.kalkRealzins = value;
@@ -486,9 +485,5 @@ export class NeubauService {
         differenzOhneMitKfw: this._ohneKfw - this._mitKfw,
         differenzOhneMitKfwM2: (this._ohneKfw - this._mitKfw) / this.wohnflaeche
       });
-  }
-
-  constructor(private constants: neubau) {
-    this.update();
   }
 }

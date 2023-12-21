@@ -1,33 +1,69 @@
 <form [formGroup]="darlehenForm">
-    <h2>Darlehen</h2>
-    <fieldset>
-        <legend>Kalkulationszinssatz (Realzins) <sup>&#9432;</sup></legend>
-        <span class="slidernumber">
-            <input type="range" formControlName="kalkRealzinsRange" min="{{kalkRealzins.min}}" max="{{kalkRealzins.max}}" step="{{kalkRealzins.step}}" class="slider" />
-            <input type="number" formControlName="kalkRealzins" min="{{kalkRealzins.min}}" max="{{kalkRealzins.max}}" step="{{kalkRealzins.step}}" />
-        </span>
-    </fieldset>
-    <fieldset>
-        <legend>Kreditlaufzeit <sup>&#9432;</sup></legend>
-        <span class="slidernumber">
-            <input type="range" formControlName="kreditlaufzeitRange" min="{{kreditlaufzeit.min}}" max="{{kreditlaufzeit.max}}" step="{{kreditlaufzeit.step}}" class="slider" />
-            <input type="number" formControlName="kreditlaufzeit" min="{{kreditlaufzeit.min}}" max="{{kreditlaufzeit.max}}" step="{{kreditlaufzeit.step}}" />
-        </span>
-    </fieldset>
-    <fieldset class="radio-fieldset">
-        <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of kfWDarlehen" class="radio">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kfWDarlehen"
-                formControlName="kfWDarlehen" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
-    <fieldset class="radio-fieldset">
-        <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of bankDarlehen" class="radio">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="bankDarlehen"
-                formControlName="bankDarlehen" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
+  <h2>Darlehen</h2>
+  <fieldset>
+    <legend>Kalkulationszinssatz (Realzins) <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="kalkRealzinsRange"
+        min="{{ formService.kalkRealzins.min }}"
+        max="{{ formService.kalkRealzins.max }}"
+        step="{{ formService.kalkRealzins.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="kalkRealzins"
+        min="{{ formService.kalkRealzins.min }}"
+        max="{{ formService.kalkRealzins.max }}"
+        step="{{ formService.kalkRealzins.step }}"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <legend>Kreditlaufzeit <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="kreditlaufzeitRange"
+        min="{{ formService.kreditlaufzeit.min }}"
+        max="{{ formService.kreditlaufzeit.max }}"
+        step="{{ formService.kreditlaufzeit.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="kreditlaufzeit"
+        min="{{ formService.kreditlaufzeit.min }}"
+        max="{{ formService.kreditlaufzeit.max }}"
+        step="{{ formService.kreditlaufzeit.step }}"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formService.kfWDarlehenOptions" class="radio">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="kfWDarlehen"
+        formControlName="kfWDarlehen"
+      />
+      <label for="{{ item.id }}">{{ item.value }}</label>
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formService.bankDarlehenOptions" class="radio">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="bankDarlehen"
+        formControlName="bankDarlehen"
+      />
+      <label for="{{ item.id }}">{{ item.value }}</label>
+    </span>
+  </fieldset>
 </form>

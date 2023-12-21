@@ -12,6 +12,12 @@ import { NeubauService } from '../neubau.service';
 })
 export class FormNeubauComponent implements OnInit {
 
+  // Konstruktion
+  konstruktion = [
+    {id: "konst1", value: "Konventionell"},
+    {id: "konst2", value: "Holzbau"}
+  ]
+
   // Kellergeschoss
   kellergeschossIn = [
     {id: "keller1", value: "Vorhanden"},
@@ -86,6 +92,7 @@ export class FormNeubauComponent implements OnInit {
 
   ngOnInit(): void {
     this.neubauForm = this.fb.group({
+      konstruktion: new FormControl(this.konstruktion[0].value),
       kellergeschossIn: new FormControl(this.kellergeschossIn[0].value),
       stellplaetzeIn: new FormControl(this.stellplaetzeIn[0].value),
       aufzugsanlageIn: new FormControl(this.aufzugsanlageIn[0].value),
@@ -97,6 +104,12 @@ export class FormNeubauComponent implements OnInit {
       grundstuecksbezogeneKosten: [this.grundstKosten.init, [Validators.min(this.grundstKosten.min), Validators.max(this.grundstKosten.max)]],
       baunebenkostenKeinFinRange: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
       baunebenkostenKeinFin: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
+    });
+
+    // Konstruktion
+    this.neubauForm.get("konstruktion")?.valueChanges.subscribe(value => {
+      // Updates the sanierungService
+      this.neubauService.setKonstruktion(value);
     });
   }
 

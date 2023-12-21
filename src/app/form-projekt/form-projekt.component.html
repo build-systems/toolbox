@@ -1,44 +1,69 @@
 <form [formGroup]="projektForm">
-    <h2>Projekt</h2>
-    <fieldset>
-        <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
-        <span class="slidernumber">
-            <input type="range" formControlName="wohnflaecheRange" min="{{wohnflaeche.min}}" max="{{wohnflaeche.max}}" step="{{wohnflaeche.step}}" class="slider" />
-            <input type="number" formControlName="wohnflaeche" min="{{wohnflaeche.min}}" max="{{wohnflaeche.max}}"
-                (keyup.enter)="onEnterKey($event)" />
-        </span>
-    </fieldset>
-    <fieldset>
-        <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
-        <span class="slidernumber">
-            <input type="range" formControlName="anzahlWohnungenRange" min="{{anzahlWohnungen.min}}" max="{{anzahlWohnungen.max}}" step="{{anzahlWohnungen.step}}" class="slider" />
-            <input type="number" formControlName="anzahlWohnungen" min="{{anzahlWohnungen.min}}" max="{{anzahlWohnungen.max}}" step="{{anzahlWohnungen.step}}" />
-        </span>
-    </fieldset>
-    <fieldset class="radio-fieldset">
-        <legend>Energiestandard <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of energiestandard">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="energiestandard"
-                formControlName="energiestandard" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
-    @if(currentRoute === "/neubau") {
-    <fieldset class="radio-fieldset">
-        <legend>Konstruktion <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of konstruktion">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="konstruktion"
-                formControlName="konstruktion" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
-    }
-    <fieldset class="radio-fieldset">
-        <legend>Zertifizierung <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of zertifizierung">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="zertifizierung"
-                formControlName="zertifizierung" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
+  <h2>Projekt</h2>
+  <fieldset>
+    <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="wohnflaecheRange"
+        min="{{ formService.wohnflaeche.min }}"
+        max="{{ formService.wohnflaeche.max }}"
+        step="{{ formService.wohnflaeche.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="wohnflaeche"
+        min="{{ formService.wohnflaeche.min }}"
+        max="{{ formService.wohnflaeche.max }}"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="anzahlWohnungenRange"
+        min="{{ formService.anzahlWohnungen.min }}"
+        max="{{ formService.anzahlWohnungen.max }}"
+        step="{{ formService.anzahlWohnungen.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="anzahlWohnungen"
+        min="{{ formService.anzahlWohnungen.min }}"
+        max="{{ formService.anzahlWohnungen.max }}"
+        step="{{ formService.anzahlWohnungen.step }}"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>Energiestandard <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formService.energiestandardOptions">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="energiestandard"
+        formControlName="energiestandard"
+      />
+      <label for="{{ item.id }}">{{ item.value }}</label>
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>Zertifizierung <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formService.zertifizierungOptions">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="zertifizierung"
+        formControlName="zertifizierung"
+      />
+      <label for="{{ item.id }}">{{ item.value }}</label>
+    </span>
+  </fieldset>
 </form>
