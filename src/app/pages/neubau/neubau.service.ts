@@ -1,15 +1,39 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NeubauProjekt } from './neubauprojekt';
-import { neubau } from '../constants';
-import { FormProjektService } from '../form-projekt/form-projekt.service';
+import { neubau } from '../../constants';
+import { FormProjektService } from '../../form-projekt/form-projekt.service';
+import { FormNeubauService } from '../../form-neubau/form-neubau.service';
+import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NeubauService {
+  // Project parameters
+  wohnflaeche = this.formProjektService.wohnflaeche.init;
+  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+  energiestandard: Energiestandard =
+    this.formProjektService.energiestandardOptions[0].value;
+  konstruktion: Konstruktion =
+    this.formProjektService.konstruktionOptions[0].value;
+  zertifizierung: Zertifizierung =
+    this.formProjektService.zertifizierungOptions[0].value;
 
-  constructor(private constants: neubau, private formProjektService: FormProjektService) {
+  // Darlehen parameters
+  kalkRealzins = this.formDarlehenService.kalkRealzins.init;
+  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
+  kfWDarlehen: KfWDarlehen =
+    this.formDarlehenService.kfWDarlehenOptions[0].value;
+  bankDarlehen: BankDarlehen =
+    this.formDarlehenService.bankDarlehenOptions[0].value;
+
+  constructor(
+    private constants: neubau,
+    private formProjektService: FormProjektService,
+    private formNeubauService: FormNeubauService,
+    private formDarlehenService: FormDarlehenService
+  ) {
     this.formProjektService.currentWohnflaeche$.subscribe((value) => {
       this.wohnflaeche = value;
       this.update();
@@ -161,7 +185,10 @@ export class NeubauService {
 
   private _redGarageOut = 0;
   private updateRedGarageOut() {
-    if (this.kellergeschossIn === 'Vorhanden' && this.stellplaetzeIn === 'Tiefgarage') {
+    if (
+      this.kellergeschossIn === 'Vorhanden' &&
+      this.stellplaetzeIn === 'Tiefgarage'
+    ) {
       this._redGarageOut = this.constants.redGarageTrue;
     }
   }
@@ -220,7 +247,19 @@ export class NeubauService {
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
   private updateGestehungskosten() {
-    this._gestehungskosten = 2436 + this._kellergeschossOut + this._stellplaetzeOut + this._redGarageOut + this._aufzugsanlageOut + this._barrierefreiheitOut + this._dachbegruenungOut + this._baustellenlogistikOut + this._energetischerStandardOut + this._aussenanlagenOut + this.grundstuecksbezogeneKosten + this.baunebenkostenKeinFin;
+    this._gestehungskosten =
+      2436 +
+      this._kellergeschossOut +
+      this._stellplaetzeOut +
+      this._redGarageOut +
+      this._aufzugsanlageOut +
+      this._barrierefreiheitOut +
+      this._dachbegruenungOut +
+      this._baustellenlogistikOut +
+      this._energetischerStandardOut +
+      this._aussenanlagenOut +
+      this.grundstuecksbezogeneKosten +
+      this.baunebenkostenKeinFin;
   }
 
   // NR-Kredit [%]
@@ -229,18 +268,18 @@ export class NeubauService {
     if (this.kreditlaufzeit < 10) {
       this._nrKredit = this.constants.nrLessThan10;
     } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 25) {
-      this._nrKredit = this.constants.nr10To25
+      this._nrKredit = this.constants.nr10To25;
     } else {
-      this._nrKredit = this.constants.nrMoreThan25
+      this._nrKredit = this.constants.nrMoreThan25;
     }
   }
 
   // Sollzins KFW [%]
   private _sollzinsKfw = 0;
   private updateSollzinsKfw() {
-    if (this.kfWDarlehen === "Endfälliges") {
+    if (this.kfWDarlehen === 'Endfälliges') {
       this._sollzinsKfw = this.constants.sollzinsKfw_Endfälliges;
-    } else if (this.kfWDarlehen === "Annuitäten") {
+    } else if (this.kfWDarlehen === 'Annuitäten') {
       this._sollzinsKfw = this._nrKredit;
     }
   }
@@ -251,14 +290,18 @@ export class NeubauService {
     this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
   }
 
-
-
   // KfW-Kredit [€]
   private _kfwKredit = 0;
   private updateKfwKredit() {
-    if (this.zertifizierung === 'Keine Zertifizierung' && this.energiestandard === 'EH 40') {
+    if (
+      this.zertifizierung === 'Keine Zertifizierung' &&
+      this.energiestandard === 'EH 40'
+    ) {
       this._kfwKredit = this.constants.kfwKredit_Lower * this.anzahlWohnungen;
-    } else if (this.zertifizierung === 'QNG' && this.energiestandard === 'EH 40') {
+    } else if (
+      this.zertifizierung === 'QNG' &&
+      this.energiestandard === 'EH 40'
+    ) {
       this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
     }
   }
@@ -267,9 +310,14 @@ export class NeubauService {
   private _restsumme = 0;
   private updateRestsumme() {
     if (this.konstruktion === 'Konventionell') {
-      this._restsumme = (this.wohnflaeche * this._gestehungskosten) - this._kfwKredit;
+      this._restsumme =
+        this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
     } else {
-      this._restsumme = (this.wohnflaeche * this._gestehungskosten * this.constants.restsummeHolzbau) - this._kfwKredit;
+      this._restsumme =
+        this.wohnflaeche *
+          this._gestehungskosten *
+          this.constants.restsummeHolzbau -
+        this._kfwKredit;
     }
   }
 
@@ -277,13 +325,19 @@ export class NeubauService {
   // AF KFW [€]
   private _afKfw = 0;
   private updateAfKfW() {
-    this._afKfw = this._sollzinsKfw / 100 * Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) / (Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) - 1);
+    this._afKfw =
+      ((this._sollzinsKfw / 100) *
+        Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit)) /
+      (Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) - 1);
   }
 
   // AF Bank [€]
   private _afBank = 0;
   private updateAfBank() {
-    this._afBank = (this.kalkRealzins / 100) * Math.pow((1 + this.kalkRealzins / 100), this.kreditlaufzeit) / (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
+    this._afBank =
+      ((this.kalkRealzins / 100) *
+        Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit)) /
+      (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
   }
 
   // Annuität KfW [€]
@@ -301,13 +355,15 @@ export class NeubauService {
   // EF KFW [€]
   private _efKfW = 0;
   private updateEfKfw() {
-    this._efKfW = this._kfwKredit * this._sollzinsKfw / 100 * this.kreditlaufzeit;
+    this._efKfW =
+      ((this._kfwKredit * this._sollzinsKfw) / 100) * this.kreditlaufzeit;
   }
 
   // EF Bank [€]
   private _efBank = 0;
   private updateEfB() {
-    this._efBank = this.kalkRealzins * this._restsumme / 100 * this.kreditlaufzeit;
+    this._efBank =
+      ((this.kalkRealzins * this._restsumme) / 100) * this.kreditlaufzeit;
   }
 
   // Bank-Kredit [€]
@@ -319,9 +375,10 @@ export class NeubauService {
   // Finanzierungskosten (KfW) [€]
   private _finanzierungskostenKfw = 0;
   private updateFinanzierungskostenKfw() {
-    if (this.kfWDarlehen === "Annuitäten") {
-      this._finanzierungskostenKfw = this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
-    } else if (this.kfWDarlehen === "Endfälliges") {
+    if (this.kfWDarlehen === 'Annuitäten') {
+      this._finanzierungskostenKfw =
+        this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
+    } else if (this.kfWDarlehen === 'Endfälliges') {
       this._finanzierungskostenKfw = this._efKfW;
     }
   }
@@ -329,9 +386,10 @@ export class NeubauService {
   // Finazierungskosten (Finanzmarkt) [€]
   private _finanzierungskostenFinanzmarkt = 0;
   private updateFinanzierungskostenFinanzmarkt() {
-    if (this.bankDarlehen === "Annuitäten") {
-      this._finanzierungskostenFinanzmarkt = this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
-    } else if (this.bankDarlehen === "Endfälliges") {
+    if (this.bankDarlehen === 'Annuitäten') {
+      this._finanzierungskostenFinanzmarkt =
+        this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
+    } else if (this.bankDarlehen === 'Endfälliges') {
       this._finanzierungskostenFinanzmarkt = this._efBank;
     }
   }
@@ -346,19 +404,23 @@ export class NeubauService {
   // GB: Annuität [€]
   private _gbAnnuitaet = 0;
   private updateGbAnnuitaet() {
-    this._gbAnnuitaet = (this._kfwKredit + this._restsumme) * this._afBank * this.kreditlaufzeit - (this._kfwKredit + this._restsumme);
+    this._gbAnnuitaet =
+      (this._kfwKredit + this._restsumme) * this._afBank * this.kreditlaufzeit -
+      (this._kfwKredit + this._restsumme);
   }
 
   // GB: EFD [€]
   private _gbEfd = 0;
   private updateGbEfd() {
-    this._gbEfd = this.kalkRealzins * (this._kfwKredit + this._restsumme) / 100 * this.kreditlaufzeit;
+    this._gbEfd =
+      ((this.kalkRealzins * (this._kfwKredit + this._restsumme)) / 100) *
+      this.kreditlaufzeit;
   }
 
   // Option 1: ohne KfW [€]
   private _ohneKfw = 0;
   private updateOhneKfw() {
-    if (this.bankDarlehen === "Endfälliges") {
+    if (this.bankDarlehen === 'Endfälliges') {
       this._ohneKfw = this._gbEfd;
     } else {
       this._ohneKfw = this._gbAnnuitaet;
@@ -368,7 +430,8 @@ export class NeubauService {
   // Option 2: mit KfW [€]
   private _mitKfw = 0;
   private updateMitKfw() {
-    this._mitKfw = this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
+    this._mitKfw =
+      this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
   }
 
   // Gesamtkosten
@@ -379,9 +442,12 @@ export class NeubauService {
 
   private _gFinanzierung = 0;
   private updateGFinanzierung() {
-    this._gFinanzierung = this._kfwKredit + this._bankKredit + this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
+    this._gFinanzierung =
+      this._kfwKredit +
+      this._bankKredit +
+      this._finanzierungskostenKfw +
+      this._finanzierungskostenFinanzmarkt;
   }
-
 
   update() {
     this.updateKellergeschossOut();
@@ -416,7 +482,7 @@ export class NeubauService {
     this.updateGFinanzierung();
 
     this.outputSource.next(
-      this.output = {
+      (this.output = {
         // Projekt
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
@@ -468,9 +534,11 @@ export class NeubauService {
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKredit / this.wohnflaeche,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2: this._finanzierungskostenKfw / this.wohnflaeche,
+        finanzierungskostenKfwM2:
+          this._finanzierungskostenKfw / this.wohnflaeche,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
-        finanzierungskostenFinanzmarktM2: this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
+        finanzierungskostenFinanzmarktM2:
+          this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
         investitionskosten: this._investitionskosten,
         investitionskostenM2: this._investitionskosten / this.wohnflaeche,
         gInvestition: this._gInvestition,
@@ -483,7 +551,9 @@ export class NeubauService {
         mitKfw: this._mitKfw,
         mitKfwM2: this._mitKfw / this.wohnflaeche,
         differenzOhneMitKfw: this._ohneKfw - this._mitKfw,
-        differenzOhneMitKfwM2: (this._ohneKfw - this._mitKfw) / this.wohnflaeche
-      });
+        differenzOhneMitKfwM2:
+          (this._ohneKfw - this._mitKfw) / this.wohnflaeche,
+      })
+    );
   }
 }

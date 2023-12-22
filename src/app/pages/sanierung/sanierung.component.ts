@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormProjektComponent } from '../form-projekt/form-projekt.component';
-import { FormSanierungComponent } from '../form-sanierung/form-sanierung.component';
-import { FormDarlehenComponent } from '../form-darlehen/form-darlehen.component';
-import { ChartGkostenComponent } from '../chart-gkosten/chart-gkosten.component';
-import { ChartGkostenM2Component } from '../chart-gkosten-m2/chart-gkosten-m2.component';
-import { ChartInstallmentComponent } from '../chart-installment/chart-installment.component';
-import { ChartRepaymentComponent } from '../chart-repayment/chart-repayment.component';
-import { ChartFinanzierungskostenComponent } from '../chart-finanzierungskosten/chart-finanzierungskosten.component';
-import { DashboardNumbersComponent } from '../dashboard-numbers/dashboard-numbers.component';
+import { FormProjektComponent } from '../../form-projekt/form-projekt.component';
+import { FormSanierungComponent } from '../../form-sanierung/form-sanierung.component';
+import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
+import { ChartGkostenComponent } from '../../chart-gkosten/chart-gkosten.component';
+import { ChartGkostenM2Component } from '../../chart-gkosten-m2/chart-gkosten-m2.component';
+import { ChartInstallmentComponent } from '../../chart-installment/chart-installment.component';
+import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
+import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
+import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
 
 @Component({
   selector: 'app-sanierung',

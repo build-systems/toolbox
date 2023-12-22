@@ -1,16 +1,41 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, skipWhile } from 'rxjs';
 import { SanierungProjekt } from './sanierungprojekt';
-import { sanierung } from '../constants';
+import { sanierung } from '../../constants';
 import tableSanierung from './tableSanierung.json';
-import { FormProjektService } from '../form-projekt/form-projekt.service';
-import { FormDarlehenService } from '../form-darlehen/form-darlehen.service';
-import { FormSanierungService } from '../form-sanierung/form-sanierung.service';
+import { FormProjektService } from '../../form-projekt/form-projekt.service';
+import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
+import { FormSanierungService } from '../../form-sanierung/form-sanierung.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SanierungService {
+  // Project parameters
+  wohnflaeche = this.formProjektService.wohnflaeche.init;
+  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+  energiestandard: Energiestandard =
+    this.formProjektService.energiestandardOptions[0].value;
+  konstruktion: Konstruktion =
+    this.formProjektService.konstruktionOptions[0].value;
+  zertifizierung: Zertifizierung =
+    this.formProjektService.zertifizierungOptions[0].value;
+
+  // Sanierung parameters
+  worstPerformingBuilding = this.formSanierungService.worstPerformingBuilding;
+  serielleSanierung = this.formSanierungService.serielleSanierung;
+  zustandBestand: ZustandBestand =
+    this.formSanierungService.zustandBestandOptions[0].value;
+  eeKlasse = this.formSanierungService.eeKlasse;
+
+  // Darlehen parameters
+  kalkRealzins = this.formDarlehenService.kalkRealzins.init;
+  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
+  kfWDarlehen: KfWDarlehen =
+    this.formDarlehenService.kfWDarlehenOptions[0].value;
+  bankDarlehen: BankDarlehen =
+    this.formDarlehenService.bankDarlehenOptions[0].value;
+
   constructor(
     private constants: sanierung,
     private formProjektService: FormProjektService,
@@ -112,35 +137,8 @@ export class SanierungService {
         this.update();
       });
 
-      this.update();
+    this.update();
   }
-
-  output!: SanierungProjekt;
-  // Declare output object
-  private outputSource = new BehaviorSubject<SanierungProjekt>(this.output);
-  currentOutput$ = this.outputSource.asObservable();
-
-  // Project parameters
-  wohnflaeche = this.formProjektService.wohnflaeche.init;
-  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
-  energiestandard: Energiestandard =
-    this.formProjektService.energiestandardOptions[0].value;
-  konstruktion: Konstruktion =
-    this.formProjektService.konstruktionOptions[0].value;
-  zertifizierung: Zertifizierung =
-    this.formProjektService.zertifizierungOptions[0].value;
-
-  // Sanierung parameters
-  worstPerformingBuilding = this.formSanierungService.worstPerformingBuilding;
-  serielleSanierung = this.formSanierungService.serielleSanierung;
-  zustandBestand: ZustandBestand = this.formSanierungService.zustandBestandOptions[0].value;
-  eeKlasse = this.formSanierungService.eeKlasse;
-
-  // Darlehen parameters
-  kalkRealzins = this.formDarlehenService.kalkRealzins.init;
-  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
-  kfWDarlehen: KfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
-  bankDarlehen: BankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
 
   // Formulas
   // #01
@@ -467,6 +465,11 @@ export class SanierungService {
       this._finanzierungskostenFinanzmarkt;
   }
 
+  // Create an observable for Sanierung Output to be used in the Save and Export
+  outputSanierung!: SanierungProjekt;
+  private outputSanierungSource = new BehaviorSubject<SanierungProjekt>(this.outputSanierung);
+  currentOutput$ = this.outputSanierungSource.asObservable();
+
   public update() {
     // console.log("test");
     this.updateTilgungszuschuss();
@@ -500,8 +503,8 @@ export class SanierungService {
     this.updateGInvestition();
     this.updateGFinanzierung();
 
-    this.outputSource.next(
-      (this.output = {
+    this.outputSanierungSource.next(
+      (this.outputSanierung = {
         // Projekt
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,

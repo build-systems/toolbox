@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component'
-import { NeubauComponent } from './neubau/neubau.component'
-import { HomeComponent } from './home/home.component';
+import { NeubauComponent } from './pages/neubau/neubau.component'
+import { HomeComponent } from './pages/home/home.component';
 
 @Component({
   selector: 'app-root',

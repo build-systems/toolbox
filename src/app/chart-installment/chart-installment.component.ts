@@ -8,8 +8,8 @@ import {
   Chart,
 } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungProjekt } from '../sanierung/sanierungprojekt';
-import { SanierungService } from '../sanierung/sanierung.service';
+import { SanierungProjekt } from '../pages/sanierung/sanierungprojekt';
+import { SanierungService } from '../pages/sanierung/sanierung.service';
 import { FormProjektService } from '../form-projekt/form-projekt.service';
 import { FormDarlehenService } from '../form-darlehen/form-darlehen.service';
 

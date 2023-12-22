@@ -2,8 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType, Chart } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungProjekt } from '../sanierung/sanierungprojekt';
-import { SanierungService } from '../sanierung/sanierung.service';
+import { SanierungProjekt } from '../pages/sanierung/sanierungprojekt';
+import { SanierungService } from '../pages/sanierung/sanierung.service';
 
 @Component({
   selector: 'app-chart-repayment',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NeubauService } from '../neubau/neubau.service';
+import { NeubauService } from '../pages/neubau/neubau.service';
 
 @Component({
   selector: 'app-form-neubau',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SanierungService } from '../sanierung/sanierung.service';
+import { SanierungService } from '../pages/sanierung/sanierung.service';
 import { ShortNumberPipe } from '../pipes/short-number.pipe';
 
 

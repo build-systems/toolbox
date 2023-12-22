@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { NeubauComponent } from './neubau/neubau.component';
-import { SanierungComponent } from './sanierung/sanierung.component';
-import { ProfileComponent } from './profile/profile.component';
-import { PortfolioComponent } from './portfolio/portfolio.component';
-import { SettingsComponent } from './settings/settings.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NeubauComponent } from './pages/neubau/neubau.component';
+import { SanierungComponent } from './pages/sanierung/sanierung.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { PortfolioComponent } from './pages/portfolio/portfolio.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 export const routes: Routes = [
     {
