@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType, Chart } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungProjekt } from '../pages/sanierung/sanierungprojekt';
 import { SanierungService } from '../pages/sanierung/sanierung.service';
+import { DashboardOutput } from '../dashboard-output';
+import { NeubauService } from '../pages/neubau/neubau.service';
+import { filter } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-chart-gkosten',
@@ -12,27 +15,61 @@ import { SanierungService } from '../pages/sanierung/sanierung.service';
   templateUrl: './chart-gkosten.component.html',
   styleUrl: './chart-gkosten.component.css',
   host: {
-    class: 'ng-chart chart1'
-  }
+    class: 'ng-chart chart1',
+  },
 })
 export class ChartGkostenComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: SanierungProjekt;
+  output!: DashboardOutput;
 
-  constructor(private sanierungService: SanierungService) { }
+  // Router links. There must be better way to get the strings from app.routes.ts
+  currentRoute!: string;
+  sanierungRoute = '/sanierung';
+  neubauRoute = '/neubau';
 
-  ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
-      this.output = value;
-      this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschuss']), 0];
-      this.barChartData.datasets[1].data = [Math.round(this.output['investitionskosten']), 0];
-      this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarkt'])];
-      this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfw'])];
-      this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKredit'])];
-      this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKredit'])];
-      this.chart?.update();
+  constructor(
+    private sanierungService: SanierungService,
+    private neubauService: NeubauService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((val) => {
+      // Check for changes on the url
+      if (val instanceof NavigationEnd) {
+        // Then assign the url as a string
+        this.currentRoute = this.router.url.toString();
+      }
     });
+  }
+
+  // Here I made a copy of the subscription to both observables.
+  // It is a lot of repetitive code, but I run out of time
+  ngOnInit(): void {
+    this.sanierungService.currentOutputDashboard$
+    .pipe(filter(() => this.currentRoute === this.sanierungRoute))
+      .subscribe((value) => {
+        this.output = value;
+        this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschuss']), 0];
+        this.barChartData.datasets[1].data = [Math.round(this.output['investitionskosten']), 0];
+        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarkt'])];
+        this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfw'])];
+        this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKredit'])];
+        this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKredit'])];
+        this.chart?.update();
+      });
+      
+      this.neubauService.currentOutputDashboard$
+      .pipe(filter(() => this.currentRoute === this.neubauRoute))
+      .subscribe((value) => {
+        this.output = value;
+        this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschuss']), 0];
+        this.barChartData.datasets[1].data = [Math.round(this.output['investitionskosten']), 0];
+        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarkt'])];
+        this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfw'])];
+        this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKredit'])];
+        this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKredit'])];
+        this.chart?.update();
+      });
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -59,7 +96,7 @@ export class ChartGkostenComponent implements OnInit {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
         stacked: true,
@@ -81,14 +118,14 @@ export class ChartGkostenComponent implements OnInit {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return value.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "EUR",
+            return value.toLocaleString('de-DE', {
+              style: 'currency',
+              currency: 'EUR',
               minimumFractionDigits: 0,
-              maximumFractionDigits: 0
+              maximumFractionDigits: 0,
             });
-          }
-        }
+          },
+        },
       },
     },
     plugins: {
@@ -101,7 +138,7 @@ export class ChartGkostenComponent implements OnInit {
             size: 18,
             weight: 400,
           },
-          text: 'Gesamtkosten [€]'
+          text: 'Gesamtkosten [€]',
         },
         display: true,
         labels: {
@@ -115,12 +152,11 @@ export class ChartGkostenComponent implements OnInit {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
-          label: (item) =>
-            `${item.dataset.label}: ${item.formattedValue} €`,
+          label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
         },
       },
     },
@@ -149,7 +185,7 @@ export class ChartGkostenComponent implements OnInit {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
         min: -2_000_000,
@@ -173,14 +209,14 @@ export class ChartGkostenComponent implements OnInit {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return value.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "EUR",
+            return value.toLocaleString('de-DE', {
+              style: 'currency',
+              currency: 'EUR',
               minimumFractionDigits: 0,
-              maximumFractionDigits: 0
+              maximumFractionDigits: 0,
             });
-          }
-        }
+          },
+        },
       },
     },
     plugins: {
@@ -193,7 +229,7 @@ export class ChartGkostenComponent implements OnInit {
             size: 18,
             weight: 400,
           },
-          text: 'Gesamtkosten [€]'
+          text: 'Gesamtkosten [€]',
         },
         display: true,
         labels: {
@@ -207,12 +243,11 @@ export class ChartGkostenComponent implements OnInit {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
-          label: (item) =>
-            `${item.dataset.label}: ${item.formattedValue} €`,
+          label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
         },
       },
     },
@@ -332,7 +367,5 @@ export class ChartGkostenComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
   }
-
 }

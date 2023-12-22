@@ -37,7 +37,8 @@
         <span *ngFor="let item of formService.barrierefreiheitOptions">
             <input type="radio" id="{{item.id}}" value="{{item.value}}" name="barrierefreiheitIn"
                 formControlName="barrierefreiheitIn" />
-            <label for="{{item.id}}">{{item.value}}</label>
+                <!-- I added innerHTML in this one to be able to breakword with <wbr /> -->
+            <label for="{{item.id}}" [innerHTML]=item.text></label>
         </span>
     </fieldset>
     <fieldset class="radio-fieldset">
@@ -65,7 +66,7 @@
         </span>
     </fieldset>
     <fieldset>
-        <legend>grundstuecksbezogeneKostenRange <sup>&#9432;</sup></legend>
+        <legend>Grundstuecksbezogene Kosten<sup>&#9432;</sup></legend>
         <span class="slidernumber">
             <input type="range" formControlName="grundstuecksbezogeneKostenRange" min="{{formService.grundstKosten.min}}" max="{{formService.grundstKosten.max}}" step="{{formService.grundstKosten.step}}" class="slider" />
             <input type="number" formControlName="grundstuecksbezogeneKosten" min="{{formService.grundstKosten.min}}" max="{{formService.grundstKosten.max}}"
@@ -73,7 +74,7 @@
         </span>
     </fieldset>
     <fieldset>
-        <legend>baunebenkostenKeinFin <sup>&#9432;</sup></legend>
+        <legend>Baunebenkosten Kein Fin <sup>&#9432;</sup></legend>
         <span class="slidernumber">
             <input type="range" formControlName="baunebenkostenKeinFinRange" min="{{formService.baunebenkostenKeinFin.min}}" max="{{formService.baunebenkostenKeinFin.max}}" step="{{formService.baunebenkostenKeinFin.step}}" class="slider" />
             <input type="number" formControlName="baunebenkostenKeinFin" min="{{formService.baunebenkostenKeinFin.min}}" max="{{formService.baunebenkostenKeinFin.max}}"

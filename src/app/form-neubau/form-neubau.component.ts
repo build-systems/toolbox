@@ -33,9 +33,9 @@ export class FormNeubauComponent implements OnInit {
       baunebenkostenKeinFin: [this.formService.baunebenkostenKeinFin.init, [Validators.min(this.formService.baunebenkostenKeinFin.min), Validators.max(this.formService.baunebenkostenKeinFin.max)]],
     });
 
-    // Konstruktion
+    // Susbscribe to form changes
     this.neubauForm.get('konstruktion')?.valueChanges.subscribe(value => {
-      // Updates the sanierungService
+      // Update variable / observable
       this.formService.setKonstruktion(value);
     });
 

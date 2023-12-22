@@ -1,32 +1,40 @@
-export interface SanierungProjekt {
+export interface NeubauProjekt {
     // Projekt
     wohnflaeche: number;
     anzahlWohnungen: number;
     energiestandard: Energiestandard;
     konstruktion: Konstruktion;
     zertifizierung: Zertifizierung;
-    // Sanierung
-    worstPerformingBuilding: boolean;
-    serielleSanierung: boolean;
-    zustandBestand: ZustandBestand;
-    eeKlasse: boolean;
+    // Neubau input
+    kellergeschossIn: Kellergeschoss;
+    stellplaetzeIn: Stellplaetze;
+    aufzugsanlageIn: Aufzugsanlage;
+    barrierefreiheitIn: BarrierefreiesBauen;
+    dachbegruenungIn: Dachbegruenung;
+    baustellenlogistikIn: Baustellenlogistik;
+    aussenanlagenIn: Aussenanlagen;
+    grundstuecksbezogeneKosten: number;
+    baunebenkostenKeinFin: number;
+    // Neubau output
+    kellergeschossOut: number;
+    stellplaetzeOut: number;
+    redGarageOut: number;
+    aufzugsanlageOut: number;
+    barrierefreiheitOut: number;
+    dachbegruenungOut: number;
+    baustellenlogistikOut: number;
+    aussenanlagenOut: number;
+    energetischerStandard: number;
     // Dalehen
     kalkRealzins: number;
     kreditlaufzeit: number;
     kfWDarlehen: KfWDarlehen;
     bankDarlehen: BankDarlehen;
     // Output
-    tilgungszuschuss: number;
-    eeBonus: number;
-    nhBonus: number;
-    wpbBonus: number;
-    serSanBonus: number;
     gestehungskosten: number;
     nrKredit: number;
     sollzinsKfw: number;
-    maxKfwKredit: number;
     gesamtgestehungskosten: number;
-    foerdersumme: number;
     restsumme: number;
     afKfw: number;
     afBank: number;
@@ -47,8 +55,6 @@ export interface SanierungProjekt {
     finanzierungskostenFinanzmarktM2: number;
     investitionskosten: number;
     investitionskostenM2: number;
-    kfwZuschuss: number;
-    kfwZuschussM2: number;
     gInvestition: number;
     gInvestitionM2: number;
     gFinanzierung: number;
@@ -58,6 +64,4 @@ export interface SanierungProjekt {
     ohneKfwM2: number;
     mitKfw: number;
     mitKfwM2: number;
-    differenzOhneMitKfw: number;
-    differenzOhneMitKfwM2: number;
 }

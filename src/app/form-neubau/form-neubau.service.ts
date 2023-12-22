@@ -15,19 +15,20 @@ export class FormNeubauService {
     { id: 'kelgesc2', value: 'Nicht Vorhanden' },
   ];
   stellplaetzeOptions: StellplaetzeOptions[] = [
-    { id: 'stpl1', value: 'Garage' },
-    { id: 'stpl2', value: 'Parkpalette' },
-    { id: 'stpl3', value: 'Tiefgarage' },
+    { id: 'stpl1', value: 'Tiefgarage' },
+    { id: 'stpl2', value: 'Garage' },
+    { id: 'stpl3', value: 'Parkpalette' },
   ];
   aufzugsanlageOptions: AufzugsanlageOptions[] = [
     { id: 'aufanl1', value: 'Vorhanden' },
     { id: 'aufanl2', value: 'Nicht Vorhanden' },
   ];
+  // I added the text field to also include html breakword syntax
   barrierefreiheitOptions: BarrierefreiesBauenOptions[] = [
-    { id: 'barfre1', value: 'Barrierereduziert' },
-    { id: 'barfre2', value: 'Barrierefrei' },
-    { id: 'barfre3', value: 'Barrierefrei (R)' },
-    { id: 'barfre4', value: 'Keine Anforderungen' },
+    { id: 'barfre1', value: 'Barrierereduziert', text: 'Barriere<wbr />reduziert' },
+    { id: 'barfre2', value: 'Barrierefrei', text: 'Barriere<wbr />frei' },
+    { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Barriere<wbr />frei (R)' },
+    { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
   ];
   dachbegruenungOptions: DachbegruenungOptions[] = [
     { id: 'dachbe1', value: 'Vorhanden' },

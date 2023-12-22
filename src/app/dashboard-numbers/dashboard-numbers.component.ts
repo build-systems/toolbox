@@ -35,5 +35,4 @@ export class DashboardNumbersComponent implements OnInit {
     this.kfwKredit = value['kfwKredit'];
     });
   }
-
 }

@@ -1,44 +1,61 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ChartConfiguration,
-  ChartData,
-  ChartEvent,
-  ChartType,
-  Chart,
-} from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungProjekt } from '../pages/sanierung/sanierungprojekt';
 import { SanierungService } from '../pages/sanierung/sanierung.service';
-import { FormProjektService } from '../form-projekt/form-projekt.service';
-import { FormDarlehenService } from '../form-darlehen/form-darlehen.service';
+import { DashboardOutput } from '../dashboard-output';
+import { NeubauService } from '../pages/neubau/neubau.service';
+import { filter } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-chart-installment',
+  selector: 'app-chart-annuitaeten',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-installment.component.html',
-  styleUrl: './chart-installment.component.css',
+  templateUrl: './chart-annuitaeten.component.html',
+  styleUrl: './chart-annuitaeten.component.css',
   host: {
     class: 'ng-chart',
   },
 })
-export class ChartInstallmentComponent {
+export class ChartAnnuitaetenComponent {
+  // ATENTION: The logic is different from chart-repayment.
+  // It has one more item in each array so we can start on zero and current year
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: SanierungProjekt;
+  output!: DashboardOutput;
+
+  // Router links. There must be better way to get the strings from app.routes.ts
+  currentRoute!: string;
+  sanierungRoute = '/sanierung';
+  neubauRoute = '/neubau';
 
   currentYear = new Date().getFullYear();
   chartLabels: number[] = [];
   annuitaeten: number[] = [];
   kreditlaufzeit!: number;
 
-  constructor(private sanierungService: SanierungService) {}
+  constructor(
+    private sanierungService: SanierungService,
+    private neubauService: NeubauService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((val) => {
+      // Check for changes on the url
+      if (val instanceof NavigationEnd) {
+        // Then assign the url as a string
+        this.currentRoute = this.router.url.toString();
+      }
+    });
+  }
 
+  // Here I made a copy of the subscription to both observables.
+  // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
+    this.sanierungService.currentOutputDashboard$
+    .pipe(filter(() => this.currentRoute === this.sanierungRoute))
+      .subscribe((value) => {
       this.output = value;
-      // console.log("ChartInstallment");
       // If kreditlaufzeit was updated assign new value and create labels
       if (this.kreditlaufzeit != value['kreditlaufzeit']) {
         this.kreditlaufzeit = value['kreditlaufzeit'];
@@ -50,53 +67,110 @@ export class ChartInstallmentComponent {
         // Update labels
         this.barChartData.labels = this.chartLabels;
       }
-
       // Monthly KfW-Darlehen
       this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
-
       // KfW-Darlehen
-      if (this.output['kfWDarlehen'] === 'Annuitäten') {
+      if (this.output.kfWDarlehen === 'Annuitäten') {
         this.annuitaeten = this.annuitaeten.map(
           (num) => num + this.output['annuitaetKfW']
         );
-      } else if (this.output['kfWDarlehen'] === 'Endfälliges') {
+      } else if (this.output.kfWDarlehen === 'Endfälliges') {
         for (var i = 0; i < this.kreditlaufzeit; i++) {
           // If it is the last installment, add Annuität and KfW-Kredit
           if (i === this.kreditlaufzeit - 1) {
             this.annuitaeten[i] =
               this.annuitaeten[i] +
-              this.output['efKfW'] / this.kreditlaufzeit +
-              this.output['kfwKredit'];
+              this.output.efKfW / this.kreditlaufzeit +
+              this.output.kfwKredit;
             // Otherwise add just Annuität
           } else {
             this.annuitaeten[i] =
-              this.annuitaeten[i] + this.output['efKfW'] / this.kreditlaufzeit;
+              this.annuitaeten[i] + this.output.efKfW / this.kreditlaufzeit;
           }
         }
       }
-
       // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
-      if (this.output['bankDarlehen'] === 'Annuitäten') {
+      if (this.output.bankDarlehen === 'Annuitäten') {
         this.annuitaeten = this.annuitaeten.map(
-          (num) => num + this.output['annuitaetBank']
+          (num) => num + this.output.annuitaetBank
         );
-      } else if (this.output['bankDarlehen'] === 'Endfälliges') {
+      } else if (this.output.bankDarlehen === 'Endfälliges') {
         for (var i = 0; i < this.kreditlaufzeit; i++) {
           if (i === this.kreditlaufzeit - 1) {
             this.annuitaeten[i] =
               this.annuitaeten[i] +
-              this.output['efBank'] / this.kreditlaufzeit +
-              this.output['bankKredit'];
+              this.output.efBank / this.kreditlaufzeit +
+              this.output.bankKredit;
           } else {
             this.annuitaeten[i] =
-              this.annuitaeten[i] + this.output['efBank'] / this.kreditlaufzeit;
+              this.annuitaeten[i] + this.output.efBank / this.kreditlaufzeit;
           }
         }
       }
-
       // Update chart data
       this.barChartData.datasets[0].data = this.annuitaeten;
+      // If KfW-Darlehen === kein Darlehen
+      this.chart?.update();
+    });
 
+
+    this.neubauService.currentOutputDashboard$
+    .pipe(filter(() => this.currentRoute === this.neubauRoute))
+      .subscribe((value) => {
+      this.output = value;
+      // If kreditlaufzeit was updated assign new value and create labels
+      if (this.kreditlaufzeit != value['kreditlaufzeit']) {
+        this.kreditlaufzeit = value['kreditlaufzeit'];
+        this.chartLabels = [];
+        // Create labels
+        for (var i = 1; i <= this.kreditlaufzeit; i++) {
+          this.chartLabels.push(this.currentYear + i);
+        }
+        // Update labels
+        this.barChartData.labels = this.chartLabels;
+      }
+      // Monthly KfW-Darlehen
+      this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
+      // KfW-Darlehen
+      if (this.output.kfWDarlehen === 'Annuitäten') {
+        this.annuitaeten = this.annuitaeten.map(
+          (num) => num + this.output.annuitaetKfW
+        );
+      } else if (this.output.kfWDarlehen === 'Endfälliges') {
+        for (var i = 0; i < this.kreditlaufzeit; i++) {
+          // If it is the last installment, add Annuität and KfW-Kredit
+          if (i === this.kreditlaufzeit - 1) {
+            this.annuitaeten[i] =
+              this.annuitaeten[i] +
+              this.output.efKfW / this.kreditlaufzeit +
+              this.output.kfwKredit;
+            // Otherwise add just Annuität
+          } else {
+            this.annuitaeten[i] =
+              this.annuitaeten[i] + this.output.efKfW / this.kreditlaufzeit;
+          }
+        }
+      }
+      // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
+      if (this.output.bankDarlehen === 'Annuitäten') {
+        this.annuitaeten = this.annuitaeten.map(
+          (num) => num + this.output.annuitaetBank
+        );
+      } else if (this.output.bankDarlehen === 'Endfälliges') {
+        for (var i = 0; i < this.kreditlaufzeit; i++) {
+          if (i === this.kreditlaufzeit - 1) {
+            this.annuitaeten[i] =
+              this.annuitaeten[i] +
+              this.output.efBank / this.kreditlaufzeit +
+              this.output.bankKredit;
+          } else {
+            this.annuitaeten[i] =
+              this.annuitaeten[i] + this.output.efBank / this.kreditlaufzeit;
+          }
+        }
+      }
+      // Update chart data
+      this.barChartData.datasets[0].data = this.annuitaeten;
       // If KfW-Darlehen === kein Darlehen
       this.chart?.update();
     });
@@ -319,7 +393,6 @@ export class ChartInstallmentComponent {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
   }
 
   public chartHovered({
@@ -329,6 +402,5 @@ export class ChartInstallmentComponent {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    console.log(event, active);
   }
 }

@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType, Chart } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungProjekt } from '../pages/sanierung/sanierungprojekt';
 import { SanierungService } from '../pages/sanierung/sanierung.service';
+import { NeubauService } from '../pages/neubau/neubau.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { DashboardOutput } from '../dashboard-output';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-chart-finanzierungskosten',
@@ -12,23 +15,57 @@ import { SanierungService } from '../pages/sanierung/sanierung.service';
   templateUrl: './chart-finanzierungskosten.component.html',
   styleUrl: './chart-finanzierungskosten.component.css',
   host: {
-    class: 'ng-chart'
-  }
+    class: 'ng-chart',
+  },
 })
 export class ChartFinanzierungskostenComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: SanierungProjekt;
+  output!: DashboardOutput;
 
-  constructor(private sanierungService: SanierungService) { }
+  // Router links. There must be better way to get the strings from app.routes.ts
+  currentRoute!: string;
+  sanierungRoute = '/sanierung';
+  neubauRoute = '/neubau';
 
-  ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
-      // console.log("ChartFinanzierungskosten");
-      this.output = value;
-      this.barChartData.datasets[0].data = [Math.round(this.output['ohneKfw']), Math.round(this.output['mitKfw'])];
-      this.chart?.update();
+  constructor(
+    private sanierungService: SanierungService,
+    private neubauService: NeubauService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((val) => {
+      // Check for changes on the url
+      if (val instanceof NavigationEnd) {
+        // Then assign the url as a string
+        this.currentRoute = this.router.url.toString();
+      }
     });
+  }
+
+  // Here I made a copy of the subscription to both observables.
+  // It is a lot of repetitive code, but I run out of time
+  ngOnInit(): void {
+    this.sanierungService.currentOutputDashboard$
+      .pipe(filter(() => this.currentRoute === this.sanierungRoute))
+      .subscribe((value) => {
+        this.output = value;
+        this.barChartData.datasets[0].data = [
+          Math.round(this.output.ohneKfw),
+          Math.round(this.output.mitKfw),
+        ];
+        this.chart?.update();
+      });
+
+    this.neubauService.currentOutputDashboard$
+      .pipe(filter(() => this.currentRoute === this.neubauRoute))
+      .subscribe((value) => {
+        this.output = value;
+        this.barChartData.datasets[0].data = [
+          Math.round(this.output.ohneKfw),
+          Math.round(this.output.mitKfw),
+        ];
+        this.chart?.update();
+      });
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -54,7 +91,7 @@ export class ChartFinanzierungskostenComponent {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
         alignToPixels: true,
@@ -75,14 +112,14 @@ export class ChartFinanzierungskostenComponent {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return value.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "EUR",
+            return value.toLocaleString('de-DE', {
+              style: 'currency',
+              currency: 'EUR',
               minimumFractionDigits: 0,
-              maximumFractionDigits: 0
+              maximumFractionDigits: 0,
             });
-          }
-        }
+          },
+        },
       },
     },
     plugins: {
@@ -95,7 +132,7 @@ export class ChartFinanzierungskostenComponent {
             size: 18,
             weight: 400,
           },
-          text: 'Finanzierungskosten [€]'
+          text: 'Finanzierungskosten [€]',
         },
         display: true,
         labels: {
@@ -109,12 +146,11 @@ export class ChartFinanzierungskostenComponent {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
-          label: (item) =>
-            `${item.dataset.label}: ${item.formattedValue} €`,
+          label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
         },
       },
     },
@@ -142,7 +178,7 @@ export class ChartFinanzierungskostenComponent {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
         max: 1_800_000,
@@ -164,14 +200,14 @@ export class ChartFinanzierungskostenComponent {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return value.toLocaleString("de-DE", {
-              style: "currency",
-              currency: "EUR",
+            return value.toLocaleString('de-DE', {
+              style: 'currency',
+              currency: 'EUR',
               minimumFractionDigits: 0,
-              maximumFractionDigits: 0
+              maximumFractionDigits: 0,
             });
-          }
-        }
+          },
+        },
       },
     },
     plugins: {
@@ -184,7 +220,7 @@ export class ChartFinanzierungskostenComponent {
             size: 18,
             weight: 400,
           },
-          text: 'Finanzierungskosten [€]'
+          text: 'Finanzierungskosten [€]',
         },
         display: true,
         labels: {
@@ -198,12 +234,11 @@ export class ChartFinanzierungskostenComponent {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
-          label: (item) =>
-            `${item.dataset.label}: ${item.formattedValue} €`,
+          label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
         },
       },
     },
@@ -242,8 +277,5 @@ export class ChartFinanzierungskostenComponent {
   }: {
     event?: ChartEvent;
     active?: object[];
-  }): void {
-    console.log(event, active);
-  }
-
+  }): void {}
 }

@@ -1,28 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, RouterModule } from '@angular/router';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-
   // This logic is to apply style to the current route icon in the nav bar
   // Declaring the current route as string
   currentRoute!: string;
 
-  // Import Router and use it in the construction
+  // Import Router and use it in the constructor
   constructor(private router: Router) {
     // Subscribe to its observable
     router.events.subscribe((val) => {
       // Check if val is NavigationEnd (it has many actions untile this last one)
       if (val instanceof NavigationEnd)
-        // Then assign the url as a string 
+        // Then assign the url as a string
         this.currentRoute = this.router.url.toString();
     });
   }
@@ -36,5 +35,4 @@ export class NavbarComponent {
       return false;
     }
   }
-
 }

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, skipWhile } from 'rxjs';
-import { NeubauProjekt } from './neubauprojekt';
-import { neubau } from '../../constants';
+import { BehaviorSubject, filter, skipWhile } from 'rxjs';
+import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { neubau } from '../../shared/constants';
 import { FormProjektService } from '../../form-projekt/form-projekt.service';
 import { FormNeubauService } from '../../form-neubau/form-neubau.service';
 import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { DashboardOutput } from '../../dashboard-output';
 
 @Injectable({
   providedIn: 'root',
@@ -48,43 +50,73 @@ export class NeubauService {
   bankDarlehen: BankDarlehen =
     this.formDarlehenService.bankDarlehenOptions[0].value;
 
+  // Router link
+  currentRoute!: string;
+  neubauRoute = '/neubau';
+
   constructor(
     private constants: neubau,
     private formProjektService: FormProjektService,
     private formNeubauService: FormNeubauService,
-    private formDarlehenService: FormDarlehenService
+    private formDarlehenService: FormDarlehenService,
+    private router: Router
   ) {
+    router.events.subscribe((val) => {
+      // Check for changes on the url
+      if (val instanceof NavigationEnd) {
+        // Then assign the url as a string
+        this.currentRoute = this.router.url.toString();
+      }
+    });
+
     // Subscribe to all Projekt Form parameters and update after every change
     this.formProjektService.currentWohnflaeche$
-      .pipe(skipWhile((value) => value === this.wohnflaeche))
+    .pipe(
+        // Don't do anything until the user changes one of the forms
+        skipWhile((value) => value === this.wohnflaeche),
+        // Don't do anything unless the Router is in the neubau page
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.wohnflaeche = value;
         this.update();
       });
 
     this.formProjektService.currentAnzahlWohnungen$
-      .pipe(skipWhile((value) => value === this.anzahlWohnungen))
+      .pipe(
+        skipWhile((value) => value === this.anzahlWohnungen),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.anzahlWohnungen = value;
         this.update();
       });
 
     this.formProjektService.currentEnergiestandard$
-      .pipe(skipWhile((value) => value === this.energiestandard))
+      .pipe(
+        skipWhile((value) => value === this.energiestandard),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.energiestandard = value;
         this.update();
       });
 
     this.formProjektService.currentKonstruktion$
-      .pipe(skipWhile((value) => value === this.konstruktion))
+      .pipe(
+        skipWhile((value) => value === this.konstruktion),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.konstruktion = value;
         this.update();
       });
 
     this.formProjektService.currentZertifizierung$
-      .pipe(skipWhile((value) => value === this.zertifizierung))
+      .pipe(
+        skipWhile((value) => value === this.zertifizierung),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.zertifizierung = value;
         this.update();
@@ -148,28 +180,42 @@ export class NeubauService {
 
     // Subscribe to all Darlehen Form parameters and update after every change
     this.formDarlehenService.currentKalkRealzins$
-      .pipe(skipWhile((value) => value === this.kalkRealzins))
+    .pipe(
+        // Don't do anything until the user changes one of the forms
+        skipWhile((value) => value === this.kalkRealzins),
+        // Don't do anything unless the Router is in the neubau page
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.kalkRealzins = value;
         this.update();
       });
 
     this.formDarlehenService.currentKreditlaufzeit$
-      .pipe(skipWhile((value) => value === this.kreditlaufzeit))
+      .pipe(
+        skipWhile((value) => value === this.kreditlaufzeit),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.kreditlaufzeit = value;
         this.update();
       });
 
     this.formDarlehenService.currentKfWDarlehen$
-      .pipe(skipWhile((value) => value === this.kfWDarlehen))
+      .pipe(
+        skipWhile((value) => value === this.kfWDarlehen),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.kfWDarlehen = value;
         this.update();
       });
 
     this.formDarlehenService.currentBankDarlehen$
-      .pipe(skipWhile((value) => value === this.bankDarlehen))
+      .pipe(
+        skipWhile((value) => value === this.bankDarlehen),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
       .subscribe((value) => {
         this.bankDarlehen = value;
         this.update();
@@ -181,14 +227,16 @@ export class NeubauService {
   // Formulas
   // #01
   // Neubau output
-  private _kellergeschossOut = 0;
+  private _kellergeschossOut = this.constants.kellerVorhanden;
   private updateKellergeschossOut() {
     if (this.kellergeschossIn === 'Vorhanden') {
       this._kellergeschossOut = this.constants.kellerVorhanden;
+    } else {
+      this._kellergeschossOut = 0
     }
   }
 
-  private _stellplaetzeOut = 0;
+  private _stellplaetzeOut = this.constants.stellplaetzeTiefgarage;
   private updateStellplaetzeOut() {
     if (this.stellplaetzeIn === 'Garage') {
       this._stellplaetzeOut = this.constants.stellplaetzeGarage;
@@ -196,27 +244,33 @@ export class NeubauService {
       this._stellplaetzeOut = this.constants.stellplaetzeParkpalette;
     } else if (this.stellplaetzeIn === 'Tiefgarage') {
       this._stellplaetzeOut = this.constants.stellplaetzeTiefgarage;
+    } else {
+      this._stellplaetzeOut = 0;
     }
   }
 
-  private _redGarageOut = 0;
+  private _redGarageOut = this.constants.redGarageTrue;
   private updateRedGarageOut() {
     if (
       this.kellergeschossIn === 'Vorhanden' &&
       this.stellplaetzeIn === 'Tiefgarage'
     ) {
       this._redGarageOut = this.constants.redGarageTrue;
+    } else {
+      this._redGarageOut = 0;
     }
   }
 
-  private _aufzugsanlageOut = 0;
+  private _aufzugsanlageOut = this.constants.aufzugsanlageVorhanden;
   private updateAufzugsanlageOut() {
     if (this.aufzugsanlageIn === 'Vorhanden') {
       this._aufzugsanlageOut = this.constants.aufzugsanlageVorhanden;
+    } else {
+      this._aufzugsanlageOut = 0;
     }
   }
 
-  private _barrierefreiheitOut = 0;
+  private _barrierefreiheitOut = this.constants.barrierereduziert;
   private updateBarrierefreiheitOut() {
     if (this.barrierefreiheitIn === 'Barrierereduziert') {
       this._barrierefreiheitOut = this.constants.barrierereduziert;
@@ -224,24 +278,30 @@ export class NeubauService {
       this._barrierefreiheitOut = this.constants.barrierefrei;
     } else if (this.barrierefreiheitIn === 'Barrierefrei (R)') {
       this._barrierefreiheitOut = this.constants.barrierereduziertR;
+    } else {
+      this._barrierefreiheitOut = 0;
     }
   }
 
-  private _dachbegruenungOut = 0;
+  private _dachbegruenungOut = this.constants.dachbegruenungVorhanden;
   private updateDachbegruenungOut() {
     if (this.dachbegruenungIn === 'Vorhanden') {
       this._dachbegruenungOut = this.constants.dachbegruenungVorhanden;
+    } else { 
+      this._dachbegruenungOut = 0;
     }
   }
 
-  private _baustellenlogistikOut = 0;
+  private _baustellenlogistikOut = this.constants.baustellenlogistikVorhanden;
   private updateBaustellenlogistikOut() {
     if (this.baustellenlogistikIn === 'Vorhanden') {
       this._baustellenlogistikOut = this.constants.baustellenlogistikVorhanden;
+    } else {
+      this._baustellenlogistikOut = 0;
     }
   }
 
-  private _aussenanlagenOut = 0;
+  private _aussenanlagenOut = this.constants.aussenanlagenGering;
   private updateAussenanlagenOut() {
     if (this.aussenanlagenIn === 'Gering') {
       this._aussenanlagenOut = this.constants.aussenanlagenGering;
@@ -249,6 +309,8 @@ export class NeubauService {
       this._aussenanlagenOut = this.constants.aussenanlagenMittel;
     } else if (this.aussenanlagenIn === 'Hoch') {
       this._aussenanlagenOut = this.constants.aussenanlagenHoch;
+    } else {
+      this._aussenanlagenOut = this.constants.aussenanlagenGering;
     }
   }
 
@@ -256,6 +318,8 @@ export class NeubauService {
   private updateEnergetischerStandard() {
     if (this.energiestandard === 'EH 40') {
       this._energetischerStandardOut = this.constants.energiestandardEH40;
+    } else {
+      this._energetischerStandardOut = 0;
     }
   }
 
@@ -323,7 +387,7 @@ export class NeubauService {
   }
 
   // Restsumme [€]
-  private _restsumme = 0;
+  private _restsumme = this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
   private updateRestsumme() {
     if (this.konstruktion === 'Konventionell') {
       this._restsumme =
@@ -364,7 +428,7 @@ export class NeubauService {
 
   // Annuität Bank [€]
   private _annuitaetBank = 0;
-  private updateAnnuitaetB() {
+  private updateAnnuitaetBank() {
     this._annuitaetBank = this._restsumme * this._afBank;
   }
 
@@ -377,7 +441,7 @@ export class NeubauService {
 
   // EF Bank [€]
   private _efBank = 0;
-  private updateEfB() {
+  private updateEfBank() {
     this._efBank =
       ((this.kalkRealzins * this._restsumme) / 100) * this.kreditlaufzeit;
   }
@@ -412,7 +476,7 @@ export class NeubauService {
 
   // Investitionskosten [€]
   private _investitionskosten = 0;
-  private updateInvestitionkosten() {
+  private updateInvestitionskosten() {
     this._investitionskosten = this.wohnflaeche * this._gestehungskosten;
   }
 
@@ -465,9 +529,60 @@ export class NeubauService {
       this._finanzierungskostenFinanzmarkt;
   }
 
-  // Declare output object
+  private _kfwKreditM2 = 0;
+  private updateKfwKreditM2() {
+    this._kfwKreditM2 = this._kfwKredit / this.wohnflaeche;
+  }
+  
+  private _bankKreditM2 = 0;
+  private updateBankKreditM2() {
+    this._bankKreditM2 = this._bankKredit / this.wohnflaeche;
+  }
+
+  private _finanzierungskostenKfwM2 = 0;
+  private updateFinanzierungskostenKfwM2() {
+    this._finanzierungskostenKfwM2 = this._finanzierungskostenKfw / this.wohnflaeche;
+  }
+
+  private _finanzierungskostenFinanzmarktM2 = 0;
+  private updateFinanzierungskostenFinanzmarktM2() {
+    this._finanzierungskostenFinanzmarktM2 = this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
+  }
+
+  private _investitionskostenM2 = 0;
+  private updateInvestitionskostenM2() {
+    this._investitionskostenM2 = this._investitionskosten / this.wohnflaeche;
+  }
+
+  private _gInvestitionM2 = 0;
+  private updateGInvestitionM2() {
+    this._gInvestitionM2 = this._gInvestition / this.wohnflaeche;
+  }
+
+  private _gFinanzierungM2 = 0;
+  private updateGFinanzierungM2() {
+    this._gFinanzierungM2 = this._gFinanzierung / this.wohnflaeche;
+  }
+
+  private _ohneKfwM2 = 0;
+  private updateOhneKfwM2() {
+    this._ohneKfwM2 = this._ohneKfw / this.wohnflaeche;
+  }
+
+  private _mitKfwM2 = 0;
+  private updateMitKfwM2() {
+    this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
+  }
+
+  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard 
+  outputDashboard!: DashboardOutput;
+  private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
+    this.outputDashboard
+  );
+  currentOutputDashboard$ = this.outputDashboardSource.asObservable();
+
+  // Neubau Output to be used in the Save and Export
   outputNeubau!: NeubauProjekt;
-  // Observable
   private outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
     this.outputNeubau
   );
@@ -488,22 +603,64 @@ export class NeubauService {
     this.updateSollzinsKfw();
     this.updateGesamtgestehungskosten();
     this.updateKfwKredit();
+    this.updateKfwKreditM2();
     this.updateRestsumme();
     this.updateAfKfW();
     this.updateAfBank();
     this.updateAnnuitaetKfw();
-    this.updateAnnuitaetB();
+    this.updateAnnuitaetBank();
     this.updateEfKfw();
-    this.updateEfB();
+    this.updateEfBank();
     this.updateBankKredit();
+    this.updateBankKreditM2();
     this.updateFinanzierungskostenKfw();
+    this.updateFinanzierungskostenKfwM2();
     this.updateFinanzierungskostenFinanzmarkt();
-    this.updateInvestitionkosten();
+    this.updateFinanzierungskostenFinanzmarktM2();
+    this.updateInvestitionskosten();
+    this.updateInvestitionskostenM2();
+    this.updateGbAnnuitaet();
     this.updateGbEfd();
     this.updateOhneKfw();
+    this.updateOhneKfwM2();
     this.updateMitKfw();
+    this.updateMitKfwM2();
     this.updateGInvestition();
+    this.updateGInvestitionM2();
     this.updateGFinanzierung();
+    this.updateGFinanzierungM2();
+
+    this.outputDashboardSource.next(
+      (this.outputDashboard = {
+        // Dalehen
+        kreditlaufzeit: this.kreditlaufzeit,
+        kfWDarlehen: this.kfWDarlehen,
+        bankDarlehen: this.bankDarlehen,
+        // Zusammenfassung Ergebnisse
+        annuitaetKfW: this._annuitaetKfW,
+        annuitaetBank: this._annuitaetBank,
+        efKfW: this._efKfW,
+        efBank: this._efBank,
+        kfwKredit: this._kfwKredit,
+        kfwKreditM2: this._kfwKreditM2,
+        bankKredit: this._bankKredit,
+        bankKreditM2: this._bankKreditM2,
+        finanzierungskostenKfw: this._finanzierungskostenKfw,
+        finanzierungskostenKfwM2:
+          this._finanzierungskostenKfwM2,
+        finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
+        finanzierungskostenFinanzmarktM2:
+          this._finanzierungskostenFinanzmarktM2,
+        investitionskosten: this._investitionskosten,
+        investitionskostenM2: this._investitionskostenM2,
+        kfwZuschuss: 0,
+        kfwZuschussM2: 0,
+        ohneKfw: this._ohneKfw,
+        ohneKfwM2: this._ohneKfwM2,
+        mitKfw: this._mitKfw,
+        mitKfwM2: this._mitKfwM2,
+      })
+    );
 
     this.outputNeubauSource.next(
       (this.outputNeubau = {
@@ -554,29 +711,26 @@ export class NeubauService {
         gbEfd: this._gbEfd,
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
-        kfwKreditM2: this._kfwKredit / this.wohnflaeche,
+        kfwKreditM2: this._kfwKreditM2,
         bankKredit: this._bankKredit,
-        bankKreditM2: this._bankKredit / this.wohnflaeche,
+        bankKreditM2: this._bankKreditM2,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
         finanzierungskostenKfwM2:
-          this._finanzierungskostenKfw / this.wohnflaeche,
+          this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
         finanzierungskostenFinanzmarktM2:
-          this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
+          this._finanzierungskostenFinanzmarktM2,
         investitionskosten: this._investitionskosten,
-        investitionskostenM2: this._investitionskosten / this.wohnflaeche,
+        investitionskostenM2: this._investitionskostenM2,
         gInvestition: this._gInvestition,
-        gInvestitionM2: this._gInvestition / this.wohnflaeche,
+        gInvestitionM2: this._gInvestitionM2,
         gFinanzierung: this._gFinanzierung,
-        gFinanzierungM2: this._gFinanzierung / this.wohnflaeche,
+        gFinanzierungM2: this._gFinanzierungM2,
         // Vergleichsrechnung
         ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfw / this.wohnflaeche,
+        ohneKfwM2: this._ohneKfwM2,
         mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfw / this.wohnflaeche,
-        differenzOhneMitKfw: this._ohneKfw - this._mitKfw,
-        differenzOhneMitKfwM2:
-          (this._ohneKfw - this._mitKfw) / this.wohnflaeche,
+        mitKfwM2: this._mitKfwM2,
       })
     );
   }
