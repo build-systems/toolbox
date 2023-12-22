@@ -11,7 +11,7 @@ export interface NeubauProjekt {
     aufzugsanlageIn: Aufzugsanlage;
     barrierefreiheitIn: BarrierefreiesBauen;
     dachbegruenungIn: Dachbegruenung;
-    baustellenlogistikIn: AnspruchsvolleBaustellenlogistik;
+    baustellenlogistikIn: Baustellenlogistik;
     aussenanlagenIn: Aussenanlagen;
     grundstuecksbezogeneKosten: number;
     baunebenkostenKeinFin: number;

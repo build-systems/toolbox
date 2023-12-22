@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NeubauService } from '../pages/neubau/neubau.service';
+import { FormNeubauService } from './form-neubau.service';
 
 @Component({
   selector: 'app-form-neubau',
@@ -11,105 +11,70 @@ import { NeubauService } from '../pages/neubau/neubau.service';
   styleUrl: './form-neubau.component.css'
 })
 export class FormNeubauComponent implements OnInit {
-
-  // Konstruktion
-  konstruktion = [
-    {id: "konst1", value: "Konventionell"},
-    {id: "konst2", value: "Holzbau"}
-  ]
-
-  // Kellergeschoss
-  kellergeschossIn = [
-    {id: "keller1", value: "Vorhanden"},
-    {id: "keller2", value: "Nicht Vorhanden"},
-  ]
-  
-  // Stellplätze
-  stellplaetzeIn = [
-    {id: "stelpla1", value: "Tiefgarage"},
-    {id: "stelpla2", value: "Parkpalette"},
-    {id: "stelpla3", value: "Garage"},
-  ]
-  
-  // Aufzugsanlage
-  aufzugsanlageIn = [
-    {id: "aufzugs1", value: "Vorhanden"},
-    {id: "aufzugs2", value: "Nicht Vorhanden"},
-  ]
-  
-  // Barrierefreies Bauen
-  barrierefreiheitIn = [
-    {id: "barfrei1", value: "Reduziert"},
-    {id: "barfrei2", value: "Frei"},
-    {id: "barfrei3", value: "Frei (R)"},
-    {id: "barfrei4", value: "Keine Anforderungen"},
-  ]
-  // barrierefreiheitIn = [
-  //   {id: "barfrei1", value: "Barrierereduziert"},
-  //   {id: "barfrei2", value: "Barrierefrei"},
-  //   {id: "barfrei3", value: "Barrierefrei (R)"},
-  //   {id: "barfrei4", value: "Keine Anforderungen"},
-  // ]
-  
-  // Dachbegrünung
-  dachbegruenungIn = [
-    {id: "dachbeg1", value: "Vorhanden"},
-    {id: "dachbeg2", value: "Nicht Vorhanden"},
-  ]
-  
-  // Anspruchsvolle Baustellenlogistik
-  baustellenlogistikIn = [
-    {id: "baustlog1", value: "Vorhanden"},
-    {id: "baustlog2", value: "Nicht Vorhanden"},
-  ]
-  
-  // Außenanlagen
-  aussenanlagenIn = [
-    {id: "auslag1", value: "Gering"},
-    {id: "auslag2", value: "Mittel"},
-    {id: "auslag3", value: "Hoch"},
-  ]
-
-  // Grundstücksbezogene Kosten
-  grundstKosten = {
-    min: 0,
-    init: 0,
-    max: 200,
-    step: 1
-  }
-
-  // Baunebenkosten (excl. Finanzierung)
-  baunebenkostenKeinFin = {
-    min: 0,
-    init: 0,
-    max: 200,
-    step: 1
-  }
+  // ATTENTION: All form variables are stored at form-neubau.service.ts
 
   neubauForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private neubauService: NeubauService) { }
+  constructor(private fb: FormBuilder, public formService: FormNeubauService) { }
 
   ngOnInit(): void {
     this.neubauForm = this.fb.group({
-      konstruktion: new FormControl(this.konstruktion[0].value),
-      kellergeschossIn: new FormControl(this.kellergeschossIn[0].value),
-      stellplaetzeIn: new FormControl(this.stellplaetzeIn[0].value),
-      aufzugsanlageIn: new FormControl(this.aufzugsanlageIn[0].value),
-      barrierefreiheitIn: new FormControl(this.barrierefreiheitIn[0].value),
-      dachbegruenungIn: new FormControl(this.dachbegruenungIn[0].value),
-      baustellenlogistikIn: new FormControl(this.baustellenlogistikIn[0].value),
-      aussenanlagenIn: new FormControl(this.aussenanlagenIn[0].value),
-      grundstuecksbezogeneKostenRange: [this.grundstKosten.init, [Validators.min(this.grundstKosten.min), Validators.max(this.grundstKosten.max)]],
-      grundstuecksbezogeneKosten: [this.grundstKosten.init, [Validators.min(this.grundstKosten.min), Validators.max(this.grundstKosten.max)]],
-      baunebenkostenKeinFinRange: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
-      baunebenkostenKeinFin: [this.baunebenkostenKeinFin.init, [Validators.min(this.baunebenkostenKeinFin.min), Validators.max(this.baunebenkostenKeinFin.max)]],
+      konstruktion: new FormControl(this.formService.konstructionOptions[0].value),
+      kellergeschossIn: new FormControl(this.formService.kellergeschossOptions[0].value),
+      stellplaetzeIn: new FormControl(this.formService.stellplaetzeOptions[0].value),
+      aufzugsanlageIn: new FormControl(this.formService.aufzugsanlageOptions[0].value),
+      barrierefreiheitIn: new FormControl(this.formService.barrierefreiheitOptions[0].value),
+      dachbegruenungIn: new FormControl(this.formService.dachbegruenungOptions[0].value),
+      baustellenlogistikIn: new FormControl(this.formService.baustellenlogistikOptions[0].value),
+      aussenanlagenIn: new FormControl(this.formService.aussenanlagenOptions[0].value),
+      grundstuecksbezogeneKostenRange: [this.formService.grundstKosten.init, [Validators.min(this.formService.grundstKosten.min), Validators.max(this.formService.grundstKosten.max)]],
+      grundstuecksbezogeneKosten: [this.formService.grundstKosten.init, [Validators.min(this.formService.grundstKosten.min), Validators.max(this.formService.grundstKosten.max)]],
+      baunebenkostenKeinFinRange: [this.formService.baunebenkostenKeinFin.init, [Validators.min(this.formService.baunebenkostenKeinFin.min), Validators.max(this.formService.baunebenkostenKeinFin.max)]],
+      baunebenkostenKeinFin: [this.formService.baunebenkostenKeinFin.init, [Validators.min(this.formService.baunebenkostenKeinFin.min), Validators.max(this.formService.baunebenkostenKeinFin.max)]],
     });
 
     // Konstruktion
-    this.neubauForm.get("konstruktion")?.valueChanges.subscribe(value => {
+    this.neubauForm.get('konstruktion')?.valueChanges.subscribe(value => {
       // Updates the sanierungService
-      this.neubauService.setKonstruktion(value);
+      this.formService.setKonstruktion(value);
+    });
+
+    this.neubauForm.get('kellergeschossIn')?.valueChanges.subscribe(value => {
+      this.formService.setKellergeschoss(value);
+    });
+    this.neubauForm.get('stellplaetzeIn')?.valueChanges.subscribe(value => {
+      this.formService.setStellplaetzeIn(value);
+    });
+    this.neubauForm.get('aufzugsanlageIn')?.valueChanges.subscribe(value => {
+      this.formService.setAufzugsanlageIn(value);
+    });
+    this.neubauForm.get('barrierefreiheitIn')?.valueChanges.subscribe(value => {
+      this.formService.setBarrierefreiheitIn(value);
+    });
+    this.neubauForm.get('dachbegruenungIn')?.valueChanges.subscribe(value => {
+      this.formService.setDachbegruenungIn(value);
+    });
+    this.neubauForm.get('baustellenlogistikIn')?.valueChanges.subscribe(value => {
+      this.formService.setBaustellenlogistikIn(value);
+    });
+    this.neubauForm.get('aussenanlagenIn')?.valueChanges.subscribe(value => {
+      this.formService.setAussenanlagenIn(value);
+    });
+    this.neubauForm.get('grundstuecksbezogeneKostenRange')?.valueChanges.subscribe(value => {
+      this.neubauForm.get('grundstuecksbezogeneKosten')?.setValue(value, { emitEvent: false });
+      this.formService.setGrundstuecksbezogeneKosten(value);
+    });
+    this.neubauForm.get('grundstuecksbezogeneKosten')?.valueChanges.subscribe(value => {
+      this.neubauForm.get('grundstuecksbezogeneKostenRange')?.setValue(value, { emitEvent: false });
+      this.formService.setGrundstuecksbezogeneKosten(value);
+    });
+    this.neubauForm.get('baunebenkostenKeinFinRange')?.valueChanges.subscribe(value => {
+      this.neubauForm.get('baunebenkostenKeinFin')?.setValue(value, { emitEvent: false });
+      this.formService.setBaunebenkostenKeinFin(value);
+    });
+    this.neubauForm.get('baunebenkostenKeinFin')?.valueChanges.subscribe(value => {
+      this.neubauForm.get('baunebenkostenKeinFinRange')?.setValue(value, { emitEvent: false });
+      this.formService.setBaunebenkostenKeinFin(value);
     });
   }
 

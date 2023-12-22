@@ -21,7 +21,7 @@ export class FormProjektComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public formService: FormProjektService,
+    public formService: FormProjektService
   ) {}
 
   // Inititalize projekt form

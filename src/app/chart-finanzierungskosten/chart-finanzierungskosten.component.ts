@@ -23,7 +23,7 @@ export class ChartFinanzierungskostenComponent {
   constructor(private sanierungService: SanierungService) { }
 
   ngOnInit(): void {
-    this.sanierungService.currentOutput$.subscribe((value) => {
+    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       // console.log("ChartFinanzierungskosten");
       this.output = value;
       this.barChartData.datasets[0].data = [Math.round(this.output['ohneKfw']), Math.round(this.output['mitKfw'])];

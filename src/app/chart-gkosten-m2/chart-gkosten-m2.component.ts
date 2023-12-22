@@ -25,7 +25,7 @@ export class ChartGkostenM2Component implements OnInit {
   constructor(private sanierungService: SanierungService) { }
 
   ngOnInit(): void {
-    this.sanierungService.currentOutput$.subscribe((value) => {
+    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
       this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschussM2']), 0];
       this.barChartData.datasets[1].data = [Math.round(this.output['investitionskostenM2']), 0];

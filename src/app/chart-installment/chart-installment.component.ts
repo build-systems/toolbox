@@ -36,7 +36,7 @@ export class ChartInstallmentComponent {
   constructor(private sanierungService: SanierungService) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutput$.subscribe((value) => {
+    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
       // console.log("ChartInstallment");
       // If kreditlaufzeit was updated assign new value and create labels

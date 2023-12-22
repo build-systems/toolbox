@@ -26,7 +26,7 @@ export class DashboardNumbersComponent implements OnInit {
   constructor(private sanierungService: SanierungService) { }
 
   ngOnInit(): void {
-    this.sanierungService.currentOutput$.subscribe((value) => {
+    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
     this.kfwZuschuss = value['kfwZuschuss'];
     this.investitionskosten = value['investitionskosten'];
     this.finanzierungskostenFinanzmarkt = value['finanzierungskostenFinanzmarkt'];

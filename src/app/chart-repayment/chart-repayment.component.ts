@@ -32,7 +32,7 @@ export class ChartRepaymentComponent {
 
 
   ngOnInit(): void {
-    this.sanierungService.currentOutput$.subscribe((value) => {
+    this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
 
       // If kreditlaufzeit was updated assign new value and create labels 

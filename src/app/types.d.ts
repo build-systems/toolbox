@@ -4,11 +4,6 @@ type EnergiestandardOptions = {
     id: string;
     value: Energiestandard;
 };
-type Konstruktion = "Konventionell" | "Holzbau";
-type KonstruktionOptions = {
-    id: string;
-    value: Konstruktion;
-}
 type Zertifizierung = "Keine Zertifizierung" | "QNG";
 type ZertifizierungOptions ={
     id: string;
@@ -21,13 +16,47 @@ type ZustandBestandOptions = {
     value: ZustandBestand;
 };
 // Neubau
+type Konstruktion = "Konventionell" | "Holzbau";
+type KonstruktionOptions = {
+    id: string;
+    value: Konstruktion;
+}
 type Kellergeschoss = "Vorhanden" | "Nicht Vorhanden";
+type KellergeschossOptions = {
+    id: string;
+    value: Kellergeschoss;
+};
 type Stellplaetze = "Garage" | "Parkpalette" | "Tiefgarage";
+type StellplaetzeOptions = {
+    id: string;
+    value: Stellplaetze;
+};
 type Aufzugsanlage = "Vorhanden" | "Nicht Vorhanden";
+type AufzugsanlageOptions = {
+    id: string;
+    value: Aufzugsanlage;
+};
 type BarrierefreiesBauen = "Keine Anforderungen" | "Barrierereduziert" | "Barrierefrei" | "Barrierefrei (R)";
+type BarrierefreiesBauenOptions = {
+    id: string;
+    value: BarrierefreiesBauen;
+};
 type Dachbegruenung = "Vorhanden" | "Nicht Vorhanden";
-type AnspruchsvolleBaustellenlogistik = "Vorhanden" | "Nicht Vorhanden";
+type DachbegruenungOptions = {
+    id: string;
+    value: Dachbegruenung;
+};
+// Anspruchsvolle Baustellenlogistik
+type Baustellenlogistik = "Vorhanden" | "Nicht Vorhanden";
+type BaustellenlogistikOptions = {
+    id: string;
+    value: Baustellenlogistik;
+};
 type Aussenanlagen = "Gering" | "Mittel" | "Hoch";
+type AussenanlagenOptions = {
+    id: string;
+    value: Aussenanlagen;
+};
 // Darlehen
 type KfWDarlehen = "Annuitäten" | "Endfälliges" | "kein";
 type KfWDarlehenOptions = {

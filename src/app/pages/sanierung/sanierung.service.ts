@@ -14,27 +14,21 @@ export class SanierungService {
   // Project parameters
   wohnflaeche = this.formProjektService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
-  energiestandard: Energiestandard =
-    this.formProjektService.energiestandardOptions[0].value;
-  konstruktion: Konstruktion =
-    this.formProjektService.konstruktionOptions[0].value;
-  zertifizierung: Zertifizierung =
-    this.formProjektService.zertifizierungOptions[0].value;
+  energiestandard: Energiestandard = this.formProjektService.energiestandardOptions[0].value;
+  konstruktion: Konstruktion = this.formProjektService.konstruktionOptions[0].value;
+  zertifizierung: Zertifizierung = this.formProjektService.zertifizierungOptions[0].value;
 
   // Sanierung parameters
   worstPerformingBuilding = this.formSanierungService.worstPerformingBuilding;
   serielleSanierung = this.formSanierungService.serielleSanierung;
-  zustandBestand: ZustandBestand =
-    this.formSanierungService.zustandBestandOptions[0].value;
+  zustandBestand: ZustandBestand = this.formSanierungService.zustandBestandOptions[0].value;
   eeKlasse = this.formSanierungService.eeKlasse;
 
   // Darlehen parameters
   kalkRealzins = this.formDarlehenService.kalkRealzins.init;
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
-  kfWDarlehen: KfWDarlehen =
-    this.formDarlehenService.kfWDarlehenOptions[0].value;
-  bankDarlehen: BankDarlehen =
-    this.formDarlehenService.bankDarlehenOptions[0].value;
+  kfWDarlehen: KfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
+  bankDarlehen: BankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
 
   constructor(
     private constants: sanierung,
@@ -48,7 +42,6 @@ export class SanierungService {
       .subscribe((value) => {
         this.wohnflaeche = value;
         this.update();
-        console.log('Updated');
       });
 
     this.formProjektService.currentAnzahlWohnungen$
@@ -468,10 +461,9 @@ export class SanierungService {
   // Create an observable for Sanierung Output to be used in the Save and Export
   outputSanierung!: SanierungProjekt;
   private outputSanierungSource = new BehaviorSubject<SanierungProjekt>(this.outputSanierung);
-  currentOutput$ = this.outputSanierungSource.asObservable();
+  currentOutputSanierung$ = this.outputSanierungSource.asObservable();
 
   public update() {
-    // console.log("test");
     this.updateTilgungszuschuss();
     this.updateEeBonus();
     this.updateNhBonus();

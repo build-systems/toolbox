@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, skipWhile } from 'rxjs';
 import { NeubauProjekt } from './neubauprojekt';
 import { neubau } from '../../constants';
 import { FormProjektService } from '../../form-projekt/form-projekt.service';
@@ -20,6 +20,26 @@ export class NeubauService {
   zertifizierung: Zertifizierung =
     this.formProjektService.zertifizierungOptions[0].value;
 
+  // Neubau form parameters
+  kellergeschossIn: Kellergeschoss =
+    this.formNeubauService.kellergeschossOptions[0].value;
+  stellplaetzeIn: Stellplaetze =
+    this.formNeubauService.stellplaetzeOptions[0].value;
+  aufzugsanlageIn: Aufzugsanlage =
+    this.formNeubauService.aufzugsanlageOptions[0].value;
+  barrierefreiheitIn: BarrierefreiesBauen =
+    this.formNeubauService.barrierefreiheitOptions[0].value;
+  dachbegruenungIn: Dachbegruenung =
+    this.formNeubauService.dachbegruenungOptions[0].value;
+  baustellenlogistikIn: Baustellenlogistik =
+    this.formNeubauService.baustellenlogistikOptions[0].value;
+  aussenanlagenIn: Aussenanlagen =
+    this.formNeubauService.aussenanlagenOptions[0].value;
+  grundstuecksbezogeneKosten: number =
+    this.formNeubauService.grundstKosten.init;
+  baunebenkostenKeinFin: number =
+    this.formNeubauService.baunebenkostenKeinFin.init;
+
   // Darlehen parameters
   kalkRealzins = this.formDarlehenService.kalkRealzins.init;
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
@@ -34,131 +54,127 @@ export class NeubauService {
     private formNeubauService: FormNeubauService,
     private formDarlehenService: FormDarlehenService
   ) {
-    this.formProjektService.currentWohnflaeche$.subscribe((value) => {
-      this.wohnflaeche = value;
-      this.update();
-    });
-    this.formProjektService.currentAnzahlWohnungen$.subscribe((value) => {
-      this.anzahlWohnungen = value;
-      this.update();
-    });
-    this.formProjektService.currentEnergiestandard$.subscribe((value) => {
-      this.energiestandard = value;
-      this.update();
-    });
-    this.formProjektService.currentKonstruktion$.subscribe((value) => {
-      this.konstruktion = value;
-      this.update();
-    });
-    this.formProjektService.currentZertifizierung$.subscribe((value) => {
-      this.zertifizierung = value;
-      this.update();
-    });
-    this.update();
-  }
+    // Subscribe to all Projekt Form parameters and update after every change
+    this.formProjektService.currentWohnflaeche$
+      .pipe(skipWhile((value) => value === this.wohnflaeche))
+      .subscribe((value) => {
+        this.wohnflaeche = value;
+        this.update();
+      });
 
-  // Declare output object
-  output!: NeubauProjekt;
-  // Observable
-  private outputSource = new BehaviorSubject<NeubauProjekt>(this.output);
-  currentOutput$ = this.outputSource.asObservable();
+    this.formProjektService.currentAnzahlWohnungen$
+      .pipe(skipWhile((value) => value === this.anzahlWohnungen))
+      .subscribe((value) => {
+        this.anzahlWohnungen = value;
+        this.update();
+      });
 
-  // Projekt form parameters
-  wohnflaeche!: number;
-  anzahlWohnungen!: number;
-  energiestandard!: Energiestandard;
-  konstruktion!: Konstruktion;
-  zertifizierung!: Zertifizierung;
+    this.formProjektService.currentEnergiestandard$
+      .pipe(skipWhile((value) => value === this.energiestandard))
+      .subscribe((value) => {
+        this.energiestandard = value;
+        this.update();
+      });
 
-  public setKonstruktion(text: Konstruktion) {
-    this.konstruktion = text;
-    this.update();
-  }
+    this.formProjektService.currentKonstruktion$
+      .pipe(skipWhile((value) => value === this.konstruktion))
+      .subscribe((value) => {
+        this.konstruktion = value;
+        this.update();
+      });
 
-  public setZertifizierung(text: Zertifizierung) {
-    this.zertifizierung = text;
-    this.update();
-  }
+    this.formProjektService.currentZertifizierung$
+      .pipe(skipWhile((value) => value === this.zertifizierung))
+      .subscribe((value) => {
+        this.zertifizierung = value;
+        this.update();
+      });
 
-  // Neubau form parameters
-  kellergeschossIn: Kellergeschoss = 'Vorhanden';
-  stellplaetzeIn: Stellplaetze = 'Tiefgarage';
-  aufzugsanlageIn: Aufzugsanlage = 'Vorhanden';
-  barrierefreiheitIn: BarrierefreiesBauen = 'Barrierereduziert';
-  dachbegruenungIn: Dachbegruenung = 'Vorhanden';
-  baustellenlogistikIn: AnspruchsvolleBaustellenlogistik = 'Vorhanden';
-  aussenanlagenIn: Aussenanlagen = 'Gering';
-  grundstuecksbezogeneKosten: number = 0;
-  baunebenkostenKeinFin: number = 0;
+    // Subscribe to all Neubau Form parameters and update after every change
+    this.formNeubauService.currentKellergeschoss$
+      .pipe(skipWhile((value) => value === this.kellergeschossIn))
+      .subscribe((value) => {
+        this.kellergeschossIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentStellplaetze$
+      .pipe(skipWhile((value) => value === this.stellplaetzeIn))
+      .subscribe((value) => {
+        this.stellplaetzeIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentAufzugsanlage$
+      .pipe(skipWhile((value) => value === this.aufzugsanlageIn))
+      .subscribe((value) => {
+        this.aufzugsanlageIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentBarriereFreiheit$
+      .pipe(skipWhile((value) => value === this.barrierefreiheitIn))
+      .subscribe((value) => {
+        this.barrierefreiheitIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentDachbegruenun$
+      .pipe(skipWhile((value) => value === this.dachbegruenungIn))
+      .subscribe((value) => {
+        this.dachbegruenungIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentBaustellenlogistik$
+      .pipe(skipWhile((value) => value === this.baustellenlogistikIn))
+      .subscribe((value) => {
+        this.baustellenlogistikIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentAussenanlage$
+      .pipe(skipWhile((value) => value === this.aussenanlagenIn))
+      .subscribe((value) => {
+        this.aussenanlagenIn = value;
+        this.update();
+      });
+    this.formNeubauService.currentGrundstuecksbezogeneKosten$
+      .pipe(skipWhile((value) => value === this.grundstuecksbezogeneKosten))
+      .subscribe((value) => {
+        this.grundstuecksbezogeneKosten = value;
+        this.update();
+      });
+    this.formNeubauService.currentBaunebenkostenKeinFin$
+      .pipe(skipWhile((value) => value === this.baunebenkostenKeinFin))
+      .subscribe((value) => {
+        this.baunebenkostenKeinFin = value;
+        this.update();
+      });
 
-  public setKellergeschoss(text: Kellergeschoss) {
-    this.kellergeschossIn = text;
-    this.update();
-  }
+    // Subscribe to all Darlehen Form parameters and update after every change
+    this.formDarlehenService.currentKalkRealzins$
+      .pipe(skipWhile((value) => value === this.kalkRealzins))
+      .subscribe((value) => {
+        this.kalkRealzins = value;
+        this.update();
+      });
 
-  public setStellplaetzeIn(text: Stellplaetze) {
-    this.stellplaetzeIn = text;
-    this.update();
-  }
+    this.formDarlehenService.currentKreditlaufzeit$
+      .pipe(skipWhile((value) => value === this.kreditlaufzeit))
+      .subscribe((value) => {
+        this.kreditlaufzeit = value;
+        this.update();
+      });
 
-  public setAufzugsanlageIn(text: Aufzugsanlage) {
-    this.aufzugsanlageIn = text;
-    this.update();
-  }
+    this.formDarlehenService.currentKfWDarlehen$
+      .pipe(skipWhile((value) => value === this.kfWDarlehen))
+      .subscribe((value) => {
+        this.kfWDarlehen = value;
+        this.update();
+      });
 
-  public setBarrierefreiheitIn(text: BarrierefreiesBauen) {
-    this.barrierefreiheitIn = text;
-    this.update();
-  }
+    this.formDarlehenService.currentBankDarlehen$
+      .pipe(skipWhile((value) => value === this.bankDarlehen))
+      .subscribe((value) => {
+        this.bankDarlehen = value;
+        this.update();
+      });
 
-  public setDachbegruenungIn(text: Dachbegruenung) {
-    this.dachbegruenungIn = text;
-    this.update();
-  }
-
-  public setBaustellenlogistikIn(text: AnspruchsvolleBaustellenlogistik) {
-    this.baustellenlogistikIn = text;
-    this.update();
-  }
-
-  public setAussenanlagenIn(text: Aussenanlagen) {
-    this.aussenanlagenIn = text;
-    this.update();
-  }
-
-  public setGrundstuecksbezogeneKosten(value: number) {
-    this.grundstuecksbezogeneKosten = value;
-    this.update();
-  }
-
-  public setBaunebenkostenKeinFin(value: number) {
-    this.baunebenkostenKeinFin = value;
-    this.update();
-  }
-
-  // Darlehen parameters
-  kalkRealzins!: number;
-  kreditlaufzeit!: number;
-  kfWDarlehen!: KfWDarlehen;
-  bankDarlehen!: BankDarlehen;
-
-  public setKalkRealzins(value: number) {
-    this.kalkRealzins = value;
-    this.update();
-  }
-
-  public setKreditlaufzeit(value: number) {
-    this.kreditlaufzeit = value;
-    this.update();
-  }
-
-  public setKfWDarlehen(text: KfWDarlehen) {
-    this.kfWDarlehen = text;
-    this.update();
-  }
-
-  public setBankDarlehen(text: BankDarlehen) {
-    this.bankDarlehen = text;
     this.update();
   }
 
@@ -449,6 +465,14 @@ export class NeubauService {
       this._finanzierungskostenFinanzmarkt;
   }
 
+  // Declare output object
+  outputNeubau!: NeubauProjekt;
+  // Observable
+  private outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
+    this.outputNeubau
+  );
+  currentOutputNeubau$ = this.outputNeubauSource.asObservable();
+
   update() {
     this.updateKellergeschossOut();
     this.updateStellplaetzeOut();
@@ -481,8 +505,8 @@ export class NeubauService {
     this.updateGInvestition();
     this.updateGFinanzierung();
 
-    this.outputSource.next(
-      (this.output = {
+    this.outputNeubauSource.next(
+      (this.outputNeubau = {
         // Projekt
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
