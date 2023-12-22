@@ -23,9 +23,9 @@ export class FormDarlehenService {
 
   // KfW-Darlehen centralized form values
   kfWDarlehenOptions: KfWDarlehenOptions[] = [
-    { id: 'kfwd1', value: 'kein' },
     { id: 'kfwd2', value: 'Annuitäten' },
     { id: 'kfwd3', value: 'Endfälliges' },
+    { id: 'kfwd1', value: 'kein' },
   ];
 
   // Bank-Darlehen centralized form values

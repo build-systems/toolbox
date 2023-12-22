@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType, Chart } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { SanierungProjekt } from '../sanierung/sanierungprojekt';
-import { SanierungService } from '../sanierung.service';
+import { SanierungService } from '../sanierung/sanierung.service';
 
 @Component({
   selector: 'app-chart-repayment',
@@ -183,6 +183,97 @@ export class ChartRepaymentComponent {
       },
     },
   };
+  // I duplicated the options and the data to use as a placeholder for a smoother page load
+  // I couldn't find a better way at the time
+  public barChartOptionsPlaceholder: ChartConfiguration['options'] = {
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        alignToPixels: true,
+        border: {
+          display: false,
+        },
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: '#999',
+          font: {
+            size: 12,
+            family: 'system-ui',
+            weight: 400,
+          },
+        }
+      },
+      y: {
+        max: 3_000_000,
+        alignToPixels: true,
+        border: {
+          display: false,
+        },
+        title: {
+          display: false,
+        },
+        grid: {
+          color: '#333',
+        },
+        ticks: {
+          color: '#999',
+          font: {
+            size: 12,
+            family: 'system-ui',
+            weight: 400,
+          },
+          callback: function (value, index, values) {
+            return value.toLocaleString("de-DE", {
+              style: "currency",
+              currency: "EUR",
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+            });
+          }
+        }
+      },
+    },
+    interaction: {
+      intersect: false,
+      mode: 'index',
+    },
+    plugins: {
+      legend: {
+        title: {
+          color: 'white',
+          display: true,
+          font: {
+            family: 'Montserrat',
+            size: 18,
+            weight: 400,
+          },
+          text: 'Repayment [€]'
+        },
+        display: true,
+        labels: {
+          color: '#ddd',
+          font: {
+            size: 12,
+            family: 'system-ui',
+            weight: 400,
+          },
+          boxWidth: 6,
+          boxHeight: 6,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: (item) =>
+            `${item.dataset.label}: ${item.formattedValue} €`,
+        },
+        usePointStyle: true,
+      },
+    },
+  };
   public barChartType: ChartType = 'line';
 
   public barChartData: ChartData<'line'> = {
@@ -191,6 +282,29 @@ export class ChartRepaymentComponent {
       {
         label: 'Summe',
         data: this.repaymentTotal,
+        fill: 'start',
+        backgroundColor: 'rgba(58, 194, 150, 0.6)',
+        borderColor: 'rgb(58, 194, 150)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(58, 194, 150)',
+        pointStyle: 'circle',
+        pointRadius: 2,
+        pointBorderColor: 'rgb(58, 194, 150)',
+        pointBackgroundColor: 'rgba(58, 194, 150, 0.6)'
+      },
+    ],
+  };
+  // I duplicated the options and the data to use as a placeholder for a smoother page load
+  // I couldn't find a better way at the time
+  public barChartDataPlaceholder: ChartData<'line'> = {
+    labels: [
+      2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035,
+      2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043
+    ],
+    datasets: [
+      {
+        label: 'Summe',
+        data: [0],
         fill: 'start',
         backgroundColor: 'rgba(58, 194, 150, 0.6)',
         borderColor: 'rgb(58, 194, 150)',

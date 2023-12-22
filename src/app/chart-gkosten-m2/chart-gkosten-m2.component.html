@@ -1,24 +1,20 @@
-<canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions"
-    [type]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+@defer (on timer(200ms); prefetch on idle) {
+<canvas
+  baseChart
+  class="chart"
+  [data]="barChartData"
+  [options]="barChartOptions"
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)"
+>
 </canvas>
-<!-- <details>
-    <summary>Values</summary>
-    <div>
-        Zuschuss: {{ zuschuss/wohnungsflaeche | currency:'EUR' }}
-    </div>
-    <div>
-        Investitionskosten: {{ investitionskosten/wohnungsflaeche | currency:'EUR' }}
-    </div>
-    <div>
-        Finanzierungskosten Finanzmarkt: {{ finanzierungskostenMarkt/wohnungsflaeche | currency:'EUR' }}
-    </div>
-    <div>
-        Finanzierungskosten KfW: {{ finanzierungskostenKfW/wohnungsflaeche | currency:'EUR' }}
-    </div>
-    <div>
-        Bank Kredit: {{ bankKredit/wohnungsflaeche | currency:'EUR' }}
-    </div>
-    <div>
-        KfW Kredit: {{ kfwKredit | currency:'EUR' }}
-    </div>
-</details> -->
+} @placeholder (minimum 250ms) {
+  <canvas baseChart
+  class="chart"
+  [data]="barChartDataPlaceholder"
+  [options]="barChartOptionsPlaceholder"
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)">
+</canvas>
+}

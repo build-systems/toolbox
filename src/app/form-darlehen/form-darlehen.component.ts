@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FormDarlehenService } from '../form-darlehen.service';
+import { FormDarlehenService } from './form-darlehen.service';
 
 @Component({
   selector: 'app-form-darlehen',

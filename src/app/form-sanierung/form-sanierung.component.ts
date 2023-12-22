@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SanierungService } from '../sanierung.service';
+import { FormSanierungService } from './form-sanierung.service';
 
 @Component({
   selector: 'app-form-sanierung',
@@ -11,47 +11,41 @@ import { SanierungService } from '../sanierung.service';
   styleUrl: './form-sanierung.component.css'
 })
 export class FormSanierungComponent implements OnInit {
-    // Zustand Bestand centralized form control
-  zustandBestand = [
-    {id: "zusbest1", value: "Unsaniert"},
-    {id: "zusbest2", value: "Teilsaniert"},
-    {id: "zusbest3", value: "Umfassend saniert"}
-  ]
-
+    
   sanierungForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private sanierungService: SanierungService) {  }
+  constructor(private fb: FormBuilder, public formService: FormSanierungService) {  }
 
   ngOnInit(): void {
     this.sanierungForm = this.fb.group({
-        worstPerformingBuilding: new FormControl(true),
-        serielleSanierung: new FormControl(true),
-        zustandBestand: new FormControl(this.zustandBestand[0]['value']),
-        eeKlasse: new FormControl(true),
+        worstPerformingBuilding: new FormControl(this.formService.worstPerformingBuilding),
+        serielleSanierung: new FormControl(this.formService.serielleSanierung),
+        zustandBestand: new FormControl(this.formService.zustandBestandOptions[0].value),
+        eeKlasse: new FormControl(this.formService.eeKlasse),
       });
 
       // Worst Performing Building
       this.sanierungForm.get("worstPerformingBuilding")?.valueChanges.subscribe(value => {
         // Updates the sanierungService
-        this.sanierungService.setWpc(value);
+        this.formService.setWpc(value);
       });
 
       // Serielle Sanierung
       this.sanierungForm.get("serielleSanierung")?.valueChanges.subscribe(value => {
         // Updates the sanierungService
-        this.sanierungService.setSerielleSanierung(value);
+        this.formService.setSerielleSanierung(value);
       });
 
       // Zustand Bestand
       this.sanierungForm.get("zustandBestand")?.valueChanges.subscribe(value => {
         // Updates the sanierungService
-        this.sanierungService.setZustandBestand(value);
+        this.formService.setZustandBestand(value);
       });
 
       // EE Klasse
       this.sanierungForm.get("eeKlasse")?.valueChanges.subscribe(value => {
         // Updates the sanierungService
-        this.sanierungService.setEeKlasse(value);
+        this.formService.setEeKlasse(value);
       });
   }
 }

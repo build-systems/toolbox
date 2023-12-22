@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OutputvaluesComponent } from './outputvalues.component';
+import { OutputvaluesComponent } from './dashboard-numbers.component';
 
 describe('OutputvaluesComponent', () => {
   let component: OutputvaluesComponent;

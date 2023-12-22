@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NeubauProjekt } from './neubau/neubauprojekt';
-import { neubau } from './constants';
-import { FormProjektService } from './form-projekt/form-projekt.service';
+import { NeubauProjekt } from './neubauprojekt';
+import { neubau } from '../constants';
+import { FormProjektService } from '../form-projekt/form-projekt.service';
 
 @Injectable({
   providedIn: 'root'

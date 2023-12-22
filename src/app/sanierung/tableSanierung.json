@@ -14,8 +14,8 @@
     {
         "Energiestandard": "EH 115",
         "ZustandBestand": "Umfassend saniert",
-        "Min": null,
-        "Max": null
+        "Min": 0,
+        "Max": 0
     },
     {
         "Energiestandard": "EH 100",

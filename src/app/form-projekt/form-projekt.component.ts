@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FormProjektService } from './form-projekt.service';
 
 @Component({
@@ -8,13 +14,16 @@ import { FormProjektService } from './form-projekt.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-projekt.component.html',
-  styleUrl: './form-projekt.component.css'
+  styleUrl: './form-projekt.component.css',
 })
 export class FormProjektComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
 
-  constructor(private fb: FormBuilder, public formService: FormProjektService) { }
-  
+  constructor(
+    private fb: FormBuilder,
+    public formService: FormProjektService,
+  ) {}
+
   // Inititalize projekt form
   projektForm!: FormGroup;
 
@@ -24,29 +33,29 @@ export class FormProjektComponent implements OnInit {
         this.formService.wohnflaeche.init,
         [
           Validators.min(this.formService.wohnflaeche.min),
-          Validators.max(this.formService.wohnflaeche.max)
-        ]
+          Validators.max(this.formService.wohnflaeche.max),
+        ],
       ],
       wohnflaeche: [
         this.formService.wohnflaeche.init,
         [
           Validators.min(this.formService.wohnflaeche.min),
-          Validators.max(this.formService.wohnflaeche.max)
-        ]
+          Validators.max(this.formService.wohnflaeche.max),
+        ],
       ],
       anzahlWohnungenRange: [
         this.formService.anzahlWohnungen.init,
         [
           Validators.min(this.formService.anzahlWohnungen.min),
-          Validators.max(this.formService.anzahlWohnungen.max)
-        ]
+          Validators.max(this.formService.anzahlWohnungen.max),
+        ],
       ],
       anzahlWohnungen: [
         this.formService.anzahlWohnungen.init,
         [
           Validators.min(this.formService.anzahlWohnungen.min),
-          Validators.max(this.formService.anzahlWohnungen.max)
-        ]
+          Validators.max(this.formService.anzahlWohnungen.max),
+        ],
       ],
       energiestandard: new FormControl(
         this.formService.energiestandardOptions[0].value
@@ -57,44 +66,55 @@ export class FormProjektComponent implements OnInit {
     });
 
     // Wohnflaeche
-    this.projektForm.get("wohnflaecheRange")?.valueChanges.subscribe(value => {
-      // Update number input when range input changes
-      this.projektForm.get("wohnflaeche")?.setValue(value, { emitEvent: false });
-      // Also updates the sanierungService
-      this.formService.setWohnflaeche(value);
-    });
+    this.projektForm
+      .get('wohnflaecheRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektForm
+          .get('wohnflaeche')
+          ?.setValue(value, { emitEvent: false });
+        // Also updates the sanierungService
+        this.formService.setWohnflaeche(value);
+      });
 
-    this.projektForm.get("wohnflaeche")?.valueChanges.subscribe(value => {
+    this.projektForm.get('wohnflaeche')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.projektForm.get("wohnflaecheRange")?.setValue(value, { emitEvent: false });
+      this.projektForm
+        .get('wohnflaecheRange')
+        ?.setValue(value, { emitEvent: false });
       // Also updates the sanierungService
       this.formService.setWohnflaeche(value);
     });
 
     // Anzahl WohnungenRange
-    this.projektForm.get("anzahlWohnungenRange")?.valueChanges.subscribe(value => {
-      // Update number input when range input changes
-      this.projektForm.get("anzahlWohnungen")?.setValue(value, { emitEvent: false });
-      // Also updates the sanierungService
-      this.formService.setAnzahlWohnungen(value);
-    });
+    this.projektForm
+      .get('anzahlWohnungenRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektForm
+          .get('anzahlWohnungen')
+          ?.setValue(value, { emitEvent: false });
+        // Also updates the sanierungService
+        this.formService.setAnzahlWohnungen(value);
+      });
 
-    this.projektForm.get("anzahlWohnungen")?.valueChanges.subscribe(value => {
+    this.projektForm.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.projektForm.get("anzahlWohnungenRange")?.setValue(value, { emitEvent: false });
+      this.projektForm
+        .get('anzahlWohnungenRange')
+        ?.setValue(value, { emitEvent: false });
       // Also updates the sanierungService
       this.formService.setAnzahlWohnungen(value);
     });
 
     // Energiestandard
-    this.projektForm.get("energiestandard")?.valueChanges.subscribe(value => {
+    this.projektForm.get('energiestandard')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
       this.formService.setEnergiestandard(value);
     });
 
-
     // Zertifizierung
-    this.projektForm.get("zertifizierung")?.valueChanges.subscribe(value => {
+    this.projektForm.get('zertifizierung')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
       this.formService.setZertifizierung(value);
     });

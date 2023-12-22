@@ -1,0 +1,37 @@
+<div title="KfW-Zuschuss: {{ kfwZuschuss | currency : 'EUR' }}" class="card">
+  <h3>KfW-<wbr />Zuschuss</h3>
+  <div>{{ kfwZuschuss | shortNumber }}</div>
+</div>
+<div
+  title="Investitionskosten: {{ investitionskosten | currency : 'EUR' }} "
+  class="card"
+>
+  <h3>Invest.</h3>
+  <div>{{ investitionskosten | shortNumber }}</div>
+</div>
+<div
+  title="Finanzierungskosten Finanzmarkt: {{
+    finanzierungskostenFinanzmarkt | currency : 'EUR'
+  }}"
+  class="card"
+>
+  <h3>Fin. <wbr />Finanz<wbr />markt</h3>
+  <div>{{ finanzierungskostenFinanzmarkt | shortNumber }}</div>
+</div>
+<div
+  title="Finanzierungskosten KfW: {{
+    finanzierungskostenKfw | currency : 'EUR'
+  }}"
+  class="card"
+>
+  <h3>Fin. <wbr />KfW</h3>
+  <div>{{ finanzierungskostenKfw | shortNumber }}</div>
+</div>
+<div title="Bank-Kredit: {{ bankKredit | currency : 'EUR' }}" class="card">
+  <h3>Bank-<wbr />Kredit</h3>
+  <div>{{ bankKredit | shortNumber }}</div>
+</div>
+<div title="KfW-Kredit: {{ kfwKredit | currency : 'EUR' }}" class="card">
+  <h3>KfW-<wbr />Kredit</h3>
+  <div>{{ kfwKredit | shortNumber }}</div>
+</div>

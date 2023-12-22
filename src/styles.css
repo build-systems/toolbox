@@ -477,7 +477,6 @@ input[type=button] {
     border-radius: var(--button-radius);
     background-color: var(--bg-secondary);
     & h3 {
-        word-break: break-all;
         font-size: 1rem;
         display: flex;
         align-items: center;

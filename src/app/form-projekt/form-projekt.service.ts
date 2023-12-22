@@ -70,20 +70,20 @@ export class FormProjektService {
   }
 
   // I repeated this for all form inputs
-  public setAnzahlWohnungen(value: number) {
-    this.anzahlWohnungenSource.next(value);
+  public setAnzahlWohnungen(data: number) {
+    this.anzahlWohnungenSource.next(data);
   }
 
-  public setEnergiestandard(text: Energiestandard) {
-    this.energiestandardSource.next(text);
+  public setEnergiestandard(data: Energiestandard) {
+    this.energiestandardSource.next(data);
   }
 
-  public setKonstruktion(text: Konstruktion) {
-    this.konstruktionSource.next(text);
+  public setKonstruktion(data: Konstruktion) {
+    this.konstruktionSource.next(data);
   }
 
-  public setZertifizierung(text: Zertifizierung) {
-    this.zertifizierungSource.next(text);
+  public setZertifizierung(data: Zertifizierung) {
+    this.zertifizierungSource.next(data);
   }
 
   constructor() { }

@@ -16,6 +16,10 @@ type ZertifizierungOptions ={
 }
 // Sanierung
 type ZustandBestand = "Unsaniert" | "Teilsaniert" | "Umfassend saniert";
+type ZustandBestandOptions = {
+    id: string;
+    value: ZustandBestand;
+};
 // Neubau
 type Kellergeschoss = "Vorhanden" | "Nicht Vorhanden";
 type Stellplaetze = "Garage" | "Parkpalette" | "Tiefgarage";

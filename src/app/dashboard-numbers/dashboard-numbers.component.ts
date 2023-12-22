@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SanierungService } from '../sanierung.service';
+import { SanierungService } from '../sanierung/sanierung.service';
 import { ShortNumberPipe } from '../pipes/short-number.pipe';
 
 
 @Component({
-  selector: 'app-outputvalues',
+  selector: 'app-dashboard-numbers',
   standalone: true,
   imports: [CommonModule, ShortNumberPipe],
-  templateUrl: './outputvalues.component.html',
-  styleUrl: './outputvalues.component.css',
+  templateUrl: './dashboard-numbers.component.html',
+  styleUrl: './dashboard-numbers.component.css',
   host: {
     class: 'values-container'
   }
 })
-export class OutputValuesComponent implements OnInit {
+export class DashboardNumbersComponent implements OnInit {
 
   kfwZuschuss: number = 0;
   investitionskosten: number = 0;
