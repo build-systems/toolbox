@@ -15,7 +15,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2.component.html',
   styleUrl: './chart-gkosten-m2.component.css',
   host: {
-    class: 'ng-chart'
+    class: 'ng-chart chart5'
   }
 
 })

@@ -1,47 +1,59 @@
 <div class="title">
-    <h1>{{ title }}</h1>
+  <h1>{{ title }}</h1>
 </div>
 <div class="container-tool">
-    <div class="container-input">
-        <div class="progress-bar">
-            <input type="button" value="1" title="Projekt" (click)="currentForm = 1"
-                [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'">
-            <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
-            <input type="button" value="2" title="Sanierung" (click)="currentForm = 2"
-                [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'">
-            <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
-            <input type="button" value="3" title="Darlehen" (click)="currentForm = 3"
-                [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'">
-        </div>
-        <div class="container-forms">
-            <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
-            <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
-            <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
-        </div>
-        <fieldset class="progress-buttons">
-            <div class="container-button">
-                @if (currentForm > 1) {
-                <input type="button" value="PREVIOUS" (click)="previousForm()">
-                }
-            </div>
-            <div class="container-button">
-                @if (currentForm < 3){ <input type="button" value="NEXT" (click)="nextForm()">
-                    }
-            </div>
-        </fieldset>
+  <div class="container-input">
+    <div class="progress-bar">
+      <input
+        type="button"
+        value="1"
+        title="Projekt"
+        (click)="currentForm = 1"
+        [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'"
+      />
+      <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
+      <input
+        type="button"
+        value="2"
+        title="Sanierung"
+        (click)="currentForm = 2"
+        [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'"
+      />
+      <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
+      <input
+        type="button"
+        value="3"
+        title="Darlehen"
+        (click)="currentForm = 3"
+        [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'"
+      />
     </div>
-    <div class="output">
-        <app-dashboard-numbers></app-dashboard-numbers>
-        <div class="charts-container">
-            <div class="charts-wrap1">
-                <app-chart-annuitaeten></app-chart-annuitaeten>
-                <app-chart-repayment></app-chart-repayment>
-                <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
-            </div>
-            <div class="charts-wrap2">
-                <app-chart-gkosten></app-chart-gkosten>
-                <app-chart-gkosten-m2></app-chart-gkosten-m2>
-            </div>
-        </div>
+    <div class="container-forms">
+      <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
+      <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
+      <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
     </div>
+    <fieldset class="progress-buttons">
+      <div class="container-button">
+        @if (currentForm > 1) {
+        <input type="button" value="PREVIOUS" (click)="previousForm()" />
+        }
+      </div>
+      <div class="container-button">
+        @if (currentForm < 3){
+        <input type="button" value="NEXT" (click)="nextForm()" />
+        }
+      </div>
+    </fieldset>
+  </div>
+  <div class="output">
+    <app-dashboard-numbers></app-dashboard-numbers>
+    <div class="charts-container">
+      <app-chart-annuitaeten></app-chart-annuitaeten>
+      <app-chart-repayment></app-chart-repayment>
+      <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
+      <app-chart-gkosten></app-chart-gkosten>
+      <app-chart-gkosten-m2></app-chart-gkosten-m2>
+    </div>
+  </div>
 </div>
