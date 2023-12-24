@@ -583,6 +583,8 @@ input[type="button"] {
   }
   
   .container-forms {
+    flex: 0;
+    /* justify-content: start; */
     overflow-y: visible;
     padding-right: 0;
   }
