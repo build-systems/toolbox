@@ -1,4 +1,4 @@
-<div class="title">
+<div class="title" #top>
   <h1>{{ title }}</h1>
 </div>
 <div class="container-tool">
@@ -36,12 +36,12 @@
     <fieldset class="progress-buttons">
       <div class="container-button">
         @if (currentForm > 1) {
-        <input type="button" value="PREVIOUS" (click)="previousForm()" />
+        <input type="button" value="PREVIOUS" (click)="previousForm(); scroll(top)" />
         }
       </div>
       <div class="container-button">
         @if (currentForm < 3){
-        <input type="button" value="NEXT" (click)="nextForm()" />
+        <input type="button" value="NEXT" (click)="nextForm(); scroll(top)" />
         }
       </div>
     </fieldset>

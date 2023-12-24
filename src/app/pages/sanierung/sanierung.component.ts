@@ -13,28 +13,41 @@ import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-num
 @Component({
   selector: 'app-sanierung',
   standalone: true,
-  imports: [CommonModule, FormProjektComponent, FormSanierungComponent, FormDarlehenComponent, ChartGkostenComponent, ChartGkostenM2Component, ChartAnnuitaetenComponent, ChartRepaymentComponent, ChartFinanzierungskostenComponent, DashboardNumbersComponent],
+  imports: [
+    CommonModule,
+    FormProjektComponent,
+    FormSanierungComponent,
+    FormDarlehenComponent,
+    ChartGkostenComponent,
+    ChartGkostenM2Component,
+    ChartAnnuitaetenComponent,
+    ChartRepaymentComponent,
+    ChartFinanzierungskostenComponent,
+    DashboardNumbersComponent,
+  ],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',
   host: {
-    class: 'ng-tool'
-  }
+    class: 'ng-tool',
+  },
 })
 export class SanierungComponent {
-  title = "Sanierung";
+  title = 'Sanierung';
 
   // Handle form page
   currentForm = 1;
   nForms = 3;
   nextForm() {
-    if (this.currentForm + 1 <= this.nForms)
-      this.currentForm += 1;
+    if (this.currentForm + 1 <= this.nForms) this.currentForm += 1;
   }
   previousForm() {
-    if (this.currentForm - 1 >= 1)
-      this.currentForm -= 1;
+    if (this.currentForm - 1 >= 1) this.currentForm -= 1;
   }
 
-  constructor() {  }
+  // To scroll to element
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
 
+  constructor() {}
 }

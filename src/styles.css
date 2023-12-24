@@ -13,7 +13,7 @@
   --bg-secondary: #222;
   --bg-tertiary: #333;
   --layout-padding: 2rem;
-  --slider-handle-diameter: 0.8rem;
+  --slider-handle-diameter: 1.6rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
   --nav-sel-thickness: 2px;
@@ -31,6 +31,7 @@
 html {
   font-family: "Montserrat", sans-serif;
   font-weight: 200;
+  scroll-behavior: smooth;
   background-color: var(--bg-primary);
 }
 
@@ -214,6 +215,7 @@ form {
   height: var(--slider-handle-diameter);
   /* Slider handle height */
   border: 1px solid white;
+  border-radius: 50%;
   background: var(--bg-tertiary);
   /* Green background */
   cursor: pointer;
