@@ -38,7 +38,7 @@
             <input type="radio" id="{{item.id}}" value="{{item.value}}" name="barrierefreiheitIn"
                 formControlName="barrierefreiheitIn" />
                 <!-- I added innerHTML in this one to be able to breakword with <wbr /> -->
-            <label for="{{item.id}}" [innerHTML]=item.text></label>
+            <label for="{{item.id}}">{{item.text}}</label>
         </span>
     </fieldset>
     <fieldset class="radio-fieldset">

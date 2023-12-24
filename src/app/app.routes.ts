@@ -10,27 +10,27 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
-        title: 'BS | Home Page'
+        title: 'Homepage'
     },
     {
         path: 'profile',
         component: ProfileComponent,
-        title: 'BS | Profile'
+        title: 'Profile'
     },
     {
         path: 'portfolio',
         component: PortfolioComponent,
-        title: 'BS | Portfolio'
+        title: 'Portfolio'
     },
     {
         path: 'neubau',
         component: NeubauComponent,
-        title: 'BS | Neubau'
+        title: 'Neubau'
     },
     {
         path: 'sanierung',
         component: SanierungComponent,
-        title: 'BS | Sanierung'
+        title: 'Sanierung'
     },
     {
         path: 'settings',

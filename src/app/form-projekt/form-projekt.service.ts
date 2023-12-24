@@ -38,8 +38,8 @@ export class FormProjektService {
 
   // Zertifizierung centralized form values
   zertifizierungOptions: ZertifizierungOptions[] = [
-    { id: "zert1", value: "Keine Zertifizierung" },
-    { id: "zert2", value: "QNG" }
+    { id: "zert1", value: "Keine Zertifizierung", text: "Keine" },
+    { id: "zert2", value: "QNG", text:"QNG" }
   ]
 
   // Observable for Wohnflaeche

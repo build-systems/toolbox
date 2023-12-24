@@ -25,9 +25,9 @@ export class FormNeubauService {
   ];
   // I added the text field to also include html breakword syntax
   barrierefreiheitOptions: BarrierefreiesBauenOptions[] = [
-    { id: 'barfre1', value: 'Barrierereduziert', text: 'Barriere<wbr />reduziert' },
-    { id: 'barfre2', value: 'Barrierefrei', text: 'Barriere<wbr />frei' },
-    { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Barriere<wbr />frei (R)' },
+    { id: 'barfre1', value: 'Barrierereduziert', text: 'Reduziert' },
+    { id: 'barfre2', value: 'Barrierefrei', text: 'Frei' },
+    { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Frei (R)' },
     { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
   ];
   dachbegruenungOptions: DachbegruenungOptions[] = [

@@ -34,4 +34,7 @@ export class NeubauComponent {
     if (this.currentForm - 1 >= 1)
       this.currentForm -= 1;
   }
+
+  constructor() {  }
+
 }

@@ -13,7 +13,7 @@
   --bg-secondary: #222;
   --bg-tertiary: #333;
   --layout-padding: 2rem;
-  --slider-handle-diameter: 1rem;
+  --slider-handle-diameter: 0.8rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
   --nav-sel-thickness: 2px;
@@ -44,6 +44,15 @@ body::-webkit-scrollbar-track {
 
 body::-webkit-scrollbar-thumb {
   background: var(--primary);
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 .title {
@@ -103,6 +112,7 @@ li {
   padding-left: 2px;
   padding-right: calc(var(--layout-padding) / 2);
   overflow-y: auto;
+  word-break: break-all;
 }
 
 .container-forms::-webkit-scrollbar-track {
@@ -370,7 +380,7 @@ input[type="checkbox"]:checked + label {
   width: 49%;
 
   & input {
-    font-weight: bold;
+    /* font-weight: bold; */
     color: var(--bg-primary);
     border: 1px solid var(--primary);
     height: var(--button-height);
@@ -523,28 +533,11 @@ input[type="button"] {
   grid-column-end: 7;
 }
 
-.charts-wrap1 {
-  display: flex;
-  height: 50%;
-  gap: calc(var(--layout-padding) / 4);
-  & .ng-chart {
-    width: clamp(20%, 33%, 50%);
-  }
-}
-
-.charts-wrap2 {
-  display: flex;
-  height: 50%;
-  gap: calc(var(--layout-padding) / 4);
-  & .ng-chart {
-    width: clamp(20%, 50%, 50%);
-  }
-}
-
 .ng-chart {
   padding: calc(var(--layout-padding) / 2);
   border-radius: var(--button-radius);
   background-color: var(--bg-secondary);
+  word-break: break-all;
 }
 
 .details {
@@ -552,18 +545,61 @@ input[type="button"] {
   width: 100%;
 }
 
-@media screen and (max-width: 1200px) {
-  .container-tool {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+.development {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  & > * {
+    text-align: center;
+    font-size: 36px;
   }
+}
+
+@media screen and (max-width: 1200px) {
+  main {
+    flex-direction: column;
+    height: 100svh;
+  }
+
+  .ng-tool {
+    height: auto;
+  }
+
+  .container-tool {
+    display: flex;
+    flex-direction: column;
+    overflow-y: visible;
+  }
+
+  .container-input {
+    overflow-y: visible;
+    border-bottom: 1px dashed var(--bg-tertiary);
+    padding-bottom: calc(var(--layout-padding)/2);
+  }
+  
+  .container-forms {
+    overflow-y: visible;
+    padding-right: 0;
+  }
+
   .values-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     height: auto;
     margin-bottom: calc(var(--layout-padding) / 4);
-    overflow-y: auto;
   }
+
+  .ng-chart {
+    min-height: 250px;
+  }
+}
+
+@media screen and (max-width: 850px) {
   .chart1 {
+    grid-column-start: 1;
     grid-column-end: 4;
   }
   .chart2 {
@@ -579,42 +615,42 @@ input[type="button"] {
     grid-column-end: 7;
   }
   .chart5 {
-    display: none;
+    grid-column-start: 1;
+    grid-column-end: 7;
   }
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 600px) {
+  .ng-tool {
+    padding-bottom: calc(var(--layout-padding)/2);
+  }
+  
   .title {
-    position: fixed;
-    width: 100svw;
-    background-color: var(--bg-primary);
-    z-index: 2;
-}
-header {
-    display: none;
-}
-.container-tool {
-    position: relative;
-    top: calc(80px + 58px + (var(--layout-padding) * 3));
+    padding-left: calc(var(--layout-padding)/2);
+    padding-right: calc(var(--layout-padding)/2);
+    padding-top: 0;
+  }
+  
+  h1 {
+    font-size: 48px;
+  }
+  
+  .container-tool {
+    padding-left: calc(var(--layout-padding)/2);
+    padding-right: calc(var(--layout-padding)/2);
+  }
+  
+  .values-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .charts-container {
     display: flex;
     flex-direction: column;
-    overflow-y: visible;
-}
-.container-input {
-    flex: 1;
-    overflow-y: visible;
-}
+  }
 
-.output {
-    margin-bottom: var(--layout-padding);
-}
-
-.values-container {
-    position: fixed;
-    display: flex;
-    padding: var(--layout-padding);
-    top: calc(58px + var(--layout-padding));;
-    left: 0;
-    background-color: var(--bg-primary);
+  .ng-chart {
+    flex: 1 0 calc(100svw - var(--layout-padding)*2);
   }
 }
