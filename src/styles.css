@@ -578,7 +578,8 @@ input[type="button"] {
   .container-input {
     overflow-y: visible;
     flex: 0;
-    /* height: fit-content; */
+    justify-content: flex-start;
+    gap: 0;
     border-bottom: 1px dashed var(--bg-tertiary);
     padding-bottom: calc(var(--layout-padding)/2);
   }
