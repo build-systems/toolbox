@@ -15,6 +15,9 @@ import { FormDarlehenService } from './form-darlehen.service';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-darlehen.component.html',
   styleUrl: './form-darlehen.component.css',
+  host: {
+    class: 'container-forms',
+  },
 })
 export class FormDarlehenComponent implements OnInit {
   darlehenForm!: FormGroup;
