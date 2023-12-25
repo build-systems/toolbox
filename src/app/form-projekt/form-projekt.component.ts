@@ -15,6 +15,9 @@ import { FormProjektService } from './form-projekt.service';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-projekt.component.html',
   styleUrl: './form-projekt.component.css',
+  host: {
+    class: 'container-forms',
+  },
 })
 export class FormProjektComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
