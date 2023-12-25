@@ -109,10 +109,7 @@ li {
 }
 
 .container-forms {
-  display: flex;
-  flex-direction: column;
   flex: 1;
-  padding-left: 2px;
   padding-right: calc(var(--layout-padding) / 2);
   overflow-y: auto;
   word-break: break-all;
@@ -584,12 +581,12 @@ input[type="button"] {
     padding-bottom: calc(var(--layout-padding)/2);
   }
   
-  .container-forms {
+ /* .container-forms {
     flex: 1;
-    /* justify-content: start; */
+    justify-content: start;
     overflow-y: visible;
     padding-right: 0;
-  }
+  } */
 
   form { 
     flex: 0;
