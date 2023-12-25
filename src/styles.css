@@ -568,7 +568,7 @@ input[type="button"] {
   }
 
   .ng-tool {
-    height: auto;
+    height: fit-content;
   }
 
   .container-tool {
