@@ -8,7 +8,10 @@ import { FormSanierungService } from './form-sanierung.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-sanierung.component.html',
-  styleUrl: './form-sanierung.component.css'
+  styleUrl: './form-sanierung.component.css',
+  host: {
+    class: 'container-forms',
+  },
 })
 export class FormSanierungComponent implements OnInit {
     
