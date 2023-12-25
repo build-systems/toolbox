@@ -584,7 +584,7 @@ input[type="button"] {
   }
   
   .container-forms {
-    flex: 0 0;
+    flex: 1;
     /* justify-content: start; */
     overflow-y: visible;
     padding-right: 0;
