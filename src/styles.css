@@ -577,12 +577,14 @@ input[type="button"] {
 
   .container-input {
     overflow-y: visible;
+    height: fit-content;
     border-bottom: 1px dashed var(--bg-tertiary);
     padding-bottom: calc(var(--layout-padding)/2);
   }
 
   .container-forms {
     overflow-y: visible;
+    padding-right: 0px;
   }
 
   form {
