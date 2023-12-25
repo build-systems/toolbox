@@ -589,6 +589,10 @@ input[type="button"] {
     padding-right: 0;
   }
 
+  form { 
+    flex: 0;
+  }
+
   .values-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
