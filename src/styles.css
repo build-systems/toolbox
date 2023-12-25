@@ -102,11 +102,13 @@ li {
   overflow-y: auto;
 }
 
+/*
 .container-input {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
+*/
 
 .container-forms {
   flex: 1;
@@ -574,7 +576,7 @@ input[type="button"] {
     flex-direction: column;
     overflow-y: visible;
   }
-
+/*
   .container-input {
     overflow-y: visible;
     flex: 0;
@@ -583,7 +585,7 @@ input[type="button"] {
     border-bottom: 1px dashed var(--bg-tertiary);
     padding-bottom: calc(var(--layout-padding)/2);
   }
-
+*/
   .container-forms {
     overflow-y: visible;
     padding-right: 0px;
