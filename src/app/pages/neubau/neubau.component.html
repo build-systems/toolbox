@@ -28,11 +28,9 @@
         [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'"
       />
     </div>
-    <div class="container-forms">
-      <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
-      <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
-      <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
-    </div>
+    <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
+    <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
+    <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
     <fieldset class="progress-buttons">
       <div class="container-button">
         @if (currentForm > 1) {
