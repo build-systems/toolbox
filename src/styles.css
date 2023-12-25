@@ -142,7 +142,7 @@ label {
 }
 
 fieldset {
-  margin-top: clamp(0.5rem, 0.9rem, 1.2rem);
+  margin-top: 0.5rem;
   padding-top: 0.25rem;
   border-style: none;
 }
