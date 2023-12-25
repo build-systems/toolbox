@@ -109,6 +109,7 @@ li {
 }
 
 .container-forms {
+  display: flex;
   flex: 1;
   padding-left: 2px;
   padding-right: calc(var(--layout-padding) / 2);
