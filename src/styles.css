@@ -580,16 +580,9 @@ input[type="button"] {
     border-bottom: 1px dashed var(--bg-tertiary);
     padding-bottom: calc(var(--layout-padding)/2);
   }
-  
- /* .container-forms {
-    flex: 1;
-    justify-content: start;
-    overflow-y: visible;
-    padding-right: 0;
-  } */
 
-  form { 
-    flex: 0;
+  fieldset {
+    flex 0 1;
   }
 
   .values-container {
