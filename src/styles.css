@@ -581,8 +581,12 @@ input[type="button"] {
     padding-bottom: calc(var(--layout-padding)/2);
   }
 
+  .container-forms {
+    overflow-y: visible;
+  }
+
   fieldset {
-    flex: 0 1;
+    flex: 1 1;
   }
 
   .values-container {
