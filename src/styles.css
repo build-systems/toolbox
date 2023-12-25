@@ -585,6 +585,10 @@ input[type="button"] {
     overflow-y: visible;
   }
 
+  form {
+    flex: 0;
+  }
+
   fieldset {
     flex: 1 1;
   }
