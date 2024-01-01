@@ -8,7 +8,10 @@ import { FormNeubauService } from './form-neubau.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-neubau.component.html',
-  styleUrl: './form-neubau.component.css'
+  styleUrl: './form-neubau.component.css',
+  host: {
+    class: 'container-forms',
+  },
 })
 export class FormNeubauComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-neubau.service.ts
