@@ -9,7 +9,7 @@ type EnergiestandardOptions = {
     text?: string;
 };
 type Zertifizierung = "Keine Zertifizierung" | "QNG";
-type ZertifizierungOptions ={
+type ZertifizierungOptions = {
     id: string;
     value: Zertifizierung;
     text?: string;
