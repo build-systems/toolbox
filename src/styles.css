@@ -14,11 +14,12 @@
   --bg-tertiary: #333;
   --layout-padding: 2rem;
   --handle-diameter: 0.8rem;
-  --mobile-handle-diameter: 1.6rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
   --nav-sel-thickness: 2px;
-}
+  --mobile-handle-diameter: 1.6rem;
+  --mobile-padding: 1rem;
+  --mobile-header: calc(40px + (2 * var(--mobile-padding)))}
 
 * {
   box-sizing: border-box;
@@ -140,7 +141,6 @@ input {
 label {
   font-family: "Inconsolata", sans-serif;
   font-size: 1rem;
-  font-weight: 300;
 }
 
 fieldset {
@@ -384,7 +384,7 @@ input[type="checkbox"]:checked + label {
   width: 49%;
 
   & input {
-    /* font-weight: bold; */
+    font-weight: bold;
     color: var(--bg-primary);
     border: 1px solid var(--primary);
     height: var(--button-height);
@@ -630,12 +630,12 @@ input[type="button"] {
 
 @media screen and (max-width: 600px) {
   .ng-tool {
-    padding-bottom: calc(var(--layout-padding)/2);
+    padding-bottom: var(--mobile-padding);
   }
   
   .title {
-    padding-left: calc(var(--layout-padding)/2);
-    padding-right: calc(var(--layout-padding)/2);
+    padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding);
     padding-top: 0;
   }
   
@@ -644,8 +644,8 @@ input[type="button"] {
   }
   
   .container-tool {
-    padding-left: calc(var(--layout-padding)/2);
-    padding-right: calc(var(--layout-padding)/2);
+    padding-left: var(--mobile-padding);
+    padding-right: var(--mobile-padding);
   }
   
   .values-container {
@@ -658,7 +658,7 @@ input[type="button"] {
     flex-direction: column;
   }
 
-  .ng-chart {
+  /* .ng-chart {
     flex: 1 0 calc(100svw - var(--layout-padding)*2);
-  }
+  } */
 }

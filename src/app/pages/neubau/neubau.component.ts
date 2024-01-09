@@ -32,6 +32,10 @@ import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-num
   },
 })
 export class NeubauComponent {
+  // ATTENTION: the page is composed of multiple components, each one has a service.
+  // for example, FormProjektComponent.ts has the form-projekt.service.ts
+  // This top component has types at neubauprojekt.ts
+
   title = 'Neubau';
 
   // Handle form page
