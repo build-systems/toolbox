@@ -21,6 +21,8 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: center;
+  stroke-width: 2px;
+  opacity: 1;
 }
 
 .link {

@@ -13,7 +13,8 @@
   --bg-secondary: #222;
   --bg-tertiary: #333;
   --layout-padding: 2rem;
-  --slider-handle-diameter: 1.6rem;
+  --handle-diameter: 0.8rem;
+  --mobile-handle-diameter: 1.6rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
   --nav-sel-thickness: 2px;
@@ -190,9 +191,9 @@ form {
   -webkit-appearance: none;
   /* Override default look */
   appearance: none;
-  width: var(--slider-handle-diameter);
+  width: var(--handle-diameter);
   /* Set a specific slider handle width */
-  height: var(--slider-handle-diameter);
+  height: var(--handle-diameter);
   /* Slider handle height */
   border: 1px solid white;
   border-radius: 50%;
@@ -211,9 +212,9 @@ form {
 }
 
 .slider::-moz-range-thumb {
-  width: var(--slider-handle-diameter);
+  width: var(--handle-diameter);
   /* Set a specific slider handle width */
-  height: var(--slider-handle-diameter);
+  height: var(--handle-diameter);
   /* Slider handle height */
   border: 1px solid white;
   border-radius: 50%;
@@ -511,7 +512,6 @@ input[type="button"] {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  /* flex-direction: column; */
   gap: calc(var(--layout-padding) / 4);
 }
 
@@ -576,30 +576,11 @@ input[type="button"] {
     flex-direction: column;
     overflow-y: visible;
   }
-/*
-  .container-input {
-    overflow-y: visible;
-    flex: 0;
-    justify-content: flex-start;
-    gap: 0;
-    border-bottom: 1px dashed var(--bg-tertiary);
-    padding-bottom: calc(var(--layout-padding)/2);
-  }
 */
   .container-forms {
     overflow-y: visible;
     padding-right: 0px;
   }
-
-  /*
-  form {
-    flex: 0;
-  }
-
-  fieldset {
-    flex: 1 1;
-  }
-  */
 
   .values-container {
     display: grid;
@@ -614,6 +595,17 @@ input[type="button"] {
 }
 
 @media screen and (max-width: 850px) {
+
+  .slider::-webkit-slider-thumb {
+    width: var(--mobile-handle-diameter);
+    height: var(--mobile-handle-diameter);
+  }
+  
+  .slider::-moz-range-thumb {
+    width: var(--mobile-handle-diameter);
+    height: var(--mobile-handle-diameter);
+  }  
+
   .chart1 {
     grid-column-start: 1;
     grid-column-end: 4;
