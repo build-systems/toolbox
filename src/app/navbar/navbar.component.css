@@ -50,7 +50,7 @@ ul {
   font-weight: 400;
   /* stroke-width: 2px; */
   opacity: 1;
-  border-left: var(--nav-sel-thickness) solid white;
+  border-left: var(--nav-sel-thickness) solid var(--secondary);
   padding-left: 0px;
 }
 

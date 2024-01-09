@@ -555,9 +555,18 @@ input[type="button"] {
   align-items: center;
   justify-content: center;
   height: 100dvh;
-  & > * {
-    text-align: center;
+  padding: var(--mobile-padding);
+  & h1 {
     font-size: 36px;
+    text-align: center;
+    padding-bottom: var(--mobile-padding);
+  }
+  & h2 {
+    text-align: center;
+    padding-bottom: var(--mobile-padding);
+  }
+  & p {
+    text-align: center;
   }
 }
 
