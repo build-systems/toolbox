@@ -20,6 +20,12 @@ import { FormDarlehenService } from './form-darlehen.service';
   },
 })
 export class FormDarlehenComponent implements OnInit {
+  // ATTENTION: All form variables are stored at form-projekt.service.ts
+
+  // The reactive forms do two things:
+  // Update the bi-directional number fields (input <-> range).
+  // Update the form service.
+
   darlehenForm!: FormGroup;
 
   constructor(
@@ -66,24 +72,34 @@ export class FormDarlehenComponent implements OnInit {
     });
 
     // Kalkulationszinssatz (Realzins)
-    this.darlehenForm.get('kalkRealzinsRange')?.valueChanges.subscribe((value) => {
+    this.darlehenForm
+      .get('kalkRealzinsRange')
+      ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.darlehenForm.get('kalkRealzins')?.setValue(value, { emitEvent: false });
+        this.darlehenForm
+          .get('kalkRealzins')
+          ?.setValue(value, { emitEvent: false });
         // Also updates the sanierungService
         this.formService.setKalkRealzins(value);
-    });
+      });
 
     this.darlehenForm.get('kalkRealzins')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.darlehenForm.get('kalkRealzinsRange')?.setValue(value, { emitEvent: false });
+      this.darlehenForm
+        .get('kalkRealzinsRange')
+        ?.setValue(value, { emitEvent: false });
       // Also updates the sanierungService\
       this.formService.setKalkRealzins(value);
     });
 
     // Kreditlaufzeit
-    this.darlehenForm.get('kreditlaufzeitRange')?.valueChanges.subscribe((value) => {
+    this.darlehenForm
+      .get('kreditlaufzeitRange')
+      ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.darlehenForm.get('kreditlaufzeit')?.setValue(value, { emitEvent: false });
+        this.darlehenForm
+          .get('kreditlaufzeit')
+          ?.setValue(value, { emitEvent: false });
         // Also updates the sanierungService
         this.formService.setKreditlaufzeit(value);
       });
@@ -91,7 +107,9 @@ export class FormDarlehenComponent implements OnInit {
     // When number input changes...
     this.darlehenForm.get('kreditlaufzeit')?.valueChanges.subscribe((value) => {
       // ...update range input
-      this.darlehenForm.get('kreditlaufzeitRange')?.setValue(value, { emitEvent: false });
+      this.darlehenForm
+        .get('kreditlaufzeitRange')
+        ?.setValue(value, { emitEvent: false });
       // and also updates the formService
       this.formService.setKreditlaufzeit(value);
     });

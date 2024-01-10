@@ -16,6 +16,10 @@ import { FormNeubauService } from './form-neubau.service';
 export class FormNeubauComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-neubau.service.ts
 
+  // The reactive forms do two things:
+  // Update the bi-directional number fields (input <-> range).
+  // Update the form service.
+
   neubauForm!: FormGroup;
 
   constructor(private fb: FormBuilder, public formService: FormNeubauService) { }

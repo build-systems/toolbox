@@ -22,6 +22,10 @@ import { FormProjektService } from './form-projekt.service';
 export class FormProjektComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
 
+  // The reactive forms do two things:
+  // Update the bi-directional number fields (input <-> range).
+  // Update the form service.
+
   constructor(
     private fb: FormBuilder,
     public formService: FormProjektService
@@ -32,7 +36,9 @@ export class FormProjektComponent implements OnInit {
 
   ngOnInit(): void {
     this.projektForm = this.fb.group({
+      // These are form controls that go into the html
       wohnflaecheRange: [
+        // The values come from the FormProjektService
         this.formService.wohnflaeche.init,
         [
           Validators.min(this.formService.wohnflaeche.min),
@@ -76,7 +82,7 @@ export class FormProjektComponent implements OnInit {
         this.projektForm
           .get('wohnflaeche')
           ?.setValue(value, { emitEvent: false });
-        // Also updates the sanierungService
+        // Also updates the FormProjektService
         this.formService.setWohnflaeche(value);
       });
 
@@ -85,7 +91,7 @@ export class FormProjektComponent implements OnInit {
       this.projektForm
         .get('wohnflaecheRange')
         ?.setValue(value, { emitEvent: false });
-      // Also updates the sanierungService
+      // Also updates the FormProjektService
       this.formService.setWohnflaeche(value);
     });
 
@@ -97,7 +103,7 @@ export class FormProjektComponent implements OnInit {
         this.projektForm
           .get('anzahlWohnungen')
           ?.setValue(value, { emitEvent: false });
-        // Also updates the sanierungService
+        // Also updates the FormProjektService
         this.formService.setAnzahlWohnungen(value);
       });
 
@@ -106,7 +112,7 @@ export class FormProjektComponent implements OnInit {
       this.projektForm
         .get('anzahlWohnungenRange')
         ?.setValue(value, { emitEvent: false });
-      // Also updates the sanierungService
+      // Also updates the FormProjektService
       this.formService.setAnzahlWohnungen(value);
     });
 

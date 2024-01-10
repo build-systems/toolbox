@@ -517,7 +517,7 @@ export class SanierungService {
   private updateKfwKreditM2() {
     this._kfwKreditM2 = this._kfwKredit / this.wohnflaeche;
   }
-  
+
   private _bankKreditM2 = 0;
   private updateBankKreditM2() {
     this._bankKreditM2 = this._bankKredit / this.wohnflaeche;
@@ -525,12 +525,14 @@ export class SanierungService {
 
   private _finanzierungskostenKfwM2 = 0;
   private updateFinanzierungskostenKfwM2() {
-    this._finanzierungskostenKfwM2 = this._finanzierungskostenKfw / this.wohnflaeche;
+    this._finanzierungskostenKfwM2 =
+      this._finanzierungskostenKfw / this.wohnflaeche;
   }
 
   private _finanzierungskostenFinanzmarktM2 = 0;
   private updateFinanzierungskostenFinanzmarktM2() {
-    this._finanzierungskostenFinanzmarktM2 = this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
+    this._finanzierungskostenFinanzmarktM2 =
+      this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
   }
 
   private _investitionskostenM2 = 0;
@@ -558,7 +560,7 @@ export class SanierungService {
     this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
   }
 
-  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard 
+  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
   outputDashboard!: DashboardOutput;
   private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
     this.outputDashboard
@@ -630,8 +632,7 @@ export class SanierungService {
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2:
-          this._finanzierungskostenKfwM2,
+        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
         finanzierungskostenFinanzmarktM2:
           this._finanzierungskostenFinanzmarktM2,
@@ -711,5 +712,32 @@ export class SanierungService {
         mitKfwM2: this._mitKfw / this.wohnflaeche,
       })
     );
+  }
+
+  reset() {
+    // Project parameters
+    this.wohnflaeche = this.formProjektService.wohnflaeche.init;
+    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+    this.energiestandard =
+      this.formProjektService.energiestandardOptions[0].value;
+    this.konstruktion = this.formProjektService.konstruktionOptions[0].value;
+    this.zertifizierung =
+      this.formProjektService.zertifizierungOptions[0].value;
+
+    // Sanierung parameters
+    this.worstPerformingBuilding =
+      this.formSanierungService.worstPerformingBuilding;
+    this.serielleSanierung = this.formSanierungService.serielleSanierung;
+    this.zustandBestand =
+      this.formSanierungService.zustandBestandOptions[0].value;
+    this.eeKlasse = this.formSanierungService.eeKlasse;
+
+    // Darlehen parameters
+    this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;
+    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.init;
+    this.kfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
+    this.bankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
+
+    this.update();
   }
 }

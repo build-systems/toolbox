@@ -9,6 +9,7 @@ import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuita
 import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
 import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
 import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
+import { SanierungService } from './sanierung.service';
 
 @Component({
   selector: 'app-sanierung',
@@ -53,5 +54,7 @@ export class SanierungComponent {
     el.scrollIntoView();
   }
 
-  constructor() {}
+  constructor(private sanierungService: SanierungService) {
+    sanierungService.reset();
+  }
 }

@@ -71,7 +71,7 @@ export class NeubauService {
 
     // Subscribe to all Projekt Form parameters and update after every change
     this.formProjektService.currentWohnflaeche$
-    .pipe(
+      .pipe(
         // Don't do anything until the user changes one of the forms
         skipWhile((value) => value === this.wohnflaeche),
         // Don't do anything unless the Router is in the neubau page
@@ -180,7 +180,7 @@ export class NeubauService {
 
     // Subscribe to all Darlehen Form parameters and update after every change
     this.formDarlehenService.currentKalkRealzins$
-    .pipe(
+      .pipe(
         // Don't do anything until the user changes one of the forms
         skipWhile((value) => value === this.kalkRealzins),
         // Don't do anything unless the Router is in the neubau page
@@ -232,7 +232,7 @@ export class NeubauService {
     if (this.kellergeschossIn === 'Vorhanden') {
       this._kellergeschossOut = this.constants.kellerVorhanden;
     } else {
-      this._kellergeschossOut = 0
+      this._kellergeschossOut = 0;
     }
   }
 
@@ -287,7 +287,7 @@ export class NeubauService {
   private updateDachbegruenungOut() {
     if (this.dachbegruenungIn === 'Vorhanden') {
       this._dachbegruenungOut = this.constants.dachbegruenungVorhanden;
-    } else { 
+    } else {
       this._dachbegruenungOut = 0;
     }
   }
@@ -387,7 +387,8 @@ export class NeubauService {
   }
 
   // Restsumme [€]
-  private _restsumme = this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
+  private _restsumme =
+    this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
   private updateRestsumme() {
     if (this.konstruktion === 'Konventionell') {
       this._restsumme =
@@ -533,7 +534,7 @@ export class NeubauService {
   private updateKfwKreditM2() {
     this._kfwKreditM2 = this._kfwKredit / this.wohnflaeche;
   }
-  
+
   private _bankKreditM2 = 0;
   private updateBankKreditM2() {
     this._bankKreditM2 = this._bankKredit / this.wohnflaeche;
@@ -541,12 +542,14 @@ export class NeubauService {
 
   private _finanzierungskostenKfwM2 = 0;
   private updateFinanzierungskostenKfwM2() {
-    this._finanzierungskostenKfwM2 = this._finanzierungskostenKfw / this.wohnflaeche;
+    this._finanzierungskostenKfwM2 =
+      this._finanzierungskostenKfw / this.wohnflaeche;
   }
 
   private _finanzierungskostenFinanzmarktM2 = 0;
   private updateFinanzierungskostenFinanzmarktM2() {
-    this._finanzierungskostenFinanzmarktM2 = this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
+    this._finanzierungskostenFinanzmarktM2 =
+      this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
   }
 
   private _investitionskostenM2 = 0;
@@ -574,7 +577,7 @@ export class NeubauService {
     this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
   }
 
-  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard 
+  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
   outputDashboard!: DashboardOutput;
   private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
     this.outputDashboard
@@ -646,8 +649,7 @@ export class NeubauService {
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2:
-          this._finanzierungskostenKfwM2,
+        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
         finanzierungskostenFinanzmarktM2:
           this._finanzierungskostenFinanzmarktM2,
@@ -715,8 +717,7 @@ export class NeubauService {
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2:
-          this._finanzierungskostenKfwM2,
+        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
         finanzierungskostenFinanzmarktM2:
           this._finanzierungskostenFinanzmarktM2,
@@ -733,5 +734,47 @@ export class NeubauService {
         mitKfwM2: this._mitKfwM2,
       })
     );
+  }
+
+  // Reset was created to make sure the outputs match the form values
+  // After doing some changes, going to another route and then coming back the outputs were the same
+  // while the form had reset to default values
+  // Another solution would be to restore the previous values. But that would require more work.
+  // The main problem is that the forms are being reused across different projects/routes
+  // So it would require either separating the forms, or identifying the current route in each form
+  // to then assign the form values from the service(neubau / sanierung).  
+  reset() {
+    // Project parameters
+    this.wohnflaeche = this.formProjektService.wohnflaeche.init;
+    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+    this.energiestandard =
+      this.formProjektService.energiestandardOptions[0].value;
+    this.konstruktion = this.formProjektService.konstruktionOptions[0].value;
+    this.zertifizierung =
+      this.formProjektService.zertifizierungOptions[0].value;
+
+    // Neubau form parameters
+    this.kellergeschossIn =
+      this.formNeubauService.kellergeschossOptions[0].value;
+    this.stellplaetzeIn = this.formNeubauService.stellplaetzeOptions[0].value;
+    this.aufzugsanlageIn = this.formNeubauService.aufzugsanlageOptions[0].value;
+    this.barrierefreiheitIn =
+      this.formNeubauService.barrierefreiheitOptions[0].value;
+    this.dachbegruenungIn =
+      this.formNeubauService.dachbegruenungOptions[0].value;
+    this.baustellenlogistikIn =
+      this.formNeubauService.baustellenlogistikOptions[0].value;
+    this.aussenanlagenIn = this.formNeubauService.aussenanlagenOptions[0].value;
+    this.grundstuecksbezogeneKosten = this.formNeubauService.grundstKosten.init;
+    this.baunebenkostenKeinFin =
+      this.formNeubauService.baunebenkostenKeinFin.init;
+
+    // Darlehen parameters
+    this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;
+    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.init;
+    this.kfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
+    this.bankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
+
+    this.update();
   }
 }

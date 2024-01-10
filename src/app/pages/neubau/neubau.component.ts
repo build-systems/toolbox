@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormProjektComponent } from '../../form-projekt/form-projekt.component';
 import { FormNeubauComponent } from '../../form-neubau/form-neubau.component';
@@ -9,6 +9,8 @@ import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuita
 import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
 import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
 import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
+import { neubau } from '../../shared/constants';
+import { NeubauService } from './neubau.service';
 
 @Component({
   selector: 'app-neubau',
@@ -53,5 +55,14 @@ export class NeubauComponent {
     el.scrollIntoView();
   }
 
-  constructor() {}
+  // Reset was created to make sure the outputs match the form values
+  // After doing some changes, going to another route and then coming back the outputs were the same
+  // while the form had reset to default values
+  // Another solution would be to restore the previous values. But that would require more work.
+  // The main problem is that the forms are being reused across different projects/routes
+  // So it would require either separating the forms, or identifying the current route in each form
+  // to then assign the form values from the service(neubau / sanierung).
+  constructor(private neubauService: NeubauService) {
+    neubauService.reset();
+  }
 }
