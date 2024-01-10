@@ -75,7 +75,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
+  width: 40px;
   aspect-ratio: 1/1;
   border: 1px solid var(--primary);
   border-radius: 50%;
