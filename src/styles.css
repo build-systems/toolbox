@@ -19,7 +19,8 @@
   --nav-sel-thickness: 2px;
   --mobile-handle-diameter: 1.6rem;
   --mobile-padding: 1rem;
-  --mobile-header: calc(40px + (2 * var(--mobile-padding)))}
+  --mobile-header: calc(40px + (2 * var(--mobile-padding)));
+}
 
 * {
   box-sizing: border-box;
@@ -124,6 +125,35 @@ li {
   flex-direction: column;
 }
 
+button {
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  font-family: "Inconsolata", sans-serif;
+  height: var(--button-height);
+  text-align: center;
+  border-radius: var(--button-radius);
+  border: 1px solid var(--primary);
+  padding-left: var(--layout-padding);
+  padding-right: var(--layout-padding);
+}
+
+button:focus {
+  outline-color: var(--secondary);
+}
+
+button:hover {
+  font-weight: 300;
+  color: var(--primary);
+  border: 1px solid var(--secondary);
+  background-color: var(--bg-secondary);
+}
+
+button:active {
+  background-color: var(--bg-tertiary);
+  color: var(--primary);
+}
+
 input {
   background-color: var(--bg-secondary);
   font-family: "Inconsolata", sans-serif;
@@ -213,7 +243,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -523,8 +552,6 @@ input[type="button"] {
   width: 100%;
 }
 
-
-
 .development {
   display: flex;
   flex: 1;
@@ -545,6 +572,59 @@ input[type="button"] {
   }
   & p {
     text-align: center;
+  }
+}
+
+.ng-profile {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  width: 100%;
+  padding: var(--layout-padding);
+  & h1 {
+    font-size: 36px;
+    /* text-align: center; */
+    padding-bottom: var(--mobile-padding);
+  }
+  & h2 {
+    text-align: center;
+    padding-bottom: var(--mobile-padding);
+  }
+  & p {
+    text-align: center;
+  }
+}
+
+.ng-auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--layout-padding);
+  background-color: var(--bg-secondary);
+  border-radius: var(--button-radius);
+  & form {
+    & div {
+      padding-top: var(--layout-padding);
+      padding-bottom: var(--layout-padding);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      & label {
+        padding-bottom: var(--layout-padding);
+      }
+      & input {
+        height: var(--button-height);
+        border-radius: var(--button-radius);
+        padding-left: 1rem;
+        border: 1px solid var(--primary);
+      }
+      input:focus {
+        outline-color: var(--secondary);
+      }
+    }
   }
 }
 
@@ -577,11 +657,11 @@ input[type="button"] {
     width: var(--mobile-handle-diameter);
     height: var(--mobile-handle-diameter);
   }
-  
+
   .slider::-moz-range-thumb {
     width: var(--mobile-handle-diameter);
     height: var(--mobile-handle-diameter);
-  } 
+  }
 }
 
 @media screen and (max-width: 850px) {
@@ -611,22 +691,22 @@ input[type="button"] {
   .ng-tool {
     padding-bottom: var(--mobile-padding);
   }
-  
+
   .title {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
     padding-top: 0;
   }
-  
+
   h1 {
     font-size: 48px;
   }
-  
+
   .container-tool {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
   }
-  
+
   .values-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -636,5 +716,4 @@ input[type="button"] {
     display: flex;
     flex-direction: column;
   }
-
 }

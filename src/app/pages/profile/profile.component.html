@@ -1,1 +1,7 @@
-<h1>Profile page in development 🔨</h1>
+<h1 style="color: red; margin: 0; padding: 0;">WARNING!</h1>
+<h1>Page in development!</h1>
+@if(session) {
+<app-account></app-account>
+} @else {
+<app-auth></app-auth>
+}

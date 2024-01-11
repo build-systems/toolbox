@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component'
@@ -16,11 +16,11 @@ import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';
     '(window:resize)': 'onWindowResize($event)',
   },
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   // https://angular.dev/guide/components/host-elements
 
   // This part is to control if either the normal navbar or the navbarmobile should be loaded
-  // See also the host up
+  // See also the host at the top
   public screenWidth!: number;
 
   ngOnInit() {

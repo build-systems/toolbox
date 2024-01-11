@@ -1,53 +1,73 @@
 <header>
-    <nav class="side-bar scroll-hide">
-      <ul>
-        <li title="Home" class="">
-          <a routerLink="" class="logo">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#bs-logo-round" />
-            </svg>
-          </a>
-        </li>
-        <li title="Profile" class="profile">
-          <a routerLink="profile" class="link" [class.active-nav]="isRouteActive('/profile')">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#profile" />
-            </svg>
-            <span class="noselect">Profile</span>
-          </a>
-        </li>
-        <li title="Portfolio" class="portfolio">
-          <a routerLink="portfolio" class="link" [class.active-nav]="isRouteActive('/portfolio')">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#portfolio" />
-            </svg>
-            <span class="noselect">Portfolio</span>
-          </a>
-        </li>
-        <li title="Neubau Fördertool" class="neubau">
-          <a routerLink="neubau" class="link" [class.active-nav]="isRouteActive('/neubau')">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#neubau" />
-            </svg>
-            <span class="noselect">Neubau</span>
-          </a>
-        </li>
-        <li title="Sanierung Fördertool" class="sanierung">
-          <a routerLink="sanierung" class="link" [class.active-nav]="isRouteActive('/sanierung')">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#sanierung" />
-            </svg>
-            <span class="noselect">Sanierung</span>
-          </a>
-        </li>
-        <li title="Settings" class="settings">
-          <a routerLink="settings" class="link" [class.active-nav]="isRouteActive('/settings')">
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#settings" />
-            </svg>
-            <span class="noselect">Settings</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <nav class="side-bar scroll-hide">
+    <ul>
+      <li title="Home" class="">
+        <a routerLink="" class="logo">
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#bs-logo-round" />
+          </svg>
+        </a>
+      </li>
+      <li title="Portfolio" class="portfolio">
+        <a
+          routerLink="portfolio"
+          class="link"
+          [class.active-nav]="isRouteActive('/portfolio')"
+        >
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#portfolio" />
+          </svg>
+          <span class="noselect">Portfolio</span>
+        </a>
+      </li>
+      <li title="Neubau Fördertool" class="neubau">
+        <a
+          routerLink="neubau"
+          class="link"
+          [class.active-nav]="isRouteActive('/neubau')"
+        >
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#neubau" />
+          </svg>
+          <span class="noselect">Neubau</span>
+        </a>
+      </li>
+      <li title="Sanierung Fördertool" class="sanierung">
+        <a
+          routerLink="sanierung"
+          class="link"
+          [class.active-nav]="isRouteActive('/sanierung')"
+        >
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#sanierung" />
+          </svg>
+          <span class="noselect">Sanierung</span>
+        </a>
+      </li>
+      <li title="Profile" class="profile">
+        <a
+          routerLink="profile"
+          class="link"
+          [class.active-nav]="isRouteActive('/profile')"
+        >
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#profile" />
+          </svg>
+          <span class="noselect">Profile</span>
+        </a>
+      </li>
+      <li title="Settings" class="settings">
+        <a
+          routerLink="settings"
+          class="link"
+          [class.active-nav]="isRouteActive('/settings')"
+        >
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#settings" />
+          </svg>
+          <span class="noselect">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
