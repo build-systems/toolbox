@@ -154,6 +154,12 @@ button:active {
   color: var(--primary);
 }
 
+button:disabled {
+  color: var(--bg-secondary);
+  background-color: var(--primary30);
+  border-color: var(--primary30);
+}
+
 input {
   background-color: var(--bg-secondary);
   font-family: "Inconsolata", sans-serif;
@@ -603,17 +609,18 @@ input[type="button"] {
   flex-direction: column;
   justify-content: center;
   padding: var(--layout-padding);
-  background-color: var(--bg-secondary);
+  /* background-color: var(--bg-secondary); */
   border-radius: var(--button-radius);
+  border: 1px solid var(--primary);
   & form {
     & div {
       padding-top: var(--layout-padding);
-      padding-bottom: var(--layout-padding);
+      /* padding-bottom: var(--layout-padding); */
       display: flex;
       flex-direction: column;
       justify-content: center;
       & label {
-        padding-bottom: var(--layout-padding);
+        padding-bottom: 0.5rem;
       }
       & input {
         height: var(--button-height);
@@ -626,6 +633,12 @@ input[type="button"] {
       }
     }
   }
+}
+
+.warning {
+  color: tomato;
+  font-size: 0.8rem;
+  position: absolute;
 }
 
 @media screen and (max-width: 1200px) {

@@ -1,7 +1,8 @@
-<h1 style="color: red; margin: 0; padding: 0;">WARNING!</h1>
-<h1>Page in development!</h1>
+<h1>Attention</h1>
+<h2>Page in development!</h2>
+<p>Session value is {{ session }}</p>
 @if(session) {
-<app-account></app-account>
+<app-account [session]="session"></app-account>
 } @else {
 <app-auth></app-auth>
 }
