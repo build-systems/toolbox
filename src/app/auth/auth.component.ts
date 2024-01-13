@@ -1,13 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SupabaseService } from '../supabase.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -19,35 +13,18 @@ import { Router } from '@angular/router';
     class: 'ng-auth',
   },
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   title = 'Login';
   loading = false;
 
+  signInForm = this.formBuilder.group({
+    email: '',
+  });
+
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder,
-    // private router: Router
-  ) {
-    // this.supabase.currentUser$.subscribe((user) => {
-    //   if (user) {
-    //     console.log('USER ON LOGIN PAGE: ', user);
-    //     this.router.navigateByUrl('/portfolio', {replaceUrl: true});
-    //   }
-    // });
-  }
-
-  // Inititalize projekt form
-  signInForm!: FormGroup;
-
-  ngOnInit(): void {
-    this.signInForm = this.formBuilder.group({
-      email: this.formBuilder.control('', [
-        Validators.required,
-        Validators.email,
-        Validators.minLength(5),
-      ]),
-    });
-  }
+    private readonly formBuilder: FormBuilder
+  ) {}
 
   async onSubmit(): Promise<void> {
     try {

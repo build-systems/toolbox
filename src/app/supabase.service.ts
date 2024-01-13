@@ -8,8 +8,6 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { environment } from '../environments/environment.development';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Profile {
   id?: string;
@@ -24,52 +22,13 @@ export interface Profile {
 export class SupabaseService {
   private supabase: SupabaseClient;
   _session: AuthSession | null = null;
-  // private currentUser = new BehaviorSubject<User | boolean | null>(
-  //   null
-  // );
-  //   currentUser$ = this.currentUser.asObservable();
 
-
-  constructor(private router: Router) {
+  constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
-
-    // this.supabase.auth.onAuthStateChange((event, session) => {
-    //   if (event === "TOKEN_REFRESHED") {
-    //     console.log('SET USER: ', session);
-    //     this.currentUser.next(session!.user);
-    //   } else {
-    //     this.currentUser.next(false);
-    //   }
-    // });
-
-    // this.loadUser();
-
   }
-
-  // async loadUser() {
-  //   if(this.currentUser.value){
-  //     return;
-  //   }
-
-  //   const user = await this.supabase.auth.getUser();
-
-  //   if (user.data.user) {
-  //     this.currentUser.next(user.data.user);
-  //   } else {
-  //     this.currentUser.next(false);
-  //   }
-  // }
-
-  // getCurrentUserId(): string | null {
-  //   if (this.currentUser.value) {
-  //     return (this.currentUser.value as User).id;
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {
@@ -96,9 +55,8 @@ export class SupabaseService {
     return this.supabase.auth.signInWithOtp({ email });
   }
 
-  async signOut() {
-    await this.supabase.auth.signOut();
-    this.router.navigateByUrl('/', { replaceUrl: true });
+  signOut() {
+    return this.supabase.auth.signOut();
   }
 
   updateProfile(profile: Profile) {

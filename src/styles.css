@@ -125,7 +125,10 @@ li {
   flex-direction: column;
 }
 
-button {
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.2rem;
   cursor: pointer;
   background-color: var(--bg-secondary);
@@ -138,23 +141,23 @@ button {
   padding-right: var(--layout-padding);
 }
 
-button:focus {
+.button:focus {
   outline-color: var(--secondary);
 }
 
-button:hover {
+.button:hover {
   font-weight: 300;
   color: var(--primary);
   border: 1px solid var(--secondary);
   background-color: var(--bg-secondary);
 }
 
-button:active {
+.button:active {
   background-color: var(--bg-tertiary);
   color: var(--primary);
 }
 
-button:disabled {
+.button:disabled {
   color: var(--bg-secondary);
   background-color: var(--primary30);
   border-color: var(--primary30);
@@ -587,7 +590,7 @@ input[type="button"] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   padding: var(--layout-padding);
   & h1 {
@@ -635,10 +638,132 @@ input[type="button"] {
   }
 }
 
+.ng-account {
+  width: 100%;
+  height: 100%;
+  /* padding: 5rem 0 10rem 0; */
+}
+
 .warning {
   color: tomato;
   font-size: 0.8rem;
   position: absolute;
+}
+
+.ng-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem 3rem 1rem;
+  & input {
+    height: 0;
+  }
+  & div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.button-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.avatar {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: block;
+}
+
+.avatar.image {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.avatar.no-image {
+  background-color: #333;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.camera-wrapper {
+  height: 33%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  position: absolute;
+}
+
+.camera-icon {
+  background-image: url(https://www.gstatic.com/images/icons/material/system/2x/photo_camera_white_24dp.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+}
+
+/* From google: hover the NBJ9cb button will trigger the element EAyyHe to have opacity 1 */
+/* way to trigger reactions from unrelated elements using only css */
+@media (hover: hover) {
+  .button-img:hover > .camera-wrapper {
+    opacity: 1;
+  }
+}
+
+.form-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  & div {
+    height: var(--button-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-bottom: var(--layout-padding);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--button-radius);
+    & label {
+      width: 20%;
+      padding-left: var(--layout-padding);
+    }
+    & input {
+      width: 80%;
+      height: 100%;
+      padding-left: var(--layout-padding);
+      border: none;
+      border-radius: 0 var(--button-radius) var(--button-radius) 0;
+    }
+    & button {
+      width: 100%;
+    }
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -653,6 +778,7 @@ input[type="button"] {
 
   .container-forms {
     padding-right: 0px;
+    padding-left: 0px;
   }
 
   .values-container {

@@ -8,7 +8,10 @@ import { SupabaseService } from '../supabase.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './avatar.component.html',
-  styleUrl: './avatar.component.css'
+  styleUrl: './avatar.component.css',
+  host: {
+    class: 'ng-avatar',
+  },
 })
 export class AvatarComponent {
   _avatarUrl: SafeResourceUrl | undefined

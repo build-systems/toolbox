@@ -69,7 +69,7 @@ export class NeubauService {
       }
     });
 
-    // Subscribe to all Projekt Form parameters and update after every change
+    // Subscribe to Projekt Form parameter and update after every change
     this.formProjektService.currentWohnflaeche$
       .pipe(
         // Don't do anything until the user changes one of the forms

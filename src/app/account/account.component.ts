@@ -11,6 +11,9 @@ import { AvatarComponent } from '../avatar/avatar.component';
   imports: [CommonModule, ReactiveFormsModule, AvatarComponent],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
+  host: {
+    class: "ng-account"
+  }
 })
 export class AccountComponent implements OnInit {
   loading = false;
@@ -39,6 +42,8 @@ export class AccountComponent implements OnInit {
       website,
       avatar_url,
     });
+
+    console.log(this.session);
   }
 
   async getProfile() {
