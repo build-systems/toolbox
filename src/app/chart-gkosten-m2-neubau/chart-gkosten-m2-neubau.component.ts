@@ -2,24 +2,22 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungService } from '../pages/sanierung/sanierung.service';
 import { NeubauService } from '../pages/neubau/neubau.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { DashboardOutput } from '../dashboard-output';
 import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-chart-gkosten-m2',
+  selector: 'app-chart-gkosten-m2-neubau',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-gkosten-m2.component.html',
-  styleUrl: './chart-gkosten-m2.component.css',
+  templateUrl: './chart-gkosten-m2-neubau.component.html',
+  styleUrl: './chart-gkosten-m2-neubau.component.css',
   host: {
     class: 'ng-chart chart5'
   }
-
 })
-export class ChartGkostenM2Component implements OnInit {
+export class ChartGkostenM2NeubauComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -27,10 +25,9 @@ export class ChartGkostenM2Component implements OnInit {
 
   // Router links. There must be better way to get the strings from app.routes.ts
   currentRoute!: string;
-  sanierungRoute = '/sanierung';
   neubauRoute = '/neubau';
 
-  constructor(private sanierungService: SanierungService,
+  constructor(
     private neubauService: NeubauService,
     private router: Router) { 
       this.router.events.subscribe((val) => {
@@ -43,32 +40,17 @@ export class ChartGkostenM2Component implements OnInit {
     }
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputDashboard$
-    .pipe(filter(() => this.currentRoute === this.sanierungRoute))
-      .subscribe((value) => {
-      this.output = value;
-      this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschussM2']), 0];
-      this.barChartData.datasets[1].data = [Math.round(this.output['investitionskostenM2']), 0];
-      this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-      this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
-      this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKreditM2'])];
-      this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKreditM2'])];
-      this.chart?.update();
-    });
-
     this.neubauService.currentOutputDashboard$
       .pipe(filter(() => this.currentRoute === this.neubauRoute))
       .subscribe((value) => {
         this.output = value;
-        this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschussM2']), 0];
-        this.barChartData.datasets[1].data = [Math.round(this.output['investitionskostenM2']), 0];
-        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-        this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
-        this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKreditM2'])];
-        this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKreditM2'])];
+        this.barChartData.datasets[0].data = [Math.round(this.output['investitionskostenM2']), 0];
+        this.barChartData.datasets[1].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
+        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
+        this.barChartData.datasets[3].data = [0, Math.round(this.output['bankKreditM2'])];
+        this.barChartData.datasets[4].data = [0, Math.round(this.output['kfwKreditM2'])];
         this.chart?.update();
       });
-
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -249,14 +231,6 @@ export class ChartGkostenM2Component implements OnInit {
     datasets: [
       {
         data: [0, null],
-        label: 'KfW-Zuschuss',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
-      },
-      {
-        data: [0, null],
         label: 'Investitionskosten',
         backgroundColor: 'rgba(58, 149, 194, 0.6)',
         borderColor: 'rgb(58, 149, 194)',
@@ -369,4 +343,5 @@ export class ChartGkostenM2Component implements OnInit {
     active?: object[];
   }): void {
   }
+
 }

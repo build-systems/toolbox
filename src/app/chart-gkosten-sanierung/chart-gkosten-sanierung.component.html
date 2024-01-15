@@ -1,0 +1,19 @@
+@defer (on timer(200ms); prefetch on idle) {
+    <canvas
+      baseChart
+      class="chart"
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)"
+    >
+    </canvas>
+    } @placeholder (minimum 250ms) {
+      <canvas baseChart
+      class="chart"
+      [data]="barChartDataPlaceholder"
+      [options]="barChartOptionsPlaceholder"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)">
+    </canvas>
+    }

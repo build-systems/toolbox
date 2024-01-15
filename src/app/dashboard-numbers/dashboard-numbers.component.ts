@@ -18,6 +18,7 @@ import { filter } from 'rxjs';
   },
 })
 export class DashboardNumbersComponent implements OnInit {
+  typ!: ProjektTyp;
   kfwZuschuss: number = 0;
   investitionskosten: number = 0;
   finanzierungskostenFinanzmarkt: number = 0;
@@ -46,12 +47,13 @@ export class DashboardNumbersComponent implements OnInit {
   }
 
   // Here I made a copy of the subscription to both observables.
-  // It is a lot of repetitive code, but I run out of time
+  // It is a lot of repetitive code, but I run out of time...
   ngOnInit(): void {
     this.sanierungService.currentOutputDashboard$
       .pipe(filter(() => this.currentRoute === this.sanierungRoute))
       .subscribe((value) => {
         this.output = value;
+        this.typ = this.output.typ;
         this.kfwZuschuss = this.output.kfwZuschuss;
         this.investitionskosten = this.output.investitionskosten;
         this.finanzierungskostenFinanzmarkt =
@@ -65,6 +67,7 @@ export class DashboardNumbersComponent implements OnInit {
       .pipe(filter(() => this.currentRoute === this.neubauRoute))
       .subscribe((value) => {
         this.output = value;
+        this.typ = this.output.typ;
         this.kfwZuschuss = this.output.kfwZuschuss;
         this.investitionskosten = this.output.investitionskosten;
         this.finanzierungskostenFinanzmarkt =

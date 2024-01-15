@@ -1,6 +1,9 @@
 // I added the optional text variable to be
 // able to change how it is displayed without affecting the logic
 
+// General
+type ProjektTyp = "Neubau" | "Sanierung";
+
 // Projekt
 type Energiestandard = "EH 40" | "EH 55" | "EH 70" | "EH 85" | "EH 100" | "EH 115";
 type EnergiestandardOptions = {

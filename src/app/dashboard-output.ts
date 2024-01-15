@@ -1,4 +1,5 @@
 export interface DashboardOutput {
+  typ: ProjektTyp;
   // Dalehen
   kreditlaufzeit: number;
   kfWDarlehen: KfWDarlehen;

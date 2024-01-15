@@ -618,6 +618,7 @@ export class SanierungService {
 
     this.outputDashboardSource.next(
       (this.outputDashboard = {
+        typ: "Sanierung",
         // Dalehen
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,

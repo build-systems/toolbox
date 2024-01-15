@@ -1,24 +1,24 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartEvent } from 'chart.js/dist/core/core.plugins';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungService } from '../pages/sanierung/sanierung.service';
 import { DashboardOutput } from '../dashboard-output';
-import { NeubauService } from '../pages/neubau/neubau.service';
-import { filter } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
+import { SanierungService } from '../pages/sanierung/sanierung.service';
+import { filter } from 'rxjs';
 
 @Component({
-  selector: 'app-chart-gkosten',
+  selector: 'app-chart-gkosten-sanierung',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-gkosten.component.html',
-  styleUrl: './chart-gkosten.component.css',
+  templateUrl: './chart-gkosten-sanierung.component.html',
+  styleUrl: './chart-gkosten-sanierung.component.css',
   host: {
     class: 'ng-chart chart4',
   },
 })
-export class ChartGkostenComponent implements OnInit {
+export class ChartGkostenSanierungComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   output!: DashboardOutput;
@@ -26,11 +26,9 @@ export class ChartGkostenComponent implements OnInit {
   // Router links. There must be better way to get the strings from app.routes.ts
   currentRoute!: string;
   sanierungRoute = '/sanierung';
-  neubauRoute = '/neubau';
 
   constructor(
     private sanierungService: SanierungService,
-    private neubauService: NeubauService,
     private router: Router
   ) {
     this.router.events.subscribe((val) => {
@@ -47,19 +45,6 @@ export class ChartGkostenComponent implements OnInit {
   ngOnInit(): void {
     this.sanierungService.currentOutputDashboard$
     .pipe(filter(() => this.currentRoute === this.sanierungRoute))
-      .subscribe((value) => {
-        this.output = value;
-        this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschuss']), 0];
-        this.barChartData.datasets[1].data = [Math.round(this.output['investitionskosten']), 0];
-        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarkt'])];
-        this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfw'])];
-        this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKredit'])];
-        this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKredit'])];
-        this.chart?.update();
-      });
-      
-      this.neubauService.currentOutputDashboard$
-      .pipe(filter(() => this.currentRoute === this.neubauRoute))
       .subscribe((value) => {
         this.output = value;
         this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschuss']), 0];
@@ -368,4 +353,5 @@ export class ChartGkostenComponent implements OnInit {
     active?: object[];
   }): void {
   }
+
 }

@@ -1,7 +1,9 @@
-<div title="KfW-Zuschuss: {{ kfwZuschuss | currency : 'EUR' }}" class="card">
-  <h3>KfW-<wbr />Zuschuss</h3>
-  <div>{{ kfwZuschuss | shortNumber }}</div>
-</div>
+@if (typ === "Sanierung") {
+  <div title="KfW-Zuschuss: {{ kfwZuschuss | currency : 'EUR' }}" class="card">
+    <h3>KfW-<wbr />Zuschuss</h3>
+    <div>{{ kfwZuschuss | shortNumber }}</div>
+  </div>
+}
 <div
   title="Investitionskosten: {{ investitionskosten | currency : 'EUR' }} "
   class="card"

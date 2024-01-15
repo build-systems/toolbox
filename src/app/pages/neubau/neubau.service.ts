@@ -635,6 +635,7 @@ export class NeubauService {
 
     this.outputDashboardSource.next(
       (this.outputDashboard = {
+        typ: "Neubau",
         // Dalehen
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,

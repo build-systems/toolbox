@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormProjektComponent } from '../../form-projekt/form-projekt.component';
 import { FormSanierungComponent } from '../../form-sanierung/form-sanierung.component';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
-import { ChartGkostenComponent } from '../../chart-gkosten/chart-gkosten.component';
-import { ChartGkostenM2Component } from '../../chart-gkosten-m2/chart-gkosten-m2.component';
+import { ChartGkostenSanierungComponent } from '../../chart-gkosten-sanierung/chart-gkosten-sanierung.component';
+import { ChartGkostenM2SanierungComponent } from '../../chart-gkosten-m2-sanierung/chart-gkosten-m2-sanierung.component';
 import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuitaeten.component';
 import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
 import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
@@ -19,8 +19,8 @@ import { SanierungService } from './sanierung.service';
     FormProjektComponent,
     FormSanierungComponent,
     FormDarlehenComponent,
-    ChartGkostenComponent,
-    ChartGkostenM2Component,
+    ChartGkostenSanierungComponent,
+    ChartGkostenM2SanierungComponent,
     ChartAnnuitaetenComponent,
     ChartRepaymentComponent,
     ChartFinanzierungskostenComponent,
