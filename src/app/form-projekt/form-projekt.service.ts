@@ -78,6 +78,10 @@ export class FormProjektService {
     this.energiestandardSource.next(data);
   }
 
+  public setKonstruktion(data: Konstruktion) {
+    this.konstruktionSource.next(data);
+  }
+
   public setZertifizierung(data: Zertifizierung) {
     this.zertifizierungSource.next(data);
   }

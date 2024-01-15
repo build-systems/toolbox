@@ -122,7 +122,7 @@ li {
 
 .output {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 
 .button {
@@ -485,11 +485,12 @@ input[type="button"] {
   background-color: var(--primary);
 }
 
-.values-container {
+.ng-dashboard-numbers {
   display: flex;
-  height: 80px;
-  width: 100%;
-  margin-bottom: calc(var(--layout-padding) / 2);
+  flex-direction: column;
+  /* height: 80px; */
+  width: 200px;
+  margin-right: calc(var(--layout-padding) / 2);
   gap: calc(var(--layout-padding) / 2);
 }
 
@@ -511,10 +512,10 @@ input[type="button"] {
     height: 100%;
   }
   & div {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 500;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     height: 100%;
   }
@@ -781,8 +782,13 @@ input[type="button"] {
     padding-left: 0px;
   }
 
-  .values-container {
+  .output {
+    flex-direction: column;
+  }
+
+  .ng-dashboard-numbers {
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     height: auto;
     margin-bottom: calc(var(--layout-padding) / 4);

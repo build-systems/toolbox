@@ -26,7 +26,6 @@ export class FormNeubauComponent implements OnInit {
 
   ngOnInit(): void {
     this.neubauForm = this.fb.group({
-      konstruktion: new FormControl(this.formService.konstructionOptions[0].value),
       kellergeschossIn: new FormControl(this.formService.kellergeschossOptions[0].value),
       stellplaetzeIn: new FormControl(this.formService.stellplaetzeOptions[0].value),
       aufzugsanlageIn: new FormControl(this.formService.aufzugsanlageOptions[0].value),
@@ -41,11 +40,6 @@ export class FormNeubauComponent implements OnInit {
     });
 
     // Susbscribe to form changes
-    this.neubauForm.get('konstruktion')?.valueChanges.subscribe(value => {
-      // Update variable / observable
-      this.formService.setKonstruktion(value);
-    });
-
     this.neubauForm.get('kellergeschossIn')?.valueChanges.subscribe(value => {
       this.formService.setKellergeschoss(value);
     });

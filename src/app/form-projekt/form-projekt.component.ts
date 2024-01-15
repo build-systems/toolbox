@@ -66,6 +66,9 @@ export class FormProjektComponent implements OnInit {
           Validators.max(this.formService.anzahlWohnungen.max),
         ],
       ],
+      konstruktion: new FormControl(
+        this.formService.konstruktionOptions[0].value
+      ),
       energiestandard: new FormControl(
         this.formService.energiestandardOptions[0].value
       ),
@@ -120,6 +123,12 @@ export class FormProjektComponent implements OnInit {
     this.projektForm.get('energiestandard')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
       this.formService.setEnergiestandard(value);
+    });
+
+    // Konstruktion
+    this.projektForm.get('konstruktion')?.valueChanges.subscribe((value) => {
+      // Updates the sanierungService
+      this.formService.setKonstruktion(value);
     });
 
     // Zertifizierung

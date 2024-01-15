@@ -6,10 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FormNeubauService {
   // Centralized form control
-  konstructionOptions: KonstruktionOptions[] = [
-    {id: 'konst1', value: 'Konventionell'},
-    {id: 'konst2', value: 'Holzbau'}
-  ]
   kellergeschossOptions: KellergeschossOptions[] = [
     { id: 'kelgesc1', value: 'Vorhanden' },
     { id: 'kelgesc2', value: 'Nicht Vorhanden' },
@@ -57,9 +53,6 @@ export class FormNeubauService {
   };
 
   // Observables
-  private konstruktionSource = new BehaviorSubject<Konstruktion>(this.konstructionOptions[0].value);
-  currentKonstruktion = this.konstruktionSource.asObservable();
-
   private kellergeschossSource = new BehaviorSubject<Kellergeschoss>(
     this.kellergeschossOptions[0].value
   );
@@ -108,9 +101,6 @@ export class FormNeubauService {
     this.baunebenkostenKeinFinSource.asObservable();
 
   // Set Neubau methods 
-  public setKonstruktion(data: Konstruktion) {
-    this.konstruktionSource.next(data);
-  }
   public setKellergeschoss(data: Kellergeschoss) {
     this.kellergeschossSource.next(data);
   }

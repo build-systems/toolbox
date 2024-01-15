@@ -1,14 +1,6 @@
 <form [formGroup]="neubauForm">
     <h2>Neubau</h2>
     <fieldset class="radio-fieldset">
-        <legend>Konstruktion <sup>&#9432;</sup></legend>
-        <span *ngFor="let item of formService.konstructionOptions">
-            <input type="radio" id="{{item.id}}" value="{{item.value}}" name="konstruktion"
-                formControlName="konstruktion" />
-            <label for="{{item.id}}">{{item.value}}</label>
-        </span>
-    </fieldset>
-    <fieldset class="radio-fieldset">
         <legend>Kellergeschoss <sup>&#9432;</sup></legend>
         <span *ngFor="let item of formService.kellergeschossOptions">
             <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kellergeschossIn"
