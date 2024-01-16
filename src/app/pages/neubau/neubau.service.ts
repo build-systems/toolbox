@@ -385,7 +385,7 @@ export class NeubauService {
       this.energiestandard === 'EH 40'
     ) {
       this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
-    } else {
+    } else if (this.zertifizierung === 'Keine'){
       this._kfwKredit = 0;
     }
   }
@@ -738,7 +738,8 @@ export class NeubauService {
         mitKfw: this._mitKfw,
         mitKfwM2: this._mitKfwM2,
       })
-    );
+      );
+      console.log(this.outputNeubauSource);
   }
 
   // Reset was created to make sure the outputs match the form values
