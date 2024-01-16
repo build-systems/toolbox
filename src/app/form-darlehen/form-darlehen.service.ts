@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FormDarlehenService {
   // Kalkulationszinssatz (Realzins) centralized form values
   kalkRealzins = {
-    min: 1,
+    min: 0,
     init: 4,
     max: 8,
     step: 0.1,
@@ -17,7 +17,7 @@ export class FormDarlehenService {
   kreditlaufzeit = {
     min: 1,
     init: 20,
-    max: 50,
+    max: 30,
     step: 1,
   };
 

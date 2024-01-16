@@ -376,7 +376,7 @@ export class NeubauService {
   private _kfwKredit = 0;
   private updateKfwKredit() {
     if (
-      this.zertifizierung === 'Keine' &&
+      this.zertifizierung === 'ohne QNG' &&
       this.energiestandard === 'EH 40'
     ) {
       this._kfwKredit = this.constants.kfwKredit_Lower * this.anzahlWohnungen;
