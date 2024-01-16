@@ -385,7 +385,7 @@ export class NeubauService {
       this.energiestandard === 'EH 40'
     ) {
       this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
-    } else if (this.zertifizierung === 'Keine'){
+    } else if (this.zertifizierung === 'Keine') {
       this._kfwKredit = 0;
     }
   }
@@ -405,7 +405,7 @@ export class NeubauService {
         this._kfwKredit;
     }
     // Make sure it doesn't go negative
-    this._restsumme = (this._restsumme < 0) ? 0 : this._restsumme;
+    this._restsumme = this._restsumme < 0 ? 0 : this._restsumme;
   }
 
   // #03
@@ -641,7 +641,7 @@ export class NeubauService {
 
     this.outputDashboardSource.next(
       (this.outputDashboard = {
-        typ: "Neubau",
+        typ: 'Neubau',
         // Dalehen
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,
@@ -740,8 +740,7 @@ export class NeubauService {
         mitKfw: this._mitKfw,
         mitKfwM2: this._mitKfwM2,
       })
-      );
-      console.log(this.outputNeubauSource);
+    );
   }
 
   // Reset was created to make sure the outputs match the form values
@@ -750,7 +749,7 @@ export class NeubauService {
   // Another solution would be to restore the previous values. But that would require more work.
   // The main problem is that the forms are being reused across different projects/routes
   // So it would require either separating the forms, or identifying the current route in each form
-  // to then assign the form values from the service(neubau / sanierung).  
+  // to then assign the form values from the service(neubau / sanierung).
   reset() {
     // Project parameters
     this.wohnflaeche = this.formProjektNeuService.wohnflaeche.init;

@@ -46,9 +46,9 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
       .subscribe((value) => {
       this.output = value;
       this.barChartData.datasets[0].data = [Math.round(this.output['investitionskostenM2']), 0];
-      this.barChartData.datasets[1].data = [-Math.round(this.output['kfwZuschussM2']), 0];
-      this.barChartData.datasets[2].data = [0, Math.round(this.output['bankKreditM2'])];
-      this.barChartData.datasets[3].data = [0, Math.round(this.output['kfwKreditM2'])];
+      this.barChartData.datasets[1].data = [0, Math.round(this.output['bankKreditM2'])];
+      this.barChartData.datasets[2].data = [0, Math.round(this.output['kfwKreditM2'])];
+      this.barChartData.datasets[3].data = [-Math.round(this.output['kfwZuschussM2']), 0];
       this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
       this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
       this.chart?.update();
