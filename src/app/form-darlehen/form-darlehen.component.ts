@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -30,7 +30,7 @@ export class FormDarlehenComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public formService: FormDarlehenService
+    public formService: FormDarlehenService,
   ) {}
 
   ngOnInit(): void {
@@ -78,8 +78,8 @@ export class FormDarlehenComponent implements OnInit {
         // Update number input when range input changes
         this.darlehenForm
           .get('kalkRealzins')
-          ?.setValue(value, { emitEvent: false });
-        // Also updates the sanierungService
+          ?.setValue(value.toFixed(2), { emitEvent: false });
+        // Also updates the sanierungService observable
         this.formService.setKalkRealzins(value);
       });
 
@@ -88,7 +88,7 @@ export class FormDarlehenComponent implements OnInit {
       this.darlehenForm
         .get('kalkRealzinsRange')
         ?.setValue(value, { emitEvent: false });
-      // Also updates the sanierungService\
+      // Also updates the sanierungService observable
       this.formService.setKalkRealzins(value);
     });
 
@@ -126,4 +126,5 @@ export class FormDarlehenComponent implements OnInit {
       this.formService.setBankDarlehen(value);
     });
   }
+
 }

@@ -2,9 +2,9 @@ export interface SanierungProjekt {
   // Projekt
   wohnflaeche: number;
   anzahlWohnungen: number;
-  energiestandard: Energiestandard;
+  energiestandard: EnergiestandardSanierung;
   konstruktion: Konstruktion;
-  zertifizierung: Zertifizierung;
+  zertifizierung: ZertifizierungSanierung;
   // Sanierung
   worstPerformingBuilding: boolean;
   serielleSanierung: boolean;

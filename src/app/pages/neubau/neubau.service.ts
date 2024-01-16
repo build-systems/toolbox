@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, skipWhile } from 'rxjs';
 import { NeubauProjekt } from '../../shared/neubauprojekt';
 import { neubau } from '../../shared/constants';
-import { FormProjektService } from '../../form-projekt/form-projekt.service';
+import { FormProjektNeuService } from '../../form-projekt-neubau/form-projekt-neu.service';
 import { FormNeubauService } from '../../form-neubau/form-neubau.service';
 import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -13,14 +13,14 @@ import { DashboardOutput } from '../../dashboard-output';
 })
 export class NeubauService {
   // Project parameters
-  wohnflaeche = this.formProjektService.wohnflaeche.init;
-  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
-  energiestandard: Energiestandard =
-    this.formProjektService.energiestandardOptions[0].value;
+  wohnflaeche = this.formProjektNeuService.wohnflaeche.init;
+  anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
+  energiestandard: EnergiestandardNeubau =
+    this.formProjektNeuService.energiestandardOptions[0].value;
   konstruktion: Konstruktion =
-    this.formProjektService.konstruktionOptions[0].value;
-  zertifizierung: Zertifizierung =
-    this.formProjektService.zertifizierungOptions[0].value;
+    this.formProjektNeuService.konstruktionOptions[0].value;
+  zertifizierung: ZertifizierungNeubau =
+    this.formProjektNeuService.zertifizierungOptions[0].value;
 
   // Neubau form parameters
   kellergeschossIn: Kellergeschoss =
@@ -56,7 +56,7 @@ export class NeubauService {
 
   constructor(
     private constants: neubau,
-    private formProjektService: FormProjektService,
+    private formProjektNeuService: FormProjektNeuService,
     private formNeubauService: FormNeubauService,
     private formDarlehenService: FormDarlehenService,
     private router: Router
@@ -70,7 +70,7 @@ export class NeubauService {
     });
 
     // Subscribe to Projekt Form parameter and update after every change
-    this.formProjektService.currentWohnflaeche$
+    this.formProjektNeuService.currentWohnflaeche$
       .pipe(
         // Don't do anything until the user changes one of the forms
         skipWhile((value) => value === this.wohnflaeche),
@@ -82,7 +82,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektService.currentAnzahlWohnungen$
+    this.formProjektNeuService.currentAnzahlWohnungen$
       .pipe(
         skipWhile((value) => value === this.anzahlWohnungen),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -92,7 +92,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektService.currentEnergiestandard$
+    this.formProjektNeuService.currentEnergiestandard$
       .pipe(
         skipWhile((value) => value === this.energiestandard),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -102,7 +102,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektService.currentKonstruktion$
+    this.formProjektNeuService.currentKonstruktion$
       .pipe(
         skipWhile((value) => value === this.konstruktion),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -112,7 +112,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektService.currentZertifizierung$
+    this.formProjektNeuService.currentZertifizierung$
       .pipe(
         skipWhile((value) => value === this.zertifizierung),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -370,19 +370,23 @@ export class NeubauService {
     this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
   }
 
+  // How will the formula look like with the new class? (keine, ohne QNG Siegel, mit QNG Siegel)
+  //=IF(AND(B7="keine Zertifizierung";B5="EH 40");100000*B4;IF(AND(B7="QNG";B5="EH 40");150000*B4;0))
   // KfW-Kredit [€]
   private _kfwKredit = 0;
   private updateKfwKredit() {
     if (
-      this.zertifizierung === 'Keine Zertifizierung' &&
+      this.zertifizierung === 'Keine' &&
       this.energiestandard === 'EH 40'
     ) {
       this._kfwKredit = this.constants.kfwKredit_Lower * this.anzahlWohnungen;
     } else if (
-      this.zertifizierung === 'QNG' &&
+      this.zertifizierung === 'mit QNG' &&
       this.energiestandard === 'EH 40'
     ) {
       this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
+    } else {
+      this._kfwKredit = 0;
     }
   }
 
@@ -746,13 +750,13 @@ export class NeubauService {
   // to then assign the form values from the service(neubau / sanierung).  
   reset() {
     // Project parameters
-    this.wohnflaeche = this.formProjektService.wohnflaeche.init;
-    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+    this.wohnflaeche = this.formProjektNeuService.wohnflaeche.init;
+    this.anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
     this.energiestandard =
-      this.formProjektService.energiestandardOptions[0].value;
-    this.konstruktion = this.formProjektService.konstruktionOptions[0].value;
+      this.formProjektNeuService.energiestandardOptions[0].value;
+    this.konstruktion = this.formProjektNeuService.konstruktionOptions[0].value;
     this.zertifizierung =
-      this.formProjektService.zertifizierungOptions[0].value;
+      this.formProjektNeuService.zertifizierungOptions[0].value;
 
     // Neubau form parameters
     this.kellergeschossIn =

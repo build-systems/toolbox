@@ -2,9 +2,9 @@ export interface NeubauProjekt {
     // Projekt
     wohnflaeche: number;
     anzahlWohnungen: number;
-    energiestandard: Energiestandard;
+    energiestandard: EnergiestandardNeubau;
     konstruktion: Konstruktion;
-    zertifizierung: Zertifizierung;
+    zertifizierung: ZertifizierungNeubau;
     // Neubau input
     kellergeschossIn: Kellergeschoss;
     stellplaetzeIn: Stellplaetze;

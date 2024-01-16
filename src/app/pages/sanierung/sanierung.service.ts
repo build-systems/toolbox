@@ -3,7 +3,7 @@ import { BehaviorSubject, filter, skipWhile } from 'rxjs';
 import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableSanierung from './tableSanierung.json';
-import { FormProjektService } from '../../form-projekt/form-projekt.service';
+import { FormProjektSanService } from '../../form-projekt-sanierung/form-projekt-san.service';
 import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
 import { FormSanierungService } from '../../form-sanierung/form-sanierung.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -16,11 +16,11 @@ export class SanierungService {
   // Project parameters
   wohnflaeche = this.formProjektService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
-  energiestandard: Energiestandard =
+  energiestandard: EnergiestandardSanierung =
     this.formProjektService.energiestandardOptions[0].value;
   konstruktion: Konstruktion =
     this.formProjektService.konstruktionOptions[0].value;
-  zertifizierung: Zertifizierung =
+  zertifizierung: ZertifizierungSanierung =
     this.formProjektService.zertifizierungOptions[0].value;
 
   // Sanierung parameters
@@ -44,7 +44,7 @@ export class SanierungService {
 
   constructor(
     private constants: sanierung,
-    private formProjektService: FormProjektService,
+    private formProjektService: FormProjektSanService,
     private formSanierungService: FormSanierungService,
     private formDarlehenService: FormDarlehenService,
     private router: Router

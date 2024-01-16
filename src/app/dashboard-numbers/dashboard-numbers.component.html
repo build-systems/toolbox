@@ -9,25 +9,26 @@
   <div>{{ investitionskosten | currency : "EUR" : 'symbol' : '1.0-0' }}</div>
 </div>
 <div
-  title="Bank-Kredit: {{ bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}"
+  title="Bank Kredit: {{ bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}"
   class="card"
 >
-  <h3>Bank-<wbr />Kredit</h3>
+  <h3>Bank Kredit</h3>
   <div>{{ bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}</div>
 </div>
 <div
-  title="KfW-Kredit: {{ kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}"
+  title="KfW Kredit: {{ kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}"
   class="card"
 >
-  <h3>KfW-<wbr />Kredit</h3>
+  <h3>KfW Kredit</h3>
   <div>{{ kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' }}</div>
 </div>
+<!-- Only display KfW Zuschuss on Sanierung  -->
 @if (typ === "Sanierung") {
 <div
-  title="KfW-Zuschuss: {{ kfwZuschuss | currency : 'EUR' : 'symbol' : '1.0-0' }}"
+  title="KfW Zuschuss: {{ kfwZuschuss | currency : 'EUR' : 'symbol' : '1.0-0' }}"
   class="card"
 >
-  <h3>KfW-<wbr />Zuschuss</h3>
+  <h3>KfW Zuschuss</h3>
   <div>{{ kfwZuschuss | currency : "EUR" : 'symbol' : '1.0-0' }}</div>
 </div>
 }

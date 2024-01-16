@@ -7,19 +7,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FormProjektService } from './form-projekt.service';
+import { FormProjektNeuService } from './form-projekt-neu.service';
 
 @Component({
-  selector: 'app-form-projekt',
+  selector: 'app-form-projekt-neubau',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './form-projekt.component.html',
-  styleUrl: './form-projekt.component.css',
+  templateUrl: './form-projekt-neubau.component.html',
+  styleUrl: './form-projekt-neubau.component.css',
   host: {
     class: 'container-forms',
   },
 })
-export class FormProjektComponent implements OnInit {
+export class FormProjektNeubauComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
 
   // The reactive forms do two things:
@@ -28,113 +28,113 @@ export class FormProjektComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public formService: FormProjektService
+    public formProjektNeuService: FormProjektNeuService
   ) {}
 
   // Inititalize projekt form
-  projektForm!: FormGroup;
+  projektFormNeu!: FormGroup;
 
   ngOnInit(): void {
-    this.projektForm = this.fb.group({
+    this.projektFormNeu = this.fb.group({
       // These are form controls that go into the html
       wohnflaecheRange: [
         // The values come from the FormProjektService
-        this.formService.wohnflaeche.init,
+        this.formProjektNeuService.wohnflaeche.init,
         [
-          Validators.min(this.formService.wohnflaeche.min),
-          Validators.max(this.formService.wohnflaeche.max),
+          Validators.min(this.formProjektNeuService.wohnflaeche.min),
+          Validators.max(this.formProjektNeuService.wohnflaeche.max),
         ],
       ],
       wohnflaeche: [
-        this.formService.wohnflaeche.init,
+        this.formProjektNeuService.wohnflaeche.init,
         [
-          Validators.min(this.formService.wohnflaeche.min),
-          Validators.max(this.formService.wohnflaeche.max),
+          Validators.min(this.formProjektNeuService.wohnflaeche.min),
+          Validators.max(this.formProjektNeuService.wohnflaeche.max),
         ],
       ],
       anzahlWohnungenRange: [
-        this.formService.anzahlWohnungen.init,
+        this.formProjektNeuService.anzahlWohnungen.init,
         [
-          Validators.min(this.formService.anzahlWohnungen.min),
-          Validators.max(this.formService.anzahlWohnungen.max),
+          Validators.min(this.formProjektNeuService.anzahlWohnungen.min),
+          Validators.max(this.formProjektNeuService.anzahlWohnungen.max),
         ],
       ],
       anzahlWohnungen: [
-        this.formService.anzahlWohnungen.init,
+        this.formProjektNeuService.anzahlWohnungen.init,
         [
-          Validators.min(this.formService.anzahlWohnungen.min),
-          Validators.max(this.formService.anzahlWohnungen.max),
+          Validators.min(this.formProjektNeuService.anzahlWohnungen.min),
+          Validators.max(this.formProjektNeuService.anzahlWohnungen.max),
         ],
       ],
       konstruktion: new FormControl(
-        this.formService.konstruktionOptions[0].value
+        this.formProjektNeuService.konstruktionOptions[0].value
       ),
       energiestandard: new FormControl(
-        this.formService.energiestandardOptions[0].value
+        this.formProjektNeuService.energiestandardOptions[0].value
       ),
       zertifizierung: new FormControl(
-        this.formService.zertifizierungOptions[0].value
+        this.formProjektNeuService.zertifizierungOptions[0].value
       ),
     });
 
     // Wohnflaeche
-    this.projektForm
+    this.projektFormNeu
       .get('wohnflaecheRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.projektForm
+        this.projektFormNeu
           .get('wohnflaeche')
           ?.setValue(value, { emitEvent: false });
         // Also updates the FormProjektService
-        this.formService.setWohnflaeche(value);
+        this.formProjektNeuService.setWohnflaeche(value);
       });
 
-    this.projektForm.get('wohnflaeche')?.valueChanges.subscribe((value) => {
+    this.projektFormNeu.get('wohnflaeche')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.projektForm
+      this.projektFormNeu
         .get('wohnflaecheRange')
         ?.setValue(value, { emitEvent: false });
       // Also updates the FormProjektService
-      this.formService.setWohnflaeche(value);
+      this.formProjektNeuService.setWohnflaeche(value);
     });
 
     // Anzahl WohnungenRange
-    this.projektForm
+    this.projektFormNeu
       .get('anzahlWohnungenRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.projektForm
+        this.projektFormNeu
           .get('anzahlWohnungen')
           ?.setValue(value, { emitEvent: false });
         // Also updates the FormProjektService
-        this.formService.setAnzahlWohnungen(value);
+        this.formProjektNeuService.setAnzahlWohnungen(value);
       });
 
-    this.projektForm.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
+    this.projektFormNeu.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.projektForm
+      this.projektFormNeu
         .get('anzahlWohnungenRange')
         ?.setValue(value, { emitEvent: false });
       // Also updates the FormProjektService
-      this.formService.setAnzahlWohnungen(value);
+      this.formProjektNeuService.setAnzahlWohnungen(value);
     });
 
     // Energiestandard
-    this.projektForm.get('energiestandard')?.valueChanges.subscribe((value) => {
+    this.projektFormNeu.get('energiestandard')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
-      this.formService.setEnergiestandard(value);
+      this.formProjektNeuService.setEnergiestandard(value);
     });
 
     // Konstruktion
-    this.projektForm.get('konstruktion')?.valueChanges.subscribe((value) => {
+    this.projektFormNeu.get('konstruktion')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
-      this.formService.setKonstruktion(value);
+      this.formProjektNeuService.setKonstruktion(value);
     });
 
     // Zertifizierung
-    this.projektForm.get('zertifizierung')?.valueChanges.subscribe((value) => {
+    this.projektFormNeu.get('zertifizierung')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
-      this.formService.setZertifizierung(value);
+      this.formProjektNeuService.setZertifizierung(value);
     });
   }
 
@@ -143,4 +143,5 @@ export class FormProjektComponent implements OnInit {
     // Call the blur method on the target element to remove focus
     event.target.blur();
   }
+
 }

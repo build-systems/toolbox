@@ -9,8 +9,8 @@ export class FormDarlehenService {
   kalkRealzins = {
     min: 1,
     init: 4,
-    max: 100,
-    step: 1,
+    max: 8,
+    step: 0.1,
   };
 
   // Kreditlaufzeit centralized form values

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormProjektComponent } from '../../form-projekt/form-projekt.component';
+import { FormProjektSanierungComponent } from '../../form-projekt-sanierung/form-projekt-sanierung.component';
 import { FormSanierungComponent } from '../../form-sanierung/form-sanierung.component';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
 import { ChartGkostenSanierungComponent } from '../../chart-gkosten-sanierung/chart-gkosten-sanierung.component';
 import { ChartGkostenM2SanierungComponent } from '../../chart-gkosten-m2-sanierung/chart-gkosten-m2-sanierung.component';
 import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuitaeten.component';
-import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
+import { ChartTilgungComponent } from '../../chart-tilgung/chart-tilgung.component';
 import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
 import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
 import { SanierungService } from './sanierung.service';
@@ -16,13 +16,13 @@ import { SanierungService } from './sanierung.service';
   standalone: true,
   imports: [
     CommonModule,
-    FormProjektComponent,
+    FormProjektSanierungComponent,
     FormSanierungComponent,
     FormDarlehenComponent,
     ChartGkostenSanierungComponent,
     ChartGkostenM2SanierungComponent,
     ChartAnnuitaetenComponent,
-    ChartRepaymentComponent,
+    ChartTilgungComponent,
     ChartFinanzierungskostenComponent,
     DashboardNumbersComponent,
   ],

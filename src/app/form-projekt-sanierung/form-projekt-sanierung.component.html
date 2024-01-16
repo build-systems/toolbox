@@ -1,0 +1,69 @@
+<form [formGroup]="projektFormSan">
+  <h2>Projekt</h2>
+  <fieldset>
+    <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="wohnflaecheRange"
+        min="{{ formProjektSanService.wohnflaeche.min }}"
+        max="{{ formProjektSanService.wohnflaeche.max }}"
+        step="{{ formProjektSanService.wohnflaeche.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="wohnflaeche"
+        min="{{ formProjektSanService.wohnflaeche.min }}"
+        max="{{ formProjektSanService.wohnflaeche.max }}"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="anzahlWohnungenRange"
+        min="{{ formProjektSanService.anzahlWohnungen.min }}"
+        max="{{ formProjektSanService.anzahlWohnungen.max }}"
+        step="{{ formProjektSanService.anzahlWohnungen.step }}"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="anzahlWohnungen"
+        min="{{ formProjektSanService.anzahlWohnungen.min }}"
+        max="{{ formProjektSanService.anzahlWohnungen.max }}"
+        step="{{ formProjektSanService.anzahlWohnungen.step }}"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>Energiestandard <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formProjektSanService.energiestandardOptions">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="energiestandard"
+        formControlName="energiestandard"
+      />
+      <label for="{{ item.id }}">{{ item.value }}</label>
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>Zertifizierung klimafreundlicher <sup>&#9432;</sup></legend>
+    <span *ngFor="let item of formProjektSanService.zertifizierungOptions">
+      <input
+        type="radio"
+        id="{{ item.id }}"
+        value="{{ item.value }}"
+        name="zertifizierung"
+        formControlName="zertifizierung"
+      />
+      <label for="{{ item.id }}">{{ item.text }}</label>
+    </span>
+  </fieldset>
+</form>

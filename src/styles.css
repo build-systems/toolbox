@@ -488,8 +488,7 @@ input[type="button"] {
 .ng-dashboard-numbers {
   display: flex;
   flex-direction: column;
-  /* height: 80px; */
-  width: 200px;
+  min-width: 200px;
   margin-right: calc(var(--layout-padding) / 2);
   gap: calc(var(--layout-padding) / 2);
 }
@@ -515,14 +514,13 @@ input[type="button"] {
     font-size: 1.5rem;
     font-weight: 500;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
     height: 100%;
   }
 }
 
 .charts-container {
-  flex-grow: 1;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
@@ -531,22 +529,22 @@ input[type="button"] {
 
 .chart1 {
   grid-column-start: 1;
-  grid-column-end: 3;
+  grid-column-end: 4;
 }
 .chart2 {
+  grid-column-start: 4;
+  grid-column-end: 7;
+}
+.chart3 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+.chart4 {
   grid-column-start: 3;
   grid-column-end: 5;
 }
-.chart3 {
-  grid-column-start: 5;
-  grid-column-end: 7;
-}
-.chart4 {
-  grid-column-start: 1;
-  grid-column-end: 4;
-}
 .chart5 {
-  grid-column-start: 4;
+  grid-column-start: 5;
   grid-column-end: 7;
 }
 
@@ -787,11 +785,14 @@ input[type="button"] {
   }
 
   .ng-dashboard-numbers {
-    display: grid;
+    flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    height: auto;
-    margin-bottom: calc(var(--layout-padding) / 4);
+    margin-bottom: calc(var(--mobile-padding) / 2);
+  }
+
+  .card {
+    flex-basis: 30%;
   }
 
   .ng-chart {
@@ -812,22 +813,22 @@ input[type="button"] {
 @media screen and (max-width: 850px) {
   .chart1 {
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 7;
   }
   .chart2 {
-    grid-column-start: 4;
-    grid-column-end: 7;
-  }
-  .chart3 {
     grid-column-start: 1;
     grid-column-end: 4;
   }
-  .chart4 {
+  .chart3 {
     grid-column-start: 4;
     grid-column-end: 7;
   }
-  .chart5 {
+  .chart4 {
     grid-column-start: 1;
+    grid-column-end: 4;
+  }
+  .chart5 {
+    grid-column-start: 4;
     grid-column-end: 7;
   }
 }

@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-sanierung.component.html',
   styleUrl: './chart-gkosten-m2-sanierung.component.css',
   host: {
-    class: 'ng-chart chart5'
+    class: 'ng-chart chart3'
   }
 
 })
@@ -45,12 +45,12 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
     .pipe(filter(() => this.currentRoute === this.sanierungRoute))
       .subscribe((value) => {
       this.output = value;
-      this.barChartData.datasets[0].data = [-Math.round(this.output['kfwZuschussM2']), 0];
-      this.barChartData.datasets[1].data = [Math.round(this.output['investitionskostenM2']), 0];
-      this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-      this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
-      this.barChartData.datasets[4].data = [0, Math.round(this.output['bankKreditM2'])];
-      this.barChartData.datasets[5].data = [0, Math.round(this.output['kfwKreditM2'])];
+      this.barChartData.datasets[0].data = [Math.round(this.output['investitionskostenM2']), 0];
+      this.barChartData.datasets[1].data = [-Math.round(this.output['kfwZuschussM2']), 0];
+      this.barChartData.datasets[2].data = [0, Math.round(this.output['bankKreditM2'])];
+      this.barChartData.datasets[3].data = [0, Math.round(this.output['kfwKreditM2'])];
+      this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
+      this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
       this.chart?.update();
     });
   }
@@ -232,24 +232,45 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
     labels: ['Investition', 'Finanzierung'],
     datasets: [
       {
+        // Baukosten (Investitionskosten)
         data: [0, null],
-        label: 'KfW-Zuschuss',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
-      },
-      {
-        data: [0, null],
-        label: 'Investitionskosten',
+        label: 'Baukosten',
         backgroundColor: 'rgba(58, 149, 194, 0.6)',
         borderColor: 'rgb(58, 149, 194)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 149, 194)',
       },
       {
+        // Bank Kredit
         data: [null, 0],
-        label: 'Finanzierungskosten Finanzmarkt',
+        label: 'Bank Kredit',
+        backgroundColor: 'rgba(144, 141, 194, 0.6)',
+        borderColor: 'rgb(144, 141, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(144, 141, 194)',
+      },
+      {
+        // KfW Kredit
+        data: [null, 0],
+        label: 'KfW Kredit',
+        backgroundColor: 'rgba(52, 103, 194, 0.6)',
+        borderColor: 'rgb(52, 103, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(52, 103, 194)',
+      },
+      {
+        // KfW Zuschuss
+        data: [0, null],
+        label: 'KfW Zuschuss',
+        backgroundColor: 'rgba(58, 194, 150, 0.6)',
+        borderColor: 'rgb(58, 194, 150)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(58, 194, 150)',
+      },
+      {
+        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+        data: [null, 0],
+        label: 'Finanzierungskosten Bank',
         backgroundColor: 'rgba(57, 190, 193, 0.6)',
         borderColor: 'rgb(57, 190, 193)',
         borderWidth: 1,
@@ -262,39 +283,17 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         borderColor: 'rgb(58, 194, 104)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
-      {
-        data: [null, 0],
-        label: 'Bank-Kredit',
-        backgroundColor: 'rgba(144, 141, 194, 0.6)',
-        borderColor: 'rgb(144, 141, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(144, 141, 194)',
-      },
-      {
-        data: [null, 0],
-        label: 'KfW-Kredit',
-        backgroundColor: 'rgba(52, 103, 194, 0.6)',
-        borderColor: 'rgb(52, 103, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(52, 103, 194)',
       },
     ],
   };
+  // The placeholder is only to have a smoothier loading
   public barChartDataPlaceholder: ChartData<'bar'> = {
     labels: ['Investition', 'Finanzierung'],
     datasets: [
+      
       {
         data: [0, null],
-        label: 'KfW-Zuschuss',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
-      },
-      {
-        data: [0, null],
-        label: 'Investitionskosten',
+        label: 'Baukosten',
         backgroundColor: 'rgba(58, 149, 194, 0.6)',
         borderColor: 'rgb(58, 149, 194)',
         borderWidth: 1,
@@ -302,7 +301,32 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
       },
       {
         data: [null, 0],
-        label: 'Finanzierungskosten Finanzmarkt',
+        label: 'Bank Kredit',
+        backgroundColor: 'rgba(144, 141, 194, 0.6)',
+        borderColor: 'rgb(144, 141, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(144, 141, 194)',
+      },
+      {
+        data: [null, 0],
+        label: 'KfW Kredit',
+        backgroundColor: 'rgba(52, 103, 194, 0.6)',
+        borderColor: 'rgb(52, 103, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(52, 103, 194)',
+      },
+      {
+        data: [0, null],
+        label: 'KfW Zuschuss',
+        backgroundColor: 'rgba(58, 194, 150, 0.6)',
+        borderColor: 'rgb(58, 194, 150)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(58, 194, 150)',
+      },
+      {
+        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+        data: [null, 0],
+        label: 'Finanzierungskosten Bank',
         backgroundColor: 'rgba(57, 190, 193, 0.6)',
         borderColor: 'rgb(57, 190, 193)',
         borderWidth: 1,
@@ -316,22 +340,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 104)',
       },
-      {
-        data: [null, 0],
-        label: 'Bank-Kredit',
-        backgroundColor: 'rgba(144, 141, 194, 0.6)',
-        borderColor: 'rgb(144, 141, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(144, 141, 194)',
-      },
-      {
-        data: [null, 0],
-        label: 'KfW-Kredit',
-        backgroundColor: 'rgba(52, 103, 194, 0.6)',
-        borderColor: 'rgb(52, 103, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(52, 103, 194)',
-      },
+      
     ],
   };
 

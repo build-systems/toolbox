@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormProjektComponent } from './form-projekt.component';
+import { ChartTilgungComponent } from './chart-tilgung.component';
 
-describe('FormProjektComponent', () => {
-  let component: FormProjektComponent;
-  let fixture: ComponentFixture<FormProjektComponent>;
+describe('ChartTilgungComponent', () => {
+  let component: ChartTilgungComponent;
+  let fixture: ComponentFixture<ChartTilgungComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormProjektComponent]
+      imports: [ChartTilgungComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FormProjektComponent);
+    fixture = TestBed.createComponent(ChartTilgungComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

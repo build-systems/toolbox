@@ -36,8 +36,8 @@ export class FormNeubauService {
   ];
   aussenanlagenOptions: AussenanlagenOptions[] = [
     { id: 'ausanl1', value: 'Gering' },
-    { id: 'ausanl2', value: 'Hoch' },
-    { id: 'ausanl3', value: 'Mittel' },
+    { id: 'ausanl2', value: 'Mittel' },
+    { id: 'ausanl3', value: 'Hoch' },
   ];
   grundstKosten = {
     init: 0,

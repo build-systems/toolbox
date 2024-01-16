@@ -29,7 +29,7 @@
         [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'"
       />
     </div>
-    <app-form-projekt [hidden]="!(currentForm === 1)"></app-form-projekt>
+    <app-form-projekt-neubau [hidden]="!(currentForm === 1)"></app-form-projekt-neubau>
     <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
     <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
     <fieldset class="progress-buttons">
@@ -48,11 +48,11 @@
   <div class="output">
     <app-dashboard-numbers></app-dashboard-numbers>
     <div class="charts-container">
-      <app-chart-annuitaeten></app-chart-annuitaeten>
-      <app-chart-repayment></app-chart-repayment>
-      <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
       <app-chart-gkosten-neubau></app-chart-gkosten-neubau>
+      <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
       <app-chart-gkosten-m2-neubau></app-chart-gkosten-m2-neubau>
+      <app-chart-tilgung></app-chart-tilgung>
+      <app-chart-annuitaeten></app-chart-annuitaeten>
     </div>
   </div>
 </div>

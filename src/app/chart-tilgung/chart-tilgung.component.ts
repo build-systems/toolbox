@@ -9,16 +9,16 @@ import { filter } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-chart-repayment',
+  selector: 'app-chart-tilgung',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-repayment.component.html',
-  styleUrl: './chart-repayment.component.css',
+  templateUrl: './chart-tilgung.component.html',
+  styleUrl: './chart-tilgung.component.css',
   host: {
-    class: 'ng-chart chart2'
+    class: 'ng-chart chart4'
   }
 })
-export class ChartRepaymentComponent {
+export class ChartTilgungComponent {
   // ATENTION: The logic is different from chart-annuitaeten.
   // It has one more item in each array so we can start on zero and current year
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
@@ -229,7 +229,7 @@ export class ChartRepaymentComponent {
             size: 18,
             weight: 400,
           },
-          text: 'Repayment [€]'
+          text: 'Tilgung [€]'
         },
         display: true,
         labels: {
@@ -320,7 +320,7 @@ export class ChartRepaymentComponent {
             size: 18,
             weight: 400,
           },
-          text: 'Repayment [€]'
+          text: 'Tilgung [€]'
         },
         display: true,
         labels: {

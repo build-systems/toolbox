@@ -1,29 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormProjektComponent } from '../../form-projekt/form-projekt.component';
 import { FormNeubauComponent } from '../../form-neubau/form-neubau.component';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
 import { ChartGkostenNeubauComponent } from '../../chart-gkosten-neubau/chart-gkosten-neubau.component';
 import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuitaeten.component';
-import { ChartRepaymentComponent } from '../../chart-repayment/chart-repayment.component';
+import { ChartTilgungComponent } from '../../chart-tilgung/chart-tilgung.component';
 import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
 import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
-import { neubau } from '../../shared/constants';
 import { NeubauService } from './neubau.service';
 import { ChartGkostenM2NeubauComponent } from '../../chart-gkosten-m2-neubau/chart-gkosten-m2-neubau.component';
+import { FormProjektNeubauComponent } from '../../form-projekt-neubau/form-projekt-neubau.component';
 
 @Component({
   selector: 'app-neubau',
   standalone: true,
   imports: [
     CommonModule,
-    FormProjektComponent,
+    FormProjektNeubauComponent,
     FormNeubauComponent,
     FormDarlehenComponent,
     ChartGkostenNeubauComponent,
     ChartGkostenM2NeubauComponent,
     ChartAnnuitaetenComponent,
-    ChartRepaymentComponent,
+    ChartTilgungComponent,
     ChartFinanzierungskostenComponent,
     DashboardNumbersComponent,
   ],

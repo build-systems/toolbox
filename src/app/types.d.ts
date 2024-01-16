@@ -5,16 +5,31 @@
 type ProjektTyp = "Neubau" | "Sanierung";
 
 // Projekt
-type Energiestandard = "EH 40" | "EH 55" | "EH 70" | "EH 85" | "EH 100" | "EH 115";
-type EnergiestandardOptions = {
+type EnergiestandardNeubau = "EH 40" | "EH 55" | "EH 70" | "EH 100" | "EH 115";
+type EnergiestandardNeubauOptions = {
     id: string;
-    value: Energiestandard;
+    value: EnergiestandardNeubau;
     text?: string;
 };
-type Zertifizierung = "Keine Zertifizierung" | "QNG";
-type ZertifizierungOptions = {
+
+type EnergiestandardSanierung = "EH 40" | "EH 55" | "EH 70" | "EH 85";
+type EnergiestandardSanierungOptions = {
     id: string;
-    value: Zertifizierung;
+    value: EnergiestandardSanierung;
+    text?: string;
+};
+
+type ZertifizierungNeubau = "Keine" | "ohne QNG" | "mit QNG";
+type ZertifizierungNeubauOptions = {
+    id: string;
+    value: ZertifizierungNeubau;
+    text?: string;
+}
+
+type ZertifizierungSanierung = "Keine Zertifizierung" | "QNG";
+type ZertifizierungSanierungOptions = {
+    id: string;
+    value: ZertifizierungSanierung;
     text?: string;
 }
 

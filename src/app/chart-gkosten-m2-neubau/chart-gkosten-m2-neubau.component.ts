@@ -14,11 +14,10 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-neubau.component.html',
   styleUrl: './chart-gkosten-m2-neubau.component.css',
   host: {
-    class: 'ng-chart chart5'
-  }
+    class: 'ng-chart chart3',
+  },
 })
 export class ChartGkostenM2NeubauComponent implements OnInit {
-
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   output!: DashboardOutput;
@@ -27,28 +26,41 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
   currentRoute!: string;
   neubauRoute = '/neubau';
 
-  constructor(
-    private neubauService: NeubauService,
-    private router: Router) { 
-      this.router.events.subscribe((val) => {
-        // Check for changes on the url
-        if (val instanceof NavigationEnd) {
-          // Then assign the url as a string
-          this.currentRoute = this.router.url.toString();
-        }
-      });
-    }
+  constructor(private neubauService: NeubauService, private router: Router) {
+    this.router.events.subscribe((val) => {
+      // Check for changes on the url
+      if (val instanceof NavigationEnd) {
+        // Then assign the url as a string
+        this.currentRoute = this.router.url.toString();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.neubauService.currentOutputDashboard$
       .pipe(filter(() => this.currentRoute === this.neubauRoute))
       .subscribe((value) => {
         this.output = value;
-        this.barChartData.datasets[0].data = [Math.round(this.output['investitionskostenM2']), 0];
-        this.barChartData.datasets[1].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-        this.barChartData.datasets[2].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
-        this.barChartData.datasets[3].data = [0, Math.round(this.output['bankKreditM2'])];
-        this.barChartData.datasets[4].data = [0, Math.round(this.output['kfwKreditM2'])];
+        this.barChartData.datasets[0].data = [
+          Math.round(this.output['investitionskostenM2']),
+          0,
+        ];
+        this.barChartData.datasets[1].data = [
+          0,
+          Math.round(this.output['bankKreditM2']),
+        ];
+        this.barChartData.datasets[2].data = [
+          0,
+          Math.round(this.output['kfwKreditM2']),
+        ];
+        this.barChartData.datasets[3].data = [
+          0,
+          Math.round(this.output['finanzierungskostenFinanzmarktM2']),
+        ];
+        this.barChartData.datasets[4].data = [
+          0,
+          Math.round(this.output['finanzierungskostenKfwM2']),
+        ];
         this.chart?.update();
       });
   }
@@ -77,7 +89,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
         stacked: true,
@@ -99,9 +111,9 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return (value + ' €/m²');
-          }
-        }
+            return value + ' €/m²';
+          },
+        },
       },
     },
     plugins: {
@@ -114,7 +126,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             size: 18,
             weight: 400,
           },
-          text: 'Gesamtkosten [€ / m²]'
+          text: 'Gesamtkosten [€ / m²]',
         },
         display: true,
         labels: {
@@ -128,7 +140,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
@@ -162,11 +174,12 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             family: 'system-ui',
             weight: 400,
           },
-        }
+        },
       },
       y: {
-        min: -400,
-        max: 800,
+        // Min and max for placeholders
+        min: 0,
+        max: 5000,
         stacked: true,
         alignToPixels: true,
         border: {
@@ -186,9 +199,9 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             weight: 400,
           },
           callback: function (value, index, values) {
-            return (value + ' €/m²');
-          }
-        }
+            return value + ' €/m²';
+          },
+        },
       },
     },
     plugins: {
@@ -201,7 +214,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             size: 18,
             weight: 400,
           },
-          text: 'Gesamtkosten [€ / m²]'
+          text: 'Gesamtkosten [€ / m²]',
         },
         display: true,
         labels: {
@@ -215,7 +228,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
           boxHeight: 6,
           usePointStyle: true,
           pointStyle: 'circle',
-        }
+        },
       },
       tooltip: {
         callbacks: {
@@ -230,16 +243,35 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
     labels: ['Investition', 'Finanzierung'],
     datasets: [
       {
+        // Baukosten (Investitionskosten)
         data: [0, null],
-        label: 'Investitionskosten',
+        label: 'Baukosten',
         backgroundColor: 'rgba(58, 149, 194, 0.6)',
         borderColor: 'rgb(58, 149, 194)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 149, 194)',
       },
       {
+        // Bank Kredit
         data: [null, 0],
-        label: 'Finanzierungskosten Finanzmarkt',
+        label: 'Bank Kredit',
+        backgroundColor: 'rgba(144, 141, 194, 0.6)',
+        borderColor: 'rgb(144, 141, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(144, 141, 194)',
+      },
+      {
+        data: [null, 0],
+        label: 'KfW Kredit',
+        backgroundColor: 'rgba(52, 103, 194, 0.6)',
+        borderColor: 'rgb(52, 103, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(52, 103, 194)',
+      },
+      {
+        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+        data: [null, 0],
+        label: 'Finanzierungskosten Bank',
         backgroundColor: 'rgba(57, 190, 193, 0.6)',
         borderColor: 'rgb(57, 190, 193)',
         borderWidth: 1,
@@ -252,22 +284,6 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
         borderColor: 'rgb(58, 194, 104)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
-      {
-        data: [null, 0],
-        label: 'Bank-Kredit',
-        backgroundColor: 'rgba(144, 141, 194, 0.6)',
-        borderColor: 'rgb(144, 141, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(144, 141, 194)',
-      },
-      {
-        data: [null, 0],
-        label: 'KfW-Kredit',
-        backgroundColor: 'rgba(52, 103, 194, 0.6)',
-        borderColor: 'rgb(52, 103, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(52, 103, 194)',
       },
     ],
   };
@@ -276,15 +292,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
     datasets: [
       {
         data: [0, null],
-        label: 'KfW-Zuschuss',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
-      },
-      {
-        data: [0, null],
-        label: 'Investitionskosten',
+        label: 'Baukosten',
         backgroundColor: 'rgba(58, 149, 194, 0.6)',
         borderColor: 'rgb(58, 149, 194)',
         borderWidth: 1,
@@ -292,7 +300,23 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
       },
       {
         data: [null, 0],
-        label: 'Finanzierungskosten Finanzmarkt',
+        label: 'Bank Kredit',
+        backgroundColor: 'rgba(144, 141, 194, 0.6)',
+        borderColor: 'rgb(144, 141, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(144, 141, 194)',
+      },
+      {
+        data: [null, 0],
+        label: 'KfW Kredit',
+        backgroundColor: 'rgba(52, 103, 194, 0.6)',
+        borderColor: 'rgb(52, 103, 194)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgb(52, 103, 194)',
+      },
+      {
+        data: [null, 0],
+        label: 'Finanzierungskosten Bank',
         backgroundColor: 'rgba(57, 190, 193, 0.6)',
         borderColor: 'rgb(57, 190, 193)',
         borderWidth: 1,
@@ -305,22 +329,6 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
         borderColor: 'rgb(58, 194, 104)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
-      {
-        data: [null, 0],
-        label: 'Bank-Kredit',
-        backgroundColor: 'rgba(144, 141, 194, 0.6)',
-        borderColor: 'rgb(144, 141, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(144, 141, 194)',
-      },
-      {
-        data: [null, 0],
-        label: 'KfW-Kredit',
-        backgroundColor: 'rgba(52, 103, 194, 0.6)',
-        borderColor: 'rgb(52, 103, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(52, 103, 194)',
       },
     ],
   };
@@ -332,8 +340,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
   }: {
     event?: ChartEvent;
     active?: object[];
-  }): void {
-  }
+  }): void {}
 
   public chartHovered({
     event,
@@ -341,7 +348,5 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
   }: {
     event?: ChartEvent;
     active?: object[];
-  }): void {
-  }
-
+  }): void {}
 }
