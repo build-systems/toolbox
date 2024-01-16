@@ -42,9 +42,19 @@ export class FormNeubauComponent implements OnInit {
     // Susbscribe to form changes
     this.neubauForm.get('kellergeschossIn')?.valueChanges.subscribe(value => {
       this.formService.setKellergeschoss(value);
+      // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
+      const stellplaetzeIn = this.neubauForm.get('stellplaetzeIn');
+      if (value === "Nicht Vorhanden" && stellplaetzeIn?.value === "Tiefgarage"){
+        stellplaetzeIn?.setValue(null);
+      }
     });
     this.neubauForm.get('stellplaetzeIn')?.valueChanges.subscribe(value => {
       this.formService.setStellplaetzeIn(value);
+      // If 'Tiefgarage' is selected, then 'Nicht Vorhanden' is unsellected
+      const kellergeschossIn = this.neubauForm.get('kellergeschossIn');
+      if (value === "Tiefgarage" && kellergeschossIn?.value === "Nicht Vorhanden"){
+        kellergeschossIn?.setValue("Vorhanden");
+      }
     });
     this.neubauForm.get('aufzugsanlageIn')?.valueChanges.subscribe(value => {
       this.formService.setAufzugsanlageIn(value);
