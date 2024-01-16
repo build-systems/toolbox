@@ -404,6 +404,8 @@ export class NeubauService {
           this.constants.restsummeHolzbau -
         this._kfwKredit;
     }
+    // Make sure it doesn't go negative
+    this._restsumme = (this._restsumme < 0) ? 0 : this._restsumme;
   }
 
   // #03
