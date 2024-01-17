@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap");
 
 :root {
@@ -33,7 +33,7 @@
 
 html {
   font-family: "Montserrat", sans-serif;
-  font-weight: 200;
+  font-weight: 300;
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
 }
@@ -67,16 +67,16 @@ html {
 
 h1 {
   font-size: 58px;
-  font-weight: 200;
+  font-weight: 400;
 }
 
 h2 {
-  font-weight: 200;
+  font-weight: 400;
 }
 
 h3 {
   font-size: 16px;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 a {
@@ -112,7 +112,8 @@ li {
 }
 
 .container-forms {
-  flex: 1;
+  /* If phone version has the bug again, this is the place to fix it */
+  /* flex: 1; */
   overflow-y: auto;
   padding-right: var(--layout-padding);
   padding-left: var(--layout-padding);

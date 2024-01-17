@@ -7,16 +7,16 @@ import { BehaviorSubject } from 'rxjs';
 export class FormProjektNeuService {
   // Wohnfläche centralized form values
   wohnflaeche = {
-    min: 50,
-    init: 5000,
-    max: 50_000,
-    step: 50,
+    min: 20,
+    init: 1000,
+    max: 10000,
+    step: 1,
   };
 
   // Anzahl Wohnungen centralized form values
   anzahlWohnungen = {
     min: 1,
-    init: 50,
+    init: 10,
     max: 1000,
     step: 1,
   };
@@ -37,9 +37,9 @@ export class FormProjektNeuService {
 
   // Zertifizierung centralized form values
   zertifizierungOptions: ZertifizierungNeubauOptions[] = [
-    { id: 'zert1', value: 'Keine', text: 'Keine Zertifizierung' },
-    { id: 'zert2', value: 'ohne QNG', text: 'ohne QNG Siegel' },
-    { id: 'zert3', value: 'mit QNG', text: 'mit QNG Siegel' },
+    { id: 'zert1', value: 'ohne QNG', text: 'ohne QNG Siegel' },
+    { id: 'zert2', value: 'mit QNG', text: 'mit QNG Siegel' },
+    { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung' },
   ];
 
   // Observable for Wohnflaeche

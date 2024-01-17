@@ -7,16 +7,16 @@ import { BehaviorSubject } from 'rxjs';
 export class FormProjektSanService {
   // Wohnfläche centralized form values
   wohnflaeche = {
-    min: 50,
-    init: 5000,
-    max: 50_000,
-    step: 50,
+    min: 20,
+    init: 1000,
+    max: 10000,
+    step: 1,
   };
 
   // Anzahl Wohnungen centralized form values
   anzahlWohnungen = {
     min: 1,
-    init: 50,
+    init: 10,
     max: 1000,
     step: 1,
   };
