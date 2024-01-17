@@ -12,7 +12,6 @@
         (click)="currentForm = 1"
         [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'"
       />
-      <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
       <input
         type="button"
         value="2"
@@ -20,18 +19,9 @@
         (click)="currentForm = 2"
         [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'"
       />
-      <div [className]="currentForm >= 3 ? 'full-line' : 'grayed-line'"></div>
-      <input
-        type="button"
-        value="3"
-        title="Darlehen"
-        (click)="currentForm = 3"
-        [className]="currentForm >= 3 ? 'full-circle' : 'grayed-circle'"
-      />
     </div>
     <app-form-projekt-neubau [hidden]="!(currentForm === 1)"></app-form-projekt-neubau>
-    <app-form-neubau [hidden]="!(currentForm === 2)"></app-form-neubau>
-    <app-form-darlehen [hidden]="!(currentForm === 3)"></app-form-darlehen>
+    <app-form-darlehen [hidden]="!(currentForm === 2)"></app-form-darlehen>
     <fieldset class="progress-buttons">
       <div class="container-button">
         @if (currentForm > 1) {
@@ -39,7 +29,7 @@
         }
       </div>
       <div class="container-button">
-        @if (currentForm < 3){
+        @if (currentForm < 2){
         <input type="button" value="NEXT" (click)="nextForm(); scroll(top)" />
         }
       </div>

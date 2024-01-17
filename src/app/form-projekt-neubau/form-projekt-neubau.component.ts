@@ -75,6 +75,56 @@ export class FormProjektNeubauComponent implements OnInit {
       zertifizierung: new FormControl(
         this.formProjektNeuService.zertifizierungOptions[0].value
       ),
+      // Details
+      kellergeschossIn: new FormControl(
+        this.formProjektNeuService.kellergeschossOptions[0].value
+      ),
+      stellplaetzeIn: new FormControl(
+        this.formProjektNeuService.stellplaetzeOptions[0].value
+      ),
+      aufzugsanlageIn: new FormControl(
+        this.formProjektNeuService.aufzugsanlageOptions[0].value
+      ),
+      barrierefreiheitIn: new FormControl(
+        this.formProjektNeuService.barrierefreiheitOptions[0].value
+      ),
+      dachbegruenungIn: new FormControl(
+        this.formProjektNeuService.dachbegruenungOptions[0].value
+      ),
+      baustellenlogistikIn: new FormControl(
+        this.formProjektNeuService.baustellenlogistikOptions[0].value
+      ),
+      aussenanlagenIn: new FormControl(
+        this.formProjektNeuService.aussenanlagenOptions[0].value
+      ),
+      grundstuecksbezogeneKostenRange: [
+        this.formProjektNeuService.grundstKosten.init,
+        [
+          Validators.min(this.formProjektNeuService.grundstKosten.min),
+          Validators.max(this.formProjektNeuService.grundstKosten.max),
+        ],
+      ],
+      grundstuecksbezogeneKosten: [
+        this.formProjektNeuService.grundstKosten.init,
+        [
+          Validators.min(this.formProjektNeuService.grundstKosten.min),
+          Validators.max(this.formProjektNeuService.grundstKosten.max),
+        ],
+      ],
+      baunebenkostenKeinFinRange: [
+        this.formProjektNeuService.baunebenkostenKeinFin.init,
+        [
+          Validators.min(this.formProjektNeuService.baunebenkostenKeinFin.min),
+          Validators.max(this.formProjektNeuService.baunebenkostenKeinFin.max),
+        ],
+      ],
+      baunebenkostenKeinFin: [
+        this.formProjektNeuService.baunebenkostenKeinFin.init,
+        [
+          Validators.min(this.formProjektNeuService.baunebenkostenKeinFin.min),
+          Validators.max(this.formProjektNeuService.baunebenkostenKeinFin.max),
+        ],
+      ],
     });
 
     // Wohnflaeche
@@ -110,20 +160,24 @@ export class FormProjektNeubauComponent implements OnInit {
         this.formProjektNeuService.setAnzahlWohnungen(value);
       });
 
-    this.projektFormNeu.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
-      // Update range input when number input changes
-      this.projektFormNeu
-        .get('anzahlWohnungenRange')
-        ?.setValue(value, { emitEvent: false });
-      // Also updates the FormProjektService
-      this.formProjektNeuService.setAnzahlWohnungen(value);
-    });
+    this.projektFormNeu
+      .get('anzahlWohnungen')
+      ?.valueChanges.subscribe((value) => {
+        // Update range input when number input changes
+        this.projektFormNeu
+          .get('anzahlWohnungenRange')
+          ?.setValue(value, { emitEvent: false });
+        // Also updates the FormProjektService
+        this.formProjektNeuService.setAnzahlWohnungen(value);
+      });
 
     // Energiestandard
-    this.projektFormNeu.get('energiestandard')?.valueChanges.subscribe((value) => {
-      // Updates the sanierungService
-      this.formProjektNeuService.setEnergiestandard(value);
-    });
+    this.projektFormNeu
+      .get('energiestandard')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektNeuService.setEnergiestandard(value);
+      });
 
     // Konstruktion
     this.projektFormNeu.get('konstruktion')?.valueChanges.subscribe((value) => {
@@ -132,9 +186,61 @@ export class FormProjektNeubauComponent implements OnInit {
     });
 
     // Zertifizierung
-    this.projektFormNeu.get('zertifizierung')?.valueChanges.subscribe((value) => {
-      // Updates the sanierungService
-      this.formProjektNeuService.setZertifizierung(value);
+    this.projektFormNeu
+      .get('zertifizierung')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektNeuService.setZertifizierung(value);
+      });
+
+      
+    // Susbscribe to form changes
+    this.projektFormNeu.get('kellergeschossIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setKellergeschoss(value);
+      // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
+      const stellplaetzeIn = this.projektFormNeu.get('stellplaetzeIn');
+      if (value === "Nicht Vorhanden" && stellplaetzeIn?.value === "Tiefgarage"){
+        stellplaetzeIn?.setValue(null);
+      }
+    });
+    this.projektFormNeu.get('stellplaetzeIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setStellplaetzeIn(value);
+      // If 'Tiefgarage' is selected, then 'Nicht Vorhanden' is unsellected
+      const kellergeschossIn = this.projektFormNeu.get('kellergeschossIn');
+      if (value === "Tiefgarage" && kellergeschossIn?.value === "Nicht Vorhanden"){
+        kellergeschossIn?.setValue("Vorhanden");
+      }
+    });
+    this.projektFormNeu.get('aufzugsanlageIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setAufzugsanlageIn(value);
+    });
+    this.projektFormNeu.get('barrierefreiheitIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setBarrierefreiheitIn(value);
+    });
+    this.projektFormNeu.get('dachbegruenungIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setDachbegruenungIn(value);
+    });
+    this.projektFormNeu.get('baustellenlogistikIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setBaustellenlogistikIn(value);
+    });
+    this.projektFormNeu.get('aussenanlagenIn')?.valueChanges.subscribe(value => {
+      this.formProjektNeuService.setAussenanlagenIn(value);
+    });
+    this.projektFormNeu.get('grundstuecksbezogeneKostenRange')?.valueChanges.subscribe(value => {
+      this.projektFormNeu.get('grundstuecksbezogeneKosten')?.setValue(value, { emitEvent: false });
+      this.formProjektNeuService.setGrundstuecksbezogeneKosten(value);
+    });
+    this.projektFormNeu.get('grundstuecksbezogeneKosten')?.valueChanges.subscribe(value => {
+      this.projektFormNeu.get('grundstuecksbezogeneKostenRange')?.setValue(value, { emitEvent: false });
+      this.formProjektNeuService.setGrundstuecksbezogeneKosten(value);
+    });
+    this.projektFormNeu.get('baunebenkostenKeinFinRange')?.valueChanges.subscribe(value => {
+      this.projektFormNeu.get('baunebenkostenKeinFin')?.setValue(value, { emitEvent: false });
+      this.formProjektNeuService.setBaunebenkostenKeinFin(value);
+    });
+    this.projektFormNeu.get('baunebenkostenKeinFin')?.valueChanges.subscribe(value => {
+      this.projektFormNeu.get('baunebenkostenKeinFinRange')?.setValue(value, { emitEvent: false });
+      this.formProjektNeuService.setBaunebenkostenKeinFin(value);
     });
   }
 
@@ -143,5 +249,4 @@ export class FormProjektNeubauComponent implements OnInit {
     // Call the blur method on the target element to remove focus
     event.target.blur();
   }
-
 }
