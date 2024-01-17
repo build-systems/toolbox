@@ -1,7 +1,7 @@
 <form [formGroup]="projektFormNeu">
   <h2>Projekt</h2>
   <fieldset>
-    <legend>Wohnfläche [m²] <sup>&#9432;</sup></legend>
+    <legend>Wohnfläche [m²] <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formProjektNeuService.wohnflaeche.description }}</span></sup></legend>
     <span class="slidernumber">
       <input
         type="range"
@@ -21,7 +21,7 @@
     </span>
   </fieldset>
   <fieldset>
-    <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
+    <legend>Anzahl Wohnungen <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.anzahlWohnungen.description }}</span></sup></legend>
     <span class="slidernumber">
       <input
         type="range"
@@ -41,8 +41,8 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Energiestandard <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.energiestandardOptions">
+    <legend>Energiestandard <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.energiestandard.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.energiestandard.options">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -54,8 +54,8 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Konstruktion <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.konstruktionOptions">
+    <legend>Konstruktion <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.konstruktion.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.konstruktion.options">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -67,8 +67,8 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Zertifizierung klimafreundlicher <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.zertifizierungOptions">
+    <legend>Zertifizierung klimafreundlicher <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formProjektNeuService.zertifizierung.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.zertifizierung.options">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -82,32 +82,32 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Kellergeschoss <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.kellergeschossOptions">
+    <legend>Kellergeschoss <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.kellergeschoss.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.kellergeschoss.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="kellergeschossIn"
             formControlName="kellergeschossIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Stellplätze <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.stellplaetzeOptions">
+    <legend>Stellplätze <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.stellplaetze.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.stellplaetze.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="stellplaetzeIn"
             formControlName="stellplaetzeIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Aufzugsanlage <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.aufzugsanlageOptions">
+    <legend>Aufzugsanlage <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.aufzugsanlage.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.aufzugsanlage.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="aufzugsanlageIn"
             formControlName="aufzugsanlageIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Barrierefreies Bauen <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.barrierefreiheitOptions">
+    <legend>Barrierefreies Bauen <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.barrierefreiheit.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.barrierefreiheit.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="barrierefreiheitIn"
             formControlName="barrierefreiheitIn" />
             <!-- I added innerHTML in this one to be able to breakword with <wbr /> -->
@@ -115,31 +115,31 @@
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Dachbegrünung <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.dachbegruenungOptions">
+    <legend>Dachbegrünung <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.dachbegruenung.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.dachbegruenung.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="dachbegruenungIn"
             formControlName="dachbegruenungIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Anspruchsvolle Baustellenlogistik <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.baustellenlogistikOptions">
+    <legend>Anspruchsvolle Baustellenlogistik <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formProjektNeuService.baustellenlogistik.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.baustellenlogistik.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="baustellenlogistikIn"
             formControlName="baustellenlogistikIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset class="radio-fieldset">
-    <legend>Außenanlagen <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektNeuService.aussenanlagenOptions">
+    <legend>Außenanlagen <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.aussenanlagen.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formProjektNeuService.aussenanlagen.options">
         <input type="radio" id="{{item.id}}" value="{{item.value}}" name="aussenanlagenIn"
             formControlName="aussenanlagenIn" />
         <label for="{{item.id}}">{{item.value}}</label>
     </span>
 </fieldset>
 <fieldset>
-    <legend>Grundstuecksbezogene Kosten<sup>&#9432;</sup></legend>
+    <legend>Grundstuecksbezogene Kosten<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formProjektNeuService.grundstKosten.description }}</span></sup></legend>
     <span class="slidernumber">
         <input type="range" formControlName="grundstuecksbezogeneKostenRange" min="{{formProjektNeuService.grundstKosten.min}}" max="{{formProjektNeuService.grundstKosten.max}}" step="{{formProjektNeuService.grundstKosten.step}}" class="slider" />
         <input type="number" formControlName="grundstuecksbezogeneKosten" min="{{formProjektNeuService.grundstKosten.min}}" max="{{formProjektNeuService.grundstKosten.max}}"
@@ -147,7 +147,7 @@
     </span>
 </fieldset>
 <fieldset>
-    <legend>Baunebenkosten Kein Fin <sup>&#9432;</sup></legend>
+    <legend>Baunebenkosten Kein Fin <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formProjektNeuService.baunebenkostenKeinFin.description }}</span></sup></legend>
     <span class="slidernumber">
         <input type="range" formControlName="baunebenkostenKeinFinRange" min="{{formProjektNeuService.baunebenkostenKeinFin.min}}" max="{{formProjektNeuService.baunebenkostenKeinFin.max}}" step="{{formProjektNeuService.baunebenkostenKeinFin.step}}" class="slider" />
         <input type="number" formControlName="baunebenkostenKeinFin" min="{{formProjektNeuService.baunebenkostenKeinFin.min}}" max="{{formProjektNeuService.baunebenkostenKeinFin.max}}"

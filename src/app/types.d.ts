@@ -1,107 +1,227 @@
 // I added the optional text variable to be
-// able to change how it is displayed without affecting the logic
+// able to change how it is displayed without affecting the formulas
 
 // General
-type ProjektTyp = "Neubau" | "Sanierung";
+type ProjektTyp = 'Neubau' | 'Sanierung';
 
 // Projekt
-type EnergiestandardNeubau = "EH 40" | "EH 55" | "EH 70" | "EH 100" | "EH 115";
+// Wohnflaeche
+type wohnflaecheObj = {
+  min: number;
+  init: number;
+  max: number;
+  step: number;
+  description: string;
+};
+
+// Anzahl Wohnungen
+type anzahlWohnungenObj = {
+  min: number;
+  init: number;
+  max: number;
+  step: number;
+  description: string;
+};
+
+// Energiestandard Neubau
+type EnergiestandardNeubau = 'EH 40' | 'EH 55' | 'EH 70' | 'EH 100' | 'EH 115';
 type EnergiestandardNeubauOptions = {
-    id: string;
-    value: EnergiestandardNeubau;
-    text?: string;
+  id: string;
+  value: EnergiestandardNeubau;
+  text?: string;
+};
+type EnergiestandardNeubauObj = {
+  options: EnergiestandardNeubauOptions[];
+  description: string;
 };
 
-type EnergiestandardSanierung = "EH 40" | "EH 55" | "EH 70" | "EH 85";
+// Energiestandard Sanierung
+type EnergiestandardSanierung = 'EH 40' | 'EH 55' | 'EH 70' | 'EH 85';
 type EnergiestandardSanierungOptions = {
-    id: string;
-    value: EnergiestandardSanierung;
-    text?: string;
+  id: string;
+  value: EnergiestandardSanierung;
+  text?: string;
+};
+type EnergiestandardSanierungObj = {
+  options: EnergiestandardSanierungOptions[];
+  description: string;
 };
 
-type ZertifizierungNeubau = "Keine" | "ohne QNG" | "mit QNG";
-type ZertifizierungNeubauOptions = {
-    id: string;
-    value: ZertifizierungNeubau;
-    text?: string;
-}
-
-type ZertifizierungSanierung = "Keine Zertifizierung" | "QNG";
-type ZertifizierungSanierungOptions = {
-    id: string;
-    value: ZertifizierungSanierung;
-    text?: string;
-}
-
-// Sanierung
-type ZustandBestand = "Unsaniert" | "Teilsaniert" | "Umfassend saniert";
-type ZustandBestandOptions = {
-    id: string;
-    value: ZustandBestand;
-    text?: string;
-};
-
-// Neubau
-type Konstruktion = "Konventionell" | "Holzbau";
+// Konstruktion typ
+type Konstruktion = 'Konventionell' | 'Holzbau';
 type KonstruktionOptions = {
-    id: string;
-    value: Konstruktion;
-    text?: string;
-}
-type Kellergeschoss = "Vorhanden" | "Nicht Vorhanden";
+  id: string;
+  value: Konstruktion;
+  text?: string;
+};
+type KonstruktionObj = {
+  options: KonstruktionOptions[];
+  description: string;
+};
+
+// Zertifizierung Neubau
+type ZertifizierungNeubau = 'Keine' | 'ohne QNG' | 'mit QNG';
+type ZertifizierungNeubauOptions = {
+  id: string;
+  value: ZertifizierungNeubau;
+  text?: string;
+};
+type ZertifizierungNeubauObj = {
+  options: ZertifizierungNeubauOptions[];
+  description: string;
+};
+
+// Zertifizierung Sanierung
+type ZertifizierungSanierung = 'Keine Zertifizierung' | 'QNG';
+type ZertifizierungSanierungOptions = {
+  id: string;
+  value: ZertifizierungSanierung;
+  text?: string;
+};
+type ZertifizierungSanierungObj = {
+  options: ZertifizierungSanierungOptions[];
+  description: string;
+};
+
+// Zustand Bestand
+type ZustandBestand = 'Unsaniert' | 'Teilsaniert' | 'Umfassend saniert';
+type ZustandBestandOptions = {
+  id: string;
+  value: ZustandBestand;
+  text?: string;
+};
+type ZustandBestandObj = {
+  options: ZustandBestandOptions[];
+  description: string;
+};
+
+// Kellergeschoss
+type Kellergeschoss = 'Vorhanden' | 'Nicht Vorhanden';
 type KellergeschossOptions = {
-    id: string;
-    value: Kellergeschoss;
-    text?: string;
+  id: string;
+  value: Kellergeschoss;
+  text?: string;
 };
-type Stellplaetze = "Garage" | "Parkpalette" | "Tiefgarage";
+type KellergeschossObj = {
+  options: KellergeschossOptions[];
+  description: string;
+};
+
+// Stellplaetze
+type Stellplaetze = 'Garage' | 'Parkpalette' | 'Tiefgarage';
 type StellplaetzeOptions = {
-    id: string;
-    value: Stellplaetze;
-    text?: string;
+  id: string;
+  value: Stellplaetze;
+  text?: string;
 };
-type Aufzugsanlage = "Vorhanden" | "Nicht Vorhanden";
+type StellplaetzeObj = {
+  options: StellplaetzeOptions[];
+  description: string;
+};
+
+// Aufzugsanlage
+type Aufzugsanlage = 'Vorhanden' | 'Nicht Vorhanden';
 type AufzugsanlageOptions = {
-    id: string;
-    value: Aufzugsanlage;
-    text?: string;
+  id: string;
+  value: Aufzugsanlage;
+  text?: string;
 };
-type BarrierefreiesBauen = "Keine Anforderungen" | "Barrierereduziert" | "Barrierefrei" | "Barrierefrei (R)";
+type AufzugsanlageObj = {
+  options: AufzugsanlageOptions[];
+  description: string;
+};
+
+// Barrierefreies Bauen
+type BarrierefreiesBauen =
+  | 'Keine Anforderungen'
+  | 'Barrierereduziert'
+  | 'Barrierefrei'
+  | 'Barrierefrei (R)';
 type BarrierefreiesBauenOptions = {
-    id: string;
-    value: BarrierefreiesBauen;
-    text?: string;
+  id: string;
+  value: BarrierefreiesBauen;
+  text?: string;
 };
-type Dachbegruenung = "Vorhanden" | "Nicht Vorhanden";
+type BarrierefreiesBauenObj = {
+  options: BarrierefreiesBauenOptions[];
+  description: string;
+};
+
+// Dachbegruenung
+type Dachbegruenung = 'Vorhanden' | 'Nicht Vorhanden';
 type DachbegruenungOptions = {
-    id: string;
-    value: Dachbegruenung;
-    text?: string;
+  id: string;
+  value: Dachbegruenung;
+  text?: string;
 };
+type DachbegruenungObj = {
+  options: DachbegruenungOptions[];
+  description: string;
+};
+
 // Anspruchsvolle Baustellenlogistik
-type Baustellenlogistik = "Vorhanden" | "Nicht Vorhanden";
+type Baustellenlogistik = 'Vorhanden' | 'Nicht Vorhanden';
 type BaustellenlogistikOptions = {
-    id: string;
-    value: Baustellenlogistik;
-    text?: string;
+  id: string;
+  value: Baustellenlogistik;
+  text?: string;
 };
-type Aussenanlagen = "Gering" | "Mittel" | "Hoch";
+type BaustellenlogistikObj = {
+  options: BaustellenlogistikOptions[];
+  description: string;
+};
+
+// Außenanlagen
+type Aussenanlagen = 'Gering' | 'Mittel' | 'Hoch';
 type AussenanlagenOptions = {
-    id: string;
-    value: Aussenanlagen;
-    text?: string;
+  id: string;
+  value: Aussenanlagen;
+  text?: string;
+};
+type AussenanlagenObj = {
+  options: AussenanlagenOptions[];
+  description: string;
 };
 
 // Darlehen
-type KfWDarlehen = "Annuitäten" | "Endfälliges" | "kein";
-type KfWDarlehenOptions = {
-    id: string;
-    value: KfWDarlehen;
-    text?: string;
+// Kalkulationszinssatz (Realzins)
+type KalkRealzinsObj = {
+  min: number;
+  init: number;
+  max: number;
+  step: number;
+  description: string;
 };
-type BankDarlehen = "Annuitäten" | "Endfälliges";
+
+// Kreditlaufzeit
+type KreditlaufzeitObj = {
+  min: number;
+  init: number;
+  max: number;
+  step: number;
+  description: string;
+};
+
+// KfW Darlehen
+type KfWDarlehen = 'Annuitäten' | 'Endfälliges' | 'kein';
+type KfWDarlehenOptions = {
+  id: string;
+  value: KfWDarlehen;
+  text?: string;
+};
+type KfWDarlehenObj = {
+  options: KfWDarlehenOptions[];
+  description: string;
+};
+
+// Bank Darlehen
+type BankDarlehen = 'Annuitäten' | 'Endfälliges';
 type BankDarlehenOptions = {
-    id: string;
-    value: BankDarlehen;
-    text?: string;
+  id: string;
+  value: BankDarlehen;
+  text?: string;
+};
+type BankDarlehenObj = {
+  options: BankDarlehenOptions[];
+  description: string;
 };

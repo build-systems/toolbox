@@ -42,7 +42,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>Energiestandard <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektSanService.energiestandardOptions">
+    <span class="radio-option" *ngFor="let item of formProjektSanService.energiestandardOptions">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -55,7 +55,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>Zertifizierung klimafreundlicher <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektSanService.zertifizierungOptions">
+    <span class="radio-option" *ngFor="let item of formProjektSanService.zertifizierungOptions">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -92,7 +92,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>Zustand Bestand <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formProjektSanService.zustandBestandOptions">
+    <span class="radio-option" *ngFor="let item of formProjektSanService.zustandBestandOptions">
       <input
         type="radio"
         id="{{ item.id }}"

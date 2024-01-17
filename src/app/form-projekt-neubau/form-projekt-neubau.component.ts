@@ -67,35 +67,35 @@ export class FormProjektNeubauComponent implements OnInit {
         ],
       ],
       konstruktion: new FormControl(
-        this.formProjektNeuService.konstruktionOptions[0].value
+        this.formProjektNeuService.konstruktion.options[0].value
       ),
       energiestandard: new FormControl(
-        this.formProjektNeuService.energiestandardOptions[0].value
+        this.formProjektNeuService.energiestandard.options[0].value
       ),
       zertifizierung: new FormControl(
-        this.formProjektNeuService.zertifizierungOptions[0].value
+        this.formProjektNeuService.zertifizierung.options[0].value
       ),
       // Details
       kellergeschossIn: new FormControl(
-        this.formProjektNeuService.kellergeschossOptions[0].value
+        this.formProjektNeuService.kellergeschoss.options[0].value
       ),
       stellplaetzeIn: new FormControl(
-        this.formProjektNeuService.stellplaetzeOptions[0].value
+        this.formProjektNeuService.stellplaetze.options[0].value
       ),
       aufzugsanlageIn: new FormControl(
-        this.formProjektNeuService.aufzugsanlageOptions[0].value
+        this.formProjektNeuService.aufzugsanlage.options[0].value
       ),
       barrierefreiheitIn: new FormControl(
-        this.formProjektNeuService.barrierefreiheitOptions[0].value
+        this.formProjektNeuService.barrierefreiheit.options[0].value
       ),
       dachbegruenungIn: new FormControl(
-        this.formProjektNeuService.dachbegruenungOptions[0].value
+        this.formProjektNeuService.dachbegruenung.options[0].value
       ),
       baustellenlogistikIn: new FormControl(
-        this.formProjektNeuService.baustellenlogistikOptions[0].value
+        this.formProjektNeuService.baustellenlogistik.options[0].value
       ),
       aussenanlagenIn: new FormControl(
-        this.formProjektNeuService.aussenanlagenOptions[0].value
+        this.formProjektNeuService.aussenanlagen.options[0].value
       ),
       grundstuecksbezogeneKostenRange: [
         this.formProjektNeuService.grundstKosten.init,

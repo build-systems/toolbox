@@ -1,6 +1,5 @@
 import { Component} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormNeubauComponent } from '../../form-neubau/form-neubau.component';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
 import { ChartGkostenNeubauComponent } from '../../chart-gkosten-neubau/chart-gkosten-neubau.component';
 import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuitaeten.component';
@@ -17,7 +16,6 @@ import { FormProjektNeubauComponent } from '../../form-projekt-neubau/form-proje
   imports: [
     CommonModule,
     FormProjektNeubauComponent,
-    FormNeubauComponent,
     FormDarlehenComponent,
     ChartGkostenNeubauComponent,
     ChartGkostenM2NeubauComponent,

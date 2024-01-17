@@ -21,6 +21,7 @@
   --mobile-handle-diameter: 1.6rem;
   --mobile-padding: 1rem;
   --mobile-header: calc(40px + (2 * var(--mobile-padding)));
+  --tooltip-width: 200px;
 }
 
 * {
@@ -182,6 +183,101 @@ fieldset {
   border-style: none;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-family:  -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  word-break: normal;
+  width: var(--tooltip-width);
+  background-color: var(--bg-secondary);
+  color: var(--secondary);
+  /* border: 1px solid var(--secondary); */
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip-top {
+  bottom: 135%;
+  left: 50%;
+  margin-left: calc(-1 * var(--tooltip-width) / 2);
+}
+
+.tooltip-right {
+  top: -7px;
+  left: 125%;
+}
+
+.tooltip-bottom {
+  top: 135%;
+  left: 50%;
+  margin-left: calc(-1 * var(--tooltip-width) / 2);
+}
+
+.tooltip-left {
+  top: -5px;
+  bottom: auto;
+  right: 128%;
+}
+
+.tooltip-top::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--bg-secondary) transparent transparent transparent;
+}
+
+.tooltip-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent var(--bg-secondary) transparent transparent;
+}
+
+.tooltip-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent var(--bg-secondary) transparent;
+}
+
+.tooltip-left::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent var(--bg-secondary);
+}
+
 .slidernumber {
   display: flex;
   justify-content: space-between;
@@ -276,27 +372,27 @@ input[type="radio"] {
 .radio-fieldset {
   display: flex;
   gap: var(--button-radius);
+}
 
-  & span {
+.radio-option {
+  display: flex;
+  height: var(--button-height);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--button-radius);
+
+  & label {
     display: flex;
-    height: var(--button-height);
+    margin: 0;
+    height: 100%;
     width: 100%;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    border: 1px solid var(--bg-tertiary);
     border-radius: var(--button-radius);
-
-    & label {
-      display: flex;
-      margin: 0;
-      height: 100%;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      border: 1px solid var(--bg-tertiary);
-      border-radius: var(--button-radius);
-      cursor: pointer;
-    }
+    cursor: pointer;
   }
 }
 
@@ -422,7 +518,7 @@ input[type="checkbox"]:checked + label {
 input[type="button"]:hover {
   color: var(--primary);
   border: 1px solid var(--secondary);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
 }
 
 input[type="button"]:active {
@@ -466,7 +562,7 @@ input[type="button"] {
   justify-content: center;
   flex: 1;
   /* border: none; */
-  border: 1px solid var(--bg-tertiary);
+  border: 1px solid var(--primary30);
   cursor: pointer;
 }
 
@@ -480,8 +576,8 @@ input[type="button"] {
   justify-content: center;
   flex: 1;
   /* border: none; */
-  border: 1px solid var(--primary);
-  background-color: var(--bg-tertiary);
+  border: 1px solid var(--secondary);
+  background-color: var(--bg-secondary);
   cursor: pointer;
 }
 

@@ -42,7 +42,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formService.kfWDarlehenOptions" class="radio">
+    <span class="radio-option" *ngFor="let item of formService.kfWDarlehenOptions">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -55,7 +55,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
-    <span *ngFor="let item of formService.bankDarlehenOptions" class="radio">
+    <span class="radio-option" *ngFor="let item of formService.bankDarlehenOptions">
       <input
         type="radio"
         id="{{ item.id }}"

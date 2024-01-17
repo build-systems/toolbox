@@ -6,87 +6,137 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FormProjektNeuService {
   // Wohnfläche centralized form values
-  wohnflaeche = {
+  wohnflaeche: wohnflaecheObj = {
     min: 20,
     init: 1000,
     max: 10000,
     step: 1,
+    description: 'Wohnflaeche description',
   };
 
   // Anzahl Wohnungen centralized form values
-  anzahlWohnungen = {
+  anzahlWohnungen: anzahlWohnungenObj = {
     min: 1,
     init: 10,
     max: 1000,
     step: 1,
+    description: 'Anzahl Wohnungen description',
   };
 
-  energiestandardOptions: EnergiestandardNeubauOptions[] = [
-    { id: 'enstd1', value: 'EH 40' },
-    { id: 'enstd2', value: 'EH 55' },
-    { id: 'enstd3', value: 'EH 70' },
-    { id: 'enstd4', value: 'EH 100' },
-    { id: 'enstd5', value: 'EH 115' },
-  ];
+  // Energiestandard centralized form values
+  energiestandard: EnergiestandardNeubauObj = {
+    options: [
+      { id: 'enstd1', value: 'EH 40' },
+      { id: 'enstd2', value: 'EH 55' },
+      { id: 'enstd3', value: 'EH 70' },
+      { id: 'enstd4', value: 'EH 100' },
+      { id: 'enstd5', value: 'EH 115' },
+    ],
+    description: 'Energiestandard description',
+  };
 
   // Konstruktion centralized form values
-  konstruktionOptions: KonstruktionOptions[] = [
-    { id: 'konst1', value: 'Konventionell' },
-    { id: 'konst2', value: 'Holzbau' },
-  ];
+  konstruktion: KonstruktionObj = {
+    options: [
+      { id: 'konst1', value: 'Konventionell' },
+      { id: 'konst2', value: 'Holzbau' },
+    ],
+    description: 'Konstruktion description',
+  };
 
   // Zertifizierung centralized form values
-  zertifizierungOptions: ZertifizierungNeubauOptions[] = [
-    { id: 'zert1', value: 'ohne QNG', text: 'ohne QNG Siegel' },
-    { id: 'zert2', value: 'mit QNG', text: 'mit QNG Siegel' },
-    { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung' },
-  ];
+  zertifizierung: ZertifizierungNeubauObj = {
+    options: [
+      { id: 'zert1', value: 'ohne QNG', text: 'ohne QNG Siegel' },
+      { id: 'zert2', value: 'mit QNG', text: 'mit QNG Siegel' },
+      { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung' },
+    ],
+    description: 'Neubau Zertifizierung klimafreundlicher description',
+  };
 
   // Details
-  kellergeschossOptions: KellergeschossOptions[] = [
-    { id: 'kelgesc1', value: 'Vorhanden' },
-    { id: 'kelgesc2', value: 'Nicht Vorhanden' },
-  ];
-  stellplaetzeOptions: StellplaetzeOptions[] = [
-    { id: 'stpl1', value: 'Tiefgarage' },
-    { id: 'stpl2', value: 'Garage' },
-    { id: 'stpl3', value: 'Parkpalette' },
-  ];
-  aufzugsanlageOptions: AufzugsanlageOptions[] = [
-    { id: 'aufanl1', value: 'Vorhanden' },
-    { id: 'aufanl2', value: 'Nicht Vorhanden' },
-  ];
-  // I added the text field to also include html breakword syntax
-  barrierefreiheitOptions: BarrierefreiesBauenOptions[] = [
-    { id: 'barfre1', value: 'Barrierereduziert', text: 'Reduziert' },
-    { id: 'barfre2', value: 'Barrierefrei', text: 'Frei' },
-    { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Frei (R)' },
-    { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
-  ];
-  dachbegruenungOptions: DachbegruenungOptions[] = [
-    { id: 'dachbe1', value: 'Vorhanden' },
-    { id: 'dachbe2', value: 'Nicht Vorhanden' },
-  ];
-  baustellenlogistikOptions: BaustellenlogistikOptions[] = [
-    { id: 'baulog1', value: 'Vorhanden' },
-    { id: 'baulog2', value: 'Nicht Vorhanden' },
-  ];
-  aussenanlagenOptions: AussenanlagenOptions[] = [
-    { id: 'ausanl1', value: 'Gering' },
-    { id: 'ausanl2', value: 'Mittel' },
-    { id: 'ausanl3', value: 'Hoch' },
-  ];
+  // Kellergeschoss
+  kellergeschoss: KellergeschossObj = {
+    options: [
+      { id: 'kelgesc1', value: 'Vorhanden' },
+      { id: 'kelgesc2', value: 'Nicht Vorhanden' },
+    ],
+    description: 'Kellergeschoss description',
+  };
+
+  stellplaetze: StellplaetzeObj = {
+    options: [
+      { id: 'stpl1', value: 'Tiefgarage' },
+      { id: 'stpl2', value: 'Garage' },
+      { id: 'stpl3', value: 'Parkpalette' },
+    ],
+    description: "Stellplaetze description" 
+  }
+
+  // Aufzugsanlage
+  aufzugsanlage: AufzugsanlageObj = {
+    options: [
+      { id: 'aufanl1', value: 'Vorhanden' },
+      { id: 'aufanl2', value: 'Nicht Vorhanden' },
+    ],
+    description: "Aufzugsanlage description"
+  }
+
+  // Barrierefreiheit
+  barrierefreiheit: BarrierefreiesBauenObj = {
+    options: [
+      { id: 'barfre1', value: 'Barrierereduziert', text: 'Reduziert' },
+      { id: 'barfre2', value: 'Barrierefrei', text: 'Frei' },
+      { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Frei (R)' },
+      { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
+    ],
+    description: "Barrierefreiheit description" 
+  }
+
+  // Dachbegruenung
+  dachbegruenung: DachbegruenungObj = {
+    options: [
+      { id: 'dachbe1', value: 'Vorhanden' },
+      { id: 'dachbe2', value: 'Nicht Vorhanden' },
+    ],
+    description: "Dachbegruenung description"
+  } 
+ 
+  // Baustellenlogistik
+  baustellenlogistik: BaustellenlogistikObj = {
+    options: [
+      { id: 'baulog1', value: 'Vorhanden' },
+      { id: 'baulog2', value: 'Nicht Vorhanden' },
+    ],
+    description: "Baustellenlogistik description"
+  }
+  
+  // Aussenanlagen
+  aussenanlagen: AussenanlagenObj = {
+    options: [
+      { id: 'ausanl1', value: 'Gering' },
+      { id: 'ausanl2', value: 'Mittel' },
+      { id: 'ausanl3', value: 'Hoch' },
+    ],
+    description: "Aussenanlagen description"
+  }
+  
+  // GrundstKosten
   grundstKosten = {
     init: 0,
     min: 0,
     max: 200,
     step: 1,
+    description: "GrundstKosten Kein Fin description"
   };
+
+  // Baunebenkosten Kein Fin
   baunebenkostenKeinFin = {
     init: 0,
     min: 0,
     max: 200,
     step: 1,
+    description: "Baunebenkosten Kein Fin description"
   };
 
   // Observable for Wohnflaeche
@@ -103,19 +153,19 @@ export class FormProjektNeuService {
 
   // Observable for Energiestandard
   private energiestandardSource = new BehaviorSubject<EnergiestandardNeubau>(
-    this.energiestandardOptions[0].value
+    this.energiestandard.options[0].value
   );
   currentEnergiestandard$ = this.energiestandardSource.asObservable();
 
   // Observable for Konstruktion
   private konstruktionSource = new BehaviorSubject<Konstruktion>(
-    this.konstruktionOptions[0].value
+    this.konstruktion.options[0].value
   );
   currentKonstruktion$ = this.konstruktionSource.asObservable();
 
   // Observable for Zertifizierung
   private zertifizierungSource = new BehaviorSubject<ZertifizierungNeubau>(
-    this.zertifizierungOptions[0].value
+    this.zertifizierung.options[0].value
   );
   currentZertifizierung$ = this.zertifizierungSource.asObservable();
 
@@ -146,37 +196,37 @@ export class FormProjektNeuService {
   // Details
   // Observables
   private kellergeschossSource = new BehaviorSubject<Kellergeschoss>(
-    this.kellergeschossOptions[0].value
+    this.kellergeschoss.options[0].value
   );
   currentKellergeschoss$ = this.kellergeschossSource.asObservable();
 
   private stellplaetzeSource = new BehaviorSubject<Stellplaetze>(
-    this.stellplaetzeOptions[0].value
+    this.stellplaetze.options[0].value
   );
   currentStellplaetze$ = this.stellplaetzeSource.asObservable();
 
   private aufzugsanlageSource = new BehaviorSubject<Aufzugsanlage>(
-    this.aufzugsanlageOptions[0].value
+    this.aufzugsanlage.options[0].value
   );
   currentAufzugsanlage$ = this.aufzugsanlageSource.asObservable();
 
   private barriereFreiheitSource = new BehaviorSubject<BarrierefreiesBauen>(
-    this.barrierefreiheitOptions[0].value
+    this.barrierefreiheit.options[0].value
   );
   currentBarriereFreiheit$ = this.barriereFreiheitSource.asObservable();
 
   private dachbegruenungSource = new BehaviorSubject<Dachbegruenung>(
-    this.dachbegruenungOptions[0].value
+    this.dachbegruenung.options[0].value
   );
   currentDachbegruenun$ = this.dachbegruenungSource.asObservable();
 
   private baustellenlogistikSource = new BehaviorSubject<Baustellenlogistik>(
-    this.baustellenlogistikOptions[0].value
+    this.baustellenlogistik.options[0].value
   );
   currentBaustellenlogistik$ = this.baustellenlogistikSource.asObservable();
 
   private aussenanlageSource = new BehaviorSubject<Aussenanlagen>(
-    this.aussenanlagenOptions[0].value
+    this.aussenanlagen.options[0].value
   );
   currentAussenanlage$ = this.aussenanlageSource.asObservable();
 
@@ -192,7 +242,7 @@ export class FormProjektNeuService {
   currentBaunebenkostenKeinFin$ =
     this.baunebenkostenKeinFinSource.asObservable();
 
-  // Set Neubau methods 
+  // Set Neubau methods
   public setKellergeschoss(data: Kellergeschoss) {
     this.kellergeschossSource.next(data);
   }
