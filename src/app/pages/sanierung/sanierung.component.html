@@ -5,27 +5,34 @@
   <div class="container-input">
     <div class="progress-bar">
       <input
+        class="left-pill"
         type="button"
-        value="1"
+        value="Projekt"
         title="Projekt"
         (click)="currentForm = 1"
-        [className]="currentForm >= 1 ? 'full-circle' : 'grayed-circle'"
+        [className]="currentForm === 1 ? 'full-pill left-pill' : 'grayed-pill left-pill'"
       />
-      <div [className]="currentForm >= 2 ? 'full-line' : 'grayed-line'"></div>
       <input
+        class="right-pill"
         type="button"
-        value="2"
-        title="Sanierung"
+        value="Darlehen"
+        title="Darlehen"
         (click)="currentForm = 2"
-        [className]="currentForm >= 2 ? 'full-circle' : 'grayed-circle'"
+        [className]="currentForm === 2 ? 'full-pill right-pill' : 'grayed-pill right-pill'"
       />
     </div>
-    <app-form-projekt-sanierung [hidden]="!(currentForm === 1)"></app-form-projekt-sanierung>
+    <app-form-projekt-sanierung
+      [hidden]="!(currentForm === 1)"
+    ></app-form-projekt-sanierung>
     <app-form-darlehen [hidden]="!(currentForm === 2)"></app-form-darlehen>
-    <fieldset class="progress-buttons">
+    <!-- <fieldset class="progress-buttons">
       <div class="container-button">
         @if (currentForm > 1) {
-        <input type="button" value="PREVIOUS" (click)="previousForm(); scroll(top)" />
+        <input
+          type="button"
+          value="PREVIOUS"
+          (click)="previousForm(); scroll(top)"
+        />
         }
       </div>
       <div class="container-button">
@@ -33,7 +40,7 @@
         <input type="button" value="NEXT" (click)="nextForm(); scroll(top)" />
         }
       </div>
-    </fieldset>
+    </fieldset> -->
   </div>
   <div class="output">
     <app-dashboard-numbers></app-dashboard-numbers>

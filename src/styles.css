@@ -186,7 +186,6 @@ fieldset {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   input[type="range"] {
     flex-grow: 1;
     margin-right: 3ch;
@@ -407,6 +406,7 @@ input[type="checkbox"]:checked + label {
   width: 49%;
 
   & input {
+    font-size: 1.3rem;
     font-weight: 300;
     color: var(--primary);
     border: 1px solid var(--secondary);
@@ -420,8 +420,8 @@ input[type="checkbox"]:checked + label {
 }
 
 input[type="button"]:hover {
-  color: var(--secondary);
-  border: 1px solid var(--primary70);
+  color: var(--primary);
+  border: 1px solid var(--secondary);
   background-color: var(--bg-primary);
 }
 
@@ -431,13 +431,12 @@ input[type="button"]:active {
 }
 
 input[type="button"] {
-  font-size: 1.3rem;
   cursor: pointer;
 }
 
 .progress-bar {
   counter-reset: code-steps-list;
-  height: var(--button-height);
+  min-height: var(--button-height);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -447,45 +446,43 @@ input[type="button"] {
   padding-right: var(--layout-padding);
 }
 
-.grayed-circle {
-  color: var(--primary30);
-  font-size: 0.8rem;
+.left-pill {
+  padding: 0.5rem;
+  border-radius: var(--button-radius) 0 0 var(--button-radius);
+}
+
+.right-pill {
+  padding: 0.5rem;
+  border-radius: 0 var(--button-radius) var(--button-radius) 0;
+}
+
+.grayed-pill {
+  color: var(--primary70);
+  font-size: 1rem;
   font-family: "Montserrat", sans-serif;
-  font-weight: 300;
+  /* font-weight: 300; */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--button-height);
-  border-radius: 50%;
-  aspect-ratio: 1/1;
+  flex: 1;
+  /* border: none; */
   border: 1px solid var(--bg-tertiary);
   cursor: pointer;
 }
 
-.full-circle {
-  font-size: 0.8rem;
+.full-pill {
+  color: var(--secondary);
+  font-size: 1rem;
   font-family: "Montserrat", sans-serif;
+  /* font-weight: 300; */
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--button-height);
-  border-radius: 50%;
-  aspect-ratio: 1/1;
+  flex: 1;
+  /* border: none; */
   border: 1px solid var(--primary);
   background-color: var(--bg-tertiary);
   cursor: pointer;
-}
-
-.grayed-line {
-  flex-grow: 1;
-  height: 1px;
-  background-color: var(--bg-tertiary);
-}
-
-.full-line {
-  flex-grow: 1;
-  height: 1px;
-  background-color: var(--primary);
 }
 
 .ng-dashboard-numbers {
