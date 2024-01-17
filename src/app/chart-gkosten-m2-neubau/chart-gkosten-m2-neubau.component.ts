@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-neubau.component.html',
   styleUrl: './chart-gkosten-m2-neubau.component.css',
   host: {
-    class: 'ng-chart chart3',
+    class: 'ng-chart chart2',
   },
 })
 export class ChartGkostenM2NeubauComponent implements OnInit {
@@ -53,14 +53,14 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
           0,
           Math.round(this.output['kfwKreditM2']),
         ];
-        this.barChartData.datasets[3].data = [
-          0,
-          Math.round(this.output['finanzierungskostenFinanzmarktM2']),
-        ];
-        this.barChartData.datasets[4].data = [
-          0,
-          Math.round(this.output['finanzierungskostenKfwM2']),
-        ];
+        // this.barChartData.datasets[3].data = [
+        //   0,
+        //   Math.round(this.output['finanzierungskostenFinanzmarktM2']),
+        // ];
+        // this.barChartData.datasets[4].data = [
+        //   0,
+        //   Math.round(this.output['finanzierungskostenKfwM2']),
+        // ];
         this.chart?.update();
       });
   }
@@ -268,23 +268,23 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(52, 103, 194)',
       },
-      {
-        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-        data: [null, 0],
-        label: 'Finanzierungskosten Bank',
-        backgroundColor: 'rgba(57, 190, 193, 0.6)',
-        borderColor: 'rgb(57, 190, 193)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(57, 190, 193)',
-      },
-      {
-        data: [null, 0],
-        label: 'Finanzierungskosten KfW',
-        backgroundColor: 'rgba(58, 194, 104, 0.6)',
-        borderColor: 'rgb(58, 194, 104)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
+      // {
+      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten Bank',
+      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      //   borderColor: 'rgb(57, 190, 193)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
+      // },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten KfW',
+      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      //   borderColor: 'rgb(58, 194, 104)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
+      // },
     ],
   };
   public barChartDataPlaceholder: ChartData<'bar'> = {
@@ -314,22 +314,22 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(52, 103, 194)',
       },
-      {
-        data: [null, 0],
-        label: 'Finanzierungskosten Bank',
-        backgroundColor: 'rgba(57, 190, 193, 0.6)',
-        borderColor: 'rgb(57, 190, 193)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(57, 190, 193)',
-      },
-      {
-        data: [null, 0],
-        label: 'Finanzierungskosten KfW',
-        backgroundColor: 'rgba(58, 194, 104, 0.6)',
-        borderColor: 'rgb(58, 194, 104)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten Bank',
+      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      //   borderColor: 'rgb(57, 190, 193)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
+      // },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten KfW',
+      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      //   borderColor: 'rgb(58, 194, 104)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
+      // },
     ],
   };
 

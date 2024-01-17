@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-sanierung.component.html',
   styleUrl: './chart-gkosten-m2-sanierung.component.css',
   host: {
-    class: 'ng-chart chart3'
+    class: 'ng-chart chart2'
   }
 
 })
@@ -48,9 +48,9 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
       this.barChartData.datasets[0].data = [Math.round(this.output['investitionskostenM2']), 0];
       this.barChartData.datasets[1].data = [0, Math.round(this.output['bankKreditM2'])];
       this.barChartData.datasets[2].data = [0, Math.round(this.output['kfwKreditM2'])];
-      this.barChartData.datasets[3].data = [-Math.round(this.output['kfwZuschussM2']), 0];
-      this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-      this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
+      this.barChartData.datasets[3].data = [0, Math.round(this.output['kfwZuschussM2'])];
+      // this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
+      // this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
       this.chart?.update();
     });
   }
@@ -260,30 +260,30 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
       },
       {
         // KfW Zuschuss
-        data: [0, null],
+        data: [null, 0],
         label: 'KfW Zuschuss',
         backgroundColor: 'rgba(58, 194, 150, 0.6)',
         borderColor: 'rgb(58, 194, 150)',
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 150)',
       },
-      {
-        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-        data: [null, 0],
-        label: 'Finanzierungskosten Bank',
-        backgroundColor: 'rgba(57, 190, 193, 0.6)',
-        borderColor: 'rgb(57, 190, 193)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(57, 190, 193)',
-      },
-      {
-        data: [null, 0],
-        label: 'Finanzierungskosten KfW',
-        backgroundColor: 'rgba(58, 194, 104, 0.6)',
-        borderColor: 'rgb(58, 194, 104)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
+      // {
+      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten Bank',
+      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      //   borderColor: 'rgb(57, 190, 193)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
+      // },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten KfW',
+      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      //   borderColor: 'rgb(58, 194, 104)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
+      // },
     ],
   };
   // The placeholder is only to have a smoothier loading
@@ -323,24 +323,23 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         borderWidth: 1,
         hoverBackgroundColor: 'rgb(58, 194, 150)',
       },
-      {
-        // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-        data: [null, 0],
-        label: 'Finanzierungskosten Bank',
-        backgroundColor: 'rgba(57, 190, 193, 0.6)',
-        borderColor: 'rgb(57, 190, 193)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(57, 190, 193)',
-      },
-      {
-        data: [null, 0],
-        label: 'Finanzierungskosten KfW',
-        backgroundColor: 'rgba(58, 194, 104, 0.6)',
-        borderColor: 'rgb(58, 194, 104)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 104)',
-      },
-      
+      // {
+      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten Bank',
+      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      //   borderColor: 'rgb(57, 190, 193)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
+      // },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten KfW',
+      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      //   borderColor: 'rgb(58, 194, 104)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
+      // },
     ],
   };
 
