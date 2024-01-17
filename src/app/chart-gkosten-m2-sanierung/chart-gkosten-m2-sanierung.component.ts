@@ -167,7 +167,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         }
       },
       y: {
-        min: -400,
+        min: 0,
         max: 800,
         stacked: true,
         alignToPixels: true,

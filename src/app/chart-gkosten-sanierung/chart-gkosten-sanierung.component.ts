@@ -173,8 +173,8 @@ export class ChartGkostenSanierungComponent implements OnInit {
         },
       },
       y: {
-        min: -2_000_000,
-        max: 4_000_000,
+        min: 0,
+        max: 800_000,
         stacked: true,
         alignToPixels: true,
         border: {
