@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap");
 
 :root {
@@ -398,29 +399,30 @@ input[type="checkbox"]:checked + label {
 .progress-buttons {
   display: flex;
   justify-content: space-between;
+  margin: 2rem 0 2rem 0;
+  padding: 0;
 }
 
 .container-button {
   width: 49%;
 
   & input {
-    font-weight: bold;
-    color: var(--bg-primary);
-    border: 1px solid var(--primary);
+    font-weight: 300;
+    color: var(--primary);
+    border: 1px solid var(--secondary);
     height: var(--button-height);
     width: 100%;
     padding-left: var(--layout-padding);
     padding-right: var(--layout-padding);
     border-radius: var(--button-radius);
-    background-color: var(--primary90);
+    /* background-color: var(--secondary); */
   }
 }
 
 input[type="button"]:hover {
-  font-weight: 300;
-  color: var(--primary);
-  border: 1px solid var(--secondary);
-  background-color: var(--bg-secondary);
+  color: var(--secondary);
+  border: 1px solid var(--primary70);
+  background-color: var(--bg-primary);
 }
 
 input[type="button"]:active {
@@ -429,7 +431,7 @@ input[type="button"]:active {
 }
 
 input[type="button"] {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
 }
 

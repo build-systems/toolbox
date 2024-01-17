@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormProjektSanierungComponent } from '../../form-projekt-sanierung/form-projekt-sanierung.component';
-import { FormSanierungComponent } from '../../form-sanierung/form-sanierung.component';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
 import { ChartGkostenSanierungComponent } from '../../chart-gkosten-sanierung/chart-gkosten-sanierung.component';
 import { ChartGkostenM2SanierungComponent } from '../../chart-gkosten-m2-sanierung/chart-gkosten-m2-sanierung.component';
@@ -17,7 +16,6 @@ import { SanierungService } from './sanierung.service';
   imports: [
     CommonModule,
     FormProjektSanierungComponent,
-    FormSanierungComponent,
     FormDarlehenComponent,
     ChartGkostenSanierungComponent,
     ChartGkostenM2SanierungComponent,

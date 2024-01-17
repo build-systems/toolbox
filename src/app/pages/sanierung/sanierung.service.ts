@@ -5,7 +5,6 @@ import { sanierung } from '../../shared/constants';
 import tableSanierung from './tableSanierung.json';
 import { FormProjektSanService } from '../../form-projekt-sanierung/form-projekt-san.service';
 import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
-import { FormSanierungService } from '../../form-sanierung/form-sanierung.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { DashboardOutput } from '../../dashboard-output';
 
@@ -22,13 +21,11 @@ export class SanierungService {
     this.formProjektService.konstruktionOptions[0].value;
   zertifizierung: ZertifizierungSanierung =
     this.formProjektService.zertifizierungOptions[0].value;
-
-  // Sanierung parameters
-  worstPerformingBuilding = this.formSanierungService.worstPerformingBuilding;
-  serielleSanierung = this.formSanierungService.serielleSanierung;
+  worstPerformingBuilding = this.formProjektService.worstPerformingBuilding;
+  serielleSanierung = this.formProjektService.serielleSanierung;
   zustandBestand: ZustandBestand =
-    this.formSanierungService.zustandBestandOptions[0].value;
-  eeKlasse = this.formSanierungService.eeKlasse;
+    this.formProjektService.zustandBestandOptions[0].value;
+  eeKlasse = this.formProjektService.eeKlasse;
 
   // Darlehen parameters
   kalkRealzins = this.formDarlehenService.kalkRealzins.init;
@@ -45,7 +42,6 @@ export class SanierungService {
   constructor(
     private constants: sanierung,
     private formProjektService: FormProjektSanService,
-    private formSanierungService: FormSanierungService,
     private formDarlehenService: FormDarlehenService,
     private router: Router
   ) {
@@ -111,28 +107,28 @@ export class SanierungService {
       });
 
     // Subscribe to all Sanierung Form parameters and update after every change
-    this.formSanierungService.currentWpc$
+    this.formProjektService.currentWpc$
       .pipe(skipWhile((value) => value === this.worstPerformingBuilding))
       .subscribe((value) => {
         this.worstPerformingBuilding = value;
         this.update();
       });
 
-    this.formSanierungService.currentSerielleSanierung$
+    this.formProjektService.currentSerielleSanierung$
       .pipe(skipWhile((value) => value === this.serielleSanierung))
       .subscribe((value) => {
         this.serielleSanierung = value;
         this.update();
       });
 
-    this.formSanierungService.currentZustandBestand$
+    this.formProjektService.currentZustandBestand$
       .pipe(skipWhile((value) => value === this.zustandBestand))
       .subscribe((value) => {
         this.zustandBestand = value;
         this.update();
       });
 
-    this.formSanierungService.currentEeKlasse$
+    this.formProjektService.currentEeKlasse$
       .pipe(skipWhile((value) => value === this.eeKlasse))
       .subscribe((value) => {
         this.eeKlasse = value;
@@ -253,7 +249,7 @@ export class SanierungService {
   updateGestehungskosten() {
     const initialProperties = {
       Energiestandard: this.formProjektService.energiestandardOptions[0].value,
-      ZustandBestand: this.formSanierungService.zustandBestandOptions[0].value,
+      ZustandBestand: this.formProjektService.zustandBestandOptions[0].value,
     };
     const desiredProperties = {
       Energiestandard: this.energiestandard,
@@ -724,14 +720,12 @@ export class SanierungService {
     this.konstruktion = this.formProjektService.konstruktionOptions[0].value;
     this.zertifizierung =
       this.formProjektService.zertifizierungOptions[0].value;
-
-    // Sanierung parameters
     this.worstPerformingBuilding =
-      this.formSanierungService.worstPerformingBuilding;
-    this.serielleSanierung = this.formSanierungService.serielleSanierung;
+      this.formProjektService.worstPerformingBuilding;
+    this.serielleSanierung = this.formProjektService.serielleSanierung;
     this.zustandBestand =
-      this.formSanierungService.zustandBestandOptions[0].value;
-    this.eeKlasse = this.formSanierungService.eeKlasse;
+      this.formProjektService.zustandBestandOptions[0].value;
+    this.eeKlasse = this.formProjektService.eeKlasse;
 
     // Darlehen parameters
     this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;

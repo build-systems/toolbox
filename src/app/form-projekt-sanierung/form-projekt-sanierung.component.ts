@@ -75,6 +75,16 @@ export class FormProjektSanierungComponent implements OnInit {
       zertifizierung: new FormControl(
         this.formProjektSanService.zertifizierungOptions[0].value
       ),
+      worstPerformingBuilding: new FormControl(
+        this.formProjektSanService.worstPerformingBuilding
+      ),
+      serielleSanierung: new FormControl(
+        this.formProjektSanService.serielleSanierung
+      ),
+      zustandBestand: new FormControl(
+        this.formProjektSanService.zustandBestandOptions[0].value
+      ),
+      eeKlasse: new FormControl(this.formProjektSanService.eeKlasse),
     });
 
     // Wohnflaeche
@@ -110,20 +120,24 @@ export class FormProjektSanierungComponent implements OnInit {
         this.formProjektSanService.setAnzahlWohnungen(value);
       });
 
-    this.projektFormSan.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
-      // Update range input when number input changes
-      this.projektFormSan
-        .get('anzahlWohnungenRange')
-        ?.setValue(value, { emitEvent: false });
-      // Also updates the FormProjektService
-      this.formProjektSanService.setAnzahlWohnungen(value);
-    });
+    this.projektFormSan
+      .get('anzahlWohnungen')
+      ?.valueChanges.subscribe((value) => {
+        // Update range input when number input changes
+        this.projektFormSan
+          .get('anzahlWohnungenRange')
+          ?.setValue(value, { emitEvent: false });
+        // Also updates the FormProjektService
+        this.formProjektSanService.setAnzahlWohnungen(value);
+      });
 
     // Energiestandard
-    this.projektFormSan.get('energiestandard')?.valueChanges.subscribe((value) => {
-      // Updates the sanierungService
-      this.formProjektSanService.setEnergiestandard(value);
-    });
+    this.projektFormSan
+      .get('energiestandard')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektSanService.setEnergiestandard(value);
+      });
 
     // Konstruktion
     this.projektFormSan.get('konstruktion')?.valueChanges.subscribe((value) => {
@@ -132,9 +146,40 @@ export class FormProjektSanierungComponent implements OnInit {
     });
 
     // Zertifizierung
-    this.projektFormSan.get('zertifizierung')?.valueChanges.subscribe((value) => {
+    this.projektFormSan
+      .get('zertifizierung')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektSanService.setZertifizierung(value);
+      });
+    // Worst Performing Building
+    this.projektFormSan
+      .get('worstPerformingBuilding')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektSanService.setWpc(value);
+      });
+
+    // Serielle Sanierung
+    this.projektFormSan
+      .get('serielleSanierung')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektSanService.setSerielleSanierung(value);
+      });
+
+    // Zustand Bestand
+    this.projektFormSan
+      .get('zustandBestand')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        this.formProjektSanService.setZustandBestand(value);
+      });
+
+    // EE Klasse
+    this.projektFormSan.get('eeKlasse')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
-      this.formProjektSanService.setZertifizierung(value);
+      this.formProjektSanService.setEeKlasse(value);
     });
   }
 

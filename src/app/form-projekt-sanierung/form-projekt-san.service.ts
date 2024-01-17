@@ -21,6 +21,7 @@ export class FormProjektSanService {
     step: 1,
   };
 
+  // Energiestandard just for Sanierung 
   energiestandardOptions: EnergiestandardSanierungOptions[] = [
     { id: 'enstd1', value: 'EH 40' },
     { id: 'enstd2', value: 'EH 55' },
@@ -39,6 +40,54 @@ export class FormProjektSanService {
     { id: 'zert1', value: 'Keine Zertifizierung', text: 'Keine' },
     { id: 'zert2', value: 'QNG', text: 'QNG' },
   ];
+
+  // This will be converted to the ABCDEFGH energieaussweis
+  worstPerformingBuilding: boolean = true;
+
+  // Martin metioned this is more for big enterprises?
+  // Should it be activated after a certain square meters?
+  serielleSanierung: boolean = true;
+
+  eeKlasse: boolean = true;
+
+  zustandBestandOptions: ZustandBestandOptions[] = [
+    { id: 'zusbest1', value: 'Unsaniert' },
+    { id: 'zusbest2', value: 'Teilsaniert' },
+    { id: 'zusbest3', value: 'Umfassend saniert' },
+  ];
+
+  // Observable Worst Performing Building
+  private wpcSource = new BehaviorSubject<boolean>(this.worstPerformingBuilding);
+  currentWpc$ = this.wpcSource.asObservable();
+
+  // Observable Serielle Sanierung
+  private serielleSanierungSource = new BehaviorSubject<boolean>(this.serielleSanierung);
+  currentSerielleSanierung$ = this.serielleSanierungSource.asObservable();
+
+  // Observable Zustand Bestand
+  private zustandBestandSource = new BehaviorSubject<ZustandBestand>(this.zustandBestandOptions[0].value);
+  currentZustandBestand$ = this.zustandBestandSource.asObservable();
+
+  // Observable EE-Klasse
+  private eeKlasseSourcde = new BehaviorSubject<boolean>(this.eeKlasse);
+  currentEeKlasse$ = this.eeKlasseSourcde.asObservable();
+
+  // Set methods
+  public setWpc(data: boolean) {
+    this.wpcSource.next(data);
+  }
+
+  public setSerielleSanierung(data: boolean) {
+    this.serielleSanierungSource.next(data);
+  }
+
+  public setZustandBestand(data: ZustandBestand) {
+    this.zustandBestandSource.next(data);
+  }
+
+  public setEeKlasse(data: boolean) {
+    this.eeKlasseSourcde.next(data);
+  }
 
   // Observable for Wohnflaeche
   private wohnflaecheSource = new BehaviorSubject<number>(
