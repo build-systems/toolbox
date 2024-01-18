@@ -29,8 +29,8 @@ export class FormProjektNeuService {
       { id: 'enstd1', value: 'EH 40' },
       { id: 'enstd2', value: 'EH 55' },
       { id: 'enstd3', value: 'EH 70' },
-      { id: 'enstd4', value: 'EH 100' },
-      { id: 'enstd5', value: 'EH 115' },
+      // { id: 'enstd4', value: 'EH 100' },
+      // { id: 'enstd5', value: 'EH 115' },
     ],
     description: 'Energiestandard description',
   };

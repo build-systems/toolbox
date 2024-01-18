@@ -234,26 +234,26 @@ export class NeubauService {
     }
   }
 
-  private _stellplaetzeOut = this.constants.stellplaetzeTiefgarage;
+  private _stellplaetzeOut = this.constants.stellplaetze.tiefgarage;
   private updateStellplaetzeOut() {
     if (this.stellplaetzeIn === 'Garage') {
-      this._stellplaetzeOut = this.constants.stellplaetzeGarage;
+      this._stellplaetzeOut = this.constants.stellplaetze.garage;
     } else if (this.stellplaetzeIn === 'Parkpalette') {
-      this._stellplaetzeOut = this.constants.stellplaetzeParkpalette;
+      this._stellplaetzeOut = this.constants.stellplaetze.parkpalette;
     } else if (this.stellplaetzeIn === 'Tiefgarage') {
-      this._stellplaetzeOut = this.constants.stellplaetzeTiefgarage;
+      this._stellplaetzeOut = this.constants.stellplaetze.tiefgarage;
     } else {
       this._stellplaetzeOut = 0;
     }
   }
 
-  private _redGarageOut = this.constants.redGarageTrue;
+  private _redGarageOut = this.constants.redGarage;
   private updateRedGarageOut() {
     if (
       this.kellergeschossIn === 'Vorhanden' &&
       this.stellplaetzeIn === 'Tiefgarage'
     ) {
-      this._redGarageOut = this.constants.redGarageTrue;
+      this._redGarageOut = this.constants.redGarage;
     } else {
       this._redGarageOut = 0;
     }
@@ -268,14 +268,14 @@ export class NeubauService {
     }
   }
 
-  private _barrierefreiheitOut = this.constants.barrierereduziert;
+  private _barrierefreiheitOut = this.constants.barriere.reduziert;
   private updateBarrierefreiheitOut() {
     if (this.barrierefreiheitIn === 'Barrierereduziert') {
-      this._barrierefreiheitOut = this.constants.barrierereduziert;
+      this._barrierefreiheitOut = this.constants.barriere.reduziert;
     } else if (this.barrierefreiheitIn === 'Barrierefrei') {
-      this._barrierefreiheitOut = this.constants.barrierefrei;
+      this._barrierefreiheitOut = this.constants.barriere.frei;
     } else if (this.barrierefreiheitIn === 'Barrierefrei (R)') {
-      this._barrierefreiheitOut = this.constants.barrierereduziertR;
+      this._barrierefreiheitOut = this.constants.barriere.reduziertR;
     } else {
       this._barrierefreiheitOut = 0;
     }
@@ -299,23 +299,29 @@ export class NeubauService {
     }
   }
 
-  private _aussenanlagenOut = this.constants.aussenanlagenGering;
+  private _aussenanlagenOut = this.constants.aussenanlagen.gering;
   private updateAussenanlagenOut() {
     if (this.aussenanlagenIn === 'Gering') {
-      this._aussenanlagenOut = this.constants.aussenanlagenGering;
+      this._aussenanlagenOut = this.constants.aussenanlagen.gering;
     } else if (this.aussenanlagenIn === 'Mittel') {
-      this._aussenanlagenOut = this.constants.aussenanlagenMittel;
+      this._aussenanlagenOut = this.constants.aussenanlagen.mittel;
     } else if (this.aussenanlagenIn === 'Hoch') {
-      this._aussenanlagenOut = this.constants.aussenanlagenHoch;
+      this._aussenanlagenOut = this.constants.aussenanlagen.hoch;
     } else {
-      this._aussenanlagenOut = this.constants.aussenanlagenGering;
+      this._aussenanlagenOut = this.constants.aussenanlagen.gering;
     }
   }
 
   private _energetischerStandardOut = 0;
   private updateEnergetischerStandard() {
     if (this.energiestandard === 'EH 40') {
-      this._energetischerStandardOut = this.constants.energiestandardEH40;
+      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH40;
+    } else if (this.energiestandard === 'EH 55') {
+      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH55;
+    } else if (this.energiestandard === 'EH 70') {
+      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH70;
+    } else if (this.energiestandard === 'EH 85') {
+      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH85;
     } else {
       this._energetischerStandardOut = 0;
     }
@@ -326,7 +332,7 @@ export class NeubauService {
   private _gestehungskosten = 0;
   private updateGestehungskosten() {
     this._gestehungskosten =
-      2436 +
+      this.constants.gestehungskostenBase +
       this._kellergeschossOut +
       this._stellplaetzeOut +
       this._redGarageOut +

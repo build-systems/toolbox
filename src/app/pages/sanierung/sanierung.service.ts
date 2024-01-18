@@ -709,6 +709,7 @@ export class SanierungService {
         mitKfwM2: this._mitKfw / this.wohnflaeche,
       })
     );
+    // console.log(this.outputSanierung);
   }
 
   reset() {
