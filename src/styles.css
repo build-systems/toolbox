@@ -198,11 +198,11 @@ fieldset {
   font-size: 1rem;
   word-break: normal;
   width: var(--tooltip-width);
-  background-color: var(--bg-tertiary95);
-  color: var(--secondary);
-  /* border: 1px solid var(--secondary); */
+  background-color: var(--bg-secondary);
+  color: var(--primary);
+  border: 1px solid var(--primary50);
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.8rem;
   border-radius: 6px;
 
   /* Position the tooltip text - see examples below! */
@@ -215,7 +215,7 @@ fieldset {
 }
 
 .tooltip-top {
-  bottom: 135%;
+  bottom: 110%;
   left: 50%;
   margin-left: calc(-1 * var(--tooltip-width) / 2);
 }
@@ -226,7 +226,7 @@ fieldset {
 }
 
 .tooltip-bottom {
-  top: 135%;
+  top: 110%;
   left: 50%;
   margin-left: calc(-1 * var(--tooltip-width) / 2);
 }
@@ -234,10 +234,12 @@ fieldset {
 .tooltip-left {
   top: -28px;
   bottom: auto;
-  right: 128%;
+  right: 125%;
 }
 
-.tooltip-top::after {
+/* These after styles add a little arrow to the tooltip.
+But it doesnt adjust to the tootltip for left/right  */
+/* .tooltip-top::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -280,6 +282,7 @@ fieldset {
   border-style: solid;
   border-color: transparent transparent transparent var(--bg-tertiary);
 }
+ */
 
 .slidernumber {
   display: flex;
@@ -386,7 +389,7 @@ input[type="radio"] {
   border-radius: var(--button-radius);
 
   & label {
-    color: var(--primary70);
+    color: var(--primary80);
     display: flex;
     margin: 0;
     height: 100%;
@@ -394,9 +397,10 @@ input[type="radio"] {
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid var(--bg-tertiary);
+    border: 1px solid var(--primary50);
     border-radius: var(--button-radius);
     cursor: pointer;
+    word-break: normal;
   }
 }
 
@@ -417,7 +421,7 @@ input[type="radio"] {
 /* When the checkbox is checked, add a blue background */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-tertiary);
   border-color: white;
 }
 

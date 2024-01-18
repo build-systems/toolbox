@@ -70,7 +70,7 @@ export class FormProjektSanierungComponent implements OnInit {
         this.formService.energiestandard.options[0].value
       ),
       zertifizierung: new FormControl(
-        this.formService.zertifizierungOptions[0].value
+        this.formService.zertifizierung.options[0].value
       ),
       worstPerformingBuilding: new FormControl(
         this.formService.worstPerformingBuilding
@@ -79,7 +79,7 @@ export class FormProjektSanierungComponent implements OnInit {
         this.formService.serielleSanierung
       ),
       zustandBestand: new FormControl(
-        this.formService.zustandBestandOptions[0].value
+        this.formService.zustandBestand.options[0].value
       ),
       eeKlasse: new FormControl(this.formService.eeKlasse),
     });

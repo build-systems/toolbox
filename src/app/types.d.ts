@@ -254,3 +254,24 @@ type BankDarlehenObj = {
   title: string;
   description: string;
 };
+
+// Worst Performing Building
+type WorstPerformingBuildingObj = {
+  value: boolean;
+  title: string;
+  description: string;
+}
+
+// Serielle Sanierung
+type SerielleSanierungObj = {
+  value: boolean;
+  title: string;
+  description: string;
+}
+
+// EE Klasse
+type EeKlasseObj = {
+  value: boolean;
+  title: string;
+  description: string;
+}

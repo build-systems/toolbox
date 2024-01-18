@@ -18,11 +18,11 @@ export class SanierungService {
   energiestandard: EnergiestandardSanierung =
     this.formProjektService.energiestandard.options[0].value;
   zertifizierung: ZertifizierungSanierung =
-    this.formProjektService.zertifizierungOptions[0].value;
+    this.formProjektService.zertifizierung.options[0].value;
   worstPerformingBuilding = this.formProjektService.worstPerformingBuilding;
   serielleSanierung = this.formProjektService.serielleSanierung;
   zustandBestand: ZustandBestand =
-    this.formProjektService.zustandBestandOptions[0].value;
+    this.formProjektService.zustandBestand.options[0].value;
   eeKlasse = this.formProjektService.eeKlasse;
 
   // Darlehen parameters
@@ -96,16 +96,16 @@ export class SanierungService {
 
     // Subscribe to all Sanierung Form parameters and update after every change
     this.formProjektService.currentWpc$
-      .pipe(skipWhile((value) => value === this.worstPerformingBuilding))
+      .pipe(skipWhile((value) => value === this.worstPerformingBuilding.value))
       .subscribe((value) => {
-        this.worstPerformingBuilding = value;
+        this.worstPerformingBuilding.value = value;
         this.update();
       });
 
     this.formProjektService.currentSerielleSanierung$
-      .pipe(skipWhile((value) => value === this.serielleSanierung))
+      .pipe(skipWhile((value) => value === this.serielleSanierung.value))
       .subscribe((value) => {
-        this.serielleSanierung = value;
+        this.serielleSanierung.value = value;
         this.update();
       });
 
@@ -117,9 +117,9 @@ export class SanierungService {
       });
 
     this.formProjektService.currentEeKlasse$
-      .pipe(skipWhile((value) => value === this.eeKlasse))
+      .pipe(skipWhile((value) => value === this.eeKlasse.value))
       .subscribe((value) => {
-        this.eeKlasse = value;
+        this.eeKlasse.value = value;
         this.update();
       });
 
@@ -188,7 +188,7 @@ export class SanierungService {
   // EE-Bonus [%]
   private _eeBonus = 0;
   private updateEeBonus() {
-    if (this.eeKlasse === true) {
+    if (this.eeKlasse.value === true) {
       this._eeBonus = this.constants.eeBonusPossible;
     } else {
       this._eeBonus = 0;
@@ -209,7 +209,7 @@ export class SanierungService {
   private _wpbBonus = 0;
   private updateWpbBonus() {
     if (
-      this.worstPerformingBuilding === true &&
+      this.worstPerformingBuilding.value === true &&
       (this.energiestandard === 'EH 70' ||
         this.energiestandard === 'EH 55' ||
         this.energiestandard === 'EH 40')
@@ -224,7 +224,7 @@ export class SanierungService {
   private _serSanBonus = 0;
   private updateSerSanBonus() {
     if (
-      this.serielleSanierung === true &&
+      this.serielleSanierung.value === true &&
       (this.energiestandard === 'EH 55' || this.energiestandard === 'EH 40')
     )
       this._serSanBonus = this.constants.serSanBonusPossible;
@@ -237,7 +237,7 @@ export class SanierungService {
   updateGestehungskosten() {
     const initialProperties = {
       Energiestandard: this.formProjektService.energiestandard.options[0].value,
-      ZustandBestand: this.formProjektService.zustandBestandOptions[0].value,
+      ZustandBestand: this.formProjektService.zustandBestand.options[0].value,
     };
     const desiredProperties = {
       Energiestandard: this.energiestandard,
@@ -298,7 +298,7 @@ export class SanierungService {
     this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
   private updateMaxKfwKredit() {
     if (
-      this.eeKlasse === true ||
+      this.eeKlasse.value === true ||
       this.zertifizierung !== 'Keine Zertifizierung'
     ) {
       this._maxKfwKredit =
@@ -640,10 +640,10 @@ export class SanierungService {
         energiestandard: this.energiestandard,
         zertifizierung: this.zertifizierung,
         // Sanierung
-        worstPerformingBuilding: this.worstPerformingBuilding,
-        serielleSanierung: this.serielleSanierung,
+        worstPerformingBuilding: this.worstPerformingBuilding.value,
+        serielleSanierung: this.serielleSanierung.value,
         zustandBestand: this.zustandBestand,
-        eeKlasse: this.eeKlasse,
+        eeKlasse: this.eeKlasse.value,
         // Dalehen
         kalkRealzins: this.kalkRealzins,
         kreditlaufzeit: this.kreditlaufzeit,
@@ -706,12 +706,12 @@ export class SanierungService {
     this.energiestandard =
       this.formProjektService.energiestandard.options[0].value;
     this.zertifizierung =
-      this.formProjektService.zertifizierungOptions[0].value;
+      this.formProjektService.zertifizierung.options[0].value;
     this.worstPerformingBuilding =
       this.formProjektService.worstPerformingBuilding;
     this.serielleSanierung = this.formProjektService.serielleSanierung;
     this.zustandBestand =
-      this.formProjektService.zustandBestandOptions[0].value;
+      this.formProjektService.zustandBestand.options[0].value;
     this.eeKlasse = this.formProjektService.eeKlasse;
 
     // Darlehen parameters

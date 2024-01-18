@@ -12,7 +12,7 @@ export class FormProjektSanService {
     max: 10000,
     step: 1,
     title: 'Wohnfläche [m²] ',
-    description: 'Wohnflaeche description'
+    description: 'Wohnflaeche description',
   };
 
   // Anzahl Wohnungen centralized form values
@@ -37,40 +37,68 @@ export class FormProjektSanService {
   };
 
   // Zertifizierung centralized form values
-  zertifizierungOptions: ZertifizierungSanierungOptions[] = [
-    { id: 'zert1', value: 'Keine Zertifizierung', text: 'Keine' },
-    { id: 'zert2', value: 'QNG', text: 'QNG' },
-  ];
+  zertifizierung: ZertifizierungSanierungObj = {
+    options: [
+      { id: 'zert1', value: 'QNG', text: 'mit QNG Siegel' },
+      { id: 'zert2', value: 'Keine Zertifizierung', text: 'Keine' },
+    ],
+    title: 'Zertifizierung klimafreundlicher ',
+    description: 'Zertifizierung klimafreundlicher description',
+  };
 
   // This will be converted to the ABCDEFGH energieaussweis
-  worstPerformingBuilding: boolean = true;
-
+  worstPerformingBuilding: WorstPerformingBuildingObj = {
+    value: true,
+    title: 'Worst Performing Building ',
+    description: 'Ein "Worst Performing Building" ist ein Gebäude, das hinsichtlich des energetischen Sanierungs\u00ADzustands zu den schlechtesten 25% der Gebäude in Deutschland gehört. Erfüllen Sie mit Ihrer Immobilie die Anforderungen an ein Worst Performing Building? Dann steigt Ihr Tilgungs\u00ADzuschuss um 10 Prozentpunkte (kfw.de)'
+  }
+  
   // Martin metioned this is more for big enterprises?
   // Should it be activated after a certain square meters?
-  serielleSanierung: boolean = true;
+  serielleSanierung: SerielleSanierungObj = {
+    value: true,
+    title: 'Serielle Sanierung ',
+    description: "Das heißt, Sie verwenden vorgefertigte Bauele\u00ADmente für Fassa\u00ADde und gegebenen\u00ADfalls Dach. Erreicht Ihre Immobilie im Rahmen der Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55? Dann steigt Ihr Tilgungs\u00ADzuschuss um 15 Prozentpunkte (kfw.de)"
+  }
 
-  eeKlasse: boolean = true;
+  // Zustand Bestand
+  zustandBestand: ZustandBestandObj = {
+    options: [
+      { id: 'zusbest1', value: 'Unsaniert' },
+      { id: 'zusbest2', value: 'Teilsaniert' },
+      { id: 'zusbest3', value: 'Umfassend saniert' },
+    ],
+    title: 'Zustand Bestand',
+    description: 'Zustand Bestand description',
+  }
 
-  zustandBestandOptions: ZustandBestandOptions[] = [
-    { id: 'zusbest1', value: 'Unsaniert' },
-    { id: 'zusbest2', value: 'Teilsaniert' },
-    { id: 'zusbest3', value: 'Umfassend saniert' },
-  ];
+  // Erneuerbare-Energien-Klasse
+  eeKlasse: EeKlasseObj = {
+    value: true,
+    title: 'Erneuerbare-Energien-Klasse ',
+    description: 'Die höhere Förderung für die Erneuerbare-Energien-Klasse können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz\u00ADhaus eine neue Heizungs\u00ADanlage auf Basis erneuer\u00ADbarer Energien einbauen und damit mindestens 65% des Energie\u00ADbedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65% des Energie\u00ADbedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden (kfw.de)'
+  }
 
   // Observable Worst Performing Building
-  private wpcSource = new BehaviorSubject<boolean>(this.worstPerformingBuilding);
+  private wpcSource = new BehaviorSubject<boolean>(
+    this.worstPerformingBuilding.value
+  );
   currentWpc$ = this.wpcSource.asObservable();
 
   // Observable Serielle Sanierung
-  private serielleSanierungSource = new BehaviorSubject<boolean>(this.serielleSanierung);
+  private serielleSanierungSource = new BehaviorSubject<boolean>(
+    this.serielleSanierung.value
+  );
   currentSerielleSanierung$ = this.serielleSanierungSource.asObservable();
 
   // Observable Zustand Bestand
-  private zustandBestandSource = new BehaviorSubject<ZustandBestand>(this.zustandBestandOptions[0].value);
+  private zustandBestandSource = new BehaviorSubject<ZustandBestand>(
+    this.zustandBestand.options[0].value
+  );
   currentZustandBestand$ = this.zustandBestandSource.asObservable();
 
   // Observable EE-Klasse
-  private eeKlasseSourcde = new BehaviorSubject<boolean>(this.eeKlasse);
+  private eeKlasseSourcde = new BehaviorSubject<boolean>(this.eeKlasse.value);
   currentEeKlasse$ = this.eeKlasseSourcde.asObservable();
 
   // Set methods
@@ -110,7 +138,7 @@ export class FormProjektSanService {
 
   // Observable for Zertifizierung
   private zertifizierungSource = new BehaviorSubject<ZertifizierungSanierung>(
-    this.zertifizierungOptions[0].value
+    this.zertifizierung.options[0].value
   );
   currentZertifizierung$ = this.zertifizierungSource.asObservable();
 

@@ -21,7 +21,7 @@
     </span>
   </fieldset>
   <fieldset>
-    <legend>Anzahl Wohnungen <sup>&#9432;</sup></legend>
+    <legend>{{ formService.anzahlWohnungen.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.anzahlWohnungen.description }}</span></sup></legend>
     <span class="slidernumber">
       <input
         type="range"
@@ -41,7 +41,7 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Energiestandard <sup>&#9432;</sup></legend>
+    <legend>{{ formService.energiestandard.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.energiestandard.description }}</span></sup></legend>
     <span class="radio-option" *ngFor="let item of formService.energiestandard.options">
       <input
         type="radio"
@@ -54,8 +54,8 @@
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Zertifizierung klimafreundlicher <sup>&#9432;</sup></legend>
-    <span class="radio-option" *ngFor="let item of formService.zertifizierungOptions">
+    <legend>{{ formService.zertifizierung.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formService.zertifizierung.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formService.zertifizierung.options">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -67,7 +67,7 @@
     </span>
   </fieldset>
   <fieldset>
-    <legend>Worst-Performing Building <sup>&#9432;</sup></legend>
+    <legend>{{ formService.worstPerformingBuilding.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formService.worstPerformingBuilding.description }}</span></sup></legend>
     <input
       type="checkbox"
       id="worstPerformingBuilding"
@@ -79,7 +79,7 @@
     </label>
   </fieldset>
   <fieldset>
-    <legend>Serielle Sanierung <sup>&#9432;</sup></legend>
+    <legend>{{ formService.serielleSanierung.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.serielleSanierung.description }}</span></sup></legend>
     <input
       type="checkbox"
       id="serielleSanierung"
@@ -91,8 +91,8 @@
     </label>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>Zustand Bestand <sup>&#9432;</sup></legend>
-    <span class="radio-option" *ngFor="let item of formService.zustandBestandOptions">
+    <legend>{{ formService.zustandBestand.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.zustandBestand.description }}</span></sup></legend>
+    <span class="radio-option" *ngFor="let item of formService.zustandBestand.options">
       <input
         type="radio"
         id="{{ item.id }}"
@@ -104,7 +104,7 @@
     </span>
   </fieldset>
   <fieldset>
-    <legend>EE-Klasse <sup>&#9432;</sup></legend>
+    <legend>{{ formService.eeKlasse.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.eeKlasse.description }}</span></sup></legend>
     <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
     <label for="eeKlasse" class="checkbox-container">
       Ja
