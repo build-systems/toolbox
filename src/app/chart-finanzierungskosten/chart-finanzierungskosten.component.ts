@@ -15,7 +15,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-finanzierungskosten.component.html',
   styleUrl: './chart-finanzierungskosten.component.css',
   host: {
-    class: 'ng-chart chart3',
+    class: 'host-chart host-chart3',
   },
 })
 export class ChartFinanzierungskostenComponent {

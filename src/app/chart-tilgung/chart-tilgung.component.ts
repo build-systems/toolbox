@@ -15,7 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './chart-tilgung.component.html',
   styleUrl: './chart-tilgung.component.css',
   host: {
-    class: 'ng-chart chart4',
+    class: 'host-chart host-chart4',
   },
 })
 export class ChartTilgungComponent {

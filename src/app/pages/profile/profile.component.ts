@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   host: {
-    class: 'ng-profile',
+    class: 'host-profile',
   },
 })
 export class ProfileComponent implements OnInit {

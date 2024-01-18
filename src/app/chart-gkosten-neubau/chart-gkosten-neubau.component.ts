@@ -14,7 +14,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './chart-gkosten-neubau.component.html',
   styleUrl: './chart-gkosten-neubau.component.css',
   host: {
-    class: 'ng-chart chart1',
+    class: 'host-chart host-chart1',
   },
 })
 export class ChartGkostenNeubauComponent implements OnInit {

@@ -92,7 +92,7 @@ li {
   list-style: none;
 }
 
-.ng-tool {
+.host-tool {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -588,7 +588,7 @@ input[type="button"] {
   cursor: pointer;
 }
 
-.ng-dashboard-numbers {
+.host-dashboard-numbers {
   display: flex;
   flex-direction: column;
   min-width: 200px;
@@ -630,28 +630,28 @@ input[type="button"] {
   gap: calc(var(--layout-padding) / 2);
 }
 
-.chart1 {
+.host-chart1 {
   grid-column-start: 1;
   grid-column-end: 4;
 }
-.chart2 {
+.host-chart2 {
   grid-column-start: 4;
   grid-column-end: 7;
 }
-.chart3 {
+.host-chart3 {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-.chart4 {
+.host-chart4 {
   grid-column-start: 3;
   grid-column-end: 5;
 }
-.chart5 {
+.host-chart5 {
   grid-column-start: 5;
   grid-column-end: 7;
 }
 
-.ng-chart {
+.host-chart {
   padding: var(--layout-padding);
   border-radius: var(--button-radius);
   background-color: var(--bg-secondary);
@@ -686,7 +686,7 @@ input[type="button"] {
   }
 }
 
-.ng-profile {
+.host-profile {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -709,7 +709,7 @@ input[type="button"] {
   }
 }
 
-.ng-auth {
+.host-auth {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -740,7 +740,7 @@ input[type="button"] {
   }
 }
 
-.ng-account {
+.host-account {
   width: 100%;
   height: 100%;
   /* padding: 5rem 0 10rem 0; */
@@ -752,7 +752,7 @@ input[type="button"] {
   position: absolute;
 }
 
-.ng-avatar {
+.host-avatar {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -887,7 +887,7 @@ input[type="button"] {
     flex-direction: column;
   }
 
-  .ng-dashboard-numbers {
+  .host-dashboard-numbers {
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
@@ -898,7 +898,7 @@ input[type="button"] {
     flex-basis: 30%;
   }
 
-  .ng-chart {
+  .host-chart {
     min-height: 250px;
   }
 
@@ -914,30 +914,30 @@ input[type="button"] {
 }
 
 @media screen and (max-width: 850px) {
-  .chart1 {
+  .host-chart1 {
     grid-column-start: 1;
     grid-column-end: 7;
   }
-  .chart2 {
+  .host-chart2 {
     grid-column-start: 1;
     grid-column-end: 4;
   }
-  .chart3 {
+  .host-chart3 {
     grid-column-start: 4;
     grid-column-end: 7;
   }
-  .chart4 {
+  .host-chart4 {
     grid-column-start: 1;
     grid-column-end: 4;
   }
-  .chart5 {
+  .host-chart5 {
     grid-column-start: 4;
     grid-column-end: 7;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .ng-tool {
+  .host-tool {
     padding-bottom: var(--mobile-padding);
   }
 

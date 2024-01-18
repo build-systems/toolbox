@@ -27,7 +27,7 @@ import { SanierungService } from './sanierung.service';
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',
   host: {
-    class: 'ng-tool',
+    class: 'host-tool',
   },
 })
 export class SanierungComponent {

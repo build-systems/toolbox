@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-sanierung.component.html',
   styleUrl: './chart-gkosten-m2-sanierung.component.css',
   host: {
-    class: 'ng-chart chart2'
+    class: 'host-chart host-chart2'
   }
 
 })

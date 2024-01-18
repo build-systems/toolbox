@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './dashboard-numbers.component.html',
   styleUrl: './dashboard-numbers.component.css',
   host: {
-    class: 'ng-dashboard-numbers',
+    class: 'host-dashboard-numbers',
   },
 })
 export class DashboardNumbersComponent implements OnInit {

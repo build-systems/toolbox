@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-m2-neubau.component.html',
   styleUrl: './chart-gkosten-m2-neubau.component.css',
   host: {
-    class: 'ng-chart chart2',
+    class: 'host-chart host-chart2',
   },
 })
 export class ChartGkostenM2NeubauComponent implements OnInit {

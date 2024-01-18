@@ -12,7 +12,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
   host: {
-    class: "ng-account"
+    class: "host-account"
   }
 })
 export class AccountComponent implements OnInit {

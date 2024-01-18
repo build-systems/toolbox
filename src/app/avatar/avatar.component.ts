@@ -10,7 +10,7 @@ import { SupabaseService } from '../supabase.service';
   templateUrl: './avatar.component.html',
   styleUrl: './avatar.component.css',
   host: {
-    class: 'ng-avatar',
+    class: 'host-avatar',
   },
 })
 export class AvatarComponent {

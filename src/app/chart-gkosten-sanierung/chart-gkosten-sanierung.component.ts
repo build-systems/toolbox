@@ -15,7 +15,7 @@ import { filter } from 'rxjs';
   templateUrl: './chart-gkosten-sanierung.component.html',
   styleUrl: './chart-gkosten-sanierung.component.css',
   host: {
-    class: 'ng-chart chart1',
+    class: 'host-chart host-chart1',
   },
 })
 export class ChartGkostenSanierungComponent implements OnInit {

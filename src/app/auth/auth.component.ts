@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
   host: {
-    class: 'ng-auth',
+    class: 'host-auth',
   },
 })
 export class AuthComponent {

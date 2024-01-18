@@ -15,7 +15,7 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './chart-annuitaeten.component.html',
   styleUrl: './chart-annuitaeten.component.css',
   host: {
-    class: 'ng-chart  chart5',
+    class: 'host-chart  host-chart5',
   },
 })
 export class ChartAnnuitaetenComponent {

@@ -27,7 +27,7 @@ import { FormProjektNeubauComponent } from '../../form-projekt-neubau/form-proje
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {
-    class: 'ng-tool',
+    class: 'host-tool',
   },
 })
 export class NeubauComponent {
