@@ -11,6 +11,7 @@ type wohnflaecheObj = {
   init: number;
   max: number;
   step: number;
+  title: string;
   description: string;
 };
 
@@ -20,6 +21,7 @@ type anzahlWohnungenObj = {
   init: number;
   max: number;
   step: number;
+  title: string;
   description: string;
 };
 
@@ -32,6 +34,7 @@ type EnergiestandardNeubauOptions = {
 };
 type EnergiestandardNeubauObj = {
   options: EnergiestandardNeubauOptions[];
+  title: string;
   description: string;
 };
 
@@ -44,6 +47,7 @@ type EnergiestandardSanierungOptions = {
 };
 type EnergiestandardSanierungObj = {
   options: EnergiestandardSanierungOptions[];
+  title: string;
   description: string;
 };
 
@@ -56,6 +60,7 @@ type KonstruktionOptions = {
 };
 type KonstruktionObj = {
   options: KonstruktionOptions[];
+  title: string;
   description: string;
 };
 
@@ -68,6 +73,7 @@ type ZertifizierungNeubauOptions = {
 };
 type ZertifizierungNeubauObj = {
   options: ZertifizierungNeubauOptions[];
+  title: string;
   description: string;
 };
 
@@ -80,6 +86,7 @@ type ZertifizierungSanierungOptions = {
 };
 type ZertifizierungSanierungObj = {
   options: ZertifizierungSanierungOptions[];
+  title: string;
   description: string;
 };
 
@@ -92,6 +99,7 @@ type ZustandBestandOptions = {
 };
 type ZustandBestandObj = {
   options: ZustandBestandOptions[];
+  title: string;
   description: string;
 };
 
@@ -104,6 +112,7 @@ type KellergeschossOptions = {
 };
 type KellergeschossObj = {
   options: KellergeschossOptions[];
+  title: string;
   description: string;
 };
 
@@ -116,6 +125,7 @@ type StellplaetzeOptions = {
 };
 type StellplaetzeObj = {
   options: StellplaetzeOptions[];
+  title: string;
   description: string;
 };
 
@@ -128,15 +138,16 @@ type AufzugsanlageOptions = {
 };
 type AufzugsanlageObj = {
   options: AufzugsanlageOptions[];
+  title: string;
   description: string;
 };
 
 // Barrierefreies Bauen
 type BarrierefreiesBauen =
-  | 'Keine Anforderungen'
-  | 'Barrierereduziert'
-  | 'Barrierefrei'
-  | 'Barrierefrei (R)';
+| 'Keine Anforderungen'
+| 'Barrierereduziert'
+| 'Barrierefrei'
+| 'Barrierefrei (R)';
 type BarrierefreiesBauenOptions = {
   id: string;
   value: BarrierefreiesBauen;
@@ -144,6 +155,7 @@ type BarrierefreiesBauenOptions = {
 };
 type BarrierefreiesBauenObj = {
   options: BarrierefreiesBauenOptions[];
+  title: string;
   description: string;
 };
 
@@ -156,6 +168,7 @@ type DachbegruenungOptions = {
 };
 type DachbegruenungObj = {
   options: DachbegruenungOptions[];
+  title: string;
   description: string;
 };
 
@@ -168,6 +181,7 @@ type BaustellenlogistikOptions = {
 };
 type BaustellenlogistikObj = {
   options: BaustellenlogistikOptions[];
+  title: string;
   description: string;
 };
 
@@ -180,6 +194,17 @@ type AussenanlagenOptions = {
 };
 type AussenanlagenObj = {
   options: AussenanlagenOptions[];
+  title: string;
+  description: string;
+};
+
+// Grundstuecksbezogene Kosten
+type grundstKostenObj = {
+  init: number;
+  min: number;
+  max: number;
+  step: number;
+  title: string;
   description: string;
 };
 
@@ -190,6 +215,7 @@ type KalkRealzinsObj = {
   init: number;
   max: number;
   step: number;
+  title: string;
   description: string;
 };
 
@@ -199,6 +225,7 @@ type KreditlaufzeitObj = {
   init: number;
   max: number;
   step: number;
+  title: string;
   description: string;
 };
 
@@ -211,6 +238,7 @@ type KfWDarlehenOptions = {
 };
 type KfWDarlehenObj = {
   options: KfWDarlehenOptions[];
+  title: string;
   description: string;
 };
 
@@ -223,5 +251,6 @@ type BankDarlehenOptions = {
 };
 type BankDarlehenObj = {
   options: BankDarlehenOptions[];
+  title: string;
   description: string;
 };

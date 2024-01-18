@@ -11,6 +11,7 @@ export class FormProjektNeuService {
     init: 1000,
     max: 10000,
     step: 1,
+    title: "Wohnfläche [m²] ",
     description: 'Wohnflaeche description',
   };
 
@@ -20,6 +21,7 @@ export class FormProjektNeuService {
     init: 10,
     max: 1000,
     step: 1,
+    title: 'Anzahl Wohnungen ',
     description: 'Anzahl Wohnungen description',
   };
 
@@ -32,6 +34,7 @@ export class FormProjektNeuService {
       // { id: 'enstd4', value: 'EH 100' },
       // { id: 'enstd5', value: 'EH 115' },
     ],
+    title: 'Energiestandard ',
     description: 'Energiestandard description',
   };
 
@@ -41,6 +44,7 @@ export class FormProjektNeuService {
       { id: 'konst1', value: 'Konventionell' },
       { id: 'konst2', value: 'Holzbau' },
     ],
+    title: 'Konstruktion ',
     description: 'Konstruktion description',
   };
 
@@ -51,6 +55,7 @@ export class FormProjektNeuService {
       { id: 'zert2', value: 'mit QNG', text: 'mit QNG Siegel' },
       { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung' },
     ],
+    title: 'Zertifizierung klimafreundlicher ',
     description: 'Neubau Zertifizierung klimafreundlicher description',
   };
 
@@ -61,6 +66,7 @@ export class FormProjektNeuService {
       { id: 'kelgesc1', value: 'Vorhanden' },
       { id: 'kelgesc2', value: 'Nicht Vorhanden' },
     ],
+    title: 'Kellergeschoss ',
     description: 'Kellergeschoss description',
   };
 
@@ -70,6 +76,7 @@ export class FormProjektNeuService {
       { id: 'stpl2', value: 'Garage' },
       { id: 'stpl3', value: 'Parkpalette' },
     ],
+    title: 'Stellplätze ',
     description: "Stellplaetze description" 
   }
 
@@ -79,6 +86,7 @@ export class FormProjektNeuService {
       { id: 'aufanl1', value: 'Vorhanden' },
       { id: 'aufanl2', value: 'Nicht Vorhanden' },
     ],
+    title: 'Aufzugsanlage ',
     description: "Aufzugsanlage description"
   }
 
@@ -90,6 +98,7 @@ export class FormProjektNeuService {
       { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Frei (R)' },
       { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
     ],
+    title: 'Barrierefreies Bauen ',
     description: "Barrierefreiheit description" 
   }
 
@@ -99,6 +108,7 @@ export class FormProjektNeuService {
       { id: 'dachbe1', value: 'Vorhanden' },
       { id: 'dachbe2', value: 'Nicht Vorhanden' },
     ],
+    title: 'Dachbegrünung ',
     description: "Dachbegruenung description"
   } 
  
@@ -108,6 +118,7 @@ export class FormProjektNeuService {
       { id: 'baulog1', value: 'Vorhanden' },
       { id: 'baulog2', value: 'Nicht Vorhanden' },
     ],
+    title: 'Anspruchsvolle Baustellenlogistik ',
     description: "Baustellenlogistik description"
   }
   
@@ -118,25 +129,28 @@ export class FormProjektNeuService {
       { id: 'ausanl2', value: 'Mittel' },
       { id: 'ausanl3', value: 'Hoch' },
     ],
+    title: 'Außenanlagen ',
     description: "Aussenanlagen description"
   }
   
-  // GrundstKosten
-  grundstKosten = {
+  // Grundstücksbezogene Kosten
+  grundstKosten: grundstKostenObj = {
     init: 0,
     min: 0,
-    max: 200,
+    max: 1000,
     step: 1,
-    description: "GrundstKosten Kein Fin description"
+    title: 'Grundstuecksbezogene Kosten ',
+    description: "Grundstücksbezogene Kosten description"
   };
 
-  // Baunebenkosten Kein Fin
+  // Baunebenkosten (excl. Finanzierung)
   baunebenkostenKeinFin = {
     init: 0,
     min: 0,
     max: 200,
     step: 1,
-    description: "Baunebenkosten Kein Fin description"
+    title: 'Baunebenkosten Kein Fin ',
+    description: "Baunebenkosten (excl. Finanzierung) description"
   };
 
   // Observable for Wohnflaeche
