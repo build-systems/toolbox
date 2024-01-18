@@ -6,34 +6,35 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class FormProjektSanService {
   // Wohnfläche centralized form values
-  wohnflaeche = {
+  wohnflaeche: wohnflaecheObj = {
     min: 20,
     init: 1000,
     max: 10000,
     step: 1,
+    title: 'Wohnfläche [m²] ',
+    description: 'Wohnflaeche description'
   };
 
   // Anzahl Wohnungen centralized form values
-  anzahlWohnungen = {
+  anzahlWohnungen: anzahlWohnungenObj = {
     min: 1,
     init: 10,
     max: 1000,
     step: 1,
+    title: 'Anzahl Wohnungen ',
+    description: 'Anzahl Wohnungen description',
   };
 
-  // Energiestandard just for Sanierung 
-  energiestandardOptions: EnergiestandardSanierungOptions[] = [
-    { id: 'enstd1', value: 'EH 40' },
-    { id: 'enstd2', value: 'EH 55' },
-    { id: 'enstd3', value: 'EH 70' },
-    { id: 'enstd4', value: 'EH 85' },
-  ];
-
-  // Konstruktion centralized form values
-  konstruktionOptions: KonstruktionOptions[] = [
-    { id: 'konst1', value: 'Konventionell' },
-    { id: 'konst2', value: 'Holzbau' },
-  ];
+  energiestandard: EnergiestandardSanierungObj = {
+    options: [
+      { id: 'enstd1', value: 'EH 40' },
+      { id: 'enstd2', value: 'EH 55' },
+      { id: 'enstd3', value: 'EH 70' },
+      { id: 'enstd4', value: 'EH 85' },
+    ],
+    title: 'Energiestandard ',
+    description: 'Energiestandard description',
+  };
 
   // Zertifizierung centralized form values
   zertifizierungOptions: ZertifizierungSanierungOptions[] = [
@@ -103,15 +104,9 @@ export class FormProjektSanService {
 
   // Observable for Energiestandard
   private energiestandardSource = new BehaviorSubject<EnergiestandardSanierung>(
-    this.energiestandardOptions[0].value
+    this.energiestandard.options[0].value
   );
   currentEnergiestandard$ = this.energiestandardSource.asObservable();
-
-  // Observable for Konstruktion
-  private konstruktionSource = new BehaviorSubject<Konstruktion>(
-    this.konstruktionOptions[0].value
-  );
-  currentKonstruktion$ = this.konstruktionSource.asObservable();
 
   // Observable for Zertifizierung
   private zertifizierungSource = new BehaviorSubject<ZertifizierungSanierung>(
@@ -133,10 +128,6 @@ export class FormProjektSanService {
 
   public setEnergiestandard(data: EnergiestandardSanierung) {
     this.energiestandardSource.next(data);
-  }
-
-  public setKonstruktion(data: Konstruktion) {
-    this.konstruktionSource.next(data);
   }
 
   public setZertifizierung(data: ZertifizierungSanierung) {

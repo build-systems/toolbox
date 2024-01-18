@@ -16,7 +16,7 @@ import { FormProjektNeuService } from './form-projekt-neu.service';
   templateUrl: './form-projekt-neubau.component.html',
   styleUrl: './form-projekt-neubau.component.css',
   host: {
-    class: 'container-forms',
+    class: 'host-forms',
   },
 })
 export class FormProjektNeubauComponent implements OnInit {

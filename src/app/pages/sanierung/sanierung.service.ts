@@ -16,9 +16,7 @@ export class SanierungService {
   wohnflaeche = this.formProjektService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
   energiestandard: EnergiestandardSanierung =
-    this.formProjektService.energiestandardOptions[0].value;
-  konstruktion: Konstruktion =
-    this.formProjektService.konstruktionOptions[0].value;
+    this.formProjektService.energiestandard.options[0].value;
   zertifizierung: ZertifizierungSanierung =
     this.formProjektService.zertifizierungOptions[0].value;
   worstPerformingBuilding = this.formProjektService.worstPerformingBuilding;
@@ -83,16 +81,6 @@ export class SanierungService {
       )
       .subscribe((value) => {
         this.energiestandard = value;
-        this.update();
-      });
-
-    this.formProjektService.currentKonstruktion$
-      .pipe(
-        skipWhile((value) => value === this.konstruktion),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.konstruktion = value;
         this.update();
       });
 
@@ -248,7 +236,7 @@ export class SanierungService {
   private _gestehungskosten = 0;
   updateGestehungskosten() {
     const initialProperties = {
-      Energiestandard: this.formProjektService.energiestandardOptions[0].value,
+      Energiestandard: this.formProjektService.energiestandard.options[0].value,
       ZustandBestand: this.formProjektService.zustandBestandOptions[0].value,
     };
     const desiredProperties = {
@@ -650,7 +638,6 @@ export class SanierungService {
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
         energiestandard: this.energiestandard,
-        konstruktion: this.konstruktion,
         zertifizierung: this.zertifizierung,
         // Sanierung
         worstPerformingBuilding: this.worstPerformingBuilding,
@@ -717,8 +704,7 @@ export class SanierungService {
     this.wohnflaeche = this.formProjektService.wohnflaeche.init;
     this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
     this.energiestandard =
-      this.formProjektService.energiestandardOptions[0].value;
-    this.konstruktion = this.formProjektService.konstruktionOptions[0].value;
+      this.formProjektService.energiestandard.options[0].value;
     this.zertifizierung =
       this.formProjektService.zertifizierungOptions[0].value;
     this.worstPerformingBuilding =

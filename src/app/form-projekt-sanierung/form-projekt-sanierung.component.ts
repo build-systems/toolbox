@@ -16,7 +16,7 @@ import { FormProjektSanService } from './form-projekt-san.service';
   templateUrl: './form-projekt-sanierung.component.html',
   styleUrl: './form-projekt-sanierung.component.css',
   host: {
-    class: 'container-forms',
+    class: 'host-forms',
   },
 })
 export class FormProjektSanierungComponent implements OnInit {
@@ -28,7 +28,7 @@ export class FormProjektSanierungComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public formProjektSanService: FormProjektSanService
+    public formService: FormProjektSanService
   ) {}
 
   // Inititalize projekt form
@@ -39,52 +39,49 @@ export class FormProjektSanierungComponent implements OnInit {
       // These are form controls that go into the html
       wohnflaecheRange: [
         // The values come from the FormProjektService
-        this.formProjektSanService.wohnflaeche.init,
+        this.formService.wohnflaeche.init,
         [
-          Validators.min(this.formProjektSanService.wohnflaeche.min),
-          Validators.max(this.formProjektSanService.wohnflaeche.max),
+          Validators.min(this.formService.wohnflaeche.min),
+          Validators.max(this.formService.wohnflaeche.max),
         ],
       ],
       wohnflaeche: [
-        this.formProjektSanService.wohnflaeche.init,
+        this.formService.wohnflaeche.init,
         [
-          Validators.min(this.formProjektSanService.wohnflaeche.min),
-          Validators.max(this.formProjektSanService.wohnflaeche.max),
+          Validators.min(this.formService.wohnflaeche.min),
+          Validators.max(this.formService.wohnflaeche.max),
         ],
       ],
       anzahlWohnungenRange: [
-        this.formProjektSanService.anzahlWohnungen.init,
+        this.formService.anzahlWohnungen.init,
         [
-          Validators.min(this.formProjektSanService.anzahlWohnungen.min),
-          Validators.max(this.formProjektSanService.anzahlWohnungen.max),
+          Validators.min(this.formService.anzahlWohnungen.min),
+          Validators.max(this.formService.anzahlWohnungen.max),
         ],
       ],
       anzahlWohnungen: [
-        this.formProjektSanService.anzahlWohnungen.init,
+        this.formService.anzahlWohnungen.init,
         [
-          Validators.min(this.formProjektSanService.anzahlWohnungen.min),
-          Validators.max(this.formProjektSanService.anzahlWohnungen.max),
+          Validators.min(this.formService.anzahlWohnungen.min),
+          Validators.max(this.formService.anzahlWohnungen.max),
         ],
       ],
-      konstruktion: new FormControl(
-        this.formProjektSanService.konstruktionOptions[0].value
-      ),
       energiestandard: new FormControl(
-        this.formProjektSanService.energiestandardOptions[0].value
+        this.formService.energiestandard.options[0].value
       ),
       zertifizierung: new FormControl(
-        this.formProjektSanService.zertifizierungOptions[0].value
+        this.formService.zertifizierungOptions[0].value
       ),
       worstPerformingBuilding: new FormControl(
-        this.formProjektSanService.worstPerformingBuilding
+        this.formService.worstPerformingBuilding
       ),
       serielleSanierung: new FormControl(
-        this.formProjektSanService.serielleSanierung
+        this.formService.serielleSanierung
       ),
       zustandBestand: new FormControl(
-        this.formProjektSanService.zustandBestandOptions[0].value
+        this.formService.zustandBestandOptions[0].value
       ),
-      eeKlasse: new FormControl(this.formProjektSanService.eeKlasse),
+      eeKlasse: new FormControl(this.formService.eeKlasse),
     });
 
     // Wohnflaeche
@@ -96,7 +93,7 @@ export class FormProjektSanierungComponent implements OnInit {
           .get('wohnflaeche')
           ?.setValue(value, { emitEvent: false });
         // Also updates the FormProjektService
-        this.formProjektSanService.setWohnflaeche(value);
+        this.formService.setWohnflaeche(value);
       });
 
     this.projektFormSan.get('wohnflaeche')?.valueChanges.subscribe((value) => {
@@ -105,7 +102,7 @@ export class FormProjektSanierungComponent implements OnInit {
         .get('wohnflaecheRange')
         ?.setValue(value, { emitEvent: false });
       // Also updates the FormProjektService
-      this.formProjektSanService.setWohnflaeche(value);
+      this.formService.setWohnflaeche(value);
     });
 
     // Anzahl WohnungenRange
@@ -117,7 +114,7 @@ export class FormProjektSanierungComponent implements OnInit {
           .get('anzahlWohnungen')
           ?.setValue(value, { emitEvent: false });
         // Also updates the FormProjektService
-        this.formProjektSanService.setAnzahlWohnungen(value);
+        this.formService.setAnzahlWohnungen(value);
       });
 
     this.projektFormSan
@@ -128,7 +125,7 @@ export class FormProjektSanierungComponent implements OnInit {
           .get('anzahlWohnungenRange')
           ?.setValue(value, { emitEvent: false });
         // Also updates the FormProjektService
-        this.formProjektSanService.setAnzahlWohnungen(value);
+        this.formService.setAnzahlWohnungen(value);
       });
 
     // Energiestandard
@@ -136,28 +133,22 @@ export class FormProjektSanierungComponent implements OnInit {
       .get('energiestandard')
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
-        this.formProjektSanService.setEnergiestandard(value);
+        this.formService.setEnergiestandard(value);
       });
-
-    // Konstruktion
-    this.projektFormSan.get('konstruktion')?.valueChanges.subscribe((value) => {
-      // Updates the sanierungService
-      this.formProjektSanService.setKonstruktion(value);
-    });
 
     // Zertifizierung
     this.projektFormSan
       .get('zertifizierung')
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
-        this.formProjektSanService.setZertifizierung(value);
+        this.formService.setZertifizierung(value);
       });
     // Worst Performing Building
     this.projektFormSan
       .get('worstPerformingBuilding')
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
-        this.formProjektSanService.setWpc(value);
+        this.formService.setWpc(value);
       });
 
     // Serielle Sanierung
@@ -165,7 +156,7 @@ export class FormProjektSanierungComponent implements OnInit {
       .get('serielleSanierung')
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
-        this.formProjektSanService.setSerielleSanierung(value);
+        this.formService.setSerielleSanierung(value);
       });
 
     // Zustand Bestand
@@ -173,13 +164,13 @@ export class FormProjektSanierungComponent implements OnInit {
       .get('zustandBestand')
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
-        this.formProjektSanService.setZustandBestand(value);
+        this.formService.setZustandBestand(value);
       });
 
     // EE Klasse
     this.projektFormSan.get('eeKlasse')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
-      this.formProjektSanService.setEeKlasse(value);
+      this.formService.setEeKlasse(value);
     });
   }
 

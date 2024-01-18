@@ -116,7 +116,7 @@ li {
   overflow-y: auto;
 }
 
-.container-forms {
+.host-forms {
   /* If phone version has the bug again, this is the place to fix it */
   /* flex: 1; */
   overflow-y: auto;
