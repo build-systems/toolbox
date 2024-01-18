@@ -48,19 +48,24 @@ export class neubau {
   providedIn: 'root',
 })
 export class sanierung {
-  fkDivisor = 2;
-  nrLessThan10 = 0.31;
-  nr10To20 = 1.38;
-  nrMoreThan20 = 1.63;
-  sollzinsKfw_Endfälliges = 1.75;
-  maxKfwKredit_Lower = 100_000;
-  maxKfwKredit_Higher = 150_000;
-  tilgungszuschussEH85 = 5;
-  tilgungszuschussEH70 = 10;
-  tilgungszuschussEH55 = 15;
-  tilgungszuschussEH40 = 20;
+  public tilgungszuschuss = {
+    EH40: 20,
+    EH55: 15,
+    EH70: 10,
+    EH85: 5,
+  };
   eeBonusPossible = 5;
   nhBonusPossible = 5;
   wpbBonusPossible = 10;
   serSanBonusPossible = 15;
+  public nrKredit = {
+    lessThan10: 0.31,
+    between10And20: 1.38,
+    moreThan20: 1.63,
+  };
+  sollzinsKfw_Endfälliges = 1.75;
+  public kfwKreditLimit = {
+    lower: 100_000,
+    higher: 150_000,
+  };
 }

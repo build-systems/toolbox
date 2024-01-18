@@ -185,13 +185,13 @@ export class SanierungService {
   private _tilgungszuschuss = 0;
   private updateTilgungszuschuss() {
     if (this.energiestandard === 'EH 85') {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH85;
+      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH85;
     } else if (this.energiestandard === 'EH 70') {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH70;
+      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH70;
     } else if (this.energiestandard === 'EH 55') {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH55;
+      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH55;
     } else if (this.energiestandard === 'EH 40') {
-      this._tilgungszuschuss = this.constants.tilgungszuschussEH40;
+      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH40;
     } else {
       this._tilgungszuschuss = 0;
     }
@@ -282,14 +282,14 @@ export class SanierungService {
   }
 
   // NR-Kredit [%]
-  private _nrKredit = this.constants.nrLessThan10;
+  private _nrKredit = this.constants.nrKredit.lessThan10;
   updateNrKredit() {
     if (this.kreditlaufzeit < 10) {
-      this._nrKredit = this.constants.nrLessThan10;
+      this._nrKredit = this.constants.nrKredit.lessThan10;
     } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 20) {
-      this._nrKredit = this.constants.nr10To20;
+      this._nrKredit = this.constants.nrKredit.between10And20;
     } else {
-      this._nrKredit = this.constants.nrMoreThan20;
+      this._nrKredit = this.constants.nrKredit.moreThan20;
     }
   }
 
@@ -307,17 +307,17 @@ export class SanierungService {
 
   // Max. KFW-Kredit [€]
   private _maxKfwKredit =
-    this.anzahlWohnungen * this.constants.maxKfwKredit_Lower;
+    this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
   private updateMaxKfwKredit() {
     if (
       this.eeKlasse === true ||
       this.zertifizierung !== 'Keine Zertifizierung'
     ) {
       this._maxKfwKredit =
-        this.anzahlWohnungen * this.constants.maxKfwKredit_Higher;
+        this.anzahlWohnungen * this.constants.kfwKreditLimit.higher;
     } else {
       this._maxKfwKredit =
-        this.anzahlWohnungen * this.constants.maxKfwKredit_Lower;
+        this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
     }
   }
 
