@@ -1,5 +1,5 @@
 <form [formGroup]="darlehenForm">
-  <h2>Darlehen</h2>
+  <!-- <h2>Darlehen</h2> -->
   <fieldset>
     <legend title="Kalkulationszinssatz Bank Kredit (Realzins)">Kalkulationszinssatz [%] <sup>&#9432;</sup></legend>
     <span class="slidernumber">
@@ -14,6 +14,7 @@
       <input
         type="number"
         formControlName="kalkRealzins"
+        name="kalkRealzins"
         min="{{ formService.kalkRealzins.min }}"
         max="{{ formService.kalkRealzins.max }}"
         step="{{ formService.kalkRealzins.step }}"
@@ -33,7 +34,7 @@
       />
       <input
         type="number"
-        formControlName="kreditlaufzeit"
+        name="kreditlaufzeit"
         min="{{ formService.kreditlaufzeit.min }}"
         max="{{ formService.kreditlaufzeit.max }}"
         step="{{ formService.kreditlaufzeit.step }}"

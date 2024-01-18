@@ -13,7 +13,7 @@
   --secondary: aquamarine;
   --bg-primary: #1a1a1a;
   --bg-primary75: rgba(26, 26, 26, 0.75);
-  --bg-secondary: #222;
+  --bg-secondary: #252525;
   --bg-tertiary: #333;
   --bg-tertiary95: rgba(51, 51, 51, 0.95);
   --layout-padding: 1rem;
@@ -114,21 +114,36 @@ li {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(black),
+    to(transparent)
+  );
+  -webkit-mask-image: linear-gradient(to bottom, black 97%, transparent 100%);
+  mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(black),
+    to(transparent)
+  );
+  mask-image: linear-gradient(to bottom, black 97%, transparent 100%);
 }
 
 .host-forms {
-  /* If phone version has the bug again, this is the place to fix it */
-  /* flex: 1; */
   overflow-y: auto;
-  padding-right: var(--layout-padding);
-  padding-left: var(--layout-padding);
-  padding-bottom: 1rem;
+  padding: var(--layout-padding);
+  padding-bottom: calc(var(--layout-padding) * 2);
+  background-color: var(--bg-tertiary);
   word-break: break-all;
+  border-radius: 0 0 var(--button-radius) var(--button-radius);
+  border: none;
 }
 
 .output {
   display: flex;
-  /* flex-direction: column; */
 }
 
 .button {
@@ -181,9 +196,13 @@ label {
 }
 
 fieldset {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   padding-top: 0.25rem;
   border-style: none;
+}
+
+legend {
+  padding-bottom: 0.25rem;
 }
 
 .tooltip {
@@ -194,7 +213,9 @@ fieldset {
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  font-family:  -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
   font-size: 1rem;
   word-break: normal;
   width: var(--tooltip-width);
@@ -237,53 +258,6 @@ fieldset {
   right: 125%;
 }
 
-/* These after styles add a little arrow to the tooltip.
-But it doesnt adjust to the tootltip for left/right  */
-/* .tooltip-top::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: var(--bg-tertiary) transparent transparent transparent;
-}
-
-.tooltip-right::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent var(--bg-tertiary) transparent transparent;
-}
-
-.tooltip-bottom::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent var(--bg-tertiary) transparent;
-}
-
-.tooltip-left::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent var(--bg-tertiary);
-}
- */
-
 .slidernumber {
   display: flex;
   justify-content: space-between;
@@ -295,24 +269,24 @@ But it doesnt adjust to the tootltip for left/right  */
   }
 }
 
+.slidernumber input[type="number"]:hover {
+  border-color: var(--secondary);
+}
+
 .slider {
   -webkit-appearance: none;
   appearance: none;
   height: 1px;
   border-radius: 1px;
-  background: var(--bg-tertiary);
+  background: var(--primary30);
   outline: none;
   opacity: 0.5;
-  /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: 0.2s;
-  /* 0.2 seconds transition on hover */
   transition: opacity 0.2s;
 }
 
-/* Mouse-over effects */
 .slider:hover {
   opacity: 1;
-  /* Fully shown on mouse-over */
 }
 
 .slider::-webkit-slider-thumb {
@@ -336,15 +310,11 @@ But it doesnt adjust to the tootltip for left/right  */
 
 .slider::-moz-range-thumb {
   width: var(--handle-diameter);
-  /* Set a specific slider handle width */
   height: var(--handle-diameter);
-  /* Slider handle height */
   border: 1px solid white;
   border-radius: 50%;
   background: var(--bg-tertiary);
-  /* Green background */
   cursor: pointer;
-  /* Cursor on hover */
 }
 
 /* Remove Arrows from number input field */
@@ -387,9 +357,9 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
   border-radius: var(--button-radius);
-
   & label {
     color: var(--primary80);
+    background-color: var(--bg-secondary);
     display: flex;
     margin: 0;
     height: 100%;
@@ -397,7 +367,7 @@ input[type="radio"] {
     justify-content: center;
     align-items: center;
     text-align: center;
-    border: 1px solid var(--primary50);
+    border: 1px solid var(--primary30);
     border-radius: var(--button-radius);
     cursor: pointer;
     word-break: normal;
@@ -421,8 +391,8 @@ input[type="radio"] {
 /* When the checkbox is checked, add a blue background */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
-  background-color: var(--bg-tertiary);
-  border-color: white;
+  background-color: var(--bg-primary);
+  border-color: var(--secondary);
 }
 
 input[type="checkbox"] {
@@ -511,7 +481,6 @@ input[type="checkbox"]:checked + label {
 
 .container-button {
   width: 49%;
-
   & input {
     font-size: 1.3rem;
     font-weight: 300;
@@ -522,74 +491,44 @@ input[type="checkbox"]:checked + label {
     padding-left: var(--layout-padding);
     padding-right: var(--layout-padding);
     border-radius: var(--button-radius);
-    /* background-color: var(--secondary); */
   }
 }
 
-input[type="button"]:hover {
-  color: var(--primary);
-  border: 1px solid var(--secondary);
-  background-color: var(--bg-secondary);
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-input[type="button"]:active {
+.pill {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--button-radius) var(--button-radius) 0 0;
+  border: none;
+}
+
+.pill:hover {
+  color: var(--primary);
+}
+
+.pill:active {
   background-color: var(--bg-tertiary);
   color: var(--primary);
 }
 
-input[type="button"] {
-  cursor: pointer;
-}
-
-.progress-bar {
-  counter-reset: code-steps-list;
-  min-height: var(--button-height);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--layout-padding);
-  margin-top: 5px;
-  padding-left: var(--layout-padding);
-  padding-right: var(--layout-padding);
-}
-
-.left-pill {
-  padding: 0.5rem;
-  border-radius: var(--button-radius) 0 0 var(--button-radius);
-}
-
-.right-pill {
-  padding: 0.5rem;
-  border-radius: 0 var(--button-radius) var(--button-radius) 0;
-}
-
 .grayed-pill {
   color: var(--primary70);
-  font-size: 1rem;
-  font-family: "Montserrat", sans-serif;
-  /* font-weight: 300; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  /* border: none; */
-  border: 1px solid var(--primary30);
-  cursor: pointer;
+  background-color: var(--bg-secondary);
 }
 
 .full-pill {
   color: var(--secondary);
-  font-size: 1rem;
-  font-family: "Montserrat", sans-serif;
-  /* font-weight: 300; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  /* border: none; */
-  border: 1px solid var(--secondary);
-  background-color: var(--bg-secondary);
-  cursor: pointer;
 }
 
 .host-dashboard-numbers {
@@ -880,6 +819,15 @@ input[type="button"] {
 
   .container-input {
     overflow: visible;
+  }
+
+  .container-input::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2rem;
+    background-color: blue;
   }
 
   .container-forms {

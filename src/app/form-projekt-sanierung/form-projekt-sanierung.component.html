@@ -1,5 +1,5 @@
 <form [formGroup]="projektFormSan">
-  <h2>Projekt</h2>
+  <!-- <h2>Projekt</h2> -->
   <fieldset>
     <legend>{{ formService.wohnflaeche.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.wohnflaeche.description }}</span></sup></legend>
     <span class="slidernumber">
@@ -14,6 +14,7 @@
       <input
         type="number"
         formControlName="wohnflaeche"
+        name="wohnflaeche"
         min="{{ formService.wohnflaeche.min }}"
         max="{{ formService.wohnflaeche.max }}"
         (keyup.enter)="onEnterKey($event)"
@@ -34,6 +35,7 @@
       <input
         type="number"
         formControlName="anzahlWohnungen"
+        name="anzahlWohnungen"
         min="{{ formService.anzahlWohnungen.min }}"
         max="{{ formService.anzahlWohnungen.max }}"
         step="{{ formService.anzahlWohnungen.step }}"

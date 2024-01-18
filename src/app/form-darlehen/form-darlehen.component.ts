@@ -16,7 +16,7 @@ import { FormDarlehenService } from './form-darlehen.service';
   templateUrl: './form-darlehen.component.html',
   styleUrl: './form-darlehen.component.css',
   host: {
-    class: 'container-forms',
+    class: 'host-forms',
   },
 })
 export class FormDarlehenComponent implements OnInit {

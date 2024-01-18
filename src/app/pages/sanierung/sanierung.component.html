@@ -5,20 +5,18 @@
   <div class="container-input">
     <div class="progress-bar">
       <input
-        class="left-pill"
         type="button"
         value="Projekt"
-        title="Projekt"
+        title="Projekt Formular"
         (click)="currentForm = 1"
-        [className]="currentForm === 1 ? 'full-pill left-pill' : 'grayed-pill left-pill'"
+        [className]="currentForm === 1 ? 'full-pill left-pill pill' : 'grayed-pill left-pill pill'"
       />
       <input
-        class="right-pill"
         type="button"
         value="Darlehen"
-        title="Darlehen"
+        title="Darlehen Formular"
         (click)="currentForm = 2"
-        [className]="currentForm === 2 ? 'full-pill right-pill' : 'grayed-pill right-pill'"
+        [className]="currentForm === 2 ? 'full-pill right-pill pill' : 'grayed-pill right-pill pill'"
       />
     </div>
     <app-form-projekt-sanierung
