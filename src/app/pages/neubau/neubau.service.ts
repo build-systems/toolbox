@@ -315,13 +315,17 @@ export class NeubauService {
   private _energetischerStandardOut = 0;
   private updateEnergetischerStandard() {
     if (this.energiestandard === 'EH 40') {
-      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH40;
+      this._energetischerStandardOut =
+        this.constants.energetischerStandardPrice.EH40;
     } else if (this.energiestandard === 'EH 55') {
-      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH55;
+      this._energetischerStandardOut =
+        this.constants.energetischerStandardPrice.EH55;
     } else if (this.energiestandard === 'EH 70') {
-      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH70;
+      this._energetischerStandardOut =
+        this.constants.energetischerStandardPrice.EH70;
     } else if (this.energiestandard === 'EH 85') {
-      this._energetischerStandardOut = this.constants.energetischerStandardPrice.EH85;
+      this._energetischerStandardOut =
+        this.constants.energetischerStandardPrice.EH85;
     } else {
       this._energetischerStandardOut = 0;
     }
@@ -347,14 +351,14 @@ export class NeubauService {
   }
 
   // NR-Kredit [%]
-  private _nrKredit = this.constants.nrLessThan10;
+  private _nrKredit = this.constants.nrKredit.lessThan10;
   private updateNrKredit() {
     if (this.kreditlaufzeit < 10) {
-      this._nrKredit = this.constants.nrLessThan10;
+      this._nrKredit = this.constants.nrKredit.lessThan10;
     } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 25) {
-      this._nrKredit = this.constants.nr10To25;
+      this._nrKredit = this.constants.nrKredit.between10And25;
     } else {
-      this._nrKredit = this.constants.nrMoreThan25;
+      this._nrKredit = this.constants.nrKredit.moreThan25;
     }
   }
 
@@ -383,12 +387,14 @@ export class NeubauService {
       this.zertifizierung === 'ohne QNG' &&
       this.energiestandard === 'EH 40'
     ) {
-      this._kfwKredit = this.constants.kfwKredit_Lower * this.anzahlWohnungen;
+      this._kfwKredit =
+        this.constants.kfwKreditLimit.lower * this.anzahlWohnungen;
     } else if (
       this.zertifizierung === 'mit QNG' &&
       this.energiestandard === 'EH 40'
     ) {
-      this._kfwKredit = this.constants.kfwKredit_Higher * this.anzahlWohnungen;
+      this._kfwKredit =
+        this.constants.kfwKreditLimit.higher * this.anzahlWohnungen;
     } else if (this.zertifizierung === 'Keine') {
       this._kfwKredit = 0;
     }
@@ -398,15 +404,15 @@ export class NeubauService {
   private _restsumme =
     this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
   private updateRestsumme() {
-    if (this.konstruktion === 'Konventionell') {
-      this._restsumme =
-        this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
-    } else {
+    if (this.konstruktion === 'Holzbau') {
       this._restsumme =
         this.wohnflaeche *
           this._gestehungskosten *
           this.constants.restsummeHolzbau -
         this._kfwKredit;
+    } else {
+      this._restsumme =
+        this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
     }
     // Make sure it doesn't go negative
     this._restsumme = this._restsumme < 0 ? 0 : this._restsumme;
@@ -760,23 +766,28 @@ export class NeubauService {
     this.anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
     this.energiestandard =
       this.formProjektNeuService.energiestandard.options[0].value;
-    this.konstruktion = this.formProjektNeuService.konstruktion.options[0].value;
+    this.konstruktion =
+      this.formProjektNeuService.konstruktion.options[0].value;
     this.zertifizierung =
       this.formProjektNeuService.zertifizierung.options[0].value;
 
     // Neubau form parameters
     this.kellergeschossIn =
       this.formProjektNeuService.kellergeschoss.options[0].value;
-    this.stellplaetzeIn = this.formProjektNeuService.stellplaetze.options[0].value;
-    this.aufzugsanlageIn = this.formProjektNeuService.aufzugsanlage.options[0].value;
+    this.stellplaetzeIn =
+      this.formProjektNeuService.stellplaetze.options[0].value;
+    this.aufzugsanlageIn =
+      this.formProjektNeuService.aufzugsanlage.options[0].value;
     this.barrierefreiheitIn =
       this.formProjektNeuService.barrierefreiheit.options[0].value;
     this.dachbegruenungIn =
       this.formProjektNeuService.dachbegruenung.options[0].value;
     this.baustellenlogistikIn =
       this.formProjektNeuService.baustellenlogistik.options[0].value;
-    this.aussenanlagenIn = this.formProjektNeuService.aussenanlagen.options[0].value;
-    this.grundstuecksbezogeneKosten = this.formProjektNeuService.grundstKosten.init;
+    this.aussenanlagenIn =
+      this.formProjektNeuService.aussenanlagen.options[0].value;
+    this.grundstuecksbezogeneKosten =
+      this.formProjektNeuService.grundstKosten.init;
     this.baunebenkostenKeinFin =
       this.formProjektNeuService.baunebenkostenKeinFin.init;
 
