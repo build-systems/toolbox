@@ -66,8 +66,9 @@ export class sanierung {
   };
   // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   sollzinsKfw_Endfälliges = 2.06; 
+  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   public kfwKreditLimit = {
-    lower: 100_000,
+    lower: 120_000,
     higher: 150_000,
   };
   // Percentages are also influenced by year the repayment start:
