@@ -35,7 +35,7 @@ export class neubau {
     between10And25: 0.79,
     moreThan25: 1.02,
   };
-  public sollzinsKfw_Endfälliges = 1.14;
+  public sollzinsKfw_Endfälliges = 1.14; // KfW 298 offline. 2024-01-19
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -58,14 +58,18 @@ export class sanierung {
   nhBonusPossible = 5;
   wpbBonusPossible = 10;
   serSanBonusPossible = 15;
+  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   public nrKredit = {
-    lessThan10: 0.31,
-    between10And20: 1.38,
-    moreThan20: 1.63,
+    lessThan10: 0.99,
+    between10And20: 1.78,
+    moreThan20: 1.97,
   };
-  sollzinsKfw_Endfälliges = 1.75;
+  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
+  sollzinsKfw_Endfälliges = 2.06; 
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
   };
+  // Percentages are also influenced by year the repayment start:
+  // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
 }

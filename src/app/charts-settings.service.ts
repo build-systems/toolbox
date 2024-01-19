@@ -4,8 +4,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ChartsSettingsService {
+  primary = 'rgba(255, 255, 255, 1)';
+  primary90 = 'rgba(255, 255, 255, 0.9)';
+  primary80 = 'rgba(255, 255, 255, 0.8)';
+  primary70 = 'rgba(255, 255, 255, 0.7)';
+  primary50 = 'rgba(255, 255, 255, 0.5)';
+  primary30 = 'rgba(255, 255, 255, 0.3)';
+  primary20 = 'rgba(255, 255, 255, 0.2)';
+  primary10 = 'rgba(255, 255, 255, 0.1)';
+  secondary = 'rgba(127, 255, 212, 1)';
+  bgPrimary = '#1a1a1a';
+  bgPrimary75 = 'rgba(26, 26, 26, 0.75)';
+  bgSecondary = '#252525';
+  bgTertiary = '#333';
+  bgTertiary95 = 'rgba(51, 51, 51, 0.95)';
+
   public ticks = {
-    color: '#999',
+    color: this.primary50,
     font: {
       family: 'system-ui',
       size: 12,
@@ -14,7 +29,7 @@ export class ChartsSettingsService {
   };
 
   public grid = {
-    color: '#333',
+    color: this.primary10,
   }
 
   public title = {
@@ -27,7 +42,7 @@ export class ChartsSettingsService {
   };
 
   public labels = {
-    color: '#ddd',
+    color: this.primary90,
     font: {
       size: 12,
       family: 'system-ui',
