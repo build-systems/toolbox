@@ -2,43 +2,37 @@
   <h1>{{ title }}</h1>
 </div>
 <div class="container-tool">
-  <div class="container-input">
-    <div class="progress-bar">
+  <div class="inputs">
+    <div class="tool-tab">
       <input
         type="button"
         value="Projekt"
         title="Projekt Formular"
         (click)="currentForm = 1"
-        [className]="currentForm === 1 ? 'full-pill left-pill pill' : 'grayed-pill left-pill pill'"
+        [className]="
+          currentForm === 1
+            ? 'full-pill left-pill pill'
+            : 'grayed-pill left-pill pill'
+        "
       />
       <input
         type="button"
         value="Darlehen"
         title="Darlehen Formular"
         (click)="currentForm = 2"
-        [className]="currentForm === 2 ? 'full-pill right-pill pill' : 'grayed-pill right-pill pill'"
+        [className]="
+          currentForm === 2
+            ? 'full-pill right-pill pill'
+            : 'grayed-pill right-pill pill'
+        "
       />
     </div>
-    <app-form-projekt-sanierung
-      [hidden]="!(currentForm === 1)"
-    ></app-form-projekt-sanierung>
-    <app-form-darlehen [hidden]="!(currentForm === 2)"></app-form-darlehen>
-    <!-- <fieldset class="progress-buttons">
-      <div class="container-button">
-        @if (currentForm > 1) {
-        <input
-          type="button"
-          value="PREVIOUS"
-          (click)="previousForm(); scroll(top)"
-        />
-        }
-      </div>
-      <div class="container-button">
-        @if (currentForm < 2){
-        <input type="button" value="NEXT" (click)="nextForm(); scroll(top)" />
-        }
-      </div>
-    </fieldset> -->
+    <div class="wraper-gradient">
+      <app-form-projekt-sanierung
+        [hidden]="!(currentForm === 1)"
+      ></app-form-projekt-sanierung>
+      <app-form-darlehen [hidden]="!(currentForm === 2)"></app-form-darlehen>
+    </div>
   </div>
   <div class="output">
     <app-dashboard-numbers></app-dashboard-numbers>

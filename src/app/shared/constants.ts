@@ -35,7 +35,7 @@ export class neubau {
     between10And25: 0.79,
     moreThan25: 1.02,
   };
-  public sollzinsKfw_Endfälliges = 1.14;
+  public sollzinsKfw_Endfälliges = 1.14; // KfW 298 offline. 2024-01-19
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -63,7 +63,7 @@ export class sanierung {
     between10And20: 1.38,
     moreThan20: 1.63,
   };
-  sollzinsKfw_Endfälliges = 1.75;
+  sollzinsKfw_Endfälliges = 2.06; // KfW 261, Checked on
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
