@@ -7,6 +7,7 @@ import { DashboardOutput } from '../dashboard-output';
 import { NeubauService } from '../pages/neubau/neubau.service';
 import { filter } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
+import { ChartsSettingsService } from '../charts-settings.service';
 
 @Component({
   selector: 'app-chart-annuitaeten',
@@ -38,7 +39,8 @@ export class ChartAnnuitaetenComponent {
   constructor(
     private sanierungService: SanierungService,
     private neubauService: NeubauService,
-    private router: Router
+    private router: Router,
+    private styleService: ChartsSettingsService
   ) {
     this.router.events.subscribe((val) => {
       // Check for changes on the url
@@ -188,11 +190,11 @@ export class ChartAnnuitaetenComponent {
         ticks: {
           maxRotation: 45,
           minRotation: 45,
-          color: '#999',
+          color: this.styleService.ticks.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.ticks.font.size,
+            family: this.styleService.ticks.font.family,
+            weight: this.styleService.ticks.font.weight,
           },
         },
       },
@@ -205,14 +207,14 @@ export class ChartAnnuitaetenComponent {
           display: false,
         },
         grid: {
-          color: '#333',
+          color: this.styleService.grid.color,
         },
         ticks: {
-          color: '#999',
+          color: this.styleService.ticks.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.ticks.font.size,
+            family: this.styleService.ticks.font.family,
+            weight: this.styleService.ticks.font.weight,
           },
           callback: function (value, index, values) {
             return value.toLocaleString('de-DE', {
@@ -228,40 +230,38 @@ export class ChartAnnuitaetenComponent {
     plugins: {
       legend: {
         title: {
-          color: 'white',
+          color: this.styleService.title.color,
           display: true,
           font: {
-            family: 'Montserrat',
-            size: 18,
-            weight: 400,
+            family: this.styleService.title.font.family,
+            size: this.styleService.title.font.size,
+            weight: this.styleService.title.font.weight,
           },
           text: 'Annuitäten [€]',
         },
         display: true,
         labels: {
-          color: '#ddd',
+          color: this.styleService.labels.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.labels.font.size,
+            family: this.styleService.labels.font.family,
+            weight: this.styleService.labels.font.weight,
           },
-          boxWidth: 6,
-          boxHeight: 6,
           usePointStyle: true,
-          pointStyle: 'circle',
+          boxWidth: this.styleService.labels.boxWidth,
+          boxHeight: this.styleService.labels.boxHeight,
+          pointStyle: this.styleService.labels.pointStyle,
         },
       },
       tooltip: {
         callbacks: {
           label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
         },
-        usePointStyle: true,
+        // usePointStyle: true,
       },
     },
   };
-
   public barChartType: ChartType = 'bar';
-
   public barChartData: ChartData<'bar'> = {
     labels: this.chartLabels,
     datasets: [
@@ -269,10 +269,10 @@ export class ChartAnnuitaetenComponent {
         label: 'Annuität',
         data: this.annuitaeten,
         pointStyle: 'circle',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        borderColor: this.styleService.datasets.color04.borderColor,
+        hoverBackgroundColor: this.styleService.datasets.color04.hoverBackgroundColor,
       },
     ],
   };

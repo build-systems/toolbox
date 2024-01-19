@@ -196,13 +196,13 @@ label {
 }
 
 fieldset {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   padding-top: 0.25rem;
   border-style: none;
 }
 
 legend {
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.10rem;
 }
 
 .tooltip {
@@ -388,7 +388,7 @@ input[type="radio"] {
   border-color: var(--secondary);
 }
 
-/* When the checkbox is checked, add a blue background */
+/* When the checkbox is checked, add another color to background */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
   background-color: var(--bg-primary);
@@ -409,7 +409,7 @@ input[type="checkbox"] {
   height: var(--button-height);
   padding-left: 5rem;
   align-items: center;
-  border: 1px solid var(--bg-tertiary);
+  border: 1px solid var(--primary);
   border-radius: var(--button-radius);
   cursor: pointer;
 }
@@ -419,8 +419,13 @@ input[type="checkbox"] {
   left: 2rem;
   height: 24px;
   width: 24px;
-  border: 1px solid var(--bg-tertiary);
+  border: 1px solid var(--primary);
   border-radius: 0.25rem;
+}
+
+/* On mouse-over, add a grey background color */
+input[type="checkbox"] ~ label .checkmark {
+  background-color: var(--bg-primary);
 }
 
 /* On mouse-over, add a grey background color */
@@ -456,8 +461,8 @@ input[type="checkbox"]:checked ~ label .checkmark:after {
 
 /* Show the checkmark when checked */
 input[type="checkbox"]:checked + label {
-  background-color: var(--bg-tertiary);
-  border-color: var(--primary);
+  background-color: var(--bg-primary);
+  border-color: var(--secondary);
 }
 
 /* Style the checkmark/indicator */
@@ -503,7 +508,7 @@ input[type="checkbox"]:checked + label {
 .pill {
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   width: 50%;
   align-items: center;
@@ -548,7 +553,7 @@ input[type="checkbox"]:checked + label {
   text-align: center;
   padding: calc(var(--layout-padding) / 2);
   border-radius: var(--button-radius);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-tertiary);
   & h3 {
     font-size: 1rem;
     display: flex;

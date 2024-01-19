@@ -7,6 +7,7 @@ import { DashboardOutput } from '../dashboard-output';
 import { NavigationEnd, Router } from '@angular/router';
 import { SanierungService } from '../pages/sanierung/sanierung.service';
 import { filter } from 'rxjs';
+import { ChartsSettingsService } from '../charts-settings.service';
 
 @Component({
   selector: 'app-chart-gkosten-sanierung',
@@ -29,7 +30,8 @@ export class ChartGkostenSanierungComponent implements OnInit {
 
   constructor(
     private sanierungService: SanierungService,
-    private router: Router
+    private router: Router,
+    private styleService: ChartsSettingsService
   ) {
     this.router.events.subscribe((val) => {
       // Check for changes on the url
@@ -75,11 +77,11 @@ export class ChartGkostenSanierungComponent implements OnInit {
           display: false,
         },
         ticks: {
-          color: '#999',
+          color: this.styleService.ticks.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.ticks.font.size,
+            family: this.styleService.ticks.font.family,
+            weight: this.styleService.ticks.font.weight,
           },
         },
       },
@@ -93,14 +95,14 @@ export class ChartGkostenSanierungComponent implements OnInit {
           display: false,
         },
         grid: {
-          color: '#333',
+          color: this.styleService.grid.color,
         },
         ticks: {
-          color: '#999',
+          color: this.styleService.ticks.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.ticks.font.size,
+            family: this.styleService.ticks.font.family,
+            weight: this.styleService.ticks.font.weight,
           },
           callback: function (value, index, values) {
             return value.toLocaleString('de-DE', {
@@ -116,27 +118,27 @@ export class ChartGkostenSanierungComponent implements OnInit {
     plugins: {
       legend: {
         title: {
-          color: 'white',
+          color: this.styleService.title.color,
           display: true,
           font: {
-            family: 'Montserrat',
-            size: 18,
-            weight: 400,
+            family: this.styleService.title.font.family,
+            size: this.styleService.title.font.size,
+            weight: this.styleService.title.font.weight,
           },
           text: 'Gesamtkosten [€]',
         },
         display: true,
         labels: {
-          color: '#ddd',
+          color: this.styleService.labels.color,
           font: {
-            size: 12,
-            family: 'system-ui',
-            weight: 400,
+            size: this.styleService.labels.font.size,
+            family: this.styleService.labels.font.family,
+            weight: this.styleService.labels.font.weight,
           },
-          boxWidth: 6,
-          boxHeight: 6,
           usePointStyle: true,
-          pointStyle: 'circle',
+          boxWidth: this.styleService.labels.boxWidth,
+          boxHeight: this.styleService.labels.boxHeight,
+          pointStyle: this.styleService.labels.pointStyle,
         },
       },
       tooltip: {
@@ -154,37 +156,37 @@ export class ChartGkostenSanierungComponent implements OnInit {
         // Baukosten (Investitionskosten)
         data: [0, null],
         label: 'Baukosten',
-        backgroundColor: 'rgba(58, 149, 194, 0.6)',
-        borderColor: 'rgb(58, 149, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 149, 194)',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color01.backgroundColor,
+        borderColor: this.styleService.datasets.color01.borderColor,
+        hoverBackgroundColor: this.styleService.datasets.color01.hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
-        backgroundColor: 'rgba(144, 141, 194, 0.6)',
-        borderColor: 'rgb(144, 141, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(144, 141, 194)',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color02.backgroundColor,
+        borderColor: this.styleService.datasets.color02.borderColor,
+        hoverBackgroundColor: this.styleService.datasets.color02.hoverBackgroundColor
       },
       {
         // KfW Kredit
         data: [null, 0],
         label: 'KfW Kredit',
-        backgroundColor: 'rgba(52, 103, 194, 0.6)',
-        borderColor: 'rgb(52, 103, 194)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(52, 103, 194)',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor,
+        borderColor: this.styleService.datasets.color03.borderColor,
+        hoverBackgroundColor: this.styleService.datasets.color03.hoverBackgroundColor
       },
       {
         // KfW Zuschuss
         data: [null, 0],
         label: 'KfW Zuschuss',
-        backgroundColor: 'rgba(58, 194, 150, 0.6)',
-        borderColor: 'rgb(58, 194, 150)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgb(58, 194, 150)',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        borderColor: this.styleService.datasets.color04.borderColor,
+        hoverBackgroundColor: this.styleService.datasets.color04.hoverBackgroundColor
       },
       // {
       //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)

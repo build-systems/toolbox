@@ -75,7 +75,8 @@ export class FormProjektSanService {
   // Erneuerbare-Energien-Klasse
   eeKlasse: EeKlasseObj = {
     value: true,
-    title: 'Erneuerbare-Energien-Klasse ',
+    // title: 'Erneuerbare-Energien-Klasse ',
+    title: 'EE-Klasse ',
     description: 'Die höhere Förderung für die Erneuerbare-Energien-Klasse können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz\u00ADhaus eine neue Heizungs\u00ADanlage auf Basis erneuer\u00ADbarer Energien einbauen und damit mindestens 65% des Energie\u00ADbedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65% des Energie\u00ADbedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden (kfw.de)'
   }
 
