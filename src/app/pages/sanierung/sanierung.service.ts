@@ -258,14 +258,14 @@ export class SanierungService {
         filterByProperties(item, desiredProperties)
       );
       var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-      this._gestehungskosten = tableResult;
+      this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
     } catch (error) {
       // Filter
       const filteredData = tableSanierung.filter((item) =>
         filterByProperties(item, initialProperties)
       );
       var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-      this._gestehungskosten = tableResult;
+      this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
     }
   }
 

@@ -38,7 +38,7 @@
   {
     "Energiestandard": "EH 85",
     "ZustandBestand": "Unsaniert",
-    "Min": 435,
+    "Min": 450,
     "Max": 715
   },
   {
@@ -50,7 +50,7 @@
   {
     "Energiestandard": "EH 85",
     "ZustandBestand": "Umfassend saniert",
-    "Min": 200,
+    "Min": 270,
     "Max": 400
   },
   {
