@@ -35,7 +35,7 @@ export class ChartsSettingsService {
   public title = {
     color: 'white',
     font: {
-      family: 'Montserrat',
+      family: "Montserrat",
       size: 18,
       weight: 400,
     },
@@ -45,7 +45,7 @@ export class ChartsSettingsService {
     color: this.primary90,
     font: {
       size: 12,
-      family: "-apple-system, BlinkMacSystemFont, 'system-ui, 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+      family: "-apple-system, BlinkMacSystemFont, 'system-ui', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
       weight: 400,
     },
     boxWidth: 6,
