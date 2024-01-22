@@ -134,11 +134,13 @@ export class FormProjektSanierungComponent implements OnInit {
         this.formService.setEnergiestandard(value);
         // Relationship with Zertifizierung
         const zertifizierung = this.projektFormSan.get('zertifizierung');
-        if (value != 'EH 40' && zertifizierung?.value === 'QNG') {
-          zertifizierung?.setValue('Keine Zertifizierung');
-          this.zertifizierungWarning = true;
+        if (value != 'EH 40') {
+          if (zertifizierung?.value === 'QNG') {
+            zertifizierung?.setValue('Keine Zertifizierung');
+          }
+          this.noQNG = true;
         } else {
-          this.zertifizierungWarning = false;
+          this.noQNG = false;
         }
       });
 
@@ -152,9 +154,9 @@ export class FormProjektSanierungComponent implements OnInit {
         const energiestandard = this.projektFormSan.get('energiestandard');
         if (value === 'QNG' && energiestandard?.value != 'EH 40') {
           energiestandard?.setValue('EH 40');
-          this.zertifizierungWarning = true;
+          this.noQNG = true;
         } else {
-          this.zertifizierungWarning = false;
+          this.noQNG = false;
         }
       });
     // Worst Performing Building
@@ -195,5 +197,5 @@ export class FormProjektSanierungComponent implements OnInit {
   }
 
   // Zertifizierung warning: if user try to select conflicting
-  public zertifizierungWarning: boolean = false;
+  public noQNG: boolean = false;
 }
