@@ -30,7 +30,7 @@ export class FormProjektSanService {
       { id: 'enstd1', value: 'EH 40' },
       { id: 'enstd2', value: 'EH 55' },
       { id: 'enstd3', value: 'EH 70' },
-      { id: 'enstd4', value: 'EH 85' },
+      // { id: 'enstd4', value: 'EH 85' },
     ],
     title: 'Energiestandard ',
     description: 'Energiestandard description',

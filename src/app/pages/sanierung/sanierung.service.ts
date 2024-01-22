@@ -172,9 +172,7 @@ export class SanierungService {
   // Tilgungszuschuss [%]
   private _tilgungszuschuss = 0;
   private updateTilgungszuschuss() {
-    if (this.energiestandard === 'EH 85') {
-      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH85;
-    } else if (this.energiestandard === 'EH 70') {
+    if (this.energiestandard === 'EH 70') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH70;
     } else if (this.energiestandard === 'EH 55') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH55;
@@ -602,7 +600,7 @@ export class SanierungService {
 
     this.outputDashboardSource.next(
       (this.outputDashboard = {
-        typ: "Sanierung",
+        typ: 'Sanierung',
         // Dalehen
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,

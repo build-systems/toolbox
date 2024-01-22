@@ -39,7 +39,7 @@ type EnergiestandardNeubauObj = {
 };
 
 // Energiestandard Sanierung
-type EnergiestandardSanierung = 'EH 40' | 'EH 55' | 'EH 70' | 'EH 85';
+type EnergiestandardSanierung = 'EH 40' | 'EH 55' | 'EH 70';
 type EnergiestandardSanierungOptions = {
   id: string;
   value: EnergiestandardSanierung;

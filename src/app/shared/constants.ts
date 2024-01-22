@@ -28,7 +28,7 @@ export class neubau {
     EH40: 294 - 138,
     EH55: 0,
     EH70: 0,
-    EH85: 0,
+    // EH85: 0,
   };
   public nrKredit = {
     lessThan10: 0.01,
@@ -52,7 +52,7 @@ export class sanierung {
     EH40: 20,
     EH55: 15,
     EH70: 10,
-    EH85: 5,
+    // EH85: 5,
   };
   eeBonusPossible = 5;
   nhBonusPossible = 5;
@@ -75,5 +75,5 @@ export class sanierung {
   // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
 
   // Safety multiplier
-  public safetyMultiplier = 1.25;
+  public safetyMultiplier = 1.30;
 }
