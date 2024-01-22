@@ -323,9 +323,9 @@ export class NeubauService {
     } else if (this.energiestandard === 'EH 70') {
       this._energetischerStandardOut =
         this.constants.energetischerStandardPrice.EH70;
-    } else if (this.energiestandard === 'EH 85') {
-      this._energetischerStandardOut =
-        this.constants.energetischerStandardPrice.EH85;
+    // } else if (this.energiestandard === 'EH 85') {
+      // this._energetischerStandardOut =
+        // this.constants.energetischerStandardPrice.EH85;
     } else {
       this._energetischerStandardOut = 0;
     }
@@ -406,13 +406,13 @@ export class NeubauService {
   private updateRestsumme() {
     if (this.konstruktion === 'Holzbau') {
       this._restsumme =
-        this.wohnflaeche *
+        (this.wohnflaeche *
           this._gestehungskosten *
           this.constants.restsummeHolzbau -
-        this._kfwKredit;
+        this._kfwKredit) * this.constants.safetyMultiplier;
     } else {
       this._restsumme =
-        this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
+        (this.wohnflaeche * this._gestehungskosten - this._kfwKredit) * this.constants.safetyMultiplier;
     }
     // Make sure it doesn't go negative
     this._restsumme = this._restsumme < 0 ? 0 : this._restsumme;

@@ -54,19 +54,19 @@
     "Max": 430
   },
   {
-    "Energiestandard": "EH 55",
+    "Energiestandard": "GEG",
     "ZustandBestand": "Unsaniert",
     "Min": 650,
     "Max": 850
   },
   {
-    "Energiestandard": "EH 55",
+    "Energiestandard": "GEG",
     "ZustandBestand": "Teilsaniert",
     "Min": 660,
     "Max": 870
   },
   {
-    "Energiestandard": "EH 55",
+    "Energiestandard": "GEG",
     "ZustandBestand": "Umfassend saniert",
     "Min": 490,
     "Max": 690

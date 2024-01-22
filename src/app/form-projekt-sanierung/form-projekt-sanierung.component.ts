@@ -75,9 +75,7 @@ export class FormProjektSanierungComponent implements OnInit {
       worstPerformingBuilding: new FormControl(
         this.formService.worstPerformingBuilding
       ),
-      serielleSanierung: new FormControl(
-        this.formService.serielleSanierung
-      ),
+      serielleSanierung: new FormControl(this.formService.serielleSanierung),
       zustandBestand: new FormControl(
         this.formService.zustandBestand.options[0].value
       ),
@@ -134,6 +132,11 @@ export class FormProjektSanierungComponent implements OnInit {
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
         this.formService.setEnergiestandard(value);
+        // Relationship with Zertifizierung 
+        const zertifizierung = this.projektFormSan.get('zertifizierung');
+        if ((value != 'EH 40' && zertifizierung?.value === 'QNG')) {
+          zertifizierung?.setValue('Keine Zertifizierung');
+        }
       });
 
     // Zertifizierung
@@ -142,6 +145,11 @@ export class FormProjektSanierungComponent implements OnInit {
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
         this.formService.setZertifizierung(value);
+        // Relationship with Energiestandard 
+        const energiestandard = this.projektFormSan.get('energiestandard');
+        if ((value === 'QNG' && energiestandard?.value != 'EH 40')) {
+          energiestandard?.setValue('EH 40');
+        }
       });
     // Worst Performing Building
     this.projektFormSan

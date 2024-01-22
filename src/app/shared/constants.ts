@@ -42,6 +42,7 @@ export class neubau {
   };
   public restsummeHolzbau = 1.05;
   public gestehungskostenBase = 2436;
+  public safetyMultiplier = 1.30;
 }
 
 @Injectable({

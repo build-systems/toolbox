@@ -174,7 +174,7 @@ export class SanierungService {
   private updateTilgungszuschuss() {
     if (this.energiestandard === 'EH 70') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH70;
-    } else if (this.energiestandard === 'EH 55') {
+    } else if (this.energiestandard === 'GEG') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH55;
     } else if (this.energiestandard === 'EH 40') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH40;
@@ -209,7 +209,7 @@ export class SanierungService {
     if (
       this.worstPerformingBuilding.value === true &&
       (this.energiestandard === 'EH 70' ||
-        this.energiestandard === 'EH 55' ||
+        this.energiestandard === 'GEG' ||
         this.energiestandard === 'EH 40')
     ) {
       this._wpbBonus = this.constants.wpbBonusPossible;
@@ -223,7 +223,7 @@ export class SanierungService {
   private updateSerSanBonus() {
     if (
       this.serielleSanierung.value === true &&
-      (this.energiestandard === 'EH 55' || this.energiestandard === 'EH 40')
+      (this.energiestandard === 'GEG' || this.energiestandard === 'EH 40')
     )
       this._serSanBonus = this.constants.serSanBonusPossible;
     else this._serSanBonus = 0;
