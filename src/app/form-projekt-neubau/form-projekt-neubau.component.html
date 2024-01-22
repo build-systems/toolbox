@@ -12,17 +12,17 @@
       <input
         type="range"
         formControlName="wohnflaecheRange"
-        min="{{ formService.wohnflaeche.min }}"
-        max="{{ formService.wohnflaeche.max }}"
-        step="{{ formService.wohnflaeche.step }}"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
+        [step]="formService.wohnflaeche.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="wohnflaeche"
         name="wohnflaeche"
-        min="{{ formService.wohnflaeche.min }}"
-        max="{{ formService.wohnflaeche.max }}"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>
@@ -40,18 +40,18 @@
       <input
         type="range"
         formControlName="anzahlWohnungenRange"
-        min="{{ formService.anzahlWohnungen.min }}"
-        max="{{ formService.anzahlWohnungen.max }}"
-        step="{{ formService.anzahlWohnungen.step }}"
+        [min]="formService.anzahlWohnungen.min"
+        [max]="formService.anzahlWohnungen.max"
+        [step]="formService.anzahlWohnungen.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="anzahlWohnungen"
         name="anzahlWohnungen"
-        min="{{ formService.anzahlWohnungen.min }}"
-        max="{{ formService.anzahlWohnungen.max }}"
-        step="{{ formService.anzahlWohnungen.step }}"
+        [min]="formService.anzahlWohnungen.min"
+        [max]="formService.anzahlWohnungen.max"
+        [step]="formService.anzahlWohnungen.step"
       />
     </span>
   </fieldset>
@@ -70,12 +70,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="energiestandard"
         formControlName="energiestandard"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -93,14 +93,15 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="konstruktion"
         formControlName="konstruktion"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
+  <!-- I couldn't find a dynamic way to disable a single radio input option created with ngFor -->
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.zertifizierung.title
@@ -112,20 +113,24 @@
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.zertifizierung.options"
+      *ngFor="let item of formService.zertifizierung.options;"
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="zertifizierung"
         formControlName="zertifizierung"
+        [attr.disabled]="(noQNG && item.value != 'Keine') ? '' : null"
       />
-      <label title="{{ item.text }}" for="{{ item.id }}">{{
-        item.value
-      }}</label>
+      <label [title]="item.text" [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
+  @if (noQNG) {
+  <div class="warning-block">
+    *EH 40 and Holzbau must be selected
+  </div>
+  }
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.kellergeschoss.title
@@ -141,12 +146,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="kellergeschossIn"
         formControlName="kellergeschossIn"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -164,14 +169,20 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="stellplaetzeIn"
         formControlName="stellplaetzeIn"
+        [attr.disabled]="(noKellergeschoss && item.value === 'Tiefgarage') ? '' : null"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
+  @if (noKellergeschoss) {
+    <div class="warning-block">
+      *Kellergeschoss nicht vorhanden
+    </div>
+    }
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.aufzugsanlage.title
@@ -187,12 +198,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="aufzugsanlageIn"
         formControlName="aufzugsanlageIn"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -210,13 +221,13 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="barrierefreiheitIn"
         formControlName="barrierefreiheitIn"
       />
       <!-- I added innerHTML in this one to be able to breakword with <wbr /> -->
-      <label for="{{ item.id }}">{{ item.text }}</label>
+      <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -234,12 +245,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="dachbegruenungIn"
         formControlName="dachbegruenungIn"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -257,12 +268,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="baustellenlogistikIn"
         formControlName="baustellenlogistikIn"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -280,12 +291,12 @@
     >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="aussenanlagenIn"
         formControlName="aussenanlagenIn"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset>
@@ -301,17 +312,17 @@
       <input
         type="range"
         formControlName="grundstuecksbezogeneKostenRange"
-        min="{{ formService.grundstKosten.min }}"
-        max="{{ formService.grundstKosten.max }}"
-        step="{{ formService.grundstKosten.step }}"
+        [min]="formService.grundstKosten.min"
+        [max]="formService.grundstKosten.max"
+        [step]="formService.grundstKosten.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="grundstuecksbezogeneKosten"
         name="grundstuecksbezogeneKosten"
-        min="{{ formService.grundstKosten.min }}"
-        max="{{ formService.grundstKosten.max }}"
+        [min]="formService.grundstKosten.min"
+        [max]="formService.grundstKosten.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>
@@ -329,17 +340,17 @@
       <input
         type="range"
         formControlName="baunebenkostenKeinFinRange"
-        min="{{ formService.baunebenkostenKeinFin.min }}"
-        max="{{ formService.baunebenkostenKeinFin.max }}"
-        step="{{ formService.baunebenkostenKeinFin.step }}"
+        [min]="formService.baunebenkostenKeinFin.min"
+        [max]="formService.baunebenkostenKeinFin.max"
+        [step]="formService.baunebenkostenKeinFin.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="baunebenkostenKeinFin"
         name="baunebenkostenKeinFin"
-        min="{{ formService.baunebenkostenKeinFin.min }}"
-        max="{{ formService.baunebenkostenKeinFin.max }}"
+        [min]="formService.baunebenkostenKeinFin.min"
+        [max]="formService.baunebenkostenKeinFin.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>

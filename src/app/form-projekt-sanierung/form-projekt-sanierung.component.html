@@ -1,75 +1,119 @@
 <form [formGroup]="projektFormSan">
   <!-- <h2>Projekt</h2> -->
   <fieldset>
-    <legend>{{ formService.wohnflaeche.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.wohnflaeche.description }}</span></sup></legend>
+    <legend>
+      {{ formService.wohnflaeche.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.wohnflaeche.description
+        }}</span></sup
+      >
+    </legend>
     <span class="slidernumber">
       <input
         type="range"
         formControlName="wohnflaecheRange"
-        min="{{ formService.wohnflaeche.min }}"
-        max="{{ formService.wohnflaeche.max }}"
-        step="{{ formService.wohnflaeche.step }}"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
+        [step]="formService.wohnflaeche.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="wohnflaeche"
         name="wohnflaeche"
-        min="{{ formService.wohnflaeche.min }}"
-        max="{{ formService.wohnflaeche.max }}"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>
   </fieldset>
   <fieldset>
-    <legend>{{ formService.anzahlWohnungen.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.anzahlWohnungen.description }}</span></sup></legend>
+    <legend>
+      {{ formService.anzahlWohnungen.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.anzahlWohnungen.description
+        }}</span></sup
+      >
+    </legend>
     <span class="slidernumber">
       <input
         type="range"
         formControlName="anzahlWohnungenRange"
-        min="{{ formService.anzahlWohnungen.min }}"
-        max="{{ formService.anzahlWohnungen.max }}"
-        step="{{ formService.anzahlWohnungen.step }}"
+        [min]="formService.anzahlWohnungen.min"
+        [max]="formService.anzahlWohnungen.max"
+        [step]="formService.anzahlWohnungen.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="anzahlWohnungen"
         name="anzahlWohnungen"
-        min="{{ formService.anzahlWohnungen.min }}"
-        max="{{ formService.anzahlWohnungen.max }}"
-        step="{{ formService.anzahlWohnungen.step }}"
+        [min]="formService.anzahlWohnungen.min"
+        [max]="formService.anzahlWohnungen.max"
+        [step]="formService.anzahlWohnungen.step"
       />
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>{{ formService.energiestandard.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{ formService.energiestandard.description }}</span></sup></legend>
-    <span class="radio-option" *ngFor="let item of formService.energiestandard.options">
+    <legend>
+      {{ formService.energiestandard.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.energiestandard.description
+        }}</span></sup
+      >
+    </legend>
+    <span
+      class="radio-option"
+      *ngFor="let item of formService.energiestandard.options"
+    >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="energiestandard"
         formControlName="energiestandard"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>{{ formService.zertifizierung.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formService.zertifizierung.description }}</span></sup></legend>
-    <span class="radio-option" *ngFor="let item of formService.zertifizierung.options">
+    <legend>
+      {{ formService.zertifizierung.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-left">{{
+          formService.zertifizierung.description
+        }}</span></sup
+      >
+    </legend>
+    <span
+      class="radio-option"
+      *ngFor="let item of formService.zertifizierung.options"
+    >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="zertifizierung"
         formControlName="zertifizierung"
       />
-      <label for="{{ item.id }}">{{ item.text }}</label>
+      <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
+  @if (zertifizierungWarning) {
+  <div class="zertifizierung-warning">*QNG is only possible with EH 40</div>
+  }
   <fieldset>
-    <legend>{{ formService.worstPerformingBuilding.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-left">{{ formService.worstPerformingBuilding.description }}</span></sup></legend>
+    <legend>
+      {{ formService.worstPerformingBuilding.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-left">{{
+          formService.worstPerformingBuilding.description
+        }}</span></sup
+      >
+    </legend>
     <input
       type="checkbox"
       id="worstPerformingBuilding"
@@ -81,7 +125,14 @@
     </label>
   </fieldset>
   <fieldset>
-    <legend>{{ formService.serielleSanierung.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.serielleSanierung.description }}</span></sup></legend>
+    <legend>
+      {{ formService.serielleSanierung.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.serielleSanierung.description
+        }}</span></sup
+      >
+    </legend>
     <input
       type="checkbox"
       id="serielleSanierung"
@@ -93,20 +144,37 @@
     </label>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <legend>{{ formService.zustandBestand.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.zustandBestand.description }}</span></sup></legend>
-    <span class="radio-option" *ngFor="let item of formService.zustandBestand.options">
+    <legend>
+      {{ formService.zustandBestand.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.zustandBestand.description
+        }}</span></sup
+      >
+    </legend>
+    <span
+      class="radio-option"
+      *ngFor="let item of formService.zustandBestand.options"
+    >
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="zustandBestand"
         formControlName="zustandBestand"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset>
-    <legend>{{ formService.eeKlasse.title }}<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-top">{{ formService.eeKlasse.description }}</span></sup></legend>
+    <legend>
+      {{ formService.eeKlasse.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.eeKlasse.description
+        }}</span></sup
+      >
+    </legend>
     <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
     <label for="eeKlasse" class="checkbox-container">
       Ja

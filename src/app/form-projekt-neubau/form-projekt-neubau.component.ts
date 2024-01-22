@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormProjektNeuService } from './form-projekt-neu.service';
+import { NeubauService } from '../pages/neubau/neubau.service';
 
 @Component({
   selector: 'app-form-projekt-neubau',
@@ -177,71 +178,132 @@ export class FormProjektNeubauComponent implements OnInit {
       ?.valueChanges.subscribe((value) => {
         // Updates the sanierungService
         this.formService.setEnergiestandard(value);
+        // Relationship with Zertifizierung
+        const zertifizierung = this.projektFormNeu.get('zertifizierung');
+        const konstruktion = this.projektFormNeu.get('konstruktion');
+        if (value != 'EH 40') {
+          zertifizierung?.setValue('Keine');
+          this.noQNG = true;
+        } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
+          this.noQNG = false;
+        }
       });
 
     // Konstruktion
     this.projektFormNeu.get('konstruktion')?.valueChanges.subscribe((value) => {
       // Updates the sanierungService
       this.formService.setKonstruktion(value);
+      // Relationship with Zertifizierung
+      const energiestandard = this.projektFormNeu.get('energiestandard');
+      const zertifizierung = this.projektFormNeu.get('zertifizierung');
+      if (value != 'Holzbau') {
+        zertifizierung?.setValue('Keine');
+        this.noQNG = true;
+      } else if (value === 'Holzbau' && energiestandard?.value === 'EH 40') {
+        this.noQNG = false;
+      }
     });
 
     // Zertifizierung
     this.projektFormNeu
       .get('zertifizierung')
       ?.valueChanges.subscribe((value) => {
-        // Updates the sanierungService
+        // Relationship with Energiestandard and Konstruktion
+        const energiestandard = this.projektFormNeu.get('energiestandard');
+        const konstruktion = this.projektFormNeu.get('konstruktion');
         this.formService.setZertifizierung(value);
+        if (
+          energiestandard?.value === 'EH 40' &&
+          konstruktion?.value === 'Holzbau'
+        ) {
+          this.noQNG = false;
+        }
       });
 
-      
     // Susbscribe to form changes
-    this.projektFormNeu.get('kellergeschossIn')?.valueChanges.subscribe(value => {
-      this.formService.setKellergeschoss(value);
-      // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
-      const stellplaetzeIn = this.projektFormNeu.get('stellplaetzeIn');
-      if (value === "Nicht Vorhanden" && stellplaetzeIn?.value === "Tiefgarage"){
-        stellplaetzeIn?.setValue(null);
-      }
-    });
-    this.projektFormNeu.get('stellplaetzeIn')?.valueChanges.subscribe(value => {
-      this.formService.setStellplaetzeIn(value);
-      // If 'Tiefgarage' is selected, then 'Nicht Vorhanden' is unsellected
-      const kellergeschossIn = this.projektFormNeu.get('kellergeschossIn');
-      if (value === "Tiefgarage" && kellergeschossIn?.value === "Nicht Vorhanden"){
-        kellergeschossIn?.setValue("Vorhanden");
-      }
-    });
-    this.projektFormNeu.get('aufzugsanlageIn')?.valueChanges.subscribe(value => {
-      this.formService.setAufzugsanlageIn(value);
-    });
-    this.projektFormNeu.get('barrierefreiheitIn')?.valueChanges.subscribe(value => {
-      this.formService.setBarrierefreiheitIn(value);
-    });
-    this.projektFormNeu.get('dachbegruenungIn')?.valueChanges.subscribe(value => {
-      this.formService.setDachbegruenungIn(value);
-    });
-    this.projektFormNeu.get('baustellenlogistikIn')?.valueChanges.subscribe(value => {
-      this.formService.setBaustellenlogistikIn(value);
-    });
-    this.projektFormNeu.get('aussenanlagenIn')?.valueChanges.subscribe(value => {
-      this.formService.setAussenanlagenIn(value);
-    });
-    this.projektFormNeu.get('grundstuecksbezogeneKostenRange')?.valueChanges.subscribe(value => {
-      this.projektFormNeu.get('grundstuecksbezogeneKosten')?.setValue(value, { emitEvent: false });
-      this.formService.setGrundstuecksbezogeneKosten(value);
-    });
-    this.projektFormNeu.get('grundstuecksbezogeneKosten')?.valueChanges.subscribe(value => {
-      this.projektFormNeu.get('grundstuecksbezogeneKostenRange')?.setValue(value, { emitEvent: false });
-      this.formService.setGrundstuecksbezogeneKosten(value);
-    });
-    this.projektFormNeu.get('baunebenkostenKeinFinRange')?.valueChanges.subscribe(value => {
-      this.projektFormNeu.get('baunebenkostenKeinFin')?.setValue(value, { emitEvent: false });
-      this.formService.setBaunebenkostenKeinFin(value);
-    });
-    this.projektFormNeu.get('baunebenkostenKeinFin')?.valueChanges.subscribe(value => {
-      this.projektFormNeu.get('baunebenkostenKeinFinRange')?.setValue(value, { emitEvent: false });
-      this.formService.setBaunebenkostenKeinFin(value);
-    });
+    this.projektFormNeu
+      .get('kellergeschossIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setKellergeschoss(value);
+        // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
+        const stellplaetzeIn = this.projektFormNeu.get('stellplaetzeIn');
+        if (value === 'Nicht Vorhanden') {
+          stellplaetzeIn?.setValue('Garage');
+          this.noKellergeschoss = true;
+        } else {
+          this.noKellergeschoss = false;
+        }
+      });
+    this.projektFormNeu
+      .get('stellplaetzeIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setStellplaetzeIn(value);
+        // If 'Tiefgarage' is selected, then 'Nicht Vorhanden' is unsellected
+        const kellergeschossIn = this.projektFormNeu.get('kellergeschossIn');
+        if (
+          value === 'Tiefgarage' &&
+          kellergeschossIn?.value === 'Nicht Vorhanden'
+        ) {
+          kellergeschossIn?.setValue('Vorhanden');
+        }
+      });
+    this.projektFormNeu
+      .get('aufzugsanlageIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setAufzugsanlageIn(value);
+      });
+    this.projektFormNeu
+      .get('barrierefreiheitIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setBarrierefreiheitIn(value);
+      });
+    this.projektFormNeu
+      .get('dachbegruenungIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setDachbegruenungIn(value);
+      });
+    this.projektFormNeu
+      .get('baustellenlogistikIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setBaustellenlogistikIn(value);
+      });
+    this.projektFormNeu
+      .get('aussenanlagenIn')
+      ?.valueChanges.subscribe((value) => {
+        this.formService.setAussenanlagenIn(value);
+      });
+    this.projektFormNeu
+      .get('grundstuecksbezogeneKostenRange')
+      ?.valueChanges.subscribe((value) => {
+        this.projektFormNeu
+          .get('grundstuecksbezogeneKosten')
+          ?.setValue(value, { emitEvent: false });
+        this.formService.setGrundstuecksbezogeneKosten(value);
+      });
+    this.projektFormNeu
+      .get('grundstuecksbezogeneKosten')
+      ?.valueChanges.subscribe((value) => {
+        this.projektFormNeu
+          .get('grundstuecksbezogeneKostenRange')
+          ?.setValue(value, { emitEvent: false });
+        this.formService.setGrundstuecksbezogeneKosten(value);
+      });
+    this.projektFormNeu
+      .get('baunebenkostenKeinFinRange')
+      ?.valueChanges.subscribe((value) => {
+        this.projektFormNeu
+          .get('baunebenkostenKeinFin')
+          ?.setValue(value, { emitEvent: false });
+        this.formService.setBaunebenkostenKeinFin(value);
+      });
+    this.projektFormNeu
+      .get('baunebenkostenKeinFin')
+      ?.valueChanges.subscribe((value) => {
+        this.projektFormNeu
+          .get('baunebenkostenKeinFinRange')
+          ?.setValue(value, { emitEvent: false });
+        this.formService.setBaunebenkostenKeinFin(value);
+      });
   }
 
   // Remove focus on enter
@@ -249,4 +311,10 @@ export class FormProjektNeubauComponent implements OnInit {
     // Call the blur method on the target element to remove focus
     event.target.blur();
   }
+
+  // Zertifizierung: if user try to select conflicting options
+  public noQNG: boolean = false;
+
+  // Kellergeschoss and Stellplätze
+  public noKellergeschoss: boolean = false;
 }

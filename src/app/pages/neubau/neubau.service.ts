@@ -317,7 +317,7 @@ export class NeubauService {
     if (this.energiestandard === 'EH 40') {
       this._energetischerStandardOut =
         this.constants.energetischerStandardPrice.EH40;
-    } else if (this.energiestandard === 'EH 55') {
+    } else if (this.energiestandard === 'GEG') {
       this._energetischerStandardOut =
         this.constants.energetischerStandardPrice.EH55;
     } else if (this.energiestandard === 'EH 70') {

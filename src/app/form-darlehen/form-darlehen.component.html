@@ -1,23 +1,22 @@
 <form [formGroup]="darlehenForm">
-  <!-- <h2>Darlehen</h2> -->
   <fieldset>
     <legend title="Kalkulationszinssatz Bank Kredit (Realzins)">Kalkulationszinssatz [%] <sup>&#9432;</sup></legend>
     <span class="slidernumber">
       <input
         type="range"
         formControlName="kalkRealzinsRange"
-        min="{{ formService.kalkRealzins.min }}"
-        max="{{ formService.kalkRealzins.max }}"
-        step="{{ formService.kalkRealzins.step }}"
+        [min]="formService.kalkRealzins.min"
+        [max]="formService.kalkRealzins.max"
+        [step]="formService.kalkRealzins.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="kalkRealzins"
         name="kalkRealzins"
-        min="{{ formService.kalkRealzins.min }}"
-        max="{{ formService.kalkRealzins.max }}"
-        step="{{ formService.kalkRealzins.step }}"
+        [min]="formService.kalkRealzins.min"
+        [max]="formService.kalkRealzins.max"
+        [step]="formService.kalkRealzins.step"
       />
     </span>
   </fieldset>
@@ -27,18 +26,18 @@
       <input
         type="range"
         formControlName="kreditlaufzeitRange"
-        min="{{ formService.kreditlaufzeit.min }}"
-        max="{{ formService.kreditlaufzeit.max }}"
-        step="{{ formService.kreditlaufzeit.step }}"
+        [min]="formService.kreditlaufzeit.min"
+        [max]="formService.kreditlaufzeit.max"
+        [step]="formService.kreditlaufzeit.step"
         class="slider"
       />
       <input
         type="number"
         formControlName="kreditlaufzeit"
         name="kreditlaufzeit"
-        min="{{ formService.kreditlaufzeit.min }}"
-        max="{{ formService.kreditlaufzeit.max }}"
-        step="{{ formService.kreditlaufzeit.step }}"
+        [min]="formService.kreditlaufzeit.min"
+        [max]="formService.kreditlaufzeit.max"
+        [step]="formService.kreditlaufzeit.step"
       />
     </span>
   </fieldset>
@@ -47,12 +46,12 @@
     <span class="radio-option" *ngFor="let item of formService.kfWDarlehenOptions">
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="kfWDarlehen"
         formControlName="kfWDarlehen"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
@@ -60,12 +59,12 @@
     <span class="radio-option" *ngFor="let item of formService.bankDarlehenOptions">
       <input
         type="radio"
-        id="{{ item.id }}"
-        value="{{ item.value }}"
+        [id]="item.id"
+        [value]="item.value"
         name="bankDarlehen"
         formControlName="bankDarlehen"
       />
-      <label for="{{ item.id }}">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
 </form>

@@ -121,22 +121,6 @@ li {
   flex-direction: column;
   overflow-y: auto;
   border-radius: 0 0 var(--button-radius) var(--button-radius);
-  /* -webkit-mask-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(black),
-    to(transparent)
-  );
-  -webkit-mask-image: linear-gradient(to bottom, black 97%, transparent 100%);
-  mask-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(black),
-    to(transparent)
-  );
-  mask-image: linear-gradient(to bottom, black 97%, transparent 100%); */
 }
 
 .host-forms {
@@ -162,24 +146,32 @@ li {
 }
 
 .wraper-gradient::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   height: 40px;
   width: 100%;
-  background-image: linear-gradient(to bottom, var(--bg-tertiary) 30%, transparent);
+  background-image: linear-gradient(
+    to bottom,
+    var(--bg-tertiary) 30%,
+    transparent
+  );
   user-select: none;
   pointer-events: none;
   z-index: 1;
 }
 
 .wraper-gradient::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   height: 40px;
   width: 100%;
-  background-image: linear-gradient(to top, var(--bg-tertiary) 10%, transparent);
+  background-image: linear-gradient(
+    to top,
+    var(--bg-tertiary) 10%,
+    transparent
+  );
   border-radius: 0 0 var(--button-radius) var(--button-radius);
   user-select: none;
   pointer-events: none;
@@ -246,7 +238,7 @@ fieldset {
 }
 
 legend {
-  padding-bottom: 0.10rem;
+  padding-bottom: 0.1rem;
 }
 
 .tooltip {
@@ -439,6 +431,13 @@ input[type="radio"] {
   border-color: var(--secondary);
 }
 
+/* When the checkbox is checked, add another color to background */
+.radio-fieldset span input:disabled ~ label {
+  color: var(--primary30);
+  background-color: var(--bg-secondary);
+  border-color: var(--bg-primary);
+}
+
 input[type="checkbox"] {
   position: absolute;
   opacity: 0;
@@ -552,7 +551,7 @@ input[type="checkbox"]:checked + label {
 .pill {
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
   cursor: pointer;
   width: 50%;
   align-items: center;
@@ -739,9 +738,18 @@ input[type="checkbox"]:checked + label {
 }
 
 .warning {
-  color: tomato;
-  font-size: 0.8rem;
+  /* color: tomato; */
+  color: #C9971C;
+  /* font-size: 0.8rem; */
   position: absolute;
+  font-size: small;
+  padding-top: .2rem;
+}
+
+.warning-block {
+  color: #C9971C;
+  font-size: small;
+  padding-top: .2rem;
 }
 
 .host-avatar {

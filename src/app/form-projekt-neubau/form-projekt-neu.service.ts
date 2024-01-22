@@ -29,7 +29,7 @@ export class FormProjektNeuService {
   energiestandard: EnergiestandardNeubauObj = {
     options: [
       { id: 'enstd1', value: 'EH 40' },
-      { id: 'enstd2', value: 'EH 55' },
+      { id: 'enstd2', value: 'GEG' },
       { id: 'enstd3', value: 'EH 70' },
       // { id: 'enstd4', value: 'EH 100' },
       // { id: 'enstd5', value: 'EH 115' },
@@ -41,8 +41,8 @@ export class FormProjektNeuService {
   // Konstruktion centralized form values
   konstruktion: KonstruktionObj = {
     options: [
-      { id: 'konst1', value: 'Konventionell' },
-      { id: 'konst2', value: 'Holzbau' },
+      { id: 'konst1', value: 'Holzbau' },
+      { id: 'konst2', value: 'Konventionell' },
     ],
     title: 'Konstruktion ',
     description: 'Konstruktion description',
@@ -51,9 +51,9 @@ export class FormProjektNeuService {
   // Zertifizierung centralized form values
   zertifizierung: ZertifizierungNeubauObj = {
     options: [
-      { id: 'zert1', value: 'ohne QNG', text: 'ohne QNG Siegel' },
-      { id: 'zert2', value: 'mit QNG', text: 'mit QNG Siegel' },
-      { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung' },
+      { id: 'zert1', value: 'mit QNG', text: 'mit QNG Siegel'},
+      { id: 'zert2', value: 'ohne QNG', text: 'ohne QNG Siegel'},
+      { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung'},
     ],
     title: 'Zertifizierung klimafreundlicher ',
     description: 'Neubau Zertifizierung klimafreundlicher description',

@@ -26,7 +26,7 @@ type anzahlWohnungenObj = {
 };
 
 // Energiestandard Neubau
-type EnergiestandardNeubau = 'EH 40' | 'EH 55' | 'EH 70';
+type EnergiestandardNeubau = 'EH 40' | 'GEG' | 'EH 70';
 type EnergiestandardNeubauOptions = {
   id: string;
   value: EnergiestandardNeubau;
