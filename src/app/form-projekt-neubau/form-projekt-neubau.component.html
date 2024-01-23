@@ -1,4 +1,57 @@
 <form [formGroup]="projektFormNeu">
+  <div class="toogle-wrapper">
+    <label for="userPriceToggle" class="label-toggle">
+      Set my own price estimation
+      <sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom"
+          >Define your own estimated budget</span
+        ></sup
+      >
+    </label>
+    <div class="checkbox-toggle-wrapper">
+      <label class="toggle-box">
+        <input
+          type="checkbox"
+          id="userPriceToggle"
+          formControlName="userPriceToggle"
+        />
+        <span class="toggle-round"></span>
+      </label>
+    </div>
+  </div>
+  @if (this.withUserPrice) {
+  <span style="color: tomato">* Feature in development</span>
+    <fieldset style="border: 1px solid tomato">
+      <legend>
+        {{ this.formService.userPrice.title }}
+        <sup class="tooltip"
+          >&#9432;<span class="tooltiptext tooltip-bottom">{{
+            this.formService.userPrice.description
+          }}</span></sup
+        >
+      </legend>
+      <span class="slidernumber">
+        <input
+          type="range"
+          formControlName="userPriceRange"
+          name="userPriceRange"
+          [min]="this.formService.userPrice.min"
+          [max]="this.formService.userPrice.max"
+          [step]="this.formService.userPrice.step"
+          class="slider"
+        />
+        <input
+          type="number"
+          formControlName="userPrice"
+          name="userPrice"
+          [min]="this.formService.userPrice.min"
+          [max]="this.formService.userPrice.max"
+          (keyup.enter)="onEnterKey($event)"
+        />
+      </span>
+    </fieldset>
+
+  }
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -113,7 +166,7 @@
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.zertifizierung.options;"
+      *ngFor="let item of formService.zertifizierung.options; let i = index"
     >
       <input
         type="radio"
@@ -121,14 +174,18 @@
         [value]="item.value"
         name="zertifizierung"
         formControlName="zertifizierung"
-        [attr.disabled]="(noQNG && item.value != 'Keine') ? '' : null"
+        [attr.disabled]="
+          this.formService.zertifizierungDisabled$i()[i] ? '' : null
+        "
       />
       <label [title]="item.text" [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
-  @if (noQNG) {
+  @if (this.formService.zertifizierungDisabled$i()[0] ||
+  this.formService.zertifizierungDisabled$i()[1] ||
+  this.formService.zertifizierungDisabled$i()[2]) {
   <div class="warning-block">
-    *Es müssen EH 40 und Holzbau ausgewählt werden
+    {{ this.formService.zertifizierungWarningMessage$i() }}
   </div>
   }
   <fieldset class="radio-fieldset">
@@ -173,16 +230,16 @@
         [value]="item.value"
         name="stellplaetzeIn"
         formControlName="stellplaetzeIn"
-        [attr.disabled]="(noKellergeschoss && item.value === 'Tiefgarage') ? '' : null"
+        [attr.disabled]="
+          noKellergeschoss && item.value === 'Tiefgarage' ? '' : null
+        "
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
   @if (noKellergeschoss) {
-    <div class="warning-block">
-      *Kellergeschoss nicht vorhanden
-    </div>
-    }
+  <div class="warning-block">*Kellergeschoss nicht vorhanden</div>
+  }
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.aufzugsanlage.title

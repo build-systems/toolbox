@@ -294,6 +294,81 @@ legend {
   right: 125%;
 }
 
+.toogle-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkbox-toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.label-toggle {
+  font-family: "Montserrat";
+  width: calc(100% - 5rem);
+}
+
+.toggle-box {
+  position: relative;
+  display: flex;
+  width: 60px;
+  height: 30px;
+}
+
+.toggle-box input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-round {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-secondary);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 30px;
+  border: 1px solid var(--primary70);
+}
+
+.toggle-round:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 3px;
+  background-color: var(--primary70);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-round {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--secondary);
+}
+
+input:checked + .toggle-round:before {
+  background-color: var(--primary);
+}
+
+input:focus + .toggle-round {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .toggle-round:before {
+  -webkit-transform: translateX(28px);
+  -ms-transform: translateX(28px);
+  transform: translateX(28px);
+}
+
 .slidernumber {
   display: flex;
   justify-content: space-between;
@@ -473,7 +548,7 @@ input[type="checkbox"] ~ label .checkmark {
 
 /* On mouse-over, add a grey background color */
 input[type="checkbox"]:hover ~ label .checkmark {
-  background-color: var(--bg-tertiary);
+  /* background-color: var(--bg-secondary); */
   border-color: var(--secondary);
 }
 
@@ -739,17 +814,17 @@ input[type="checkbox"]:checked + label {
 
 .warning {
   /* color: tomato; */
-  color: #C9971C;
+  color: #c9971c;
   /* font-size: 0.8rem; */
   position: absolute;
   font-size: small;
-  padding-top: .2rem;
+  padding-top: 0.2rem;
 }
 
 .warning-block {
-  color: #C9971C;
+  color: #c9971c;
   font-size: small;
-  padding-top: .2rem;
+  padding-top: 0.2rem;
 }
 
 .host-avatar {

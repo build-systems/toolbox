@@ -1,17 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormProjektNeuService {
+  // User price
+  // Wohnfläche centralized form values
+  userPrice: userPriceObj = {
+    min: 1000,
+    init: 1000,
+    max: 1000000,
+    step: 1000,
+    title: 'Price estimation [€] ',
+    description: 'Price estimation description',
+  };
+
   // Wohnfläche centralized form values
   wohnflaeche: wohnflaecheObj = {
     min: 20,
     init: 1000,
     max: 10000,
     step: 1,
-    title: "Wohnfläche [m²] ",
+    title: 'Wohnfläche [m²] ',
     description: 'Wohnflaeche description',
   };
 
@@ -51,13 +62,16 @@ export class FormProjektNeuService {
   // Zertifizierung centralized form values
   zertifizierung: ZertifizierungNeubauObj = {
     options: [
-      { id: 'zert1', value: 'mit QNG', text: 'mit QNG Siegel'},
-      { id: 'zert2', value: 'ohne QNG', text: 'ohne QNG Siegel'},
-      { id: 'zert3', value: 'Keine', text: 'Keine Zertifizierung'},
+      { id: 'zert1', value: 'Keine', text: 'Keine Zertifizierung' },
+      { id: 'zert2', value: 'ohne QNG', text: 'ohne QNG Siegel' },
+      { id: 'zert3', value: 'mit QNG', text: 'mit QNG Siegel' },
     ],
-    title: 'Zertifizierung klimafreundlicher ',
+    title: 'Zertifizierung klimafreundlicher Neubau ',
     description: 'Neubau Zertifizierung klimafreundlicher description',
   };
+  // Signal to edit the disable property
+  zertifizierungDisabled$i = signal([false, false, false]);
+  zertifizierungWarningMessage$i = signal("")
 
   // Details
   // Kellergeschoss
@@ -77,8 +91,8 @@ export class FormProjektNeuService {
       { id: 'stpl3', value: 'Parkpalette' },
     ],
     title: 'Stellplätze ',
-    description: "Stellplaetze description" 
-  }
+    description: 'Stellplaetze description',
+  };
 
   // Aufzugsanlage
   aufzugsanlage: AufzugsanlageObj = {
@@ -87,8 +101,8 @@ export class FormProjektNeuService {
       { id: 'aufanl2', value: 'Nicht Vorhanden' },
     ],
     title: 'Aufzugsanlage ',
-    description: "Aufzugsanlage description"
-  }
+    description: 'Aufzugsanlage description',
+  };
 
   // Barrierefreiheit
   barrierefreiheit: BarrierefreiesBauenObj = {
@@ -99,8 +113,8 @@ export class FormProjektNeuService {
       { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine' },
     ],
     title: 'Barrierefreies Bauen ',
-    description: "Barrierefreiheit description" 
-  }
+    description: 'Barrierefreiheit description',
+  };
 
   // Dachbegruenung
   dachbegruenung: DachbegruenungObj = {
@@ -109,9 +123,9 @@ export class FormProjektNeuService {
       { id: 'dachbe2', value: 'Nicht Vorhanden' },
     ],
     title: 'Dachbegrünung ',
-    description: "Dachbegruenung description"
-  } 
- 
+    description: 'Dachbegruenung description',
+  };
+
   // Baustellenlogistik
   baustellenlogistik: BaustellenlogistikObj = {
     options: [
@@ -119,9 +133,9 @@ export class FormProjektNeuService {
       { id: 'baulog2', value: 'Nicht Vorhanden' },
     ],
     title: 'Anspruchsvolle Baustellenlogistik ',
-    description: "Baustellenlogistik description"
-  }
-  
+    description: 'Baustellenlogistik description',
+  };
+
   // Aussenanlagen
   aussenanlagen: AussenanlagenObj = {
     options: [
@@ -130,9 +144,9 @@ export class FormProjektNeuService {
       { id: 'ausanl3', value: 'Hoch' },
     ],
     title: 'Außenanlagen ',
-    description: "Aussenanlagen description"
-  }
-  
+    description: 'Aussenanlagen description',
+  };
+
   // Grundstücksbezogene Kosten
   grundstKosten: grundstKostenObj = {
     init: 0,
@@ -140,7 +154,7 @@ export class FormProjektNeuService {
     max: 1000,
     step: 1,
     title: 'Grundstuecksbezogene Kosten ',
-    description: "Grundstücksbezogene Kosten description"
+    description: 'Grundstücksbezogene Kosten description',
   };
 
   // Baunebenkosten (excl. Finanzierung)
@@ -150,7 +164,7 @@ export class FormProjektNeuService {
     max: 200,
     step: 1,
     title: 'Baunebenkosten Kein Fin ',
-    description: "Baunebenkosten (excl. Finanzierung) description"
+    description: 'Baunebenkosten (excl. Finanzierung) description',
   };
 
   // Observable for Wohnflaeche

@@ -36,6 +36,24 @@
     "Max": 310
   },
   {
+    "Energiestandard": "EH 85",
+    "ZustandBestand": "Unsaniert",
+    "Min": 500,
+    "Max": 720
+  },
+  {
+    "Energiestandard": "EH 85",
+    "ZustandBestand": "Teilsaniert",
+    "Min": 510,
+    "Max": 720
+  },
+  {
+    "Energiestandard": "EH 85",
+    "ZustandBestand": "Umfassend saniert",
+    "Min": 270,
+    "Max": 400
+  },
+  {
     "Energiestandard": "EH 70",
     "ZustandBestand": "Unsaniert",
     "Min": 520,
@@ -54,19 +72,19 @@
     "Max": 430
   },
   {
-    "Energiestandard": "GEG",
+    "Energiestandard": "EH 55",
     "ZustandBestand": "Unsaniert",
     "Min": 650,
     "Max": 850
   },
   {
-    "Energiestandard": "GEG",
+    "Energiestandard": "EH 55",
     "ZustandBestand": "Teilsaniert",
     "Min": 660,
     "Max": 870
   },
   {
-    "Energiestandard": "GEG",
+    "Energiestandard": "EH 55",
     "ZustandBestand": "Umfassend saniert",
     "Min": 490,
     "Max": 690

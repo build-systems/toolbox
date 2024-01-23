@@ -53,7 +53,7 @@ export class sanierung {
     EH40: 20,
     EH55: 15,
     EH70: 10,
-    // EH85: 5,
+    EH85: 5,
   };
   eeBonusPossible = 5;
   nhBonusPossible = 5;
@@ -74,7 +74,8 @@ export class sanierung {
   };
   // Percentages are also influenced by year the repayment start:
   // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
-
+  //
+  public kfwZuschussMinMultiplier = 0.4;
   // Safety multiplier
   public safetyMultiplier = 1.30;
 }

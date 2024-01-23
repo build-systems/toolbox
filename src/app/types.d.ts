@@ -5,6 +5,16 @@
 type ProjektTyp = 'Neubau' | 'Sanierung';
 
 // Projekt
+// User price
+type userPriceObj = {
+  min: number;
+  init: number;
+  max: number;
+  step: number;
+  title: string;
+  description: string;
+};
+
 // Wohnflaeche
 type wohnflaecheObj = {
   min: number;
@@ -39,7 +49,7 @@ type EnergiestandardNeubauObj = {
 };
 
 // Energiestandard Sanierung
-type EnergiestandardSanierung = 'EH 40' | 'GEG' | 'EH 70';
+type EnergiestandardSanierung = 'EH 40' | 'EH 55' | 'EH 70' | 'EH 85';
 type EnergiestandardSanierungOptions = {
   id: string;
   value: EnergiestandardSanierung;
@@ -144,10 +154,10 @@ type AufzugsanlageObj = {
 
 // Barrierefreies Bauen
 type BarrierefreiesBauen =
-| 'Keine Anforderungen'
-| 'Barrierereduziert'
-| 'Barrierefrei'
-| 'Barrierefrei (R)';
+  | 'Keine Anforderungen'
+  | 'Barrierereduziert'
+  | 'Barrierefrei'
+  | 'Barrierefrei (R)';
 type BarrierefreiesBauenOptions = {
   id: string;
   value: BarrierefreiesBauen;
@@ -260,18 +270,18 @@ type WorstPerformingBuildingObj = {
   value: boolean;
   title: string;
   description: string;
-}
+};
 
 // Serielle Sanierung
 type SerielleSanierungObj = {
   value: boolean;
   title: string;
   description: string;
-}
+};
 
 // EE Klasse
 type EeKlasseObj = {
   value: boolean;
   title: string;
   description: string;
-}
+};

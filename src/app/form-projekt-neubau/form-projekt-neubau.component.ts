@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormProjektNeuService } from './form-projekt-neu.service';
-import { NeubauService } from '../pages/neubau/neubau.service';
 
 @Component({
   selector: 'app-form-projekt-neubau',
@@ -27,6 +26,11 @@ export class FormProjektNeubauComponent implements OnInit {
   // Update the bi-directional number fields (input <-> range).
   // Update the form service.
 
+  // Form switches
+  // Kellergeschoss and Stellplätze
+  public noKellergeschoss: boolean = false;
+  public withUserPrice: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public formService: FormProjektNeuService
@@ -38,6 +42,21 @@ export class FormProjektNeubauComponent implements OnInit {
   ngOnInit(): void {
     this.projektFormNeu = this.fb.group({
       // These are form controls that go into the html
+      userPriceToggle: new FormControl(false),
+      userPriceRange: [
+        this.formService.userPrice.init, // init
+        [
+          Validators.min(this.formService.userPrice.min),
+          Validators.max(this.formService.userPrice.max),
+        ],
+      ],
+      userPrice: [
+        this.formService.userPrice.init, // init
+        [
+          Validators.min(this.formService.userPrice.min),
+          Validators.max(this.formService.userPrice.max),
+        ],
+      ],
       wohnflaecheRange: [
         // The values come from the FormProjektService
         this.formService.wohnflaeche.init,
@@ -128,6 +147,30 @@ export class FormProjektNeubauComponent implements OnInit {
       ],
     });
 
+    //User price
+    this.projektFormNeu
+      .get('userPriceToggle')
+      ?.valueChanges.subscribe((value) => {
+        this.withUserPrice = value;
+        ////////// Needs an observable //////////
+      });
+
+    this.projektFormNeu
+      .get('userPriceRange')
+      ?.valueChanges.subscribe((value) => {
+        this.projektFormNeu
+          .get('userPrice')
+          ?.setValue(value, { emitEvent: false });
+        ////////// Needs an observable //////////
+      });
+
+    this.projektFormNeu.get('userPrice')?.valueChanges.subscribe((value) => {
+      this.projektFormNeu
+        .get('userPriceRange')
+        ?.setValue(value, { emitEvent: false });
+      ////////// Needs an observable //////////
+    });
+
     // Wohnflaeche
     this.projektFormNeu
       .get('wohnflaecheRange')
@@ -183,9 +226,20 @@ export class FormProjektNeubauComponent implements OnInit {
         const konstruktion = this.projektFormNeu.get('konstruktion');
         if (value != 'EH 40') {
           zertifizierung?.setValue('Keine');
-          this.noQNG = true;
+          this.formService.zertifizierungDisabled$i.set([false, true, true]);
+          this.formService.zertifizierungWarningMessage$i.set(
+            '* Zertifizierung ist nur mit EH 40 möglich'
+          );
         } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
-          this.noQNG = false;
+          this.formService.zertifizierungDisabled$i.set([false, false, false]);
+        } else if (
+          value === 'EH 40' &&
+          konstruktion?.value === 'Konventionell'
+        ) {
+          this.formService.zertifizierungDisabled$i.set([false, false, true]);
+          this.formService.zertifizierungWarningMessage$i.set(
+            '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+          );
         }
       });
 
@@ -196,11 +250,21 @@ export class FormProjektNeubauComponent implements OnInit {
       // Relationship with Zertifizierung
       const energiestandard = this.projektFormNeu.get('energiestandard');
       const zertifizierung = this.projektFormNeu.get('zertifizierung');
-      if (value != 'Holzbau') {
-        zertifizierung?.setValue('Keine');
-        this.noQNG = true;
+      if (value === 'Konventionell' && energiestandard?.value === 'EH 40') {
+        if (zertifizierung?.value === 'mit QNG') {
+          zertifizierung?.setValue('Keine');
+        }
+        this.formService.zertifizierungDisabled$i.set([false, false, true]);
+        this.formService.zertifizierungWarningMessage$i.set(
+          '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+        );
+      } else if (
+        value === 'Konventionell' &&
+        energiestandard?.value != 'EH 40'
+      ) {
+        this.formService.zertifizierungDisabled$i.set([false, true, true]);
       } else if (value === 'Holzbau' && energiestandard?.value === 'EH 40') {
-        this.noQNG = false;
+        this.formService.zertifizierungDisabled$i.set([false, false, false]);
       }
     });
 
@@ -212,12 +276,6 @@ export class FormProjektNeubauComponent implements OnInit {
         const energiestandard = this.projektFormNeu.get('energiestandard');
         const konstruktion = this.projektFormNeu.get('konstruktion');
         this.formService.setZertifizierung(value);
-        if (
-          energiestandard?.value === 'EH 40' &&
-          konstruktion?.value === 'Holzbau'
-        ) {
-          this.noQNG = false;
-        }
       });
 
     // Susbscribe to form changes
@@ -311,10 +369,4 @@ export class FormProjektNeubauComponent implements OnInit {
     // Call the blur method on the target element to remove focus
     event.target.blur();
   }
-
-  // Zertifizierung: if user try to select conflicting options
-  public noQNG: boolean = false;
-
-  // Kellergeschoss and Stellplätze
-  public noKellergeschoss: boolean = false;
 }

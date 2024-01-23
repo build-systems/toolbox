@@ -175,9 +175,11 @@ export class SanierungService {
   // Tilgungszuschuss [%]
   private _tilgungszuschuss = 0;
   private updateTilgungszuschuss() {
-    if (this.energiestandard === 'EH 70') {
+    if (this.energiestandard === 'EH 85') {
+      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH85;
+    } else if (this.energiestandard === 'EH 70') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH70;
-    } else if (this.energiestandard === 'GEG') {
+    } else if (this.energiestandard === 'EH 55') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH55;
     } else if (this.energiestandard === 'EH 40') {
       this._tilgungszuschuss = this.constants.tilgungszuschuss.EH40;
@@ -212,7 +214,7 @@ export class SanierungService {
     if (
       this.worstPerformingBuilding.value === true &&
       (this.energiestandard === 'EH 70' ||
-        this.energiestandard === 'GEG' ||
+        this.energiestandard === 'EH 55' ||
         this.energiestandard === 'EH 40')
     ) {
       this._wpbBonus = this.constants.wpbBonusPossible;
@@ -226,7 +228,7 @@ export class SanierungService {
   private updateSerSanBonus() {
     if (
       this.serielleSanierung.value === true &&
-      (this.energiestandard === 'GEG' || this.energiestandard === 'EH 40')
+      (this.energiestandard === 'EH 55' || this.energiestandard === 'EH 40')
     )
       this._serSanBonus = this.constants.serSanBonusPossible;
     else this._serSanBonus = 0;
@@ -368,7 +370,7 @@ export class SanierungService {
         this._serSanBonus) /
         100) *
         this._foerdersumme,
-      0.4 * this._foerdersumme
+        this.constants.kfwZuschussMinMultiplier * this._foerdersumme
     );
   }
 
