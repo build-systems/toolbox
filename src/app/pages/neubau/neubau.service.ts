@@ -323,9 +323,9 @@ export class NeubauService {
     } else if (this.energiestandard === 'EH 70') {
       this._energetischerStandardOut =
         this.constants.energetischerStandardPrice.EH70;
-    // } else if (this.energiestandard === 'EH 85') {
+      // } else if (this.energiestandard === 'EH 85') {
       // this._energetischerStandardOut =
-        // this.constants.energetischerStandardPrice.EH85;
+      // this.constants.energetischerStandardPrice.EH85;
     } else {
       this._energetischerStandardOut = 0;
     }
@@ -336,18 +336,19 @@ export class NeubauService {
   private _gestehungskosten = 0;
   private updateGestehungskosten() {
     this._gestehungskosten =
-      this.constants.gestehungskostenBase +
-      this._kellergeschossOut +
-      this._stellplaetzeOut +
-      this._redGarageOut +
-      this._aufzugsanlageOut +
-      this._barrierefreiheitOut +
-      this._dachbegruenungOut +
-      this._baustellenlogistikOut +
-      this._energetischerStandardOut +
-      this._aussenanlagenOut +
-      this.grundstuecksbezogeneKosten +
-      this.baunebenkostenKeinFin;
+      (this.constants.gestehungskostenBase +
+        this._kellergeschossOut +
+        this._stellplaetzeOut +
+        this._redGarageOut +
+        this._aufzugsanlageOut +
+        this._barrierefreiheitOut +
+        this._dachbegruenungOut +
+        this._baustellenlogistikOut +
+        this._energetischerStandardOut +
+        this._aussenanlagenOut +
+        this.grundstuecksbezogeneKosten +
+        this.baunebenkostenKeinFin) *
+      this.constants.safetyMultiplier;
   }
 
   // NR-Kredit [%]
@@ -406,13 +407,13 @@ export class NeubauService {
   private updateRestsumme() {
     if (this.konstruktion === 'Holzbau') {
       this._restsumme =
-        (this.wohnflaeche *
+        this.wohnflaeche *
           this._gestehungskosten *
           this.constants.restsummeHolzbau -
-        this._kfwKredit) * this.constants.safetyMultiplier;
+        this._kfwKredit;
     } else {
       this._restsumme =
-        (this.wohnflaeche * this._gestehungskosten - this._kfwKredit) * this.constants.safetyMultiplier;
+        this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
     }
     // Make sure it doesn't go negative
     this._restsumme = this._restsumme < 0 ? 0 : this._restsumme;
