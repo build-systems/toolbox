@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, filter, skipWhile } from 'rxjs';
 import { NeubauProjekt } from '../../shared/neubauprojekt';
 import { neubau } from '../../shared/constants';
@@ -11,6 +11,9 @@ import { DashboardOutput } from '../../dashboard-output';
   providedIn: 'root',
 })
 export class NeubauService {
+  // Neubau active form tab
+  public currentTab = signal(1);
+
   // Project parameters
   wohnflaeche = this.formProjektNeuService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
@@ -370,6 +373,8 @@ export class NeubauService {
       this._sollzinsKfw = this.constants.sollzinsKfw_Endfälliges;
     } else if (this.kfWDarlehen === 'Annuitäten') {
       this._sollzinsKfw = this._nrKredit;
+    } else {
+      this._sollzinsKfw = 0;
     }
   }
 
@@ -478,6 +483,8 @@ export class NeubauService {
         this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
     } else if (this.kfWDarlehen === 'Endfälliges') {
       this._finanzierungskostenKfw = this._efKfW;
+    } else {
+      this._finanzierungskostenKfw = 0;
     }
   }
 
@@ -489,6 +496,8 @@ export class NeubauService {
         this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
     } else if (this.bankDarlehen === 'Endfälliges') {
       this._finanzierungskostenFinanzmarkt = this._efBank;
+    } else {
+      this._finanzierungskostenFinanzmarkt = 0;
     }
   }
 

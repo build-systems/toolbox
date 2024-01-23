@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, filter, skipWhile } from 'rxjs';
 import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
@@ -12,6 +12,9 @@ import { DashboardOutput } from '../../dashboard-output';
   providedIn: 'root',
 })
 export class SanierungService {
+  // Neubau active form tab
+  public currentTab = signal(1);
+
   // Project parameters
   wohnflaeche = this.formProjektService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;

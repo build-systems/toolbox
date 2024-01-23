@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
 import { ChartGkostenNeubauComponent } from '../../chart-gkosten-neubau/chart-gkosten-neubau.component';
@@ -37,29 +37,19 @@ export class NeubauComponent {
 
   title = 'Neubau';
 
-  // Handle form page
-  currentForm = 1;
-  nForms = 3;
-  nextForm() {
-    if (this.currentForm + 1 <= this.nForms) this.currentForm += 1;
-  }
-  previousForm() {
-    if (this.currentForm - 1 >= 1) this.currentForm -= 1;
-  }
-
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
   }
 
-  // Reset was created to make sure the outputs match the form values
-  // After doing some changes, going to another route and then coming back the outputs were the same
-  // while the form had reset to default values
-  // Another solution would be to restore the previous values. But that would require more work.
-  // The main problem is that the forms are being reused across different projects/routes
-  // So it would require either separating the forms, or identifying the current route in each form
-  // to then assign the form values from the service(neubau / sanierung).
-  constructor(private neubauService: NeubauService) {
+  constructor(public neubauService: NeubauService) {
+    // Reset was created to make sure the outputs match the form values
+    // After doing some changes, going to another route and then coming back the outputs were the same
+    // while the form had reset to default values
+    // Another solution would be to restore the previous values. But that would require more work.
+    // The main problem is that the forms are being reused across different projects/routes
+    // So it would require separating the forms.
+    // I think it could easily be done using signals
     neubauService.reset();
   }
 }

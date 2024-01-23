@@ -37,22 +37,19 @@ export class SanierungComponent {
 
   title = 'Sanierung';
 
-  // Handle form page
-  currentForm = 1;
-  nForms = 3;
-  nextForm() {
-    if (this.currentForm + 1 <= this.nForms) this.currentForm += 1;
-  }
-  previousForm() {
-    if (this.currentForm - 1 >= 1) this.currentForm -= 1;
-  }
-
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
   }
 
-  constructor(private sanierungService: SanierungService) {
+  constructor(public sanierungService: SanierungService) {
+    // Reset was created to make sure the outputs match the form values
+    // After doing some changes, going to another route and then coming back the outputs were the same
+    // while the form had reset to default values
+    // Another solution would be to restore the previous values. But that would require more work.
+    // The main problem is that the forms are being reused across different projects/routes
+    // So it would require separating the forms.
+    // I think it could easily be done using signals
     sanierungService.reset();
   }
 }

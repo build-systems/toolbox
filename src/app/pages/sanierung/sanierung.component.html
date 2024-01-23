@@ -8,9 +8,9 @@
         type="button"
         value="Projekt"
         title="Projekt Formular"
-        (click)="currentForm = 1"
+        (click)="this.sanierungService.currentTab.set(1)"
         [className]="
-          currentForm === 1
+          this.sanierungService.currentTab() === 1
             ? 'full-pill left-pill pill'
             : 'grayed-pill left-pill pill'
         "
@@ -19,9 +19,9 @@
         type="button"
         value="Darlehen"
         title="Darlehen Formular"
-        (click)="currentForm = 2"
+        (click)="this.sanierungService.currentTab.set(2)"
         [className]="
-          currentForm === 2
+          this.sanierungService.currentTab() === 2
             ? 'full-pill right-pill pill'
             : 'grayed-pill right-pill pill'
         "
@@ -29,9 +29,9 @@
     </div>
     <div class="wraper-gradient">
       <app-form-projekt-sanierung
-        [hidden]="!(currentForm === 1)"
+        [hidden]="!(this.sanierungService.currentTab() === 1)"
       ></app-form-projekt-sanierung>
-      <app-form-darlehen [hidden]="!(currentForm === 2)"></app-form-darlehen>
+      <app-form-darlehen [hidden]="!(this.sanierungService.currentTab() === 2)"></app-form-darlehen>
     </div>
   </div>
   <div class="output">
