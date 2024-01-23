@@ -30,7 +30,7 @@ export class FormDarlehenComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public formService: FormDarlehenService,
+    public formService: FormDarlehenService
   ) {}
 
   ngOnInit(): void {
@@ -79,7 +79,7 @@ export class FormDarlehenComponent implements OnInit {
         this.darlehenForm
           .get('kalkRealzins')
           ?.setValue(value.toFixed(2), { emitEvent: false });
-        // Also updates the sanierungService observable
+        // Updates the sanierungService observable
         this.formService.setKalkRealzins(value);
       });
 
@@ -102,6 +102,8 @@ export class FormDarlehenComponent implements OnInit {
           ?.setValue(value, { emitEvent: false });
         // Also updates the sanierungService
         this.formService.setKreditlaufzeit(value);
+        // Check if inside Endfälliges range
+        this.noEndfaelliges = this.updateNoEndfaelliges(value);
       });
 
     // When number input changes...
@@ -112,6 +114,8 @@ export class FormDarlehenComponent implements OnInit {
         ?.setValue(value, { emitEvent: false });
       // and also updates the formService
       this.formService.setKreditlaufzeit(value);
+      // Check if inside Endfälliges range
+      this.noEndfaelliges = this.updateNoEndfaelliges(value);
     });
 
     // KfW Darlehen
@@ -127,4 +131,13 @@ export class FormDarlehenComponent implements OnInit {
     });
   }
 
+  // Enfälliges not possible
+  public noEndfaelliges = false;
+  private updateNoEndfaelliges(value: number) {
+    if (value > 10 || value < 4) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

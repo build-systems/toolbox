@@ -16,7 +16,7 @@ export class FormDarlehenService {
   // Kreditlaufzeit centralized form values
   kreditlaufzeit = {
     min: 1,
-    init: 20,
+    init: 10,
     max: 30,
     step: 1,
   };
