@@ -26,6 +26,10 @@ export class FormProjektSanierungComponent implements OnInit {
   // Update the bi-directional number fields (input <-> range).
   // Update the form service.
 
+  // public withUserPrice: boolean = false;
+    // Zertifizierung warning: if user try to select conflicting
+  public noQNG: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public formService: FormProjektSanService
@@ -36,6 +40,22 @@ export class FormProjektSanierungComponent implements OnInit {
 
   ngOnInit(): void {
     this.projektFormSan = this.fb.group({
+      // These are form controls that go into the html
+      userPriceToggle: new FormControl(false),
+      userPriceRange: [
+        this.formService.userPrice.init, // init
+        [
+          Validators.min(this.formService.userPrice.min),
+          Validators.max(this.formService.userPrice.max),
+        ],
+      ],
+      userPrice: [
+        this.formService.userPrice.init, // init
+        [
+          Validators.min(this.formService.userPrice.min),
+          Validators.max(this.formService.userPrice.max),
+        ],
+      ],
       // These are form controls that go into the html
       wohnflaecheRange: [
         // The values come from the FormProjektService
@@ -81,6 +101,29 @@ export class FormProjektSanierungComponent implements OnInit {
       ),
       eeKlasse: new FormControl(this.formService.eeKlasse),
     });
+
+        //User price
+        this.projektFormSan
+        .get('userPriceToggle')
+        ?.valueChanges.subscribe((value) => {
+          this.formService.setUserPriceToggle(value);
+        });
+  
+      this.projektFormSan
+        .get('userPriceRange')
+        ?.valueChanges.subscribe((value) => {
+          this.projektFormSan
+            .get('userPrice')
+            ?.setValue(value, { emitEvent: false });
+          this.formService.setUserPrice(value);
+        });
+  
+      this.projektFormSan.get('userPrice')?.valueChanges.subscribe((value) => {
+        this.projektFormSan
+          .get('userPriceRange')
+          ?.setValue(value, { emitEvent: false });
+          this.formService.setUserPrice(value);
+      });
 
     // Wohnflaeche
     this.projektFormSan
@@ -138,8 +181,12 @@ export class FormProjektSanierungComponent implements OnInit {
           if (zertifizierung?.value === 'QNG') {
             zertifizierung?.setValue('Keine Zertifizierung');
           }
+          // Disable mit QNG Siegel
+          this.formService.zertifizierung.options[0].disabled = true;
           this.noQNG = true;
         } else {
+          // Enable mit QNG Siegel
+          this.formService.zertifizierung.options[0].disabled = false;
           this.noQNG = false;
         }
       });
@@ -195,7 +242,4 @@ export class FormProjektSanierungComponent implements OnInit {
     // Call the blur method on the target element to remove focus
     event.target.blur();
   }
-
-  // Zertifizierung warning: if user try to select conflicting
-  public noQNG: boolean = false;
 }

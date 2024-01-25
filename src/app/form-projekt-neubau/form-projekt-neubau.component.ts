@@ -29,7 +29,6 @@ export class FormProjektNeubauComponent implements OnInit {
   // Form switches
   // Kellergeschoss and Stellplätze
   public noKellergeschoss: boolean = false;
-  public withUserPrice: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -147,12 +146,11 @@ export class FormProjektNeubauComponent implements OnInit {
       ],
     });
 
-    //User price
+    // User price
     this.projektFormNeu
       .get('userPriceToggle')
       ?.valueChanges.subscribe((value) => {
-        this.withUserPrice = value;
-        ////////// Needs an observable //////////
+        this.formService.setUserPriceToggle(value);
       });
 
     this.projektFormNeu
@@ -161,16 +159,17 @@ export class FormProjektNeubauComponent implements OnInit {
         this.projektFormNeu
           .get('userPrice')
           ?.setValue(value, { emitEvent: false });
-        ////////// Needs an observable //////////
+        this.formService.setUserPrice(value);
       });
 
     this.projektFormNeu.get('userPrice')?.valueChanges.subscribe((value) => {
       this.projektFormNeu
         .get('userPriceRange')
         ?.setValue(value, { emitEvent: false });
-      ////////// Needs an observable //////////
+      this.formService.setUserPrice(value);
     });
 
+    // Down from here I was using Rxjs observables
     // Wohnflaeche
     this.projektFormNeu
       .get('wohnflaecheRange')
@@ -226,17 +225,23 @@ export class FormProjektNeubauComponent implements OnInit {
         const konstruktion = this.projektFormNeu.get('konstruktion');
         if (value != 'EH 40') {
           zertifizierung?.setValue('Keine');
-          this.formService.zertifizierungDisabled$i.set([false, true, true]);
+          this.formService.zertifizierung.options[0].disabled = false;
+          this.formService.zertifizierung.options[1].disabled = true;
+          this.formService.zertifizierung.options[2].disabled = true;
           this.formService.zertifizierungWarningMessage$i.set(
             '* Zertifizierung ist nur mit EH 40 möglich'
           );
         } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
-          this.formService.zertifizierungDisabled$i.set([false, false, false]);
+          this.formService.zertifizierung.options[0].disabled = false;
+          this.formService.zertifizierung.options[1].disabled = false;
+          this.formService.zertifizierung.options[2].disabled = false;
         } else if (
           value === 'EH 40' &&
           konstruktion?.value === 'Konventionell'
         ) {
-          this.formService.zertifizierungDisabled$i.set([false, false, true]);
+          this.formService.zertifizierung.options[0].disabled = false;
+          this.formService.zertifizierung.options[1].disabled = false;
+          this.formService.zertifizierung.options[2].disabled = true;
           this.formService.zertifizierungWarningMessage$i.set(
             '* QNG-Zertifizierung ist nur mit Holzbau möglich'
           );
@@ -254,7 +259,9 @@ export class FormProjektNeubauComponent implements OnInit {
         if (zertifizierung?.value === 'mit QNG') {
           zertifizierung?.setValue('Keine');
         }
-        this.formService.zertifizierungDisabled$i.set([false, false, true]);
+        this.formService.zertifizierung.options[0].disabled = false;
+        this.formService.zertifizierung.options[1].disabled = false;
+        this.formService.zertifizierung.options[2].disabled = true;
         this.formService.zertifizierungWarningMessage$i.set(
           '* QNG-Zertifizierung ist nur mit Holzbau möglich'
         );
@@ -262,9 +269,13 @@ export class FormProjektNeubauComponent implements OnInit {
         value === 'Konventionell' &&
         energiestandard?.value != 'EH 40'
       ) {
-        this.formService.zertifizierungDisabled$i.set([false, true, true]);
+        this.formService.zertifizierung.options[0].disabled = false;
+        this.formService.zertifizierung.options[1].disabled = true;
+        this.formService.zertifizierung.options[2].disabled = true;
       } else if (value === 'Holzbau' && energiestandard?.value === 'EH 40') {
-        this.formService.zertifizierungDisabled$i.set([false, false, false]);
+        this.formService.zertifizierung.options[0].disabled = false;
+        this.formService.zertifizierung.options[1].disabled = false;
+        this.formService.zertifizierung.options[2].disabled = false;
       }
     });
 

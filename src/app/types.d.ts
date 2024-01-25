@@ -13,6 +13,7 @@ type userPriceObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // Wohnflaeche
@@ -23,6 +24,7 @@ type wohnflaecheObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // Anzahl Wohnungen
@@ -33,6 +35,7 @@ type anzahlWohnungenObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // Energiestandard Neubau
@@ -41,6 +44,7 @@ type EnergiestandardNeubauOptions = {
   id: string;
   value: EnergiestandardNeubau;
   text?: string;
+  disabled: boolean;
 };
 type EnergiestandardNeubauObj = {
   options: EnergiestandardNeubauOptions[];
@@ -54,6 +58,7 @@ type EnergiestandardSanierungOptions = {
   id: string;
   value: EnergiestandardSanierung;
   text?: string;
+  disabled: boolean;
 };
 type EnergiestandardSanierungObj = {
   options: EnergiestandardSanierungOptions[];
@@ -67,6 +72,7 @@ type KonstruktionOptions = {
   id: string;
   value: Konstruktion;
   text?: string;
+  disabled: boolean;
 };
 type KonstruktionObj = {
   options: KonstruktionOptions[];
@@ -80,6 +86,7 @@ type ZertifizierungNeubauOptions = {
   id: string;
   value: ZertifizierungNeubau;
   text?: string;
+  disabled: boolean;
 };
 type ZertifizierungNeubauObj = {
   options: ZertifizierungNeubauOptions[];
@@ -93,6 +100,7 @@ type ZertifizierungSanierungOptions = {
   id: string;
   value: ZertifizierungSanierung;
   text?: string;
+  disabled: boolean;
 };
 type ZertifizierungSanierungObj = {
   options: ZertifizierungSanierungOptions[];
@@ -106,6 +114,7 @@ type ZustandBestandOptions = {
   id: string;
   value: ZustandBestand;
   text?: string;
+  disabled: boolean;
 };
 type ZustandBestandObj = {
   options: ZustandBestandOptions[];
@@ -119,6 +128,7 @@ type KellergeschossOptions = {
   id: string;
   value: Kellergeschoss;
   text?: string;
+  disabled: boolean;
 };
 type KellergeschossObj = {
   options: KellergeschossOptions[];
@@ -132,6 +142,7 @@ type StellplaetzeOptions = {
   id: string;
   value: Stellplaetze;
   text?: string;
+  disabled: boolean;
 };
 type StellplaetzeObj = {
   options: StellplaetzeOptions[];
@@ -145,6 +156,7 @@ type AufzugsanlageOptions = {
   id: string;
   value: Aufzugsanlage;
   text?: string;
+  disabled: boolean;
 };
 type AufzugsanlageObj = {
   options: AufzugsanlageOptions[];
@@ -162,6 +174,7 @@ type BarrierefreiesBauenOptions = {
   id: string;
   value: BarrierefreiesBauen;
   text?: string;
+  disabled: boolean;
 };
 type BarrierefreiesBauenObj = {
   options: BarrierefreiesBauenOptions[];
@@ -175,6 +188,7 @@ type DachbegruenungOptions = {
   id: string;
   value: Dachbegruenung;
   text?: string;
+  disabled: boolean;
 };
 type DachbegruenungObj = {
   options: DachbegruenungOptions[];
@@ -188,6 +202,7 @@ type BaustellenlogistikOptions = {
   id: string;
   value: Baustellenlogistik;
   text?: string;
+  disabled: boolean;
 };
 type BaustellenlogistikObj = {
   options: BaustellenlogistikOptions[];
@@ -201,6 +216,7 @@ type AussenanlagenOptions = {
   id: string;
   value: Aussenanlagen;
   text?: string;
+  disabled: boolean;
 };
 type AussenanlagenObj = {
   options: AussenanlagenOptions[];
@@ -216,7 +232,18 @@ type grundstKostenObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
+
+type baunebenkostenKeinFinObj = {
+  init: number;
+  min: number;
+  max: number;
+  step: number;
+  title: string;
+  description: string;
+  disabled: boolean;
+}
 
 // Darlehen
 // Kalkulationszinssatz (Realzins)
@@ -227,6 +254,7 @@ type KalkRealzinsObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // Kreditlaufzeit
@@ -237,6 +265,7 @@ type KreditlaufzeitObj = {
   step: number;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // KfW Darlehen
@@ -245,6 +274,7 @@ type KfWDarlehenOptions = {
   id: string;
   value: KfWDarlehen;
   text?: string;
+  disabled: boolean;
 };
 type KfWDarlehenObj = {
   options: KfWDarlehenOptions[];
@@ -258,6 +288,7 @@ type BankDarlehenOptions = {
   id: string;
   value: BankDarlehen;
   text?: string;
+  disabled: boolean;
 };
 type BankDarlehenObj = {
   options: BankDarlehenOptions[];
@@ -270,6 +301,7 @@ type WorstPerformingBuildingObj = {
   value: boolean;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // Serielle Sanierung
@@ -277,6 +309,7 @@ type SerielleSanierungObj = {
   value: boolean;
   title: string;
   description: string;
+  disabled: boolean;
 };
 
 // EE Klasse
@@ -284,4 +317,5 @@ type EeKlasseObj = {
   value: boolean;
   title: string;
   description: string;
+  disabled: boolean;
 };

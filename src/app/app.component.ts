@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     // Update session observable
     this.supabase.authChanges((_, session) => (this.session = session));
-    console.log(this.session);
+    // console.log(this.session);
   }
 
   onWindowResize() {

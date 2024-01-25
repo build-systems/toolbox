@@ -1,5 +1,4 @@
 <form [formGroup]="projektFormSan">
-  <!-- <h2>Projekt</h2> -->
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -75,6 +74,7 @@
         [value]="item.value"
         name="energiestandard"
         formControlName="energiestandard"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -98,12 +98,12 @@
         [value]="item.value"
         name="zertifizierung"
         formControlName="zertifizierung"
-        [attr.disabled]="(noQNG && item.value === 'QNG') ? '' : null"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
-  @if (noQNG) {
+  @if (formService.zertifizierung.options[0].disabled || formService.zertifizierung.options[1].disabled) {
   <div class="warning-block">*QNG ist nur mit EH 40 möglich</div>
   }
   <fieldset>
@@ -119,6 +119,7 @@
       type="checkbox"
       id="worstPerformingBuilding"
       formControlName="worstPerformingBuilding"
+      [attr.disabled]="formService.worstPerformingBuilding.disabled ? '' : null"
     />
     <label for="worstPerformingBuilding" class="checkbox-container">
       Ja
@@ -138,11 +139,76 @@
       type="checkbox"
       id="serielleSanierung"
       formControlName="serielleSanierung"
+      [attr.disabled]="formService.serielleSanierung.disabled ? '' : null"
     />
     <label for="serielleSanierung" class="checkbox-container">
       Ja
       <span class="checkmark"></span>
     </label>
+  </fieldset>
+  <fieldset>
+    <legend>
+      {{ formService.eeKlasse.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.eeKlasse.description
+        }}</span></sup
+      >
+    </legend>
+    <input
+      type="checkbox"
+      id="eeKlasse"
+      formControlName="eeKlasse"
+      [attr.disabled]="formService.eeKlasse.disabled ? '' : null"
+    />
+    <label for="eeKlasse" class="checkbox-container">
+      Ja
+      <span class="checkmark"></span>
+    </label>
+  </fieldset>
+  <div class="toggle-wrapper">
+    <label for="userPriceToggle" class="label-toggle">
+      Set my own price estimation
+      <sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom"
+          >Define your own estimated budget</span
+        ></sup
+      >
+    </label>
+    <div class="checkbox-toggle-wrapper">
+      <label class="toggle-box">
+        <input
+          type="checkbox"
+          id="userPriceToggle"
+          formControlName="userPriceToggle"
+        />
+        <span class="toggle-round"></span>
+      </label>
+    </div>
+  </div>
+  <fieldset class="userPrice">
+    <legend>
+      {{ this.formService.userPrice.title }}
+    </legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="userPriceRange"
+        name="userPriceRange"
+        [min]="this.formService.userPrice.min"
+        [max]="this.formService.userPrice.max"
+        [step]="this.formService.userPrice.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="userPrice"
+        name="userPrice"
+        [min]="this.formService.userPrice.min"
+        [max]="this.formService.userPrice.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
@@ -163,23 +229,9 @@
         [value]="item.value"
         name="zustandBestand"
         formControlName="zustandBestand"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
-  </fieldset>
-  <fieldset>
-    <legend>
-      {{ formService.eeKlasse.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-top">{{
-          formService.eeKlasse.description
-        }}</span></sup
-      >
-    </legend>
-    <input type="checkbox" id="eeKlasse" formControlName="eeKlasse" />
-    <label for="eeKlasse" class="checkbox-container">
-      Ja
-      <span class="checkmark"></span>
-    </label>
   </fieldset>
 </form>

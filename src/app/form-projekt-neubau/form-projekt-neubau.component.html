@@ -1,57 +1,4 @@
 <form [formGroup]="projektFormNeu">
-  <div class="toogle-wrapper">
-    <label for="userPriceToggle" class="label-toggle">
-      Set my own price estimation
-      <sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-bottom"
-          >Define your own estimated budget</span
-        ></sup
-      >
-    </label>
-    <div class="checkbox-toggle-wrapper">
-      <label class="toggle-box">
-        <input
-          type="checkbox"
-          id="userPriceToggle"
-          formControlName="userPriceToggle"
-        />
-        <span class="toggle-round"></span>
-      </label>
-    </div>
-  </div>
-  @if (this.withUserPrice) {
-  <span style="color: tomato">* Feature in development</span>
-    <fieldset style="border: 1px solid tomato">
-      <legend>
-        {{ this.formService.userPrice.title }}
-        <sup class="tooltip"
-          >&#9432;<span class="tooltiptext tooltip-bottom">{{
-            this.formService.userPrice.description
-          }}</span></sup
-        >
-      </legend>
-      <span class="slidernumber">
-        <input
-          type="range"
-          formControlName="userPriceRange"
-          name="userPriceRange"
-          [min]="this.formService.userPrice.min"
-          [max]="this.formService.userPrice.max"
-          [step]="this.formService.userPrice.step"
-          class="slider"
-        />
-        <input
-          type="number"
-          formControlName="userPrice"
-          name="userPrice"
-          [min]="this.formService.userPrice.min"
-          [max]="this.formService.userPrice.max"
-          (keyup.enter)="onEnterKey($event)"
-        />
-      </span>
-    </fieldset>
-
-  }
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -127,6 +74,7 @@
         [value]="item.value"
         name="energiestandard"
         formControlName="energiestandard"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -150,11 +98,11 @@
         [value]="item.value"
         name="konstruktion"
         formControlName="konstruktion"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
-  <!-- I couldn't find a dynamic way to disable a single radio input option created with ngFor -->
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.zertifizierung.title
@@ -174,20 +122,67 @@
         [value]="item.value"
         name="zertifizierung"
         formControlName="zertifizierung"
-        [attr.disabled]="
-          this.formService.zertifizierungDisabled$i()[i] ? '' : null
-        "
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [title]="item.text" [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
-  @if (this.formService.zertifizierungDisabled$i()[0] ||
-  this.formService.zertifizierungDisabled$i()[1] ||
-  this.formService.zertifizierungDisabled$i()[2]) {
+  @if (this.formService.zertifizierung.options[0].disabled ||
+  this.formService.zertifizierung.options[1].disabled ||
+  this.formService.zertifizierung.options[2].disabled) {
   <div class="warning-block">
     {{ this.formService.zertifizierungWarningMessage$i() }}
   </div>
   }
+  <div class="toggle-wrapper">
+    <label for="userPriceToggle" class="label-toggle">
+      Set my own price estimation
+      <sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom"
+          >Define your own estimated budget</span
+        ></sup
+      >
+    </label>
+    <div class="checkbox-toggle-wrapper">
+      <label class="toggle-box">
+        <input
+          type="checkbox"
+          id="userPriceToggle"
+          formControlName="userPriceToggle"
+        />
+        <span class="toggle-round"></span>
+      </label>
+    </div>
+  </div>
+  <fieldset class="userPrice">
+    <legend>
+      {{ this.formService.userPrice.title }}
+      <sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          this.formService.userPrice.description
+        }}</span></sup
+      >
+    </legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="userPriceRange"
+        name="userPriceRange"
+        [min]="this.formService.userPrice.min"
+        [max]="this.formService.userPrice.max"
+        [step]="this.formService.userPrice.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="userPrice"
+        name="userPrice"
+        [min]="this.formService.userPrice.min"
+        [max]="this.formService.userPrice.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.kellergeschoss.title
@@ -207,6 +202,7 @@
         [value]="item.value"
         name="kellergeschossIn"
         formControlName="kellergeschossIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -230,9 +226,7 @@
         [value]="item.value"
         name="stellplaetzeIn"
         formControlName="stellplaetzeIn"
-        [attr.disabled]="
-          noKellergeschoss && item.value === 'Tiefgarage' ? '' : null
-        "
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -259,6 +253,7 @@
         [value]="item.value"
         name="aufzugsanlageIn"
         formControlName="aufzugsanlageIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -282,8 +277,8 @@
         [value]="item.value"
         name="barrierefreiheitIn"
         formControlName="barrierefreiheitIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
-      <!-- I added innerHTML in this one to be able to breakword with <wbr /> -->
       <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
@@ -306,6 +301,7 @@
         [value]="item.value"
         name="dachbegruenungIn"
         formControlName="dachbegruenungIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -329,6 +325,7 @@
         [value]="item.value"
         name="baustellenlogistikIn"
         formControlName="baustellenlogistikIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -352,6 +349,7 @@
         [value]="item.value"
         name="aussenanlagenIn"
         formControlName="aussenanlagenIn"
+        [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
@@ -373,6 +371,7 @@
         [max]="formService.grundstKosten.max"
         [step]="formService.grundstKosten.step"
         class="slider"
+        [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />
       <input
         type="number"
@@ -381,6 +380,7 @@
         [min]="formService.grundstKosten.min"
         [max]="formService.grundstKosten.max"
         (keyup.enter)="onEnterKey($event)"
+        [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />
     </span>
   </fieldset>
@@ -401,6 +401,7 @@
         [max]="formService.baunebenkostenKeinFin.max"
         [step]="formService.baunebenkostenKeinFin.step"
         class="slider"
+        [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />
       <input
         type="number"
@@ -409,6 +410,7 @@
         [min]="formService.baunebenkostenKeinFin.min"
         [max]="formService.baunebenkostenKeinFin.max"
         (keyup.enter)="onEnterKey($event)"
+        [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />
     </span>
   </fieldset>

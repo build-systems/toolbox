@@ -14,35 +14,37 @@ export class NeubauService {
   // Neubau active form tab
   public currentTab = signal(1);
 
-  // Project parameters
-  wohnflaeche = this.formProjektNeuService.wohnflaeche.init;
-  anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
+  // Initial project parameters
+  userPriceDisabled = this.formProjektService.userPrice.disabled;
+  userPrice = this.formProjektService.userPrice.init;
+  wohnflaeche = this.formProjektService.wohnflaeche.init;
+  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
   energiestandard: EnergiestandardNeubau =
-    this.formProjektNeuService.energiestandard.options[0].value;
+    this.formProjektService.energiestandard.options[0].value;
   konstruktion: Konstruktion =
-    this.formProjektNeuService.konstruktion.options[0].value;
+    this.formProjektService.konstruktion.options[0].value;
   zertifizierung: ZertifizierungNeubau =
-    this.formProjektNeuService.zertifizierung.options[0].value;
+    this.formProjektService.zertifizierung.options[0].value;
 
   // Neubau form parameters
   kellergeschossIn: Kellergeschoss =
-    this.formProjektNeuService.kellergeschoss.options[0].value;
+    this.formProjektService.kellergeschoss.options[0].value;
   stellplaetzeIn: Stellplaetze =
-    this.formProjektNeuService.stellplaetze.options[0].value;
+    this.formProjektService.stellplaetze.options[0].value;
   aufzugsanlageIn: Aufzugsanlage =
-    this.formProjektNeuService.aufzugsanlage.options[0].value;
+    this.formProjektService.aufzugsanlage.options[0].value;
   barrierefreiheitIn: BarrierefreiesBauen =
-    this.formProjektNeuService.barrierefreiheit.options[0].value;
+    this.formProjektService.barrierefreiheit.options[0].value;
   dachbegruenungIn: Dachbegruenung =
-    this.formProjektNeuService.dachbegruenung.options[0].value;
+    this.formProjektService.dachbegruenung.options[0].value;
   baustellenlogistikIn: Baustellenlogistik =
-    this.formProjektNeuService.baustellenlogistik.options[0].value;
+    this.formProjektService.baustellenlogistik.options[0].value;
   aussenanlagenIn: Aussenanlagen =
-    this.formProjektNeuService.aussenanlagen.options[0].value;
+    this.formProjektService.aussenanlagen.options[0].value;
   grundstuecksbezogeneKosten: number =
-    this.formProjektNeuService.grundstKosten.init;
+    this.formProjektService.grundstKosten.init;
   baunebenkostenKeinFin: number =
-    this.formProjektNeuService.baunebenkostenKeinFin.init;
+    this.formProjektService.baunebenkostenKeinFin.init;
 
   // Darlehen parameters
   kalkRealzins = this.formDarlehenService.kalkRealzins.init;
@@ -58,20 +60,41 @@ export class NeubauService {
 
   constructor(
     private constants: neubau,
-    private formProjektNeuService: FormProjektNeuService,
+    private formProjektService: FormProjektNeuService,
     private formDarlehenService: FormDarlehenService,
     private router: Router
   ) {
-    router.events.subscribe((val) => {
+    router.events.subscribe((value) => {
       // Check for changes on the url
-      if (val instanceof NavigationEnd) {
+      if (value instanceof NavigationEnd) {
         // Then assign the url as a string
         this.currentRoute = this.router.url.toString();
       }
     });
 
-    // Subscribe to Projekt Form parameter and update after every change
-    this.formProjektNeuService.currentWohnflaeche$
+    // Subscribe to observable userPriceToggle
+    this.formProjektService.currentUserPriceToggle$
+      .pipe(
+        skipWhile((value) => value === this.userPriceDisabled),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
+      .subscribe((value) => {
+        this.userPriceDisabled = value;
+        this.update();
+      });
+
+    this.formProjektService.currentUserPrice$
+      .pipe(
+        skipWhile((value) => value === this.userPrice),
+        filter(() => this.currentRoute === this.neubauRoute)
+      )
+      .subscribe((value) => {
+        this.userPrice = value;
+        this.update();
+      });
+
+    // Subscribe to Projekt Form parameters and update after every change
+    this.formProjektService.currentWohnflaeche$
       .pipe(
         // Don't do anything until the user changes one of the forms
         skipWhile((value) => value === this.wohnflaeche),
@@ -83,7 +106,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektNeuService.currentAnzahlWohnungen$
+    this.formProjektService.currentAnzahlWohnungen$
       .pipe(
         skipWhile((value) => value === this.anzahlWohnungen),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -93,7 +116,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektNeuService.currentEnergiestandard$
+    this.formProjektService.currentEnergiestandard$
       .pipe(
         skipWhile((value) => value === this.energiestandard),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -103,7 +126,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektNeuService.currentKonstruktion$
+    this.formProjektService.currentKonstruktion$
       .pipe(
         skipWhile((value) => value === this.konstruktion),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -113,7 +136,7 @@ export class NeubauService {
         this.update();
       });
 
-    this.formProjektNeuService.currentZertifizierung$
+    this.formProjektService.currentZertifizierung$
       .pipe(
         skipWhile((value) => value === this.zertifizierung),
         filter(() => this.currentRoute === this.neubauRoute)
@@ -124,55 +147,55 @@ export class NeubauService {
       });
 
     // Subscribe to all Neubau Form parameters and update after every change
-    this.formProjektNeuService.currentKellergeschoss$
+    this.formProjektService.currentKellergeschoss$
       .pipe(skipWhile((value) => value === this.kellergeschossIn))
       .subscribe((value) => {
         this.kellergeschossIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentStellplaetze$
+    this.formProjektService.currentStellplaetze$
       .pipe(skipWhile((value) => value === this.stellplaetzeIn))
       .subscribe((value) => {
         this.stellplaetzeIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentAufzugsanlage$
+    this.formProjektService.currentAufzugsanlage$
       .pipe(skipWhile((value) => value === this.aufzugsanlageIn))
       .subscribe((value) => {
         this.aufzugsanlageIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentBarriereFreiheit$
+    this.formProjektService.currentBarriereFreiheit$
       .pipe(skipWhile((value) => value === this.barrierefreiheitIn))
       .subscribe((value) => {
         this.barrierefreiheitIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentDachbegruenun$
+    this.formProjektService.currentDachbegruenun$
       .pipe(skipWhile((value) => value === this.dachbegruenungIn))
       .subscribe((value) => {
         this.dachbegruenungIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentBaustellenlogistik$
+    this.formProjektService.currentBaustellenlogistik$
       .pipe(skipWhile((value) => value === this.baustellenlogistikIn))
       .subscribe((value) => {
         this.baustellenlogistikIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentAussenanlage$
+    this.formProjektService.currentAussenanlage$
       .pipe(skipWhile((value) => value === this.aussenanlagenIn))
       .subscribe((value) => {
         this.aussenanlagenIn = value;
         this.update();
       });
-    this.formProjektNeuService.currentGrundstuecksbezogeneKosten$
+    this.formProjektService.currentGrundstuecksbezogeneKosten$
       .pipe(skipWhile((value) => value === this.grundstuecksbezogeneKosten))
       .subscribe((value) => {
         this.grundstuecksbezogeneKosten = value;
         this.update();
       });
-    this.formProjektNeuService.currentBaunebenkostenKeinFin$
+    this.formProjektService.currentBaunebenkostenKeinFin$
       .pipe(skipWhile((value) => value === this.baunebenkostenKeinFin))
       .subscribe((value) => {
         this.baunebenkostenKeinFin = value;
@@ -338,20 +361,24 @@ export class NeubauService {
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
   private updateGestehungskosten() {
-    this._gestehungskosten =
-      (this.constants.gestehungskostenBase +
-        this._kellergeschossOut +
-        this._stellplaetzeOut +
-        this._redGarageOut +
-        this._aufzugsanlageOut +
-        this._barrierefreiheitOut +
-        this._dachbegruenungOut +
-        this._baustellenlogistikOut +
-        this._energetischerStandardOut +
-        this._aussenanlagenOut +
-        this.grundstuecksbezogeneKosten +
-        this.baunebenkostenKeinFin) *
-      this.constants.safetyMultiplier;
+    if (this.userPriceDisabled) {
+      this._gestehungskosten =
+        (this.constants.gestehungskostenBase +
+          this._kellergeschossOut +
+          this._stellplaetzeOut +
+          this._redGarageOut +
+          this._aufzugsanlageOut +
+          this._barrierefreiheitOut +
+          this._dachbegruenungOut +
+          this._baustellenlogistikOut +
+          this._energetischerStandardOut +
+          this._aussenanlagenOut +
+          this.grundstuecksbezogeneKosten +
+          this.baunebenkostenKeinFin) *
+        this.constants.safetyMultiplier;
+    } else {
+      this._gestehungskosten = this.userPrice;
+    }
   }
 
   // NR-Kredit [%]
@@ -617,7 +644,9 @@ export class NeubauService {
   );
   currentOutputNeubau$ = this.outputNeubauSource.asObservable();
 
-  update() {
+  public update() {
+    console.log(this.userPriceDisabled);
+    console.log(this.userPrice);
     this.updateKellergeschossOut();
     this.updateStellplaetzeOut();
     this.updateRedGarageOut();
@@ -770,36 +799,34 @@ export class NeubauService {
   // The main problem is that the forms are being reused across different projects/routes
   // So it would require either separating the forms, or identifying the current route in each form
   // to then assign the form values from the service(neubau / sanierung).
-  reset() {
+  public reset() {
     // Project parameters
-    this.wohnflaeche = this.formProjektNeuService.wohnflaeche.init;
-    this.anzahlWohnungen = this.formProjektNeuService.anzahlWohnungen.init;
+    this.wohnflaeche = this.formProjektService.wohnflaeche.init;
+    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
     this.energiestandard =
-      this.formProjektNeuService.energiestandard.options[0].value;
-    this.konstruktion =
-      this.formProjektNeuService.konstruktion.options[0].value;
+      this.formProjektService.energiestandard.options[0].value;
+    this.konstruktion = this.formProjektService.konstruktion.options[0].value;
     this.zertifizierung =
-      this.formProjektNeuService.zertifizierung.options[0].value;
+      this.formProjektService.zertifizierung.options[0].value;
 
     // Neubau form parameters
     this.kellergeschossIn =
-      this.formProjektNeuService.kellergeschoss.options[0].value;
-    this.stellplaetzeIn =
-      this.formProjektNeuService.stellplaetze.options[0].value;
+      this.formProjektService.kellergeschoss.options[0].value;
+    this.stellplaetzeIn = this.formProjektService.stellplaetze.options[0].value;
     this.aufzugsanlageIn =
-      this.formProjektNeuService.aufzugsanlage.options[0].value;
+      this.formProjektService.aufzugsanlage.options[0].value;
     this.barrierefreiheitIn =
-      this.formProjektNeuService.barrierefreiheit.options[0].value;
+      this.formProjektService.barrierefreiheit.options[0].value;
     this.dachbegruenungIn =
-      this.formProjektNeuService.dachbegruenung.options[0].value;
+      this.formProjektService.dachbegruenung.options[0].value;
     this.baustellenlogistikIn =
-      this.formProjektNeuService.baustellenlogistik.options[0].value;
+      this.formProjektService.baustellenlogistik.options[0].value;
     this.aussenanlagenIn =
-      this.formProjektNeuService.aussenanlagen.options[0].value;
+      this.formProjektService.aussenanlagen.options[0].value;
     this.grundstuecksbezogeneKosten =
-      this.formProjektNeuService.grundstKosten.init;
+      this.formProjektService.grundstKosten.init;
     this.baunebenkostenKeinFin =
-      this.formProjektNeuService.baunebenkostenKeinFin.init;
+      this.formProjektService.baunebenkostenKeinFin.init;
 
     // Darlehen parameters
     this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;

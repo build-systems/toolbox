@@ -23,15 +23,15 @@ export class FormDarlehenService {
 
   // KfW-Darlehen centralized form values
   kfWDarlehenOptions: KfWDarlehenOptions[] = [
-    { id: 'kfwd2', value: 'Annuitäten' },
-    { id: 'kfwd3', value: 'Endfälliges' },
-    { id: 'kfwd1', value: 'kein' },
+    { id: 'kfwd2', value: 'Annuitäten', disabled: false },
+    { id: 'kfwd3', value: 'Endfälliges', disabled: false },
+    { id: 'kfwd1', value: 'kein', disabled: false },
   ];
 
   // Bank-Darlehen centralized form values
   bankDarlehenOptions: BankDarlehenOptions[] = [
-    { id: 'bankd1', value: 'Annuitäten' },
-    { id: 'bankd2', value: 'Endfälliges' },
+    { id: 'bankd1', value: 'Annuitäten', disabled: false },
+    { id: 'bankd2', value: 'Endfälliges', disabled: false },
   ];
 
   // Observable for Kalkulationszinssatz (Realzins)

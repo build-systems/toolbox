@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, filter, skipWhile } from 'rxjs';
+import { BehaviorSubject, filter, skip, skipWhile } from 'rxjs';
 import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableSanierung from './tableSanierung.json';
@@ -15,7 +15,9 @@ export class SanierungService {
   // Neubau active form tab
   public currentTab = signal(1);
 
-  // Project parameters
+  // Initial project parameters
+  userPriceDisabled = this.formProjektService.userPrice.disabled;
+  userPrice = this.formProjektService.userPrice.init;
   wohnflaeche = this.formProjektService.wohnflaeche.init;
   anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
   energiestandard: EnergiestandardSanierung =
@@ -46,13 +48,35 @@ export class SanierungService {
     private formDarlehenService: FormDarlehenService,
     private router: Router
   ) {
-    router.events.subscribe((val) => {
+    router.events.subscribe((value) => {
       // Check for changes on the url
-      if (val instanceof NavigationEnd) {
+      if (value instanceof NavigationEnd) {
         // Then assign the url as a string
         this.currentRoute = this.router.url.toString();
       }
     });
+
+    // Subscribe to observable userPriceToggle
+    this.formProjektService.currentUserPriceToggle$
+      .pipe(
+        skipWhile((value) => value === this.userPriceDisabled),
+        filter(() => this.currentRoute === this.sanierungRoute)
+      )
+      .subscribe((value) => {
+        this.userPriceDisabled = value;
+        this.update();
+      });
+
+    // Subscribe to observable userPrice
+    this.formProjektService.currentUserPrice$
+      .pipe(
+        skipWhile((value) => value === this.userPrice),
+        filter(() => this.currentRoute === this.sanierungRoute)
+      )
+      .subscribe((value) => {
+        this.userPrice = value;
+        this.update();
+      });
 
     // Subscribe to all Projekt Form parameters and update after every change
     this.formProjektService.currentWohnflaeche$
@@ -238,37 +262,43 @@ export class SanierungService {
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
   updateGestehungskosten() {
-    const initialProperties = {
-      Energiestandard: this.formProjektService.energiestandard.options[0].value,
-      ZustandBestand: this.formProjektService.zustandBestand.options[0].value,
-    };
-    const desiredProperties = {
-      Energiestandard: this.energiestandard,
-      ZustandBestand: this.zustandBestand,
-    };
-    // Callback function
-    function filterByProperties(item: any, desiredProperties: any) {
-      for (const prop in desiredProperties) {
-        if (item[prop] !== desiredProperties[prop]) {
-          return false;
+    // First check if the user chose to input their own price estimation
+    // If not, then search in the table (JSON file)
+    if (this.userPriceDisabled){
+      const initialProperties = {
+        Energiestandard: this.formProjektService.energiestandard.options[0].value,
+        ZustandBestand: this.formProjektService.zustandBestand.options[0].value,
+      };
+      const desiredProperties = {
+        Energiestandard: this.energiestandard,
+        ZustandBestand: this.zustandBestand,
+      };
+      // Callback function
+      function filterByProperties(item: any, desiredProperties: any) {
+        for (const prop in desiredProperties) {
+          if (item[prop] !== desiredProperties[prop]) {
+            return false;
+          }
         }
+        return true;
       }
-      return true;
-    }
-    try {
-      // Filter
-      const filteredData = tableSanierung.filter((item) =>
-        filterByProperties(item, desiredProperties)
-      );
-      var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-      this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
-    } catch (error) {
-      // Filter
-      const filteredData = tableSanierung.filter((item) =>
-        filterByProperties(item, initialProperties)
-      );
-      var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-      this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
+      try {
+        // Filter
+        const filteredData = tableSanierung.filter((item) =>
+          filterByProperties(item, desiredProperties)
+        );
+        var tableResult = filteredData[0].Min; // Considering only unique results from the filter
+        this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
+      } catch (error) {
+        // Filter
+        const filteredData = tableSanierung.filter((item) =>
+          filterByProperties(item, initialProperties)
+        );
+        var tableResult = filteredData[0].Min; // Considering only unique results from the filter
+        this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
+      }
+    } else {
+      this._gestehungskosten = this.userPrice;
     }
   }
 
@@ -370,7 +400,7 @@ export class SanierungService {
         this._serSanBonus) /
         100) *
         this._foerdersumme,
-        this.constants.kfwZuschussMinMultiplier * this._foerdersumme
+      this.constants.kfwZuschussMinMultiplier * this._foerdersumme
     );
   }
 
@@ -562,6 +592,8 @@ export class SanierungService {
   currentOutputSanierung$ = this.outputSanierungSource.asObservable();
 
   public update() {
+    // console.log(this.userPriceToggle);
+    // console.log(this.userPrice);
     this.updateTilgungszuschuss();
     this.updateEeBonus();
     this.updateNhBonus();
@@ -702,7 +734,7 @@ export class SanierungService {
     // console.log(this.outputSanierung);
   }
 
-  reset() {
+  public reset() {
     // Project parameters
     this.wohnflaeche = this.formProjektService.wohnflaeche.init;
     this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;

@@ -11,11 +11,11 @@
   --primary50: rgba(255, 255, 255, 0.5);
   --primary30: rgba(255, 255, 255, 0.3);
   --secondary: aquamarine;
-  --bg-primary: #111;
-  --bg-primary75: rgba(26, 26, 26, 0.75);
-  --bg-secondary: #222;
-  --bg-tertiary: #333;
-  --bg-tertiary95: rgba(51, 51, 51, 0.95);
+  --bg-primary: #222;
+  --bg-primary75: rgba(34, 34, 34, 0.75);
+  --bg-secondary: #333;
+  --bg-tertiary: #444;
+  --bg-tertiary95: rgba(68, 68, 68, 0.95);
   --layout-padding: 1rem;
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
@@ -221,7 +221,7 @@ li {
 }
 
 input {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   font-family: "Inconsolata", sans-serif;
   font-size: 1rem;
 }
@@ -294,9 +294,13 @@ legend {
   right: 125%;
 }
 
-.toogle-wrapper {
+.toggle-wrapper {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
+  min-height: var(--button-height);
 }
 
 .checkbox-toggle-wrapper {
@@ -368,6 +372,64 @@ input:checked + .toggle-round:before {
   -ms-transform: translateX(28px);
   transform: translateX(28px);
 }
+
+.userPrice {
+  pointer-events: none;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  height: 0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  & legend,
+  span {
+    -webkit-transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* With :has() it is possible to select elements far from eachother */
+/* The + here is used to select the next sibling */
+.toggle-wrapper:has(input:checked) + .userPrice {
+  pointer-events: auto;
+  opacity: 1;
+  height: 4.5rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  & legend {
+    -webkit-transition: height 0.1s ease-out 0s, opacity 0.1s ease-out 0.05s;
+    transition: height 0.1s ease-out 0s, opacity 0.1s ease-out 0.05s;
+    opacity: 1;
+    height: 1.5rem;
+  }
+  & span {
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+    opacity: 1;
+    height: var(--button-height);
+  }
+}
+
+/* Hiding the other options would be better using Angular 
+animations to remove the form fields from the DOM */
+/* .toggle-wrapper:has(input:checked) ~ fieldset:not(.userPrice) {
+  pointer-events: none;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  height: 0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  & legend,
+  span {
+    -webkit-transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    height: 0;
+    opacity: 0;
+  }
+} */
 
 .slidernumber {
   display: flex;
@@ -485,32 +547,25 @@ input[type="radio"] {
   }
 }
 
-/* On mouse-over, add a grey background color */
+/* On mouse-over, add... */
 .radio-fieldset span input:hover ~ label {
   color: var(--primary);
   background-color: var(--bg-secondary);
   border-color: var(--secondary);
 }
 
-/* On mouse-over, add a grey background color */
+/* On click or touch, add... */
 .radio-fieldset span input:active ~ label {
   color: var(--primary);
   background-color: var(--bg-tertiary);
   border-color: var(--secondary);
 }
 
-/* When the checkbox is checked, add another color to background */
+/* When the radio option is selected... */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
   background-color: var(--bg-primary);
   border-color: var(--secondary);
-}
-
-/* When the checkbox is checked, add another color to background */
-.radio-fieldset span input:disabled ~ label {
-  color: var(--primary30);
-  background-color: var(--bg-secondary);
-  border-color: var(--bg-primary);
 }
 
 input[type="checkbox"] {
@@ -529,6 +584,7 @@ input[type="checkbox"] {
   align-items: center;
   border: 1px solid var(--primary);
   border-radius: var(--button-radius);
+  background-color: var(--bg-secondary);
   cursor: pointer;
 }
 
@@ -542,12 +598,12 @@ input[type="checkbox"] {
 }
 
 /* On mouse-over, add a grey background color */
-input[type="checkbox"] ~ label .checkmark {
+input ~ .checkbox-container .checkmark {
   background-color: var(--bg-primary);
 }
 
 /* On mouse-over, add a grey background color */
-input[type="checkbox"]:hover ~ label .checkmark {
+input:hover ~ .checkbox-container .checkmark {
   /* background-color: var(--bg-secondary); */
   border-color: var(--secondary);
 }
@@ -559,7 +615,7 @@ input[type="checkbox"]:hover ~ label .checkmark {
 }
 
 /* When the checkbox is checked, add a blue background */
-input[type="checkbox"]:checked ~ label .checkmark {
+input[type="checkbox"]:checked ~ .checkbox-container .checkmark {
   background-color: var(--primary);
   border-color: var(--primary);
 }
@@ -573,18 +629,18 @@ input[type="checkbox"]:checked ~ label .checkmark {
 }
 
 /* Show the checkmark when checked */
-input[type="checkbox"]:checked ~ label .checkmark:after {
+input:checked ~ .checkbox-container .checkmark:after {
   display: block;
 }
 
 /* Show the checkmark when checked */
-input[type="checkbox"]:checked + label {
+input:checked + .checkbox-container {
   background-color: var(--bg-primary);
   border-color: var(--secondary);
 }
 
-/* Style the checkmark/indicator */
-.checkbox-container .checkmark:after {
+/* Checkmark symbol */
+.checkmark:after {
   left: 7px;
   width: 5px;
   height: 10px;
@@ -593,6 +649,61 @@ input[type="checkbox"]:checked + label {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+/* Container of inputs when checkbox or radio options are disabled... */
+input[type="checkbox"]:disabled ~ .checkbox-container,
+.radio-fieldset span input[type="radio"]:disabled ~ label {
+  color: var(--primary30);
+  background-color: var(--bg-secondary);
+  border-color: var(--bg-primary);
+}
+
+/* Checkbox when input is disabled */
+input[type="checkbox"]:disabled ~ .checkbox-container .checkmark {
+  background-color: var(--bg-secondary);
+  border-color: var(--bg-primary);
+}
+
+/* Checkmark when disabled */
+input:disabled ~ label .checkmark:after {
+  border-color: var(--primary30);
+}
+
+/* Inputs when disabled */
+input:disabled {
+  background-color: var(--bg-secondary);
+}
+
+/* Legends when disabled */
+legend:has(~ span input:disabled, ~ input:disabled) {
+  pointer-events: none;
+  color: var(--primary30);
+  & sup {
+    pointer-events: none;
+    color: var(--primary30);
+  }
+}
+
+/* Input number when disabled */
+input[type="number"]:disabled,
+input[type="number"]:disabled:hover {
+  color: var(--primary30);
+  border-color: var(--bg-primary);
+}
+
+/* Input number when disabled */
+.slider:disabled:hover,
+.slider:disabled:active {
+  border-color: var(--bg-primary);
+  opacity: 0.5;
+}
+
+.slider:disabled::-webkit-slider-thumb,
+.slider:disabled:hover::-webkit-slider-thumb,
+.slider:disabled:active::-webkit-slider-thumb {
+  border-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
 }
 
 .progress-buttons {
@@ -641,17 +752,20 @@ input[type="checkbox"]:checked + label {
 }
 
 .pill:active {
-  background-color: var(--bg-tertiary);
+  background-color: var(--bg-primary);
   color: var(--primary);
+  border-top: 2px solid var(--secondary);
 }
 
 .grayed-pill {
   color: var(--primary70);
   background-color: var(--bg-secondary);
+  border-top: 2px solid var(--primary50);
 }
 
 .full-pill {
   color: var(--secondary);
+  border-top: 2px solid var(--secondary);
 }
 
 .host-dashboard-numbers {
