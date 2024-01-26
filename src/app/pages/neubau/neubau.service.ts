@@ -2,10 +2,10 @@ import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, filter, skipWhile } from 'rxjs';
 import { NeubauProjekt } from '../../shared/neubauprojekt';
 import { neubau } from '../../shared/constants';
-import { FormProjektNeuService } from '../../form-projekt-neubau/form-projekt-neu.service';
-import { FormDarlehenService } from '../../form-darlehen/form-darlehen.service';
+import { FormProjektNeubauService } from './form-projekt-neubau/form-projekt-neubau.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { DashboardOutput } from '../../dashboard-output';
+import { DashboardOutput } from '../../shared/dashboard-output';
+import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-neubau.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +16,9 @@ export class NeubauService {
 
   // Initial project parameters
   userPriceDisabled = this.formProjektService.userPrice.disabled;
-  userPrice = this.formProjektService.userPrice.init;
-  wohnflaeche = this.formProjektService.wohnflaeche.init;
-  anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+  userPrice = this.formProjektService.userPrice.value;
+  wohnflaeche = this.formProjektService.wohnflaeche.value;
+  anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardNeubau =
     this.formProjektService.energiestandard.options[0].value;
   konstruktion: Konstruktion =
@@ -42,7 +42,7 @@ export class NeubauService {
   aussenanlagenIn: Aussenanlagen =
     this.formProjektService.aussenanlagen.options[0].value;
   grundstuecksbezogeneKosten: number =
-    this.formProjektService.grundstKosten.init;
+    this.formProjektService.grundstKosten.value;
   baunebenkostenKeinFin: number =
     this.formProjektService.baunebenkostenKeinFin.init;
 
@@ -60,8 +60,8 @@ export class NeubauService {
 
   constructor(
     private constants: neubau,
-    private formProjektService: FormProjektNeuService,
-    private formDarlehenService: FormDarlehenService,
+    private formProjektService: FormProjektNeubauService,
+    private formDarlehenService: FormDarlehenNeubauService,
     private router: Router
   ) {
     router.events.subscribe((value) => {
@@ -630,6 +630,23 @@ export class NeubauService {
     this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
   }
 
+  private _kfwKreditProBau = 0;
+  private updateKfwKreditProBau() {
+    this._kfwKreditProBau = this._kfwKredit / this.anzahlWohnungen;
+  }
+  
+  private _bankKreditProBau = 0;
+  private updateBankKreditProBau() {
+    this._bankKreditProBau = this._bankKredit / this.anzahlWohnungen;
+  }
+
+  // investitionskostenProBau
+  private _investitionskostenProBau = 0;
+  private updateInvestitionskostenProBau() {
+    this._investitionskostenProBau = this._investitionskosten / this.anzahlWohnungen;
+  }
+
+
   // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
   outputDashboard!: DashboardOutput;
   private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
@@ -645,8 +662,8 @@ export class NeubauService {
   currentOutputNeubau$ = this.outputNeubauSource.asObservable();
 
   public update() {
-    console.log(this.userPriceDisabled);
-    console.log(this.userPrice);
+    // console.log(this.userPriceDisabled);
+    // console.log(this.userPrice);
     this.updateKellergeschossOut();
     this.updateStellplaetzeOut();
     this.updateRedGarageOut();
@@ -662,6 +679,7 @@ export class NeubauService {
     this.updateGesamtgestehungskosten();
     this.updateKfwKredit();
     this.updateKfwKreditM2();
+    this.updateKfwKreditProBau()
     this.updateRestsumme();
     this.updateAfKfW();
     this.updateAfBank();
@@ -671,12 +689,14 @@ export class NeubauService {
     this.updateEfBank();
     this.updateBankKredit();
     this.updateBankKreditM2();
+    this.updateBankKreditProBau();
     this.updateFinanzierungskostenKfw();
     this.updateFinanzierungskostenKfwM2();
     this.updateFinanzierungskostenFinanzmarkt();
     this.updateFinanzierungskostenFinanzmarktM2();
     this.updateInvestitionskosten();
     this.updateInvestitionskostenM2();
+    this.updateInvestitionskostenProBau();
     this.updateGbAnnuitaet();
     this.updateGbEfd();
     this.updateOhneKfw();
@@ -702,8 +722,10 @@ export class NeubauService {
         efBank: this._efBank,
         kfwKredit: this._kfwKredit,
         kfwKreditM2: this._kfwKreditM2,
+        kfwKreditProBau: this._kfwKreditProBau,
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
+        bankKreditProBau: this._bankKreditProBau,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
         finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
@@ -711,8 +733,10 @@ export class NeubauService {
           this._finanzierungskostenFinanzmarktM2,
         investitionskosten: this._investitionskosten,
         investitionskostenM2: this._investitionskostenM2,
+        investitionskostenProBau: this._investitionskostenProBau,
         kfwZuschuss: 0,
         kfwZuschussM2: 0,
+        kfwZuschussProBau: 0,
         ohneKfw: this._ohneKfw,
         ohneKfwM2: this._ohneKfwM2,
         mitKfw: this._mitKfw,
@@ -801,8 +825,8 @@ export class NeubauService {
   // to then assign the form values from the service(neubau / sanierung).
   public reset() {
     // Project parameters
-    this.wohnflaeche = this.formProjektService.wohnflaeche.init;
-    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.init;
+    this.wohnflaeche = this.formProjektService.wohnflaeche.value;
+    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
     this.energiestandard =
       this.formProjektService.energiestandard.options[0].value;
     this.konstruktion = this.formProjektService.konstruktion.options[0].value;
@@ -824,7 +848,7 @@ export class NeubauService {
     this.aussenanlagenIn =
       this.formProjektService.aussenanlagen.options[0].value;
     this.grundstuecksbezogeneKosten =
-      this.formProjektService.grundstKosten.init;
+      this.formProjektService.grundstKosten.value;
     this.baunebenkostenKeinFin =
       this.formProjektService.baunebenkostenKeinFin.init;
 

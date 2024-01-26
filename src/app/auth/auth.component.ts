@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { SupabaseService } from '../supabase.service';
+import { SupabaseService } from '../shared/supabase.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

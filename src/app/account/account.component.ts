@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Profile, SupabaseService } from '../supabase.service';
+import { Profile, SupabaseService } from '../shared/supabase.service';
 import { AuthSession } from '@supabase/supabase-js';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { AvatarComponent } from '../avatar/avatar.component';
+import { AvatarComponent } from '../pages/profile/avatar/avatar.component';
 
 @Component({
   selector: 'app-account',

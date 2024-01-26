@@ -31,17 +31,14 @@
       <app-form-projekt-neubau
         [hidden]="!(this.neubauService.currentTab() === 1)"
       ></app-form-projekt-neubau>
-      <app-form-darlehen [hidden]="!(this.neubauService.currentTab()  === 2)"></app-form-darlehen>
+      <app-form-darlehen-neubau
+        [hidden]="!(this.neubauService.currentTab() === 2)"
+      ></app-form-darlehen-neubau>
     </div>
   </div>
-  <div class="output">
-    <app-dashboard-numbers></app-dashboard-numbers>
-    <div class="charts-container">
-      <app-chart-gkosten-neubau></app-chart-gkosten-neubau>
-      <app-chart-gkosten-m2-neubau></app-chart-gkosten-m2-neubau>
-      <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
-      <app-chart-tilgung></app-chart-tilgung>
-      <app-chart-annuitaeten></app-chart-annuitaeten>
-    </div>
-  </div>
+  @if (this.neubauService.currentTab() === 1) {
+    <app-dashboard-projekt-neubau></app-dashboard-projekt-neubau>
+  } @else {
+    <app-dashboard-darlehen-neubau></app-dashboard-darlehen-neubau>
+  }
 </div>

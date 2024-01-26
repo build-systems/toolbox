@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SupabaseService } from '../../supabase.service';
+import { SupabaseService } from '../../shared/supabase.service';
 import { AccountComponent } from '../../account/account.component';
 import { AuthComponent } from '../../auth/auth.component';
 import { CommonModule } from '@angular/common';

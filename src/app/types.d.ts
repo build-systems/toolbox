@@ -7,8 +7,8 @@ type ProjektTyp = 'Neubau' | 'Sanierung';
 // Projekt
 // User price
 type userPriceObj = {
+  value: number;
   min: number;
-  init: number;
   max: number;
   step: number;
   title: string;
@@ -18,8 +18,8 @@ type userPriceObj = {
 
 // Wohnflaeche
 type wohnflaecheObj = {
+  value: number;
   min: number;
-  init: number;
   max: number;
   step: number;
   title: string;
@@ -29,8 +29,8 @@ type wohnflaecheObj = {
 
 // Anzahl Wohnungen
 type anzahlWohnungenObj = {
+  value: number;
   min: number;
-  init: number;
   max: number;
   step: number;
   title: string;
@@ -226,7 +226,7 @@ type AussenanlagenObj = {
 
 // Grundstuecksbezogene Kosten
 type grundstKostenObj = {
-  init: number;
+  value: number;
   min: number;
   max: number;
   step: number;
@@ -236,7 +236,7 @@ type grundstKostenObj = {
 };
 
 type baunebenkostenKeinFinObj = {
-  init: number;
+  value: number;
   min: number;
   max: number;
   step: number;
@@ -248,8 +248,8 @@ type baunebenkostenKeinFinObj = {
 // Darlehen
 // Kalkulationszinssatz (Realzins)
 type KalkRealzinsObj = {
+  value: number;
   min: number;
-  init: number;
   max: number;
   step: number;
   title: string;
@@ -259,8 +259,8 @@ type KalkRealzinsObj = {
 
 // Kreditlaufzeit
 type KreditlaufzeitObj = {
+  value: number;
   min: number;
-  init: number;
   max: number;
   step: number;
   title: string;

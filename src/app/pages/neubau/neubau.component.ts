@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormDarlehenComponent } from '../../form-darlehen/form-darlehen.component';
-import { ChartGkostenNeubauComponent } from '../../chart-gkosten-neubau/chart-gkosten-neubau.component';
-import { ChartAnnuitaetenComponent } from '../../chart-annuitaeten/chart-annuitaeten.component';
-import { ChartTilgungComponent } from '../../chart-tilgung/chart-tilgung.component';
-import { ChartFinanzierungskostenComponent } from '../../chart-finanzierungskosten/chart-finanzierungskosten.component';
-import { DashboardNumbersComponent } from '../../dashboard-numbers/dashboard-numbers.component';
 import { NeubauService } from './neubau.service';
-import { ChartGkostenM2NeubauComponent } from '../../chart-gkosten-m2-neubau/chart-gkosten-m2-neubau.component';
-import { FormProjektNeubauComponent } from '../../form-projekt-neubau/form-projekt-neubau.component';
+import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-neubau.component';
+import { FormDarlehenNeubauComponent } from './form-darlehen-neubau/form-darlehen-neubau.component';
+import { DashboardProjektNeubauComponent } from './dashboard-projekt-neubau/dashboard-projekt-neubau.component';
+import { DashboardDarlehenNeubauComponent } from './dashboard-darlehen-neubau/dashboard-darlehen-neubau.component';
 
 @Component({
   selector: 'app-neubau',
@@ -16,13 +12,9 @@ import { FormProjektNeubauComponent } from '../../form-projekt-neubau/form-proje
   imports: [
     CommonModule,
     FormProjektNeubauComponent,
-    FormDarlehenComponent,
-    ChartGkostenNeubauComponent,
-    ChartGkostenM2NeubauComponent,
-    ChartAnnuitaetenComponent,
-    ChartTilgungComponent,
-    ChartFinanzierungskostenComponent,
-    DashboardNumbersComponent,
+    FormDarlehenNeubauComponent,
+    DashboardProjektNeubauComponent,
+    DashboardDarlehenNeubauComponent
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
@@ -50,6 +42,6 @@ export class NeubauComponent {
     // The main problem is that the forms are being reused across different projects/routes
     // So it would require separating the forms.
     // I think it could easily be done using signals
-    neubauService.reset();
+    // neubauService.reset();
   }
 }

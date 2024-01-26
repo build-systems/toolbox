@@ -5,7 +5,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NeubauComponent } from './pages/neubau/neubau.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService } from './shared/supabase.service';
 import { AuthComponent } from './auth/auth.component';
 import { AccountComponent } from './account/account.component';
 

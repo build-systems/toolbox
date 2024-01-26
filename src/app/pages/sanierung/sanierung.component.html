@@ -31,17 +31,13 @@
       <app-form-projekt-sanierung
         [hidden]="!(this.sanierungService.currentTab() === 1)"
       ></app-form-projekt-sanierung>
-      <app-form-darlehen [hidden]="!(this.sanierungService.currentTab() === 2)"></app-form-darlehen>
+      <app-form-darlehen-sanierung [hidden]="!(this.sanierungService.currentTab() === 2)"></app-form-darlehen-sanierung>
     </div>
   </div>
-  <div class="output">
-    <app-dashboard-numbers></app-dashboard-numbers>
-    <div class="charts-container">
-      <app-chart-gkosten-sanierung></app-chart-gkosten-sanierung>
-      <app-chart-gkosten-m2-sanierung></app-chart-gkosten-m2-sanierung>
-      <app-chart-finanzierungskosten></app-chart-finanzierungskosten>
-      <app-chart-tilgung></app-chart-tilgung>
-      <app-chart-annuitaeten></app-chart-annuitaeten>
-    </div>
-  </div>
+  @if (this.sanierungService.currentTab() === 1) {
+    <app-dashboard-projekt-sanierung></app-dashboard-projekt-sanierung>
+
+  } @else {
+    <app-dashboard-darlehen-sanierung></app-dashboard-darlehen-sanierung>
+  }
 </div>
