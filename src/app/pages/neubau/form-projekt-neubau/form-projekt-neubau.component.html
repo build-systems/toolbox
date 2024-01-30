@@ -1,4 +1,4 @@
-<form [formGroup]="projektFormNeu">
+<form [formGroup]="formService.projektFormNeu">
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -226,7 +226,7 @@
       <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
-  @if (noKellergeschoss) {
+  @if (formService.noKellergeschoss) {
   <div class="warning-block">*Kellergeschoss nicht vorhanden</div>
   }
   <fieldset class="radio-fieldset">

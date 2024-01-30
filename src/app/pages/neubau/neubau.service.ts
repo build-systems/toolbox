@@ -1,9 +1,8 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, filter, skipWhile } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { NeubauProjekt } from '../../shared/neubauprojekt';
 import { neubau } from '../../shared/constants';
 import { FormProjektNeubauService } from './form-projekt-neubau/form-projekt-neubau.service';
-import { NavigationEnd, Router } from '@angular/router';
 import { DashboardOutput } from '../../shared/dashboard-output';
 import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-neubau.service';
 
@@ -57,132 +56,27 @@ export class NeubauService {
   constructor(
     private constants: neubau,
     private formProjektService: FormProjektNeubauService,
-    private formDarlehenService: FormDarlehenNeubauService,
-    private router: Router
+    private formDarlehenService: FormDarlehenNeubauService
   ) {
-    router.events.subscribe((value) => {});
-
-    // Subscribe to observable userPriceToggle
-    this.formProjektService.currentUserPriceToggle$
-      .pipe(
-        skipWhile((value) => value === this.userPriceDisabled),
-      )
-      .subscribe((value) => {
-        this.userPriceDisabled = value;
-        this.update();
-      });
-
-    this.formProjektService.currentUserPrice$
-      .pipe(
-        skipWhile((value) => value === this.userPrice),
-      )
-      .subscribe((value) => {
-        this.userPrice = value;
-        this.update();
-      });
-
-    // Subscribe to Projekt Form parameters and update after every change
-    this.formProjektService.currentWohnflaeche$
-      .pipe(
-        // Don't do anything until the user changes one of the forms
-        skipWhile((value) => value === this.wohnflaeche),
-        // Don't do anything unless the Router is in the neubau page
-      )
-      .subscribe((value) => {
-        this.wohnflaeche = value;
-        this.update();
-      });
-
-    this.formProjektService.currentAnzahlWohnungen$
-      .pipe(
-        skipWhile((value) => value === this.anzahlWohnungen),
-      )
-      .subscribe((value) => {
-        this.anzahlWohnungen = value;
-        this.update();
-      });
-
-    this.formProjektService.currentEnergiestandard$
-      .pipe(
-        skipWhile((value) => value === this.energiestandard),
-      )
-      .subscribe((value) => {
-        this.energiestandard = value;
-        this.update();
-      });
-
-    this.formProjektService.currentKonstruktion$
-      .pipe(
-        skipWhile((value) => value === this.konstruktion),
-      )
-      .subscribe((value) => {
-        this.konstruktion = value;
-        this.update();
-      });
-
-    this.formProjektService.currentZertifizierung$
-      .pipe(
-        skipWhile((value) => value === this.zertifizierung),
-      )
-      .subscribe((value) => {
-        this.zertifizierung = value;
-        this.update();
-      });
-
-    this.formProjektService.currentKellergeschoss$
-      .pipe(skipWhile((value) => value === this.kellergeschossIn))
-      .subscribe((value) => {
-        this.kellergeschossIn = value;
-        this.update();
-      });
-    this.formProjektService.currentStellplaetze$
-      .pipe(skipWhile((value) => value === this.stellplaetzeIn))
-      .subscribe((value) => {
-        this.stellplaetzeIn = value;
-        this.update();
-      });
-    this.formProjektService.currentAufzugsanlage$
-      .pipe(skipWhile((value) => value === this.aufzugsanlageIn))
-      .subscribe((value) => {
-        this.aufzugsanlageIn = value;
-        this.update();
-      });
-    this.formProjektService.currentBarriereFreiheit$
-      .pipe(skipWhile((value) => value === this.barrierefreiheitIn))
-      .subscribe((value) => {
-        this.barrierefreiheitIn = value;
-        this.update();
-      });
-    this.formProjektService.currentDachbegruenun$
-      .pipe(skipWhile((value) => value === this.dachbegruenungIn))
-      .subscribe((value) => {
-        this.dachbegruenungIn = value;
-        this.update();
-      });
-    this.formProjektService.currentBaustellenlogistik$
-      .pipe(skipWhile((value) => value === this.baustellenlogistikIn))
-      .subscribe((value) => {
-        this.baustellenlogistikIn = value;
-        this.update();
-      });
-    this.formProjektService.currentAussenanlage$
-      .pipe(skipWhile((value) => value === this.aussenanlagenIn))
-      .subscribe((value) => {
-        this.aussenanlagenIn = value;
-        this.update();
-      });
-    this.formProjektService.currentGrundstuecksbezogeneKosten$
-      .pipe(skipWhile((value) => value === this.grundstuecksbezogeneKosten))
-      .subscribe((value) => {
-        this.grundstuecksbezogeneKosten = value;
-        this.update();
-      });
-    this.formProjektService.currentBaunebenkostenKeinFin$
-      .pipe(skipWhile((value) => value === this.baunebenkostenKeinFin))
-      .subscribe((value) => {
-        this.baunebenkostenKeinFin = value;
-        this.update();
-      });
+    this.formProjektService.projektFormNeu.valueChanges.subscribe((value) => {
+      this.userPriceDisabled = !value.userPriceToggle!;
+      this.userPrice = value.userPrice!;
+      this.wohnflaeche = value.wohnflaecheRange!;
+      this.anzahlWohnungen = value.anzahlWohnungen!;
+      this.energiestandard = value.energiestandard!;
+      this.konstruktion = value.konstruktion!;
+      this.zertifizierung = value.zertifizierung!;
+      this.kellergeschossIn = value.kellergeschossIn!;
+      this.stellplaetzeIn = value.stellplaetzeIn!;
+      this.aufzugsanlageIn = value.aufzugsanlageIn!;
+      this.barrierefreiheitIn = value.barrierefreiheitIn!;
+      this.dachbegruenungIn = value.dachbegruenungIn!;
+      this.baustellenlogistikIn = value.baustellenlogistikIn!;
+      this.aussenanlagenIn = value.aussenanlagenIn!;
+      this.grundstuecksbezogeneKosten = value.grundstuecksbezogeneKostenRange!;
+      this.baunebenkostenKeinFin = value.baunebenkostenKeinFinRange!;
+      this.update();
+    });
 
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
       this.kalkRealzins = value.kalkRealzinsRange!;
@@ -192,6 +86,7 @@ export class NeubauService {
       this.update();
     });
 
+    // CAN THIS BE DELETED?
     this.update();
   }
 

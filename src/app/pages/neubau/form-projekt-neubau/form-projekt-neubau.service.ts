@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -65,9 +66,24 @@ export class FormProjektNeubauService {
   // Zertifizierung centralized form values
   zertifizierung: ZertifizierungNeubauObj = {
     options: [
-      { id: 'zert1', value: 'Keine', text: 'Keine Zertifizierung', disabled: false },
-      { id: 'zert2', value: 'ohne QNG', text: 'ohne QNG Siegel', disabled: false },
-      { id: 'zert3', value: 'mit QNG', text: 'mit QNG Siegel', disabled: false },
+      {
+        id: 'zert1',
+        value: 'Keine',
+        text: 'Keine Zertifizierung',
+        disabled: false,
+      },
+      {
+        id: 'zert2',
+        value: 'ohne QNG',
+        text: 'ohne QNG Siegel',
+        disabled: false,
+      },
+      {
+        id: 'zert3',
+        value: 'mit QNG',
+        text: 'mit QNG Siegel',
+        disabled: false,
+      },
     ],
     title: 'Zertifizierung klimafreundlicher Neubau ',
     description: 'Neubau Zertifizierung klimafreundlicher description',
@@ -109,10 +125,25 @@ export class FormProjektNeubauService {
   // Barrierefreiheit
   barrierefreiheit: BarrierefreiesBauenObj = {
     options: [
-      { id: 'barfre1', value: 'Barrierereduziert', text: 'Reduziert', disabled: false },
+      {
+        id: 'barfre1',
+        value: 'Barrierereduziert',
+        text: 'Reduziert',
+        disabled: false,
+      },
       { id: 'barfre2', value: 'Barrierefrei', text: 'Frei', disabled: false },
-      { id: 'barfre3', value: 'Barrierefrei (R)', text: 'Frei (R)', disabled: false },
-      { id: 'barfre4', value: 'Keine Anforderungen', text: 'Keine', disabled: false },
+      {
+        id: 'barfre3',
+        value: 'Barrierefrei (R)',
+        text: 'Frei (R)',
+        disabled: false,
+      },
+      {
+        id: 'barfre4',
+        value: 'Keine Anforderungen',
+        text: 'Keine',
+        disabled: false,
+      },
     ],
     title: 'Barrierefreies Bauen ',
     description: 'Barrierefreiheit description',
@@ -171,180 +202,259 @@ export class FormProjektNeubauService {
     disabled: false,
   };
 
-  // Observable and set function for user price toggle
-  private userPriceToggleSource = new BehaviorSubject<boolean>(
-    this.userPrice.disabled
-  );
-  currentUserPriceToggle$ = this.userPriceToggleSource.asObservable();
+  ///// Refactor
+  public noKellergeschoss: boolean = false;
 
-  // Here it has to be the oposite of the toggle (!data)
-  public setUserPriceToggle(data: boolean) {
-    this.userPriceToggleSource.next(!data);
-    // this.userPrice.disabled = !data;
-    this.kellergeschoss.options.forEach(obj => obj.disabled = data);
-    this.stellplaetze.options.forEach(obj => obj.disabled = data);
-    this.aufzugsanlage.options.forEach(obj => obj.disabled = data);
-    this.barrierefreiheit.options.forEach(obj => obj.disabled = data);
-    this.dachbegruenung.options.forEach(obj => obj.disabled = data);
-    this.baustellenlogistik.options.forEach(obj => obj.disabled = data);
-    this.aussenanlagen.options.forEach(obj => obj.disabled = data);
-    this.grundstKosten.disabled = data;
-    this.baunebenkostenKeinFin.disabled = data;
+  projektFormNeu = this.fb.group({
+    userPriceToggle: !this.userPrice.disabled,
+    userPriceRange: [
+      this.userPrice.value, // init
+      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+    ],
+    userPrice: [
+      this.userPrice.value, // init
+      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+    ],
+    wohnflaecheRange: [
+      // The values come from the FormProjektService
+      this.wohnflaeche.value,
+      [
+        Validators.min(this.wohnflaeche.min),
+        Validators.max(this.wohnflaeche.max),
+      ],
+    ],
+    wohnflaeche: [
+      this.wohnflaeche.value,
+      [
+        Validators.min(this.wohnflaeche.min),
+        Validators.max(this.wohnflaeche.max),
+      ],
+    ],
+    anzahlWohnungenRange: [
+      this.anzahlWohnungen.value,
+      [
+        Validators.min(this.anzahlWohnungen.min),
+        Validators.max(this.anzahlWohnungen.max),
+      ],
+    ],
+    anzahlWohnungen: [
+      this.anzahlWohnungen.value,
+      [
+        Validators.min(this.anzahlWohnungen.min),
+        Validators.max(this.anzahlWohnungen.max),
+      ],
+    ],
+    konstruktion: this.konstruktion.options[0].value,
+    energiestandard: this.energiestandard.options[0].value,
+    zertifizierung: this.zertifizierung.options[0].value,
+    // Details
+    kellergeschossIn: this.kellergeschoss.options[0].value,
+    stellplaetzeIn: this.stellplaetze.options[0].value,
+    aufzugsanlageIn: this.aufzugsanlage.options[0].value,
+    barrierefreiheitIn: this.barrierefreiheit.options[0].value,
+    dachbegruenungIn: this.dachbegruenung.options[0].value,
+    baustellenlogistikIn: this.baustellenlogistik.options[0].value,
+    aussenanlagenIn: this.aussenanlagen.options[0].value,
+    grundstuecksbezogeneKostenRange: [
+      this.grundstKosten.value,
+      [
+        Validators.min(this.grundstKosten.min),
+        Validators.max(this.grundstKosten.max),
+      ],
+    ],
+    grundstuecksbezogeneKosten: [
+      this.grundstKosten.value,
+      [
+        Validators.min(this.grundstKosten.min),
+        Validators.max(this.grundstKosten.max),
+      ],
+    ],
+    baunebenkostenKeinFinRange: [
+      this.baunebenkostenKeinFin.init,
+      [
+        Validators.min(this.baunebenkostenKeinFin.min),
+        Validators.max(this.baunebenkostenKeinFin.max),
+      ],
+    ],
+    baunebenkostenKeinFin: [
+      this.baunebenkostenKeinFin.init,
+      [
+        Validators.min(this.baunebenkostenKeinFin.min),
+        Validators.max(this.baunebenkostenKeinFin.max),
+      ],
+    ],
+  });
+
+  ///// Refactor
+
+  constructor(private fb: FormBuilder) {
+    this.projektFormNeu
+      .get('userPriceToggle')
+      ?.valueChanges.subscribe((value) => {
+        this.kellergeschoss.options.forEach((obj) => (obj.disabled = value!));
+        this.stellplaetze.options.forEach((obj) => (obj.disabled = value!));
+        this.aufzugsanlage.options.forEach((obj) => (obj.disabled = value!));
+        this.barrierefreiheit.options.forEach((obj) => (obj.disabled = value!));
+        this.dachbegruenung.options.forEach((obj) => (obj.disabled = value!));
+        this.baustellenlogistik.options.forEach((obj) => (obj.disabled = value!));
+        this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
+        this.grundstKosten.disabled = value!;
+        this.baunebenkostenKeinFin.disabled = value!;
+      });
+
+    // Wohnflaeche
+    this.projektFormNeu
+      .get('wohnflaecheRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektFormNeu
+          .get('wohnflaeche')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormNeu.get('wohnflaeche')?.valueChanges.subscribe((value) => {
+      // Update range input when number input changes
+      this.projektFormNeu
+        .get('wohnflaecheRange')
+        ?.setValue(value, { emitEvent: false });
+    });
+
+    // Anzahl WohnungenRange
+    this.projektFormNeu
+      .get('anzahlWohnungenRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektFormNeu
+          .get('anzahlWohnungen')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormNeu
+      .get('anzahlWohnungen')
+      ?.valueChanges.subscribe((value) => {
+        // Update range input when number input changes
+        this.projektFormNeu
+          .get('anzahlWohnungenRange')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    // Energiestandard
+    this.projektFormNeu
+      .get('energiestandard')
+      ?.valueChanges.subscribe((value) => {
+        // Updates the sanierungService
+        const zertifizierung = this.projektFormNeu.get('zertifizierung');
+        const konstruktion = this.projektFormNeu.get('konstruktion');
+        if (value != 'EH 40') {
+          zertifizierung?.setValue('Keine');
+          this.zertifizierung.options[1].disabled = true;
+          this.zertifizierung.options[2].disabled = true;
+          this.zertifizierungWarningMessage$i.set(
+            '* Zertifizierung ist nur mit EH 40 möglich'
+          );
+        } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
+          this.zertifizierung.options[1].disabled = false;
+          this.zertifizierung.options[2].disabled = false;
+        } else if (
+          value === 'EH 40' &&
+          konstruktion?.value === 'Konventionell'
+        ) {
+          this.zertifizierung.options[1].disabled = false;
+          this.zertifizierung.options[2].disabled = true;
+          this.zertifizierungWarningMessage$i.set(
+            '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+          );
+        }
+      });
+
+    // Konstruktion
+    this.projektFormNeu.get('konstruktion')?.valueChanges.subscribe((value) => {
+      // Relationship with Zertifizierung
+      const energiestandard = this.projektFormNeu.get('energiestandard');
+      const zertifizierung = this.projektFormNeu.get('zertifizierung');
+      if (value === 'Konventionell' && energiestandard?.value === 'EH 40') {
+        if (zertifizierung?.value === 'mit QNG') {
+          zertifizierung?.setValue('Keine');
+        }
+        this.zertifizierung.options[1].disabled = false;
+        this.zertifizierung.options[2].disabled = true;
+        this.zertifizierungWarningMessage$i.set(
+          '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+        );
+      } else if (
+        value === 'Konventionell' &&
+        energiestandard?.value != 'EH 40'
+      ) {
+        this.zertifizierung.options[1].disabled = true;
+        this.zertifizierung.options[2].disabled = true;
+      } else if (value === 'Holzbau' && energiestandard?.value === 'EH 40') {
+        this.zertifizierung.options[1].disabled = false;
+        this.zertifizierung.options[2].disabled = false;
+      }
+    });
+
+    // Susbscribe to form changes
+    this.projektFormNeu
+      .get('kellergeschossIn')
+      ?.valueChanges.subscribe((value) => {
+        // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
+        const stellplaetzeIn = this.projektFormNeu.get('stellplaetzeIn');
+        if (value === 'Nicht Vorhanden') {
+          stellplaetzeIn?.setValue('Garage');
+          this.stellplaetze.options[0].disabled = true;
+          this.noKellergeschoss = true;
+        } else {
+          this.stellplaetze.options[0].disabled = false;
+          this.noKellergeschoss = false;
+        }
+      });
+    this.projektFormNeu
+      .get('stellplaetzeIn')
+      ?.valueChanges.subscribe((value) => {
+        // If 'Tiefgarage' is selected, then 'Nicht Vorhanden' is unsellected
+        const kellergeschossIn = this.projektFormNeu.get('kellergeschossIn');
+        if (
+          value === 'Tiefgarage' &&
+          kellergeschossIn?.value === 'Nicht Vorhanden'
+        ) {
+          kellergeschossIn?.setValue('Vorhanden');
+        }
+      });
+    this.projektFormNeu
+      .get('grundstuecksbezogeneKostenRange')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          this.projektFormNeu
+            .get('grundstuecksbezogeneKosten')
+            ?.setValue(value, { emitEvent: false });
+        }
+      });
+    this.projektFormNeu
+      .get('grundstuecksbezogeneKosten')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          this.projektFormNeu
+            .get('grundstuecksbezogeneKostenRange')
+            ?.setValue(value, { emitEvent: false });
+        }
+      });
+    this.projektFormNeu
+      .get('baunebenkostenKeinFinRange')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          this.projektFormNeu
+            .get('baunebenkostenKeinFin')
+            ?.setValue(value, { emitEvent: false });
+        }
+      });
+    this.projektFormNeu
+      .get('baunebenkostenKeinFin')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          this.projektFormNeu
+            .get('baunebenkostenKeinFinRange')
+            ?.setValue(value, { emitEvent: false });
+        }
+      });
   }
-
-  // Observable and set function for user price
-  private userPriceSource = new BehaviorSubject<number>(this.userPrice.value);
-  currentUserPrice$ = this.userPriceSource.asObservable();
-
-  public setUserPrice(data: number) {
-    this.userPriceSource.next(data);
-    // this.userPrice.value = data;
-  }
-
-  // Observable and set function for Wohnflaeche
-  private wohnflaecheSource = new BehaviorSubject<number>(
-    this.wohnflaeche.value
-  );
-  currentWohnflaeche$ = this.wohnflaecheSource.asObservable();
-
-  // This method is used inside the form component and is triggered everytime the form changes
-  public setWohnflaeche(value: number) {
-    // It gets the form value
-    this.wohnflaecheSource.next(value);
-    this.wohnflaeche.value = value;
-  }
-
-  // Observable and set function for Anzahl Wohnungen
-  private anzahlWohnungenSource = new BehaviorSubject<number>(
-    this.anzahlWohnungen.value
-  );
-  currentAnzahlWohnungen$ = this.anzahlWohnungenSource.asObservable();
-
-  public setAnzahlWohnungen(data: number) {
-    this.anzahlWohnungenSource.next(data);
-  }
-
-  // Observable and set function for Energiestandard
-  private energiestandardSource = new BehaviorSubject<EnergiestandardNeubau>(
-    this.energiestandard.options[0].value
-  );
-  currentEnergiestandard$ = this.energiestandardSource.asObservable();
-
-  public setEnergiestandard(data: EnergiestandardNeubau) {
-    this.energiestandardSource.next(data);
-  }
-
-  // Observable and set function for Konstruktion
-  private konstruktionSource = new BehaviorSubject<Konstruktion>(
-    this.konstruktion.options[0].value
-  );
-  currentKonstruktion$ = this.konstruktionSource.asObservable();
-
-  public setKonstruktion(data: Konstruktion) {
-    this.konstruktionSource.next(data);
-  }
-
-  // Observable and set function for Zertifizierung
-  private zertifizierungSource = new BehaviorSubject<ZertifizierungNeubau>(
-    this.zertifizierung.options[0].value
-  );
-  currentZertifizierung$ = this.zertifizierungSource.asObservable();
-
-  public setZertifizierung(data: ZertifizierungNeubau) {
-    this.zertifizierungSource.next(data);
-  }
-
-  // Observable and set function for Kellergeschoss
-  private kellergeschossSource = new BehaviorSubject<Kellergeschoss>(
-    this.kellergeschoss.options[0].value
-  );
-  currentKellergeschoss$ = this.kellergeschossSource.asObservable();
-
-  public setKellergeschoss(data: Kellergeschoss) {
-    this.kellergeschossSource.next(data);
-  }
-
-  // Observable and set function for Stellplätze
-  private stellplaetzeSource = new BehaviorSubject<Stellplaetze>(
-    this.stellplaetze.options[0].value
-  );
-  currentStellplaetze$ = this.stellplaetzeSource.asObservable();
-
-  public setStellplaetzeIn(data: Stellplaetze) {
-    this.stellplaetzeSource.next(data);
-  }
-
-  // Observable and set function for Aufzugsanlage
-  private aufzugsanlageSource = new BehaviorSubject<Aufzugsanlage>(
-    this.aufzugsanlage.options[0].value
-  );
-  currentAufzugsanlage$ = this.aufzugsanlageSource.asObservable();
-
-  public setAufzugsanlageIn(data: Aufzugsanlage) {
-    this.aufzugsanlageSource.next(data);
-  }
-
-  // Observable and set function for Barriere Freiheit
-  private barriereFreiheitSource = new BehaviorSubject<BarrierefreiesBauen>(
-    this.barrierefreiheit.options[0].value
-  );
-  currentBarriereFreiheit$ = this.barriereFreiheitSource.asObservable();
-
-  public setBarrierefreiheitIn(data: BarrierefreiesBauen) {
-    this.barriereFreiheitSource.next(data);
-  }
-
-  // Observable and set function for Dachbegruenung
-  private dachbegruenungSource = new BehaviorSubject<Dachbegruenung>(
-    this.dachbegruenung.options[0].value
-  );
-  currentDachbegruenun$ = this.dachbegruenungSource.asObservable();
-
-  public setDachbegruenungIn(data: Dachbegruenung) {
-    this.dachbegruenungSource.next(data);
-  }
-
-  // Observable and set function for Baustellenlogistik
-  private baustellenlogistikSource = new BehaviorSubject<Baustellenlogistik>(
-    this.baustellenlogistik.options[0].value
-  );
-  currentBaustellenlogistik$ = this.baustellenlogistikSource.asObservable();
-
-  public setBaustellenlogistikIn(data: Baustellenlogistik) {
-    this.baustellenlogistikSource.next(data);
-  }
-
-  // Observable and set function for Außenanlage
-  private aussenanlageSource = new BehaviorSubject<Aussenanlagen>(
-    this.aussenanlagen.options[0].value
-  );
-  currentAussenanlage$ = this.aussenanlageSource.asObservable();
-
-  public setAussenanlagenIn(data: Aussenanlagen) {
-    this.aussenanlageSource.next(data);
-  }
-
-  // Observable and set function for Grundstuecksbezogenekosten
-  private grundstuecksbezogeneKostenSource = new BehaviorSubject<number>(
-    this.grundstKosten.value
-  );
-  currentGrundstuecksbezogeneKosten$ =
-    this.grundstuecksbezogeneKostenSource.asObservable();
-
-  public setGrundstuecksbezogeneKosten(data: number) {
-    this.grundstuecksbezogeneKostenSource.next(data);
-  }
-
-  // Observable and set function for Baunebenkosten Kein Fin
-  private baunebenkostenKeinFinSource = new BehaviorSubject<number>(
-    this.baunebenkostenKeinFin.init
-  );
-  currentBaunebenkostenKeinFin$ =
-    this.baunebenkostenKeinFinSource.asObservable();
-
-  public setBaunebenkostenKeinFin(data: number) {
-    this.baunebenkostenKeinFinSource.next(data);
-  }
-
-  constructor() {}
 }
