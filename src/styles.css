@@ -677,8 +677,10 @@ input:disabled {
   background-color: var(--bg-secondary);
 }
 
-/* Legends when disabled */
-legend:has(~ span input:disabled, ~ input:disabled) {
+/* Legends when ALL its items are disabled */
+legend:has(~ span input:disabled, ~ input:disabled) /* select if legend has a disabled child */
+  :not(:has(~ span input:enabled, ~ input:enabled) /* only select if the legend don't have a enabled child */ 
+  ) {
   pointer-events: none;
   color: var(--primary30);
   & sup {
@@ -747,6 +749,10 @@ input[type="number"]:disabled:hover {
   background-color: var(--bg-tertiary);
   border-radius: var(--button-radius) var(--button-radius) 0 0;
   border: none;
+}
+
+.pill:focus {
+  outline-color: var(--secondary);
 }
 
 .pill:hover {
