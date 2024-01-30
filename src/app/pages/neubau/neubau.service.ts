@@ -47,16 +47,12 @@ export class NeubauService {
     this.formProjektService.baunebenkostenKeinFin.init;
 
   // Darlehen parameters
-  kalkRealzins = this.formDarlehenService.kalkRealzins.init;
-  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
+  kalkRealzins = this.formDarlehenService.kalkRealzins.value;
+  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
-    this.formDarlehenService.kfWDarlehenOptions[0].value;
+    this.formDarlehenService.kfWDarlehen.options[0].value;
   bankDarlehen: BankDarlehen =
-    this.formDarlehenService.bankDarlehenOptions[0].value;
-
-  // Router link
-  currentRoute!: string;
-  neubauRoute = '/neubau';
+    this.formDarlehenService.bankDarlehen.options[0].value;
 
   constructor(
     private constants: neubau,
@@ -64,19 +60,12 @@ export class NeubauService {
     private formDarlehenService: FormDarlehenNeubauService,
     private router: Router
   ) {
-    router.events.subscribe((value) => {
-      // Check for changes on the url
-      if (value instanceof NavigationEnd) {
-        // Then assign the url as a string
-        this.currentRoute = this.router.url.toString();
-      }
-    });
+    router.events.subscribe((value) => {});
 
     // Subscribe to observable userPriceToggle
     this.formProjektService.currentUserPriceToggle$
       .pipe(
         skipWhile((value) => value === this.userPriceDisabled),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.userPriceDisabled = value;
@@ -86,7 +75,6 @@ export class NeubauService {
     this.formProjektService.currentUserPrice$
       .pipe(
         skipWhile((value) => value === this.userPrice),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.userPrice = value;
@@ -99,7 +87,6 @@ export class NeubauService {
         // Don't do anything until the user changes one of the forms
         skipWhile((value) => value === this.wohnflaeche),
         // Don't do anything unless the Router is in the neubau page
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.wohnflaeche = value;
@@ -109,7 +96,6 @@ export class NeubauService {
     this.formProjektService.currentAnzahlWohnungen$
       .pipe(
         skipWhile((value) => value === this.anzahlWohnungen),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.anzahlWohnungen = value;
@@ -119,7 +105,6 @@ export class NeubauService {
     this.formProjektService.currentEnergiestandard$
       .pipe(
         skipWhile((value) => value === this.energiestandard),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.energiestandard = value;
@@ -129,7 +114,6 @@ export class NeubauService {
     this.formProjektService.currentKonstruktion$
       .pipe(
         skipWhile((value) => value === this.konstruktion),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.konstruktion = value;
@@ -139,14 +123,12 @@ export class NeubauService {
     this.formProjektService.currentZertifizierung$
       .pipe(
         skipWhile((value) => value === this.zertifizierung),
-        filter(() => this.currentRoute === this.neubauRoute)
       )
       .subscribe((value) => {
         this.zertifizierung = value;
         this.update();
       });
 
-    // Subscribe to all Neubau Form parameters and update after every change
     this.formProjektService.currentKellergeschoss$
       .pipe(skipWhile((value) => value === this.kellergeschossIn))
       .subscribe((value) => {
@@ -202,48 +184,13 @@ export class NeubauService {
         this.update();
       });
 
-    // Subscribe to all Darlehen Form parameters and update after every change
-    this.formDarlehenService.currentKalkRealzins$
-      .pipe(
-        // Don't do anything until the user changes one of the forms
-        skipWhile((value) => value === this.kalkRealzins),
-        // Don't do anything unless the Router is in the neubau page
-        filter(() => this.currentRoute === this.neubauRoute)
-      )
-      .subscribe((value) => {
-        this.kalkRealzins = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentKreditlaufzeit$
-      .pipe(
-        skipWhile((value) => value === this.kreditlaufzeit),
-        filter(() => this.currentRoute === this.neubauRoute)
-      )
-      .subscribe((value) => {
-        this.kreditlaufzeit = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentKfWDarlehen$
-      .pipe(
-        skipWhile((value) => value === this.kfWDarlehen),
-        filter(() => this.currentRoute === this.neubauRoute)
-      )
-      .subscribe((value) => {
-        this.kfWDarlehen = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentBankDarlehen$
-      .pipe(
-        skipWhile((value) => value === this.bankDarlehen),
-        filter(() => this.currentRoute === this.neubauRoute)
-      )
-      .subscribe((value) => {
-        this.bankDarlehen = value;
-        this.update();
-      });
+    this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
+      this.kalkRealzins = value.kalkRealzinsRange!;
+      this.kreditlaufzeit = value.kreditlaufzeit!;
+      this.kfWDarlehen = value.kfWDarlehen!;
+      this.bankDarlehen = value.bankDarlehen!;
+      this.update();
+    });
 
     this.update();
   }
@@ -634,7 +581,7 @@ export class NeubauService {
   private updateKfwKreditProBau() {
     this._kfwKreditProBau = this._kfwKredit / this.anzahlWohnungen;
   }
-  
+
   private _bankKreditProBau = 0;
   private updateBankKreditProBau() {
     this._bankKreditProBau = this._bankKredit / this.anzahlWohnungen;
@@ -643,9 +590,9 @@ export class NeubauService {
   // investitionskostenProBau
   private _investitionskostenProBau = 0;
   private updateInvestitionskostenProBau() {
-    this._investitionskostenProBau = this._investitionskosten / this.anzahlWohnungen;
+    this._investitionskostenProBau =
+      this._investitionskosten / this.anzahlWohnungen;
   }
-
 
   // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
   outputDashboard!: DashboardOutput;
@@ -679,7 +626,7 @@ export class NeubauService {
     this.updateGesamtgestehungskosten();
     this.updateKfwKredit();
     this.updateKfwKreditM2();
-    this.updateKfwKreditProBau()
+    this.updateKfwKreditProBau();
     this.updateRestsumme();
     this.updateAfKfW();
     this.updateAfBank();
@@ -853,10 +800,10 @@ export class NeubauService {
       this.formProjektService.baunebenkostenKeinFin.init;
 
     // Darlehen parameters
-    this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;
-    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.init;
-    this.kfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
-    this.bankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
+    this.kalkRealzins = this.formDarlehenService.kalkRealzins.value;
+    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
+    this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
+    this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;
 
     this.update();
   }

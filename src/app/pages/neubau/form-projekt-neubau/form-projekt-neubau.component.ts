@@ -225,21 +225,18 @@ export class FormProjektNeubauComponent implements OnInit {
         const konstruktion = this.projektFormNeu.get('konstruktion');
         if (value != 'EH 40') {
           zertifizierung?.setValue('Keine');
-          this.formService.zertifizierung.options[0].disabled = false;
           this.formService.zertifizierung.options[1].disabled = true;
           this.formService.zertifizierung.options[2].disabled = true;
           this.formService.zertifizierungWarningMessage$i.set(
             '* Zertifizierung ist nur mit EH 40 möglich'
           );
         } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
-          this.formService.zertifizierung.options[0].disabled = false;
           this.formService.zertifizierung.options[1].disabled = false;
           this.formService.zertifizierung.options[2].disabled = false;
         } else if (
           value === 'EH 40' &&
           konstruktion?.value === 'Konventionell'
         ) {
-          this.formService.zertifizierung.options[0].disabled = false;
           this.formService.zertifizierung.options[1].disabled = false;
           this.formService.zertifizierung.options[2].disabled = true;
           this.formService.zertifizierungWarningMessage$i.set(
@@ -259,7 +256,6 @@ export class FormProjektNeubauComponent implements OnInit {
         if (zertifizierung?.value === 'mit QNG') {
           zertifizierung?.setValue('Keine');
         }
-        this.formService.zertifizierung.options[0].disabled = false;
         this.formService.zertifizierung.options[1].disabled = false;
         this.formService.zertifizierung.options[2].disabled = true;
         this.formService.zertifizierungWarningMessage$i.set(
@@ -269,11 +265,9 @@ export class FormProjektNeubauComponent implements OnInit {
         value === 'Konventionell' &&
         energiestandard?.value != 'EH 40'
       ) {
-        this.formService.zertifizierung.options[0].disabled = false;
         this.formService.zertifizierung.options[1].disabled = true;
         this.formService.zertifizierung.options[2].disabled = true;
       } else if (value === 'Holzbau' && energiestandard?.value === 'EH 40') {
-        this.formService.zertifizierung.options[0].disabled = false;
         this.formService.zertifizierung.options[1].disabled = false;
         this.formService.zertifizierung.options[2].disabled = false;
       }
