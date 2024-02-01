@@ -2,9 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungService } from '../../sanierung.service';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
+import { SanierungService } from '../../sanierung.service';
+import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
 
 @Component({
   selector: 'app-chart-finanzierungskosten-sanierung',
@@ -19,21 +19,16 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 export class ChartFinanzierungskostenSanierungComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
-
   constructor(
     private sanierungService: SanierungService,
     private styleService: ChartsSettingsService
   ) {}
 
-  // Here I made a copy of the subscription to both observables.
-  // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.sanierungService.currentOutputDashboard$.subscribe((value) => {
-      this.output = value;
+    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(this.output.ohneKfw),
-        Math.round(this.output.mitKfw),
+        Math.round(projekt.ohneKfw),
+        Math.round(projekt.mitKfw),
       ];
       this.chart?.update();
     });

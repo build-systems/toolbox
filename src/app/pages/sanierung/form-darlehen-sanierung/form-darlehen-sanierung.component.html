@@ -1,4 +1,4 @@
-<form [formGroup]="darlehenForm">
+<form [formGroup]="formService.darlehenFormSanierung">
     <fieldset>
       <legend title="Kalkulationszinssatz Bank Kredit (Realzins)">Kalkulationszinssatz [%] <sup>&#9432;</sup></legend>
       <span class="slidernumber">
@@ -43,26 +43,26 @@
     </fieldset>
     <fieldset class="radio-fieldset">
       <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
-      <span class="radio-option" *ngFor="let item of formService.kfWDarlehenOptions">
+      <span class="radio-option" *ngFor="let item of formService.kfWDarlehen.options">
         <input
           type="radio"
           [id]="item.id"
           [value]="item.value"
           name="kfWDarlehen"
           formControlName="kfWDarlehen"
-          [attr.disabled]="(noEndfaelliges && item.value === 'Endfälliges') ? '' : null"
+          [attr.disabled]="(formService.noEndfaelliges && item.value === 'Endfälliges') ? '' : null"
         />
         <label [for]="item.id">{{ item.value }}</label>
       </span>
     </fieldset>
-    @if (noEndfaelliges) {
+    @if (formService.noEndfaelliges) {
       <div class="warning-block">
         *Endfälliges ist nur zwischen 4 und 10 Jahren möglich
       </div>
       }
     <fieldset class="radio-fieldset">
       <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
-      <span class="radio-option" *ngFor="let item of formService.bankDarlehenOptions">
+      <span class="radio-option" *ngFor="let item of formService.bankDarlehen.options">
         <input
           type="radio"
           [id]="item.id"

@@ -4,8 +4,6 @@ import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableSanierung from './tableSanierung.json';
 import { FormProjektSanierungService } from './form-projekt-sanierung/form-projekt-sanierung.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { DashboardOutput } from '../../shared/dashboard-output';
 import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-darlehen-sanierung.service';
 
 @Injectable({
@@ -16,180 +14,58 @@ export class SanierungService {
   public currentTab = signal(1);
 
   // Initial project parameters
-  userPriceDisabled = this.formProjektService.userPrice.disabled;
-  userPrice = this.formProjektService.userPrice.value;
-  wohnflaeche = this.formProjektService.wohnflaeche.value;
-  anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
+  userPriceDisabled: boolean = this.formProjektService.userPrice.disabled;
+  userPrice: number = this.formProjektService.userPrice.value;
+  wohnflaeche: number = this.formProjektService.wohnflaeche.value;
+  anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardSanierung =
     this.formProjektService.energiestandard.options[0].value;
   zertifizierung: ZertifizierungSanierung =
     this.formProjektService.zertifizierung.options[0].value;
-  worstPerformingBuilding = this.formProjektService.worstPerformingBuilding;
-  serielleSanierung = this.formProjektService.serielleSanierung;
+  worstPerformingBuilding: boolean =
+    this.formProjektService.worstPerformingBuilding.value;
+  serielleSanierung: boolean = this.formProjektService.serielleSanierung.value;
   zustandBestand: ZustandBestand =
     this.formProjektService.zustandBestand.options[0].value;
-  eeKlasse = this.formProjektService.eeKlasse;
+  eeKlasse: boolean = this.formProjektService.eeKlasse.value;
 
-  // Darlehen parameters
-  kalkRealzins = this.formDarlehenService.kalkRealzins.init;
-  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.init;
+  // Initial darlehen parameters
+  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value;
+  kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
-    this.formDarlehenService.kfWDarlehenOptions[0].value;
+    this.formDarlehenService.kfWDarlehen.options[0].value;
   bankDarlehen: BankDarlehen =
-    this.formDarlehenService.bankDarlehenOptions[0].value;
-
-  // Router link
-  currentRoute!: string;
-  sanierungRoute = '/sanierung';
+    this.formDarlehenService.bankDarlehen.options[0].value;
 
   constructor(
     private constants: sanierung,
     private formProjektService: FormProjektSanierungService,
-    private formDarlehenService: FormDarlehenSanierungService,
-    private router: Router
+    private formDarlehenService: FormDarlehenSanierungService
   ) {
-    router.events.subscribe((value) => {
-      // Check for changes on the url
-      if (value instanceof NavigationEnd) {
-        // Then assign the url as a string
-        this.currentRoute = this.router.url.toString();
+    this.formProjektService.projektFormSanierung.valueChanges.subscribe(
+      (value) => {
+        this.userPriceDisabled = !value.userPriceToggle!;
+        this.userPrice = value.userPriceRange!;
+        this.wohnflaeche = value.wohnflaecheRange!;
+        this.anzahlWohnungen = value.anzahlWohnungenRange!;
+        this.energiestandard = value.energiestandard!;
+        this.zertifizierung = value.zertifizierung!;
+        this.worstPerformingBuilding = value.worstPerformingBuilding!;
+        this.serielleSanierung = value.serielleSanierung!;
+        this.zustandBestand = value.zustandBestand!;
+        this.eeKlasse = value.eeKlasse!;
+        this.update();
       }
-    });
-
-    // Subscribe to observable userPriceToggle
-    this.formProjektService.currentUserPriceToggle$
-      .pipe(
-        skipWhile((value) => value === this.userPriceDisabled),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.userPriceDisabled = value;
+    );
+    this.formDarlehenService.darlehenFormSanierung.valueChanges.subscribe(
+      (value) => {
+        this.kalkRealzins = value.kalkRealzinsRange!;
+        this.kreditlaufzeit = value.kreditlaufzeitRange!;
+        this.kfWDarlehen = value.kfWDarlehen!;
+        this.bankDarlehen = value.bankDarlehen!;
         this.update();
-      });
-
-    // Subscribe to observable userPrice
-    this.formProjektService.currentUserPrice$
-      .pipe(
-        skipWhile((value) => value === this.userPrice),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.userPrice = value;
-        this.update();
-      });
-
-    // Subscribe to all Projekt Form parameters and update after every change
-    this.formProjektService.currentWohnflaeche$
-      // Don't do anything until the user changes one of the forms
-      // Don't do anything unless the Router is in the sanierung page
-      .pipe(
-        skipWhile((value) => value === this.wohnflaeche),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.wohnflaeche = value;
-        this.update();
-      });
-
-    this.formProjektService.currentAnzahlWohnungen$
-      .pipe(
-        skipWhile((value) => value === this.anzahlWohnungen),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.anzahlWohnungen = value;
-        this.update();
-      });
-
-    this.formProjektService.currentEnergiestandard$
-      .pipe(
-        skipWhile((value) => value === this.energiestandard),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.energiestandard = value;
-        this.update();
-      });
-
-    this.formProjektService.currentZertifizierung$
-      .pipe(
-        skipWhile((value) => value === this.zertifizierung),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.zertifizierung = value;
-        this.update();
-      });
-
-    // Subscribe to all Sanierung Form parameters and update after every change
-    this.formProjektService.currentWpc$
-      .pipe(skipWhile((value) => value === this.worstPerformingBuilding.value))
-      .subscribe((value) => {
-        this.worstPerformingBuilding.value = value;
-        this.update();
-      });
-
-    this.formProjektService.currentSerielleSanierung$
-      .pipe(skipWhile((value) => value === this.serielleSanierung.value))
-      .subscribe((value) => {
-        this.serielleSanierung.value = value;
-        this.update();
-      });
-
-    this.formProjektService.currentZustandBestand$
-      .pipe(skipWhile((value) => value === this.zustandBestand))
-      .subscribe((value) => {
-        this.zustandBestand = value;
-        this.update();
-      });
-
-    this.formProjektService.currentEeKlasse$
-      .pipe(skipWhile((value) => value === this.eeKlasse.value))
-      .subscribe((value) => {
-        this.eeKlasse.value = value;
-        this.update();
-      });
-
-    // Subscribe to all Darlehen Form parameters and update after every change
-    this.formDarlehenService.currentKalkRealzins$
-      .pipe(
-        skipWhile((value) => value === this.kalkRealzins),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.kalkRealzins = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentKreditlaufzeit$
-      .pipe(
-        skipWhile((value) => value === this.kreditlaufzeit),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.kreditlaufzeit = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentKfWDarlehen$
-      .pipe(
-        skipWhile((value) => value === this.kfWDarlehen),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.kfWDarlehen = value;
-        this.update();
-      });
-
-    this.formDarlehenService.currentBankDarlehen$
-      .pipe(
-        skipWhile((value) => value === this.bankDarlehen),
-        filter(() => this.currentRoute === this.sanierungRoute)
-      )
-      .subscribe((value) => {
-        this.bankDarlehen = value;
-        this.update();
-      });
+      }
+    );
 
     this.update();
   }
@@ -215,7 +91,7 @@ export class SanierungService {
   // EE-Bonus [%]
   private _eeBonus = 0;
   private updateEeBonus() {
-    if (this.eeKlasse.value === true) {
+    if (this.eeKlasse === true) {
       this._eeBonus = this.constants.eeBonusPossible;
     } else {
       this._eeBonus = 0;
@@ -236,7 +112,7 @@ export class SanierungService {
   private _wpbBonus = 0;
   private updateWpbBonus() {
     if (
-      this.worstPerformingBuilding.value === true &&
+      this.worstPerformingBuilding === true &&
       (this.energiestandard === 'EH 70' ||
         this.energiestandard === 'EH 55' ||
         this.energiestandard === 'EH 40')
@@ -251,7 +127,7 @@ export class SanierungService {
   private _serSanBonus = 0;
   private updateSerSanBonus() {
     if (
-      this.serielleSanierung.value === true &&
+      this.serielleSanierung === true &&
       (this.energiestandard === 'EH 55' || this.energiestandard === 'EH 40')
     )
       this._serSanBonus = this.constants.serSanBonusPossible;
@@ -264,9 +140,10 @@ export class SanierungService {
   updateGestehungskosten() {
     // First check if the user chose to input their own price estimation
     // If not, then search in the table (JSON file)
-    if (this.userPriceDisabled){
+    if (this.userPriceDisabled) {
       const initialProperties = {
-        Energiestandard: this.formProjektService.energiestandard.options[0].value,
+        Energiestandard:
+          this.formProjektService.energiestandard.options[0].value,
         ZustandBestand: this.formProjektService.zustandBestand.options[0].value,
       };
       const desiredProperties = {
@@ -331,7 +208,7 @@ export class SanierungService {
     this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
   private updateMaxKfwKredit() {
     if (
-      this.eeKlasse.value === true ||
+      this.eeKlasse === true ||
       this.zertifizierung !== 'Keine Zertifizierung'
     ) {
       this._maxKfwKredit =
@@ -577,12 +454,11 @@ export class SanierungService {
     this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
   }
 
-  
   private _kfwKreditProBau = 0;
   private updateKfwKreditProBau() {
     this._kfwKreditProBau = this._kfwKredit / this.anzahlWohnungen;
   }
-  
+
   private _bankKreditProBau = 0;
   private updateBankKreditProBau() {
     this._bankKreditProBau = this._bankKredit / this.anzahlWohnungen;
@@ -591,20 +467,14 @@ export class SanierungService {
   // investitionskostenProBau
   private _investitionskostenProBau = 0;
   private updateInvestitionskostenProBau() {
-    this._investitionskostenProBau = this._investitionskosten / this.anzahlWohnungen;
+    this._investitionskostenProBau =
+      this._investitionskosten / this.anzahlWohnungen;
   }
 
   private _kfwZuschussProBau = 0;
   private updateKfwZuschussProBau() {
     this._kfwZuschussProBau = this._kfwZuschuss / this.anzahlWohnungen;
   }
-
-  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
-  outputDashboard!: DashboardOutput;
-  private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
-    this.outputDashboard
-  );
-  currentOutputDashboard$ = this.outputDashboardSource.asObservable();
 
   // Sanierung Output to be used in the Save and Export
   outputSanierung!: SanierungProjekt;
@@ -614,8 +484,6 @@ export class SanierungService {
   currentOutputSanierung$ = this.outputSanierungSource.asObservable();
 
   public update() {
-    // console.log(this.userPriceToggle);
-    // console.log(this.userPrice);
     this.updateTilgungszuschuss();
     this.updateEeBonus();
     this.updateNhBonus();
@@ -632,10 +500,10 @@ export class SanierungService {
     this.updateAfBank();
     this.updateKfwZuschuss();
     this.updateKfwZuschussM2();
-    this.updateKfwZuschussProBau()
-    this.updateKfwKreditProBau()
+    this.updateKfwZuschussProBau();
     this.updateKfwKredit();
     this.updateKfwKreditM2();
+    this.updateKfwKreditProBau();
     this.updateBankKredit();
     this.updateBankKreditM2();
     this.updateBankKreditProBau();
@@ -661,42 +529,6 @@ export class SanierungService {
     this.updateGFinanzierung();
     this.updateGFinanzierungM2();
 
-    this.outputDashboardSource.next(
-      (this.outputDashboard = {
-        typ: 'Sanierung',
-        // Dalehen
-        kreditlaufzeit: this.kreditlaufzeit,
-        kfWDarlehen: this.kfWDarlehen,
-        bankDarlehen: this.bankDarlehen,
-        // Zusammenfassung Ergebnisse
-        annuitaetKfW: this._annuitaetKfW,
-        annuitaetBank: this._annuitaetBank,
-        efKfW: this._efKfW,
-        efBank: this._efBank,
-        kfwKredit: this._kfwKredit,
-        kfwKreditM2: this._kfwKreditM2,
-        kfwKreditProBau: this._kfwKreditProBau,
-        bankKredit: this._bankKredit,
-        bankKreditM2: this._bankKreditM2,
-        bankKreditProBau: this._bankKreditProBau,
-        finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
-        finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
-        finanzierungskostenFinanzmarktM2:
-          this._finanzierungskostenFinanzmarktM2,
-        investitionskosten: this._investitionskosten,
-        investitionskostenM2: this._investitionskostenM2,
-        investitionskostenProBau: this._investitionskostenProBau,
-        kfwZuschuss: this._kfwZuschuss,
-        kfwZuschussM2: this._kfwZuschussM2,
-        kfwZuschussProBau: this._kfwZuschussProBau,
-        ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfwM2,
-        mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfwM2,
-      })
-    );
-
     this.outputSanierungSource.next(
       (this.outputSanierung = {
         // Projekt
@@ -705,10 +537,10 @@ export class SanierungService {
         energiestandard: this.energiestandard,
         zertifizierung: this.zertifizierung,
         // Sanierung
-        worstPerformingBuilding: this.worstPerformingBuilding.value,
-        serielleSanierung: this.serielleSanierung.value,
+        worstPerformingBuilding: this.worstPerformingBuilding,
+        serielleSanierung: this.serielleSanierung,
         zustandBestand: this.zustandBestand,
-        eeKlasse: this.eeKlasse.value,
+        eeKlasse: this.eeKlasse,
         // Dalehen
         kalkRealzins: this.kalkRealzins,
         kreditlaufzeit: this.kreditlaufzeit,
@@ -737,31 +569,33 @@ export class SanierungService {
         gbEfd: this._gbEfd,
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
-        kfwKreditM2: this._kfwKredit / this.wohnflaeche,
+        kfwKreditM2: this._kfwKreditM2,
+        kfwKreditProBau: this._kfwKreditProBau,
         bankKredit: this._bankKredit,
-        bankKreditM2: this._bankKredit / this.wohnflaeche,
+        bankKreditM2: this._bankKreditM2,
+        bankKreditProBau: this._bankKreditProBau,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2:
-          this._finanzierungskostenKfw / this.wohnflaeche,
+        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
         finanzierungskostenFinanzmarktM2:
-          this._finanzierungskostenFinanzmarkt / this.wohnflaeche,
+          this._finanzierungskostenFinanzmarktM2,
         investitionskosten: this._investitionskosten,
-        investitionskostenM2: this._investitionskosten / this.wohnflaeche,
+        investitionskostenM2: this._investitionskostenM2,
+        investitionskostenProBau: this._investitionskostenProBau,
         kfwZuschuss: this._kfwZuschuss,
-        kfwZuschussM2: this._kfwZuschuss / this.wohnflaeche,
+        kfwZuschussM2: this._kfwZuschussM2,
+        kfwZuschussProBau: this._kfwZuschussProBau,
         gInvestition: this._gInvestition,
-        gInvestitionM2: this._gInvestition / this.wohnflaeche,
+        gInvestitionM2: this._gInvestitionM2,
         gFinanzierung: this._gFinanzierung,
-        gFinanzierungM2: this._gFinanzierung / this.wohnflaeche,
+        gFinanzierungM2: this._gFinanzierungM2,
         // Vergleichsrechnung
         ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfw / this.wohnflaeche,
+        ohneKfwM2: this._ohneKfwM2,
         mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfw / this.wohnflaeche,
+        mitKfwM2: this._mitKfwM2,
       })
     );
-    // console.log(this.outputSanierung);
   }
 
   public reset() {
@@ -773,17 +607,17 @@ export class SanierungService {
     this.zertifizierung =
       this.formProjektService.zertifizierung.options[0].value;
     this.worstPerformingBuilding =
-      this.formProjektService.worstPerformingBuilding;
-    this.serielleSanierung = this.formProjektService.serielleSanierung;
+      this.formProjektService.worstPerformingBuilding.value;
+    this.serielleSanierung = this.formProjektService.serielleSanierung.value;
     this.zustandBestand =
       this.formProjektService.zustandBestand.options[0].value;
-    this.eeKlasse = this.formProjektService.eeKlasse;
+    this.eeKlasse = this.formProjektService.eeKlasse.value;
 
     // Darlehen parameters
-    this.kalkRealzins = this.formDarlehenService.kalkRealzins.init;
-    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.init;
-    this.kfWDarlehen = this.formDarlehenService.kfWDarlehenOptions[0].value;
-    this.bankDarlehen = this.formDarlehenService.bankDarlehenOptions[0].value;
+    this.kalkRealzins = this.formDarlehenService.kalkRealzins.value;
+    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
+    this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
+    this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;
 
     this.update();
   }

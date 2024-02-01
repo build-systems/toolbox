@@ -202,7 +202,7 @@ export class FormProjektNeubauService {
     disabled: false,
   };
 
-  ///// Refactor
+  // Control for kellergeschoss and stellplätze
   public noKellergeschoss: boolean = false;
 
   projektFormNeu = this.fb.group({

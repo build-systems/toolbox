@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
+import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 
 @Component({
   selector: 'app-chart-gkosten-neubau',
@@ -19,7 +19,6 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 export class ChartGkostenNeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
 
   // Router links. There must be better way to get the strings from app.routes.ts
   constructor(
@@ -30,22 +29,21 @@ export class ChartGkostenNeubauComponent implements OnInit {
   // Here I made a copy of the subscription to both observables.
   // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.neubauService.currentOutputDashboard$.subscribe((value) => {
-      this.output = value;
+    this.neubauService.currentOutputNeubau$.subscribe((projekt: NeubauProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(this.output['investitionskosten']),
+        Math.round(projekt.investitionskosten),
         0,
       ];
       this.barChartData.datasets[1].data = [
         0,
-        Math.round(this.output['bankKredit']),
+        Math.round(projekt.bankKredit),
       ];
       this.barChartData.datasets[2].data = [
         0,
-        Math.round(this.output['kfwKredit']),
+        Math.round(projekt.kfwKredit),
       ];
-      // this.barChartData.datasets[3].data = [0, Math.round(this.output['finanzierungskostenFinanzmarkt'])];
-      // this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenKfw'])];
+      // this.barChartData.datasets[3].data = [0, Math.round(value['finanzierungskostenFinanzmarkt'])];
+      // this.barChartData.datasets[4].data = [0, Math.round(value['finanzierungskostenKfw'])];
       this.chart?.update();
     });
   }

@@ -1,4 +1,4 @@
-<form [formGroup]="projektFormSan">
+<form [formGroup]="this.formService.projektFormSanierung">
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -103,7 +103,8 @@
       <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
-  @if (formService.zertifizierung.options[0].disabled || formService.zertifizierung.options[1].disabled) {
+  @if (formService.zertifizierung.options[0].disabled ||
+  formService.zertifizierung.options[1].disabled) {
   <div class="warning-block">*QNG ist nur mit EH 40 möglich</div>
   }
   <fieldset>

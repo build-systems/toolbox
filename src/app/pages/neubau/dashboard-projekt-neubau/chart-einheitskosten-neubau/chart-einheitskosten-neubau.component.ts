@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
+import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 
 @Component({
   selector: 'app-chart-einheitskosten-neubau',
@@ -20,7 +20,7 @@ import { ChartEvent } from 'chart.js/dist/core/core.plugins';
 export class ChartEinheitskostenNeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
+  output!: NeubauProjekt;
 
   constructor(
     private neubauService: NeubauService,
@@ -28,7 +28,7 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.neubauService.currentOutputDashboard$
+    this.neubauService.currentOutputNeubau$
       .subscribe((value) => {
         this.output = value;
         this.barChartData.datasets[0].data = [

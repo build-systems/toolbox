@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { SanierungService } from '../../sanierung.service';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
+import { SanierungService } from '../../sanierung.service';
+import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
 
 @Component({
   selector: 'app-chart-gkosten-m2-sanierung',
@@ -19,34 +19,31 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 export class ChartGkostenM2SanierungComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
-
   constructor(
     private sanierungService: SanierungService,
     private styleService: ChartsSettingsService
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputDashboard$.subscribe((value) => {
-      this.output = value;
+    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(this.output['investitionskostenM2']),
+        Math.round(projekt.investitionskostenM2),
         0,
       ];
       this.barChartData.datasets[1].data = [
         0,
-        Math.round(this.output['bankKreditM2']),
+        Math.round(projekt.bankKreditM2),
       ];
       this.barChartData.datasets[2].data = [
         0,
-        Math.round(this.output['kfwKreditM2']),
+        Math.round(projekt.kfwKreditM2),
       ];
       this.barChartData.datasets[3].data = [
         0,
-        Math.round(this.output['kfwZuschussM2']),
+        Math.round(projekt.kfwZuschussM2),
       ];
-      // this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
-      // this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
+      // this.barChartData.datasets[4].data = [0, Math.round(value['finanzierungskostenFinanzmarktM2'])];
+      // this.barChartData.datasets[5].data = [0, Math.round(value['finanzierungskostenKfwM2'])];
       this.chart?.update();
     });
   }
@@ -155,10 +152,10 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.color02.backgroundColor,
+        borderColor: this.styleService.datasets.color02.borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.color02.hoverBackgroundColor,
       },
       {
         // KfW Kredit

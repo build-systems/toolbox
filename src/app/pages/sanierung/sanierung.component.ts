@@ -42,6 +42,6 @@ export class SanierungComponent {
     // The main problem is that the forms are being reused across different projects/routes
     // So it would require separating the forms.
     // I think it could easily be done using signals
-    sanierungService.reset();
+    // sanierungService.reset();
   }
 }

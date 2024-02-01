@@ -39,16 +39,20 @@ export interface SanierungProjekt {
   // Zusammenfassung Ergebnisse
   kfwKredit: number;
   kfwKreditM2: number;
+  kfwKreditProBau: number;
   bankKredit: number;
   bankKreditM2: number;
+  bankKreditProBau: number;
   finanzierungskostenKfw: number;
   finanzierungskostenKfwM2: number;
   finanzierungskostenFinanzmarkt: number;
   finanzierungskostenFinanzmarktM2: number;
   investitionskosten: number;
   investitionskostenM2: number;
+  investitionskostenProBau: number;
   kfwZuschuss: number;
   kfwZuschussM2: number;
+  kfwZuschussProBau: number;
   gInvestition: number;
   gInvestitionM2: number;
   gFinanzierung: number;

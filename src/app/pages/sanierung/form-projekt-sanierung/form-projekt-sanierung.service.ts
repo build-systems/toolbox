@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -103,6 +104,57 @@ export class FormProjektSanierungService {
     disabled: false,
   };
 
+  // Zertifizierung warning: if user try to select conflicting
+  public noQNG: boolean = false;
+
+  projektFormSanierung = this.fb.group({
+    userPriceToggle: false,
+    userPriceRange: [
+      this.userPrice.value,
+      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+    ],
+    userPrice: [
+      this.userPrice.value,
+      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+    ],
+    wohnflaecheRange: [
+      this.wohnflaeche.value,
+      [
+        Validators.min(this.wohnflaeche.min),
+        Validators.max(this.wohnflaeche.max),
+      ],
+    ],
+    wohnflaeche: [
+      this.wohnflaeche.value,
+      [
+        Validators.min(this.wohnflaeche.min),
+        Validators.max(this.wohnflaeche.max),
+      ],
+    ],
+    anzahlWohnungenRange: [
+      this.anzahlWohnungen.value,
+      [
+        Validators.min(this.anzahlWohnungen.min),
+        Validators.max(this.anzahlWohnungen.max),
+      ],
+    ],
+    anzahlWohnungen: [
+      this.anzahlWohnungen.value,
+      [
+        Validators.min(this.anzahlWohnungen.min),
+        Validators.max(this.anzahlWohnungen.max),
+      ],
+    ],
+    energiestandard: this.energiestandard.options[0].value,
+    zertifizierung: this.zertifizierung.options[0].value,
+    worstPerformingBuilding: this.worstPerformingBuilding.value,
+    serielleSanierung: this.serielleSanierung.value,
+    zustandBestand: this.zustandBestand.options[0].value,
+    eeKlasse: this.eeKlasse.value,
+  });
+
+  //// REFACTOR
+
   // Observable and set function for user price toggle
   private userPriceToggleSource = new BehaviorSubject<boolean>(
     this.userPrice.disabled
@@ -113,97 +165,100 @@ export class FormProjektSanierungService {
   public setUserPriceToggle(data: boolean) {
     this.userPriceToggleSource.next(!data);
     // Disable all the following form elements
-    this.zustandBestand.options.forEach(obj => obj.disabled = data);
+    this.zustandBestand.options.forEach((obj) => (obj.disabled = data));
   }
 
-  // Observable and set function for user price
-  private userPriceSource = new BehaviorSubject<number>(this.userPrice.value);
-  currentUserPrice$ = this.userPriceSource.asObservable();
+  constructor(private fb: FormBuilder) {
+    //User price
+    this.projektFormSanierung
+      .get('userPriceToggle')
+      ?.valueChanges.subscribe((value) => {});
 
-  public setUserPrice(data: number) {
-    this.userPriceSource.next(data);
+    // User Price
+    this.projektFormSanierung
+      .get('userPriceRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range changes
+        this.projektFormSanierung
+          .get('userPrice')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormSanierung.get('userPrice')?.valueChanges.subscribe((value) => {
+      this.projektFormSanierung
+        // Update range input when number changes
+        .get('userPriceRange')
+        ?.setValue(value, { emitEvent: false });
+    });
+
+    // Wohnflaeche
+    this.projektFormSanierung
+      .get('wohnflaecheRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektFormSanierung
+          .get('wohnflaeche')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormSanierung.get('wohnflaeche')?.valueChanges.subscribe((value) => {
+      // Update range input when number input changes
+      this.projektFormSanierung
+        .get('wohnflaecheRange')
+        ?.setValue(value, { emitEvent: false });
+    });
+
+    // Anzahl WohnungenRange
+    this.projektFormSanierung
+      .get('anzahlWohnungenRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range input changes
+        this.projektFormSanierung
+          .get('anzahlWohnungen')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormSanierung
+      .get('anzahlWohnungen')
+      ?.valueChanges.subscribe((value) => {
+        // Update range input when number input changes
+        this.projektFormSanierung
+          .get('anzahlWohnungenRange')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    // Energiestandard
+    this.projektFormSanierung
+      .get('energiestandard')
+      ?.valueChanges.subscribe((value) => {
+        // Relationship with Zertifizierung
+        const zertifizierung = this.projektFormSanierung.get('zertifizierung');
+        if (value != 'EH 40') {
+          if (zertifizierung?.value === 'QNG') {
+            zertifizierung?.setValue('Keine Zertifizierung');
+          }
+          // Disable mit QNG Siegel
+          this.zertifizierung.options[0].disabled = true;
+          this.noQNG = true;
+        } else {
+          // Enable mit QNG Siegel
+          this.zertifizierung.options[0].disabled = false;
+          this.noQNG = false;
+        }
+      });
+
+    // Zertifizierung
+    this.projektFormSanierung
+      .get('zertifizierung')
+      ?.valueChanges.subscribe((value) => {
+        // Relationship with Energiestandard
+        const energiestandard = this.projektFormSanierung.get('energiestandard');
+        if (value === 'QNG' && energiestandard?.value != 'EH 40') {
+          energiestandard?.setValue('EH 40');
+          this.noQNG = true;
+        } else {
+          this.noQNG = false;
+        }
+      });
   }
-
-  // Observable and set function for Wohnflaeche
-  private wohnflaecheSource = new BehaviorSubject<number>(
-    this.wohnflaeche.value
-  );
-  currentWohnflaeche$ = this.wohnflaecheSource.asObservable();
-
-  // This method is used inside the form component and is triggered everytime the form changes
-  public setWohnflaeche(value: number) {
-    // It gets the form value
-    this.wohnflaecheSource.next(value);
-    // And trigger the update() method which cascade triggering all methods
-  }
-
-  // Observable and set function for Anzahl Wohnungen
-  private anzahlWohnungenSource = new BehaviorSubject<number>(
-    this.anzahlWohnungen.value
-  );
-  currentAnzahlWohnungen$ = this.anzahlWohnungenSource.asObservable();
-
-  public setAnzahlWohnungen(data: number) {
-    this.anzahlWohnungenSource.next(data);
-  }
-
-  // Observable and set function for Energiestandard
-  private energiestandardSource = new BehaviorSubject<EnergiestandardSanierung>(
-    this.energiestandard.options[0].value
-  );
-  currentEnergiestandard$ = this.energiestandardSource.asObservable();
-
-  public setEnergiestandard(data: EnergiestandardSanierung) {
-    this.energiestandardSource.next(data);
-  }
-
-  // Observable and set function for Zertifizierung
-  private zertifizierungSource = new BehaviorSubject<ZertifizierungSanierung>(
-    this.zertifizierung.options[0].value
-  );
-  currentZertifizierung$ = this.zertifizierungSource.asObservable();
-
-  public setZertifizierung(data: ZertifizierungSanierung) {
-    this.zertifizierungSource.next(data);
-  }
-
-  // Observable and set function for Worst Performing Building
-  private wpcSource = new BehaviorSubject<boolean>(
-    this.worstPerformingBuilding.value
-  );
-  currentWpc$ = this.wpcSource.asObservable();
-
-  public setWpc(data: boolean) {
-    this.wpcSource.next(data);
-  }
-
-  // Observable and set function for Serielle Sanierung
-  private serielleSanierungSource = new BehaviorSubject<boolean>(
-    this.serielleSanierung.value
-  );
-  currentSerielleSanierung$ = this.serielleSanierungSource.asObservable();
-
-  public setSerielleSanierung(data: boolean) {
-    this.serielleSanierungSource.next(data);
-  }
-
-  // Observable and set function for Zustand Bestand
-  private zustandBestandSource = new BehaviorSubject<ZustandBestand>(
-    this.zustandBestand.options[0].value
-  );
-  currentZustandBestand$ = this.zustandBestandSource.asObservable();
-
-  public setZustandBestand(data: ZustandBestand) {
-    this.zustandBestandSource.next(data);
-  }
-
-  // Observable and set function for EE-Klasse
-  private eeKlasseSourcde = new BehaviorSubject<boolean>(this.eeKlasse.value);
-  currentEeKlasse$ = this.eeKlasseSourcde.asObservable();
-
-  public setEeKlasse(data: boolean) {
-    this.eeKlasseSourcde.next(data);
-  }
-
-  constructor() {}
 }

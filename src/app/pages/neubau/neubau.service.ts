@@ -14,10 +14,10 @@ export class NeubauService {
   public currentTab = signal(1);
 
   // Initial project parameters
-  userPriceDisabled = this.formProjektService.userPrice.disabled;
-  userPrice = this.formProjektService.userPrice.value;
-  wohnflaeche = this.formProjektService.wohnflaeche.value;
-  anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
+  userPriceDisabled: boolean = this.formProjektService.userPrice.disabled;
+  userPrice: number = this.formProjektService.userPrice.value;
+  wohnflaeche: number = this.formProjektService.wohnflaeche.value;
+  anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardNeubau =
     this.formProjektService.energiestandard.options[0].value;
   konstruktion: Konstruktion =
@@ -46,7 +46,7 @@ export class NeubauService {
     this.formProjektService.baunebenkostenKeinFin.init;
 
   // Darlehen parameters
-  kalkRealzins = this.formDarlehenService.kalkRealzins.value;
+  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value;
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
@@ -86,7 +86,6 @@ export class NeubauService {
       this.update();
     });
 
-    // CAN THIS BE DELETED?
     this.update();
   }
 
@@ -253,8 +252,6 @@ export class NeubauService {
     this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
   }
 
-  // How will the formula look like with the new class? (keine, ohne QNG Siegel, mit QNG Siegel)
-  //=IF(AND(B7="keine Zertifizierung";B5="EH 40");100000*B4;IF(AND(B7="QNG";B5="EH 40");150000*B4;0))
   // KfW-Kredit [€]
   private _kfwKredit = 0;
   private updateKfwKredit() {
@@ -489,13 +486,6 @@ export class NeubauService {
       this._investitionskosten / this.anzahlWohnungen;
   }
 
-  // I am creating one output observable for Sanierung and one for Neubau to input in the dashboard
-  outputDashboard!: DashboardOutput;
-  private outputDashboardSource = new BehaviorSubject<DashboardOutput>(
-    this.outputDashboard
-  );
-  currentOutputDashboard$ = this.outputDashboardSource.asObservable();
-
   // Neubau Output to be used in the Save and Export
   outputNeubau!: NeubauProjekt;
   private outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
@@ -550,42 +540,6 @@ export class NeubauService {
     this.updateGFinanzierung();
     this.updateGFinanzierungM2();
 
-    this.outputDashboardSource.next(
-      (this.outputDashboard = {
-        typ: 'Neubau',
-        // Dalehen
-        kreditlaufzeit: this.kreditlaufzeit,
-        kfWDarlehen: this.kfWDarlehen,
-        bankDarlehen: this.bankDarlehen,
-        // Zusammenfassung Ergebnisse
-        annuitaetKfW: this._annuitaetKfW,
-        annuitaetBank: this._annuitaetBank,
-        efKfW: this._efKfW,
-        efBank: this._efBank,
-        kfwKredit: this._kfwKredit,
-        kfwKreditM2: this._kfwKreditM2,
-        kfwKreditProBau: this._kfwKreditProBau,
-        bankKredit: this._bankKredit,
-        bankKreditM2: this._bankKreditM2,
-        bankKreditProBau: this._bankKreditProBau,
-        finanzierungskostenKfw: this._finanzierungskostenKfw,
-        finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
-        finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
-        finanzierungskostenFinanzmarktM2:
-          this._finanzierungskostenFinanzmarktM2,
-        investitionskosten: this._investitionskosten,
-        investitionskostenM2: this._investitionskostenM2,
-        investitionskostenProBau: this._investitionskostenProBau,
-        kfwZuschuss: 0,
-        kfwZuschussM2: 0,
-        kfwZuschussProBau: 0,
-        ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfwM2,
-        mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfwM2,
-      })
-    );
-
     this.outputNeubauSource.next(
       (this.outputNeubau = {
         // Projekt
@@ -636,8 +590,10 @@ export class NeubauService {
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
         kfwKreditM2: this._kfwKreditM2,
+        kfwKreditProBau: this._kfwKreditProBau,
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
+        bankKreditProBau: this._bankKreditProBau,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
         finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
@@ -645,6 +601,7 @@ export class NeubauService {
           this._finanzierungskostenFinanzmarktM2,
         investitionskosten: this._investitionskosten,
         investitionskostenM2: this._investitionskostenM2,
+        investitionskostenProBau: this._investitionskostenProBau,
         gInvestition: this._gInvestition,
         gInvestitionM2: this._gInvestitionM2,
         gFinanzierung: this._gFinanzierung,

@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { NeubauService } from '../../neubau.service';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
+import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 
 @Component({
   selector: 'app-chart-gkosten-m2-neubau',
@@ -19,39 +19,34 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 export class ChartGkostenM2NeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
-
   constructor(
     private neubauService: NeubauService,
     private styleService: ChartsSettingsService
   ) {}
 
   ngOnInit(): void {
-    this.neubauService.currentOutputDashboard$
-      .subscribe((value) => {
-        this.output = value;
+    this.neubauService.currentOutputNeubau$.subscribe(
+      (projekt: NeubauProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(this.output['investitionskostenM2']),
+          Math.round(projekt.investitionskostenM2),
           0,
         ];
         this.barChartData.datasets[1].data = [
           0,
-          Math.round(this.output['bankKreditM2']),
+          Math.round(projekt.bankKreditM2),
         ];
-        this.barChartData.datasets[2].data = [
-          0,
-          Math.round(this.output['kfwKreditM2']),
-        ];
+        this.barChartData.datasets[2].data = [0, Math.round(projekt.kfwKreditM2)];
         // this.barChartData.datasets[3].data = [
         //   0,
-        //   Math.round(this.output['finanzierungskostenFinanzmarktM2']),
+        //   Math.round(value.finanzierungskostenFinanzmarktM2),
         // ];
         // this.barChartData.datasets[4].data = [
         //   0,
-        //   Math.round(this.output['finanzierungskostenKfwM2']),
+        //   Math.round(value.finanzierungskostenKfwM2),
         // ];
         this.chart?.update();
-      });
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {

@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
-import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
+import { NeubauService } from '../../neubau.service';
+import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 
 @Component({
   selector: 'app-chart-annuitaeten-neubau',
@@ -22,13 +22,6 @@ export class ChartAnnuitaetenNeubauComponent {
   // It has one more item in each array so we can start on zero and current year
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
-
-  // Router links. There must be better way to get the strings from app.routes.ts
-  currentRoute!: string;
-  sanierungRoute = '/sanierung';
-  neubauRoute = '/neubau';
-
   currentYear = new Date().getFullYear();
   chartLabels: number[] = [];
   annuitaeten: number[] = [];
@@ -39,15 +32,12 @@ export class ChartAnnuitaetenNeubauComponent {
     private styleService: ChartsSettingsService
   ) {}
 
-  // Here I made a copy of the subscription to both observables.
   ngOnInit(): void {
-
-    this.neubauService.currentOutputDashboard$
-      .subscribe((value) => {
-        this.output = value;
+    this.neubauService.currentOutputNeubau$
+      .subscribe((projekt: NeubauProjekt) => {
         // If kreditlaufzeit was updated assign new value and create labels
-        if (this.kreditlaufzeit != value['kreditlaufzeit']) {
-          this.kreditlaufzeit = value['kreditlaufzeit'];
+        if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
+          this.kreditlaufzeit = projekt.kreditlaufzeit;
           this.chartLabels = [];
           // Create labels
           for (var i = 1; i <= this.kreditlaufzeit; i++) {
@@ -59,40 +49,40 @@ export class ChartAnnuitaetenNeubauComponent {
         // Monthly KfW-Darlehen
         this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
         // KfW-Darlehen
-        if (this.output.kfWDarlehen === 'Annuitäten') {
+        if (projekt.kfWDarlehen === 'Annuitäten') {
           this.annuitaeten = this.annuitaeten.map(
-            (num) => num + this.output.annuitaetKfW
+            (num) => num + projekt.annuitaetKfW
           );
-        } else if (this.output.kfWDarlehen === 'Endfälliges') {
+        } else if (projekt.kfWDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             // If it is the last installment, add Annuität and KfW-Kredit
             if (i === this.kreditlaufzeit - 1) {
               this.annuitaeten[i] =
                 this.annuitaeten[i] +
-                this.output.efKfW / this.kreditlaufzeit +
-                this.output.kfwKredit;
+                projekt.efKfW / this.kreditlaufzeit +
+                projekt.kfwKredit;
               // Otherwise add just Annuität
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] + this.output.efKfW / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
             }
           }
         }
         // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
-        if (this.output.bankDarlehen === 'Annuitäten') {
+        if (projekt.bankDarlehen === 'Annuitäten') {
           this.annuitaeten = this.annuitaeten.map(
-            (num) => num + this.output.annuitaetBank
+            (num) => num + projekt.annuitaetBank
           );
-        } else if (this.output.bankDarlehen === 'Endfälliges') {
+        } else if (projekt.bankDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             if (i === this.kreditlaufzeit - 1) {
               this.annuitaeten[i] =
                 this.annuitaeten[i] +
-                this.output.efBank / this.kreditlaufzeit +
-                this.output.bankKredit;
+                projekt.efBank / this.kreditlaufzeit +
+                projekt.bankKredit;
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] + this.output.efBank / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
             }
           }
         }

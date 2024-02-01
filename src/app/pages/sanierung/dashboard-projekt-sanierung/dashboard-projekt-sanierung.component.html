@@ -24,18 +24,6 @@
       <h3>KfW Kredit</h3>
       <div>{{ kfwKredit | currency : "EUR" : "symbol" : "1.0-0" }}</div>
     </div>
-    <!-- Only display KfW Zuschuss on Sanierung  -->
-    @if (typ === "Sanierung") {
-    <div
-      title="KfW Zuschuss: {{
-        kfwZuschuss | currency : 'EUR' : 'symbol' : '1.0-0'
-      }}"
-      class="card"
-    >
-      <h3>KfW Zuschuss</h3>
-      <div>{{ kfwZuschuss | currency : "EUR" : "symbol" : "1.0-0" }}</div>
-    </div>
-    }
     <div
       title="Finanzierungskosten Finanzmarkt: {{
         finanzierungskostenFinanzmarkt | currency : 'EUR' : 'symbol' : '1.0-0'

@@ -24,42 +24,6 @@
     <h3>KfW Kredit</h3>
     <div>{{ kfwKredit | currency : "EUR" : "symbol" : "1.0-0" }}</div>
   </div>
-  <!-- Only display KfW Zuschuss on Sanierung  -->
-  @if (typ === "Sanierung") {
-  <div
-    title="KfW Zuschuss: {{
-      kfwZuschuss | currency : 'EUR' : 'symbol' : '1.0-0'
-    }}"
-    class="card"
-  >
-    <h3>KfW Zuschuss</h3>
-    <div>{{ kfwZuschuss | currency : "EUR" : "symbol" : "1.0-0" }}</div>
-  </div>
-  }
-  <div
-    title="Finanzierungskosten Finanzmarkt: {{
-      finanzierungskostenFinanzmarkt | currency : 'EUR' : 'symbol' : '1.0-0'
-    }}"
-    class="card"
-  >
-    <h3>Finanz<wbr />ierungs<wbr />kosten Bank</h3>
-    <div>
-      {{
-        finanzierungskostenFinanzmarkt | currency : "EUR" : "symbol" : "1.0-0"
-      }}
-    </div>
-  </div>
-  <div
-    title="Finanzierungskosten KfW: {{
-      finanzierungskostenKfw | currency : 'EUR' : 'symbol' : '1.0-0'
-    }}"
-    class="card"
-  >
-    <h3>Finanz<wbr />ierungs<wbr />kosten KfW</h3>
-    <div>
-      {{ finanzierungskostenKfw | currency : "EUR" : "symbol" : "1.0-0" }}
-    </div>
-  </div>
 </div>
 <div class="charts-container">
   <app-chart-gkosten-neubau></app-chart-gkosten-neubau>

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { DashboardOutput } from '../../../../shared/dashboard-output';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
 import { SanierungService } from '../../sanierung.service';
+import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
 
 @Component({
   selector: 'app-chart-einheitskosten-sanierung',
@@ -20,7 +20,6 @@ import { SanierungService } from '../../sanierung.service';
 export class ChartEinheitskostenSanierungComponent  implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  output!: DashboardOutput;
 
   constructor(
     private sanierungService: SanierungService,
@@ -28,24 +27,23 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputDashboard$
-      .subscribe((value) => {
-        this.output = value;
+    this.sanierungService.currentOutputSanierung$
+      .subscribe((projekt: SanierungProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(this.output['investitionskostenProBau']),
+          Math.round(projekt.investitionskostenProBau),
           0,
         ];
         this.barChartData.datasets[1].data = [
           0,
-          Math.round(this.output['bankKreditProBau']),
+          Math.round(projekt.bankKreditProBau),
         ];
         this.barChartData.datasets[2].data = [
           0,
-          Math.round(this.output['kfwKreditProBau']),
+          Math.round(projekt.kfwKreditProBau),
         ];
         this.barChartData.datasets[3].data = [
           0,
-          Math.round(this.output['kfwZuschussProBau']),
+          Math.round(projekt.kfwZuschussProBau),
         ];
         // this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
         // this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];

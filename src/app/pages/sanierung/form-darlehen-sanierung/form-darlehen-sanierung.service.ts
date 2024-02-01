@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormDarlehenSanierungService {
   // Kalkulationszinssatz (Realzins) centralized form values
   kalkRealzins = {
     min: 0.1,
-    init: 4,
+    value: 4,
     max: 8,
     step: 0.1,
   };
@@ -16,55 +17,129 @@ export class FormDarlehenSanierungService {
   // Kreditlaufzeit centralized form values
   kreditlaufzeit = {
     min: 1,
-    init: 10,
+    value: 10,
     max: 30,
     step: 1,
   };
 
   // KfW-Darlehen centralized form values
-  kfWDarlehenOptions: KfWDarlehenOptions[] = [
-    { id: 'kfwd2', value: 'Annuitäten', disabled: false },
-    { id: 'kfwd3', value: 'Endfälliges', disabled: false },
-    { id: 'kfwd1', value: 'kein', disabled: false },
-  ];
+  kfWDarlehen: KfWDarlehenObj = {
+    options: [
+      { id: 'kfwd2', value: 'Annuitäten', disabled: false },
+      { id: 'kfwd3', value: 'Endfälliges', disabled: false },
+      { id: 'kfwd1', value: 'kein', disabled: false },
+    ],
+    title: 'KfW-Darlehen ',
+    description: 'KfW-Darlehen description',
+  };
 
   // Bank-Darlehen centralized form values
-  bankDarlehenOptions: BankDarlehenOptions[] = [
-    { id: 'bankd1', value: 'Annuitäten', disabled: false },
-    { id: 'bankd2', value: 'Endfälliges', disabled: false },
-  ];
+  bankDarlehen: BankDarlehenObj = {
+    options: [
+      { id: 'bankd1', value: 'Annuitäten', disabled: false },
+      { id: 'bankd2', value: 'Endfälliges', disabled: false },
+    ],
+    title: 'Bank-Darlehen',
+    description: 'Bank-Darlehen description'
+  };
 
-  // Observable for Kalkulationszinssatz (Realzins)
-  private kalkRealzinsSource = new BehaviorSubject<number>(this.kalkRealzins.init);
-  currentKalkRealzins$ = this.kalkRealzinsSource.asObservable(); 
+  darlehenFormSanierung = this.fb.group({
+    kalkRealzinsRange: [
+      this.kalkRealzins.value,
+      [
+        Validators.required,
+        Validators.min(this.kalkRealzins.min),
+        Validators.max(this.kalkRealzins.max),
+      ],
+    ],
+    kalkRealzins: [
+      this.kalkRealzins.value.toFixed(2),
+      [
+        Validators.required,
+        Validators.min(this.kalkRealzins.min),
+        Validators.max(this.kalkRealzins.max),
+      ],
+    ],
+    kreditlaufzeitRange: [
+      this.kreditlaufzeit.value,
+      [
+        Validators.required,
+        Validators.min(this.kreditlaufzeit.min),
+        Validators.max(this.kreditlaufzeit.max),
+      ],
+    ],
+    kreditlaufzeit: [
+      this.kreditlaufzeit.value,
+      [
+        Validators.required,
+        Validators.min(this.kreditlaufzeit.min),
+        Validators.max(this.kreditlaufzeit.max),
+      ],
+    ],
+    kfWDarlehen: this.kfWDarlehen.options[0].value,
+    bankDarlehen: this.bankDarlehen.options[0].value,
+  });
 
-  // Observable for Kreditlaufzeit
-  private kreditlaufzeitSource = new BehaviorSubject<number>(this.kreditlaufzeit.init);
-  currentKreditlaufzeit$ = this.kreditlaufzeitSource.asObservable(); 
+  constructor(private fb: FormBuilder) {
+    // Kalkulationszinssatz (Realzins)
+    this.darlehenFormSanierung
+      .get('kalkRealzinsRange')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          // Update number input when range input changes
+          this.darlehenFormSanierung
+            .get('kalkRealzins')
+            ?.setValue(value.toFixed(2), { emitEvent: false });
+        }
+      });
 
-  // Observable for kfW-Darlehen
-  private kfWDarlehenSource = new BehaviorSubject<KfWDarlehen>(this.kfWDarlehenOptions[0].value); 
-  currentKfWDarlehen$ = this.kfWDarlehenSource.asObservable();
+    this.darlehenFormSanierung
+      .get('kalkRealzins')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          // Update range input when number input changes
+          this.darlehenFormSanierung
+            .get('kalkRealzinsRange')
+            ?.setValue(Number(value), { emitEvent: false });
+        }
+      });
 
-  // Observable for Bank-Darlehen
-  private bankDarlehenSource = new BehaviorSubject<BankDarlehen>(this.bankDarlehenOptions[0].value);
-  currentBankDarlehen$ = this.bankDarlehenSource.asObservable();
+    // Kreditlaufzeit
+    this.darlehenFormSanierung
+      .get('kreditlaufzeitRange')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          // Update number input when range input changes
+          this.darlehenFormSanierung
+            .get('kreditlaufzeit')
+            ?.setValue(value, { emitEvent: false });
+          // Check if inside Endfälliges range
+          this.noEndfaelliges = this.updateNoEndfaelliges(value);
+        }
+      });
 
-  public setKalkRealzins(data: number) {
-    this.kalkRealzinsSource.next(data);
+    // When number input changes...
+    this.darlehenFormSanierung
+      .get('kreditlaufzeit')
+      ?.valueChanges.subscribe((value) => {
+        if (value) {
+          // ...update range input
+          this.darlehenFormSanierung
+            .get('kreditlaufzeitRange')
+            ?.setValue(value, { emitEvent: false });
+          // Check if inside Endfälliges range
+          this.noEndfaelliges = this.updateNoEndfaelliges(value);
+        }
+      });
   }
 
-  public setKreditlaufzeit(data: number) {
-    this.kreditlaufzeitSource.next(data);
+  // Enfälliges not possible
+  public noEndfaelliges = false;
+  private updateNoEndfaelliges(value: number) {
+    if (value > 10 || value < 4) {
+      return true;
+    } else {
+      return false;
+    }
   }
-
-  public setKfWDarlehen(data: KfWDarlehen) {
-    this.kfWDarlehenSource.next(data);
-  }
-
-  public setBankDarlehen(data: BankDarlehen) {
-    this.bankDarlehenSource.next(data);
-  }
-
-  constructor() {}
 }

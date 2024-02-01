@@ -16,7 +16,7 @@ import { FormProjektNeubauService } from './form-projekt-neubau.service';
   },
 })
 export class FormProjektNeubauComponent {
-  // ATTENTION: All form variables are stored at form-projekt.service.ts
+  // ATTENTION: All form variables are stored at form-projekt-neubau.service.ts
 
   constructor(
     public formService: FormProjektNeubauService
