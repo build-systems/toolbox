@@ -26,6 +26,7 @@ export class DashboardDarlehenSanierungComponent implements OnInit {
   finanzierungskostenKfw: number = 0;
   bankKredit: number = 0;
   kfwKredit: number = 0;
+  sollzinsKfw: number = 0;
   output!: SanierungProjekt;
 
   constructor(private sanierungService: SanierungService) {}
@@ -40,6 +41,7 @@ export class DashboardDarlehenSanierungComponent implements OnInit {
       this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
       this.bankKredit = this.output.bankKredit;
       this.kfwKredit = this.output.kfwKredit;
+      this.sollzinsKfw = this.output.sollzinsKfw;
     });
   }
 }

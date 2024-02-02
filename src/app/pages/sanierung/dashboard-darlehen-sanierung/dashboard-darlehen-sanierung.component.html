@@ -1,41 +1,46 @@
 <div class="dashboard-numbers">
-    <div
-      title="Baukosten: {{
-        investitionskosten | currency : 'EUR' : 'symbol' : '3.0'
-      }} "
-      class="card"
-    >
-      <h3>Baukosten</h3>
-      <div>{{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" }}</div>
-    </div>
-    <div
-      title="Finanzierungskosten Bank: {{
-        finanzierungskostenFinanzmarkt | currency : 'EUR' : 'symbol' : '1.0-0'
-      }}"
-      class="card"
-    >
-      <h3>Finanz<wbr />ierungs<wbr />kosten Bank</h3>
-      <div>
-        {{
-          finanzierungskostenFinanzmarkt | currency : "EUR" : "symbol" : "1.0-0"
-        }}
-      </div>
-    </div>
-    <div
-      title="Finanzierungskosten KfW: {{
-        finanzierungskostenKfw | currency : 'EUR' : 'symbol' : '1.0-0'
-      }}"
-      class="card"
-    >
-      <h3>Finanz<wbr />ierungs<wbr />kosten KfW</h3>
-      <div>
-        {{ finanzierungskostenKfw | currency : "EUR" : "symbol" : "1.0-0" }}
-      </div>
+  <div
+    title="Baukosten: {{
+      investitionskosten | currency : 'EUR' : 'symbol' : '3.0'
+    }} "
+    class="card"
+  >
+    <h3>Baukosten</h3>
+    <div>{{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" }}</div>
+  </div>
+  <div
+    title="Finanzierungskosten Bank: {{
+      finanzierungskostenFinanzmarkt | currency : 'EUR' : 'symbol' : '1.0-0'
+    }}"
+    class="card"
+  >
+    <h3>Finanz<wbr />ierungs<wbr />kosten Bank</h3>
+    <div>
+      {{
+        finanzierungskostenFinanzmarkt | currency : "EUR" : "symbol" : "1.0-0"
+      }}
     </div>
   </div>
-  <div class="charts-container">
-    <app-chart-finanzierungskosten-sanierung></app-chart-finanzierungskosten-sanierung>
-    <app-chart-tilgung-sanierung></app-chart-tilgung-sanierung>
-    <app-chart-annuitaeten-sanierung></app-chart-annuitaeten-sanierung>
+  <div
+    title="Finanzierungskosten KfW: {{
+      finanzierungskostenKfw | currency : 'EUR' : 'symbol' : '1.0-0'
+    }}"
+    class="card"
+  >
+    <h3>Finanz<wbr />ierungs<wbr />kosten KfW</h3>
+    <div>
+      {{ finanzierungskostenKfw | currency : "EUR" : "symbol" : "1.0-0" }}
+    </div>
   </div>
-  
+  <div title="Sollzins KfW: {{ finanzierungskostenKfw + ' %' }}" class="card">
+    <h3>Sollzins KfW</h3>
+    <div>
+      {{ sollzinsKfw + " %" }}
+    </div>
+  </div>
+</div>
+<div class="charts-container">
+  <app-chart-finanzierungskosten-sanierung></app-chart-finanzierungskosten-sanierung>
+  <app-chart-tilgung-sanierung></app-chart-tilgung-sanierung>
+  <app-chart-annuitaeten-sanierung></app-chart-annuitaeten-sanierung>
+</div>

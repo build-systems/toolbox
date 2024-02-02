@@ -145,13 +145,18 @@ export class SanierungService {
   // #02
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
-  updateGestehungskosten() {
+  updateGestehungskosten(
+    userPriceDisabled: boolean,
+    userPrice: number,
+    energiestandard: EnergiestandardSanierung,
+    zustandBestand: ZustandBestand
+  ): number {
     // First check if the user chose to input their own price estimation
     // If not, then search in the table (JSON file)
-    if (this.userPriceDisabled) {
+    if (userPriceDisabled) {
       const desiredProperties = {
-        Energiestandard: this.energiestandard,
-        ZustandBestand: this.zustandBestand,
+        Energiestandard: energiestandard,
+        ZustandBestand: zustandBestand,
       };
       // Callback function
       function filterByProperties(item: any, desiredProperties: any) {
@@ -168,12 +173,13 @@ export class SanierungService {
           filterByProperties(item, desiredProperties)
         );
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-        this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
+        return (tableResult * this.constants.safetyMultiplier);
       } catch (error) {
         console.log(error);
+        return 0
       }
     } else {
-      this._gestehungskosten = this.userPrice;
+      return userPrice;
     }
   }
 
@@ -493,7 +499,12 @@ export class SanierungService {
       this.serielleSanierung,
       this.energiestandard
     );
-    this.updateGestehungskosten();
+    this._gestehungskosten = this.updateGestehungskosten(
+      this.userPriceDisabled,
+      this.userPrice,
+      this.energiestandard,
+      this.zustandBestand
+    );
     this.updateNrKredit();
     this.updateSollzinsKfw();
     this.updateMaxKfwKredit();

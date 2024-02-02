@@ -27,6 +27,7 @@ export class DashboardProjektSanierungComponent implements OnInit {
   finanzierungskostenKfw: number = 0;
   bankKredit: number = 0;
   kfwKredit: number = 0;
+  sollzinsKfw: number = 0;
   output!: SanierungProjekt;
 
   constructor(private sanierungService: SanierungService) {}

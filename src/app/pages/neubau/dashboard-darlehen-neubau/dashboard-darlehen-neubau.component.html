@@ -32,15 +32,10 @@
       {{ finanzierungskostenKfw | currency : "EUR" : "symbol" : "1.0-0" }}
     </div>
   </div>
-  <div
-    title="Sollzins KfW: {{
-      finanzierungskostenKfw | currency : 'EUR' : 'symbol' : '1.0-0'
-    }}"
-    class="card"
-  >
+  <div title="Sollzins KfW: {{ finanzierungskostenKfw + ' %' }}" class="card">
     <h3>Sollzins KfW</h3>
     <div>
-      {{ sollzinsKfw + ' %' }}
+      {{ sollzinsKfw + " %" }}
     </div>
   </div>
 </div>

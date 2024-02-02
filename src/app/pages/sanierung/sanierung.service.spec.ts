@@ -137,5 +137,94 @@ describe('SanierungService', () => {
     expect(result).toBe(0);
   });
 
+  it('should return the user Gestehungskosten when he turns the option on', () => {
+    const result = service.updateGestehungskosten(false, service.userPrice, 'EH 40', 'Teilsaniert');
+    expect(result).toBe(service.userPrice);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 40 and Umfassend saniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 40', 'Umfassend saniert');
+    expect(result).toBe(680 * constants.safetyMultiplier);
+  });
+  
+  it('should return Gestehungskosten defined by the table for EH 40 and Teilsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 40', 'Teilsaniert');
+    expect(result).toBe(770 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 40 and Unsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 40', 'Unsaniert');
+    expect(result).toBe(760 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 55 and Umfassend saniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 55', 'Umfassend saniert');
+    expect(result).toBe(490 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 55 and Teilsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 55', 'Teilsaniert');
+    expect(result).toBe(660 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 55 and Unsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 55', 'Unsaniert');
+    expect(result).toBe(650 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 70 and Umfassend saniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 70', 'Umfassend saniert');
+    expect(result).toBe(300 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 70 and Teilsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 70', 'Teilsaniert');
+    expect(result).toBe(530 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 70 and Unsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 70', 'Unsaniert');
+    expect(result).toBe(520 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 85 and Unsaniert saniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 85', 'Umfassend saniert');
+    expect(result).toBe(270 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 85 and Teilsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 85', 'Teilsaniert');
+    expect(result).toBe(510 * constants.safetyMultiplier);
+  });
+
+  it('should return Gestehungskosten defined by the table for EH 85 and Teilsaniert', () => {
+    // ATTENTION: VALUES HARD CODED.
+    // If the chart change values, this test will fail
+    const result = service.updateGestehungskosten(true, service.userPrice, 'EH 85', 'Unsaniert');
+    expect(result).toBe(500 * constants.safetyMultiplier);
+  });
+
 
 });
