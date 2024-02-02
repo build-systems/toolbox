@@ -83,7 +83,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:web-test-runner",
+          "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
               "zone.js",

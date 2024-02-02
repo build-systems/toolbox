@@ -7,7 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';
 import { SupabaseService } from './shared/supabase.service';
 import { AuthComponent } from './auth/auth.component';
-import { AccountComponent } from './account/account.component';
+import { AccountComponent } from './pages/profile/account/account.component';
 
 @Component({
   selector: 'app-root',

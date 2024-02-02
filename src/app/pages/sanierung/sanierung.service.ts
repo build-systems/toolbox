@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, filter, skip, skipWhile } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableSanierung from './tableSanierung.json';
@@ -74,64 +74,72 @@ export class SanierungService {
   // #01
   // Tilgungszuschuss [%]
   private _tilgungszuschuss = 0;
-  private updateTilgungszuschuss() {
-    if (this.energiestandard === 'EH 85') {
-      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH85;
-    } else if (this.energiestandard === 'EH 70') {
-      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH70;
-    } else if (this.energiestandard === 'EH 55') {
-      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH55;
-    } else if (this.energiestandard === 'EH 40') {
-      this._tilgungszuschuss = this.constants.tilgungszuschuss.EH40;
+  updateTilgungszuschuss(energiestandard: EnergiestandardSanierung): number {
+    if (energiestandard === 'EH 85') {
+      return this.constants.tilgungszuschuss.EH85;
+    } else if (energiestandard === 'EH 70') {
+      return this.constants.tilgungszuschuss.EH70;
+    } else if (energiestandard === 'EH 55') {
+      return this.constants.tilgungszuschuss.EH55;
+    } else if (energiestandard === 'EH 40') {
+      return this.constants.tilgungszuschuss.EH40;
     } else {
-      this._tilgungszuschuss = 0;
+      return 0;
     }
   }
 
   // EE-Bonus [%]
   private _eeBonus = 0;
-  private updateEeBonus() {
-    if (this.eeKlasse === true) {
-      this._eeBonus = this.constants.eeBonusPossible;
+  updateEeBonus(eeKlasse: boolean): number {
+    if (eeKlasse === true) {
+      return this.constants.eeBonusPossible;
     } else {
-      this._eeBonus = 0;
+      return 0;
     }
   }
 
   // NH-Bonus [%]
   private _nhBonus = 0;
-  private updateNhBonus() {
-    if (this.zertifizierung !== 'Keine Zertifizierung') {
-      this._nhBonus = this.constants.nhBonusPossible;
+  updateNhBonus(zertifizierung: ZertifizierungSanierung): number {
+    if (zertifizierung !== 'Keine Zertifizierung') {
+      return this.constants.nhBonusPossible;
     } else {
-      this._nhBonus = 0;
+      return 0;
     }
   }
 
   // WPB-Bonus [%]
   private _wpbBonus = 0;
-  private updateWpbBonus() {
+  updateWpbBonus(
+    worstPerformingBuilding: boolean,
+    energiestandard: EnergiestandardSanierung
+  ): number {
     if (
-      this.worstPerformingBuilding === true &&
-      (this.energiestandard === 'EH 70' ||
-        this.energiestandard === 'EH 55' ||
-        this.energiestandard === 'EH 40')
+      worstPerformingBuilding === true &&
+      (energiestandard === 'EH 70' ||
+        energiestandard === 'EH 55' ||
+        energiestandard === 'EH 40')
     ) {
-      this._wpbBonus = this.constants.wpbBonusPossible;
+      return this.constants.wpbBonusPossible;
     } else {
-      this._wpbBonus = 0;
+      return 0;
     }
   }
 
   // SerSan-Bonus [%]
   private _serSanBonus = 0;
-  private updateSerSanBonus() {
+  updateSerSanBonus(
+    serielleSanierung: boolean,
+    energiestandard: EnergiestandardSanierung
+  ): number {
     if (
-      this.serielleSanierung === true &&
-      (this.energiestandard === 'EH 55' || this.energiestandard === 'EH 40')
-    )
-      this._serSanBonus = this.constants.serSanBonusPossible;
-    else this._serSanBonus = 0;
+      serielleSanierung === true &&
+      (energiestandard === 'EH 55' || energiestandard === 'EH 40')
+    ) {
+      return this.constants.serSanBonusPossible;
+    } else {
+      return 0;
+    }
   }
 
   // #02
@@ -141,11 +149,6 @@ export class SanierungService {
     // First check if the user chose to input their own price estimation
     // If not, then search in the table (JSON file)
     if (this.userPriceDisabled) {
-      const initialProperties = {
-        Energiestandard:
-          this.formProjektService.energiestandard.options[0].value,
-        ZustandBestand: this.formProjektService.zustandBestand.options[0].value,
-      };
       const desiredProperties = {
         Energiestandard: this.energiestandard,
         ZustandBestand: this.zustandBestand,
@@ -167,12 +170,7 @@ export class SanierungService {
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
         this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
       } catch (error) {
-        // Filter
-        const filteredData = tableSanierung.filter((item) =>
-          filterByProperties(item, initialProperties)
-        );
-        var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-        this._gestehungskosten = tableResult * this.constants.safetyMultiplier;
+        console.log(error);
       }
     } else {
       this._gestehungskosten = this.userPrice;
@@ -484,11 +482,17 @@ export class SanierungService {
   currentOutputSanierung$ = this.outputSanierungSource.asObservable();
 
   public update() {
-    this.updateTilgungszuschuss();
-    this.updateEeBonus();
-    this.updateNhBonus();
-    this.updateWpbBonus();
-    this.updateSerSanBonus();
+    this._tilgungszuschuss = this.updateTilgungszuschuss(this.energiestandard);
+    this._eeBonus = this.updateEeBonus(this.eeKlasse);
+    this._nhBonus = this.updateNhBonus(this.zertifizierung);
+    this._wpbBonus = this.updateWpbBonus(
+      this.worstPerformingBuilding,
+      this.energiestandard
+    );
+    this._serSanBonus = this.updateSerSanBonus(
+      this.serielleSanierung,
+      this.energiestandard
+    );
     this.updateGestehungskosten();
     this.updateNrKredit();
     this.updateSollzinsKfw();
