@@ -487,7 +487,7 @@ describe('SanierungService', () => {
   it('should update Restsumme = (gesamtgestehungskosten - maxKfwKredit) when result > 0', () => {
     const maxKfwKreditMock = 1000;
     const gesamtgestehungskostenMock = 2000;
-    const result = service.updateRestsumme(
+    const result = service.updateBankKredit(
       maxKfwKreditMock,
       gesamtgestehungskostenMock
     );
@@ -497,7 +497,7 @@ describe('SanierungService', () => {
   it('should update Restsumme = 0 when (gesamtgestehungskosten - maxKfwKredit) < 0', () => {
     const maxKfwKreditMock = 2000;
     const gesamtgestehungskostenMock = 1000;
-    const result = service.updateRestsumme(
+    const result = service.updateBankKredit(
       maxKfwKreditMock,
       gesamtgestehungskostenMock
     );

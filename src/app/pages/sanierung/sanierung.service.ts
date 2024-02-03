@@ -240,7 +240,7 @@ export class SanierungService {
 
   // Bank-Kredit [€]
   private _bankKredit = 0;
-  updateRestsumme(
+  updateBankKredit(
     maxKfwKredit: number,
     gesamtgestehungskosten: number
   ): number {
@@ -525,7 +525,7 @@ export class SanierungService {
       this._maxKfwKredit,
       this._gesamtgestehungskosten
     );
-    this._bankKredit = this.updateRestsumme(
+    this._bankKredit = this.updateBankKredit(
       this._gesamtgestehungskosten,
       this._maxKfwKredit
     );
