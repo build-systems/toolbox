@@ -126,7 +126,7 @@ export class SanierungService {
     }
   }
 
-  // SerSan-Bonus [%]
+  // Seriellen Sanierung Bonus [%]
   private _serSanBonus = 0;
   updateSerSanBonus(
     serielleSanierung: boolean,
@@ -173,10 +173,10 @@ export class SanierungService {
           filterByProperties(item, desiredProperties)
         );
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-        return (tableResult * this.constants.safetyMultiplier);
+        return tableResult * this.constants.safetyMultiplier;
       } catch (error) {
         console.log(error);
-        return 0
+        return 0;
       }
     } else {
       return userPrice;
@@ -185,47 +185,46 @@ export class SanierungService {
 
   // NR-Kredit [%]
   private _nrKredit = this.constants.nrKredit.lessThan10;
-  updateNrKredit() {
-    if (this.kreditlaufzeit < 10) {
-      this._nrKredit = this.constants.nrKredit.lessThan10;
-    } else if (this.kreditlaufzeit >= 10 && this.kreditlaufzeit <= 20) {
-      this._nrKredit = this.constants.nrKredit.between10And20;
+  updateNrKredit(kreditlaufzeit: number): number {
+    if (kreditlaufzeit < 10) {
+      return this.constants.nrKredit.lessThan10;
+    } else if (kreditlaufzeit >= 10 && kreditlaufzeit <= 20) {
+      return this.constants.nrKredit.between10And20;
     } else {
-      this._nrKredit = this.constants.nrKredit.moreThan20;
+      return this.constants.nrKredit.moreThan20;
     }
   }
 
   // Sollzins KFW [%]
   private _sollzinsKfw = 0;
-  private updateSollzinsKfw() {
-    if (this.kfWDarlehen === 'Endfälliges') {
-      this._sollzinsKfw = this.constants.sollzinsKfw_Endfälliges;
-    } else if (this.kfWDarlehen === 'Annuitäten') {
-      this._sollzinsKfw = this._nrKredit;
+  updateSollzinsKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
+    if (kfWDarlehen === 'Endfälliges') {
+      return this.constants.sollzinsKfw_Endfälliges;
+    } else if (kfWDarlehen === 'Annuitäten') {
+      return nrKredit;
     } else {
-      this._sollzinsKfw = 0;
+      return 0;
     }
   }
 
   // Max. KFW-Kredit [€]
   private _maxKfwKredit =
     this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
-  private updateMaxKfwKredit() {
-    if (
-      this.eeKlasse === true ||
-      this.zertifizierung !== 'Keine Zertifizierung'
-    ) {
-      this._maxKfwKredit =
-        this.anzahlWohnungen * this.constants.kfwKreditLimit.higher;
+  updateMaxKfwKredit(
+    eeKlasse: boolean,
+    zertifizierung: ZertifizierungSanierung,
+    anzahlWohnungen: number
+  ): number {
+    if (eeKlasse === true || zertifizierung !== 'Keine Zertifizierung') {
+      return anzahlWohnungen * this.constants.kfwKreditLimit.higher;
     } else {
-      this._maxKfwKredit =
-        this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
+      return anzahlWohnungen * this.constants.kfwKreditLimit.lower;
     }
   }
 
   // Gesamtgestehungskosten [€]
   private _gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
-  private updateGesamtgestehungskosten() {
+  updateGesamtgestehungskosten() {
     this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
   }
 
@@ -505,9 +504,16 @@ export class SanierungService {
       this.energiestandard,
       this.zustandBestand
     );
-    this.updateNrKredit();
-    this.updateSollzinsKfw();
-    this.updateMaxKfwKredit();
+    this._nrKredit = this.updateNrKredit(this.kreditlaufzeit);
+    this._sollzinsKfw = this.updateSollzinsKfw(
+      this.kfWDarlehen,
+      this._nrKredit
+    );
+    this._maxKfwKredit = this.updateMaxKfwKredit(
+      this.eeKlasse,
+      this.zertifizierung,
+      this.anzahlWohnungen
+    );
     this.updateGesamtgestehungskosten();
     this.updateFoerdersumme();
     this.updateRestsumme();

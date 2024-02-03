@@ -58,6 +58,8 @@ export class sanierung {
   eeBonusPossible = 5;
   nhBonusPossible = 5;
   wpbBonusPossible = 10;
+  // Seriellen Sanierung
+  // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
   serSanBonusPossible = 15;
   // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   public nrKredit = {

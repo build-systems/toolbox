@@ -205,7 +205,7 @@ export class FormProjektNeubauService {
   public noKellergeschoss: boolean = false;
 
   projektFormNeu = this.fb.group({
-    userPriceToggle: !this.userPrice.disabled,
+    userPriceToggle: [!this.userPrice.disabled, Validators.required],
     userPriceRange: [
       this.userPrice.value, // init
       [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
@@ -218,6 +218,7 @@ export class FormProjektNeubauService {
       // The values come from the FormProjektService
       this.wohnflaeche.value,
       [
+        Validators.required,
         Validators.min(this.wohnflaeche.min),
         Validators.max(this.wohnflaeche.max),
       ],
@@ -225,6 +226,7 @@ export class FormProjektNeubauService {
     wohnflaeche: [
       this.wohnflaeche.value,
       [
+        Validators.required,
         Validators.min(this.wohnflaeche.min),
         Validators.max(this.wohnflaeche.max),
       ],
@@ -232,6 +234,7 @@ export class FormProjektNeubauService {
     anzahlWohnungenRange: [
       this.anzahlWohnungen.value,
       [
+        Validators.required,
         Validators.min(this.anzahlWohnungen.min),
         Validators.max(this.anzahlWohnungen.max),
       ],
@@ -239,6 +242,7 @@ export class FormProjektNeubauService {
     anzahlWohnungen: [
       this.anzahlWohnungen.value,
       [
+        Validators.required,
         Validators.min(this.anzahlWohnungen.min),
         Validators.max(this.anzahlWohnungen.max),
       ],
@@ -257,6 +261,7 @@ export class FormProjektNeubauService {
     grundstuecksbezogeneKostenRange: [
       this.grundstKosten.value,
       [
+        Validators.required,
         Validators.min(this.grundstKosten.min),
         Validators.max(this.grundstKosten.max),
       ],
@@ -264,6 +269,7 @@ export class FormProjektNeubauService {
     grundstuecksbezogeneKosten: [
       this.grundstKosten.value,
       [
+        Validators.required,
         Validators.min(this.grundstKosten.min),
         Validators.max(this.grundstKosten.max),
       ],
@@ -271,6 +277,7 @@ export class FormProjektNeubauService {
     baunebenkostenKeinFinRange: [
       this.baunebenkostenKeinFin.init,
       [
+        Validators.required,
         Validators.min(this.baunebenkostenKeinFin.min),
         Validators.max(this.baunebenkostenKeinFin.max),
       ],
@@ -278,13 +285,12 @@ export class FormProjektNeubauService {
     baunebenkostenKeinFin: [
       this.baunebenkostenKeinFin.init,
       [
+        Validators.required,
         Validators.min(this.baunebenkostenKeinFin.min),
         Validators.max(this.baunebenkostenKeinFin.max),
       ],
     ],
   });
-
-  ///// Refactor
 
   constructor(private fb: FormBuilder) {
     this.projektFormNeu
@@ -295,7 +301,9 @@ export class FormProjektNeubauService {
         this.aufzugsanlage.options.forEach((obj) => (obj.disabled = value!));
         this.barrierefreiheit.options.forEach((obj) => (obj.disabled = value!));
         this.dachbegruenung.options.forEach((obj) => (obj.disabled = value!));
-        this.baustellenlogistik.options.forEach((obj) => (obj.disabled = value!));
+        this.baustellenlogistik.options.forEach(
+          (obj) => (obj.disabled = value!)
+        );
         this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
         this.grundstKosten.disabled = value!;
         this.baunebenkostenKeinFin.disabled = value!;
