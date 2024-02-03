@@ -57,15 +57,13 @@ export class SanierungService {
         this.update();
       }
     );
-    this.formDarlehenService.darlehenForm.valueChanges.subscribe(
-      (value) => {
-        this.kalkRealzins = value.kalkRealzinsRange!;
-        this.kreditlaufzeit = value.kreditlaufzeitRange!;
-        this.kfWDarlehen = value.kfWDarlehen!;
-        this.bankDarlehen = value.bankDarlehen!;
-        this.update();
-      }
-    );
+    this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
+      this.kalkRealzins = value.kalkRealzinsRange!;
+      this.kreditlaufzeit = value.kreditlaufzeitRange!;
+      this.kfWDarlehen = value.kfWDarlehen!;
+      this.bankDarlehen = value.bankDarlehen!;
+      this.update();
+    });
 
     this.update();
   }
@@ -224,76 +222,81 @@ export class SanierungService {
 
   // Gesamtgestehungskosten [€]
   private _gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
-  updateGesamtgestehungskosten() {
-    this._gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
+  updateGesamtgestehungskosten(
+    gestehungskosten: number,
+    wohnflaeche: number
+  ): number {
+    return gestehungskosten * wohnflaeche;
   }
 
   // Fördersumme [€]
   private _foerdersumme = this._maxKfwKredit;
-  private updateFoerdersumme() {
-    this._foerdersumme = Math.min(
-      this._maxKfwKredit,
-      this._gesamtgestehungskosten
-    );
+  updateFoerdersumme(
+    maxKfwKredit: number,
+    gesamtgestehungskosten: number
+  ): number {
+    return Math.min(maxKfwKredit, gesamtgestehungskosten);
   }
 
-  // Restsumme [€]
-  private _restsumme = 0;
-  private updateRestsumme() {
-    this._restsumme = Math.max(
-      this._gesamtgestehungskosten - this._maxKfwKredit,
-      0
-    );
+  // Bank-Kredit [€]
+  private _bankKredit = 0;
+  updateRestsumme(
+    maxKfwKredit: number,
+    gesamtgestehungskosten: number
+  ): number {
+    return Math.max(gesamtgestehungskosten - maxKfwKredit, 0);
   }
 
   // #03
   // AF KFW [€]
   private _afKfw = 0;
-  private updateAfKfW() {
-    if (this._sollzinsKfw === 0 || this.kreditlaufzeit === 0) {
-      this._afKfw = 0;
+  updateAfKfW(sollzinsKfw: number, kreditlaufzeit: number): number {
+    if (sollzinsKfw === 0 || kreditlaufzeit === 0) {
+      return 0;
     } else {
-      this._afKfw =
-        ((this._sollzinsKfw / 100) *
-          Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit)) /
-        (Math.pow(1 + this._sollzinsKfw / 100, this.kreditlaufzeit) - 1);
+      return (
+        ((sollzinsKfw / 100) *
+          Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit)) /
+        (Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit) - 1)
+      );
     }
   }
 
   // AF Bank [€]
   private _afBank = 0;
-  private updateAfBank() {
-    this._afBank =
-      ((this.kalkRealzins / 100) *
-        Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit)) /
-      (Math.pow(1 + this.kalkRealzins / 100, this.kreditlaufzeit) - 1);
+  updateAfBank(kalkRealzins: number, kreditlaufzeit: number): number {
+    if (kalkRealzins === 0 || kreditlaufzeit === 0) {
+      return 0;
+    } else {
+      return (
+        ((kalkRealzins / 100) *
+          Math.pow(1 + kalkRealzins / 100, kreditlaufzeit)) /
+        (Math.pow(1 + kalkRealzins / 100, kreditlaufzeit) - 1)
+      );
+    }
   }
 
   // Zuschuss (KfW) [€]
   private _kfwZuschuss = 0;
-  private updateKfwZuschuss() {
-    this._kfwZuschuss = Math.min(
-      ((this._tilgungszuschuss +
-        this._eeBonus +
-        this._nhBonus +
-        this._wpbBonus +
-        this._serSanBonus) /
-        100) *
-        this._foerdersumme,
-      this.constants.kfwZuschussMinMultiplier * this._foerdersumme
+  updateKfwZuschuss(
+    tilgungszuschuss: number,
+    eeBonus: number,
+    nhBonus: number,
+    wpbBonus: number,
+    serSanBonus: number,
+    foerdersumme: number
+  ): number {
+    return Math.min(
+      ((tilgungszuschuss + eeBonus + nhBonus + wpbBonus + serSanBonus) / 100) *
+        foerdersumme,
+      this.constants.kfwZuschussMinMultiplier * foerdersumme
     );
   }
 
   // KfW-Kredit [€]
   private _kfwKredit = 0;
-  private updateKfwKredit() {
-    this._kfwKredit = this._foerdersumme - this._kfwZuschuss;
-  }
-
-  // Bank-Kredit [€]
-  private _bankKredit = 0;
-  private updateBankKredit() {
-    this._bankKredit = this._restsumme;
+  updateKfwKredit(foerdersumme: number, kfwZuschuss: number): number {
+    return foerdersumme - kfwZuschuss;
   }
 
   // Annuität KfW [€]
@@ -319,7 +322,7 @@ export class SanierungService {
   private _efBank = 0;
   private updateEfBank() {
     this._efBank =
-      ((this.kalkRealzins * this._restsumme) / 100) * this.kreditlaufzeit;
+      ((this.kalkRealzins * this._bankKredit) / 100) * this.kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -359,17 +362,17 @@ export class SanierungService {
   private _gbAnnuitaet = 0;
   private updateGbAnnuitaet() {
     this._gbAnnuitaet =
-      (this._foerdersumme + this._restsumme) *
+      (this._foerdersumme + this._bankKredit) *
         this._afBank *
         this.kreditlaufzeit -
-      (this._foerdersumme + this._restsumme);
+      (this._foerdersumme + this._bankKredit);
   }
 
   // GB: EFD [€]
   private _gbEfd = 0;
   private updateGbEfd() {
     this._gbEfd =
-      ((this.kalkRealzins * (this._foerdersumme + this._restsumme)) / 100) *
+      ((this.kalkRealzins * (this._foerdersumme + this._bankKredit)) / 100) *
       this.kreditlaufzeit;
   }
 
@@ -514,18 +517,33 @@ export class SanierungService {
       this.zertifizierung,
       this.anzahlWohnungen
     );
-    this.updateGesamtgestehungskosten();
-    this.updateFoerdersumme();
-    this.updateRestsumme();
-    this.updateAfKfW();
-    this.updateAfBank();
-    this.updateKfwZuschuss();
+    this._gesamtgestehungskosten = this.updateGesamtgestehungskosten(
+      this._gestehungskosten,
+      this.wohnflaeche
+    );
+    this._foerdersumme = this.updateFoerdersumme(
+      this._maxKfwKredit,
+      this._gesamtgestehungskosten
+    );
+    this._bankKredit = this.updateRestsumme(
+      this._gesamtgestehungskosten,
+      this._maxKfwKredit
+    );
+    this._afKfw = this.updateAfKfW(this._sollzinsKfw, this.kreditlaufzeit);
+    this._afBank = this.updateAfBank(this.kalkRealzins, this.kreditlaufzeit);
+    this._kfwZuschuss = this.updateKfwZuschuss(
+      this._tilgungszuschuss,
+      this._eeBonus,
+      this._nhBonus,
+      this._wpbBonus,
+      this._serSanBonus,
+      this._foerdersumme
+    );
     this.updateKfwZuschussM2();
     this.updateKfwZuschussProBau();
-    this.updateKfwKredit();
+    this._kfwKredit = this.updateKfwKredit(this._foerdersumme, this._kfwZuschuss);
     this.updateKfwKreditM2();
     this.updateKfwKreditProBau();
-    this.updateBankKredit();
     this.updateBankKreditM2();
     this.updateBankKreditProBau();
     this.updateAnnuitaetKfw();
@@ -579,7 +597,7 @@ export class SanierungService {
         maxKfwKredit: this._maxKfwKredit,
         gesamtgestehungskosten: this._gesamtgestehungskosten,
         foerdersumme: this._foerdersumme,
-        restsumme: this._restsumme,
+        restsumme: this._bankKredit,
         afKfw: this._afKfw,
         afBank: this._afBank,
         annuitaetKfW: this._annuitaetKfW,

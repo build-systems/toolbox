@@ -443,7 +443,7 @@ describe('SanierungService', () => {
     const result = service.updateMaxKfwKredit(true, 'Keine Zertifizierung', 1);
     expect(result).toBe(constants.kfwKreditLimit.higher);
   });
-    
+
   it('should update Max KfW Kredit = higher kfwKreditLimit if EE-Klasse is checked and there is QNG Zertifizierung', () => {
     const result = service.updateMaxKfwKredit(true, 'QNG', 1);
     expect(result).toBe(constants.kfwKreditLimit.higher);
@@ -459,6 +459,193 @@ describe('SanierungService', () => {
     expect(result).toBe(constants.kfwKreditLimit.lower);
   });
 
+  it('should update Gesamtgestehungskosten multiplying gestehungskosten and wohnflaeche', () => {
+    const result = service.updateGesamtgestehungskosten(200, 3);
+    expect(result).toBe(600);
+  });
 
+  it('should update Foerdersumme = maxKfwKredit when maxKfwKredit is smaller than gesamtgestehungskosten', () => {
+    const maxKfwKreditMock = 150000;
+    const gesamtgestehungskostenMock = 200000;
+    const result = service.updateFoerdersumme(
+      maxKfwKreditMock,
+      gesamtgestehungskostenMock
+    );
+    expect(result).toBe(maxKfwKreditMock);
+  });
 
+  it('should update Foerdersumme = gesamtgestehungskosten when gesamtgestehungskosten is smaller than maxKfwKredit', () => {
+    const maxKfwKreditMock = 150000;
+    const gesamtgestehungskostenMock = 100000;
+    const result = service.updateFoerdersumme(
+      maxKfwKreditMock,
+      gesamtgestehungskostenMock
+    );
+    expect(result).toBe(gesamtgestehungskostenMock);
+  });
+
+  it('should update Restsumme = (gesamtgestehungskosten - maxKfwKredit) when result > 0', () => {
+    const maxKfwKreditMock = 1000;
+    const gesamtgestehungskostenMock = 2000;
+    const result = service.updateRestsumme(
+      maxKfwKreditMock,
+      gesamtgestehungskostenMock
+    );
+    expect(result).toBe(1000);
+  });
+
+  it('should update Restsumme = 0 when (gesamtgestehungskosten - maxKfwKredit) < 0', () => {
+    const maxKfwKreditMock = 2000;
+    const gesamtgestehungskostenMock = 1000;
+    const result = service.updateRestsumme(
+      maxKfwKreditMock,
+      gesamtgestehungskostenMock
+    );
+    expect(result).toBe(0);
+  });
+
+  it('should update AF KfW = 0 if sollzinsKfw = 0 and kreditlaufzeit = 10', () => {
+    const sollzinsKfw = 0;
+    const kreditlaufzeit = 10;
+    const result = service.updateAfKfW(sollzinsKfw, kreditlaufzeit);
+    expect(result).toBe(0);
+  });
+
+  it('should update AF KfW = 0 if sollzinsKfw = 2 and kreditlaufzeit = 0', () => {
+    const sollzinsKfw = 2;
+    const kreditlaufzeit = 0;
+    const result = service.updateAfKfW(sollzinsKfw, kreditlaufzeit);
+    expect(result).toBe(0);
+  });
+
+  it('should update AF KfW = 0.136863 if sollzinsKfw = 2.06 and kreditlaufzeit = 8 (result rounded to 6 digits)', () => {
+    const sollzinsKfw = 2.06;
+    const kreditlaufzeit = 8;
+    const result = service.updateAfKfW(sollzinsKfw, kreditlaufzeit);
+    expect(Number(result.toFixed(6))).toBe(0.136863);
+  });
+
+  it('should update AF Bank = 0 if kalkRealzins = 0 and kreditlaufzeit = 10', () => {
+    const kalkRealzins = 0;
+    const kreditlaufzeit = 10;
+    const result = service.updateAfBank(kalkRealzins, kreditlaufzeit);
+    expect(result).toBe(0);
+  });
+
+  it('should update AF Bank = 0 if kalkRealzins = 2 and kreditlaufzeit = 0', () => {
+    const kalkRealzins = 2;
+    const kreditlaufzeit = 0;
+    const result = service.updateAfBank(kalkRealzins, kreditlaufzeit);
+    expect(result).toBe(0);
+  });
+
+  it('should update AF Bank = 0.148528 if kalkRealzins = 4 and kreditlaufzeit = 8 (result rounded to 6 digits)', () => {
+    const kalkRealzins = 4;
+    const kreditlaufzeit = 8;
+    const result = service.updateAfBank(kalkRealzins, kreditlaufzeit);
+    expect(Number(result.toFixed(6))).toBe(0.148528);
+  });
+
+  it('should return KfW Zuschuss min multiplier constant = 0.4', () => {
+    // ATTENTION: VALUE HARD CODED.
+    // If constant change, this test will fail
+    expect(constants.kfwZuschussMinMultiplier).toBe(0.4);
+  });
+
+  it('should update KfW Zuschuss = 60000€ if Tilgungszuschuss = 20, EE Bonus = 5, NH Bonus = 5, WPB Bonus = 10, SerSan Bonus = 15, Foerdersumme = 150000€', () => {
+    const tilgungszuschuss = 20;
+    const eeBonus = 5;
+    const nhBonus = 5;
+    const wpbBonus = 10;
+    const serSanBonus = 15;
+    const foerdersumme = 150000;
+    const result = service.updateKfwZuschuss(
+      tilgungszuschuss,
+      eeBonus,
+      nhBonus,
+      wpbBonus,
+      serSanBonus,
+      foerdersumme
+    );
+    expect(result).toBe(60000);
+  });
+
+  it('should update KfW Zuschuss = 45000€ if Tilgungszuschuss = 20, EE Bonus = 5, NH Bonus = 5, WPB Bonus = 0, SerSan Bonus = 0, Foerdersumme = 150000€', () => {
+    const tilgungszuschuss = 20;
+    const eeBonus = 5;
+    const nhBonus = 5;
+    const wpbBonus = 0;
+    const serSanBonus = 0;
+    const foerdersumme = 150000;
+    const result = service.updateKfwZuschuss(
+      tilgungszuschuss,
+      eeBonus,
+      nhBonus,
+      wpbBonus,
+      serSanBonus,
+      foerdersumme
+    );
+    expect(result).toBe(45000);
+  });
+
+  it('should update KfW Zuschuss = 37500€ if Tilgungszuschuss = 20, EE Bonus = 0, NH Bonus = 5, WPB Bonus = 0, SerSan Bonus = 0, Foerdersumme = 150000€', () => {
+    const tilgungszuschuss = 20;
+    const eeBonus = 0;
+    const nhBonus = 5;
+    const wpbBonus = 0;
+    const serSanBonus = 0;
+    const foerdersumme = 150000;
+    const result = service.updateKfwZuschuss(
+      tilgungszuschuss,
+      eeBonus,
+      nhBonus,
+      wpbBonus,
+      serSanBonus,
+      foerdersumme
+    );
+    expect(result).toBe(37500);
+  });
+
+  it('should update KfW Zuschuss = 48000€ if Tilgungszuschuss = 20, EE Bonus = 0, NH Bonus = 0, WPB Bonus = 10, SerSan Bonus = 15, Foerdersumme = 120000€', () => {
+    const tilgungszuschuss = 20;
+    const eeBonus = 0;
+    const nhBonus = 0;
+    const wpbBonus = 10;
+    const serSanBonus = 15;
+    const foerdersumme = 120000;
+    const result = service.updateKfwZuschuss(
+      tilgungszuschuss,
+      eeBonus,
+      nhBonus,
+      wpbBonus,
+      serSanBonus,
+      foerdersumme
+    );
+    expect(result).toBe(48000);
+  });
+
+  it('should update KfW Zuschuss = 18000€ if Tilgungszuschuss = 15, EE Bonus = 0, NH Bonus = 0, WPB Bonus = 0, SerSan Bonus = 0, Foerdersumme = 120000€', () => {
+    const tilgungszuschuss = 15;
+    const eeBonus = 0;
+    const nhBonus = 0;
+    const wpbBonus = 0;
+    const serSanBonus = 0;
+    const foerdersumme = 120000;
+    const result = service.updateKfwZuschuss(
+      tilgungszuschuss,
+      eeBonus,
+      nhBonus,
+      wpbBonus,
+      serSanBonus,
+      foerdersumme
+    );
+    expect(result).toBe(18000);
+  });
+
+  it('should return KfW Kredit = 100000€ when Foerdersumme is 160000€ and KfW Zuschuss is 60000€. It is their subtraction.', () => {
+    const foerdersumme = 160000;
+    const kfwZuschuss = 60000;
+    const result = service.updateKfwKredit(foerdersumme, kfwZuschuss);
+    expect(result).toBe(100000);
+  });
 });
