@@ -112,14 +112,22 @@ export class FormDarlehenNeubauService {
 
     this.darlehenForm.get('kalkRealzins')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      const valueNumber = Number(value);
-      if (value) {
+      if (value && Number(value) >= this.kalkRealzins.min) {
+        const valueNumber = Number(value);
         this.darlehenForm
           .get('kalkRealzinsRange')
           ?.setValue(valueNumber, { emitEvent: false });
         this.darlehenForm
           .get('kalkRealzins')
           ?.setValue(valueNumber.toFixed(2), { emitEvent: false });
+      } else {
+        // Prevent non-realistic values and non-suported formats
+        this.darlehenForm
+          .get('kalkRealzinsRange')
+          ?.setValue(this.kalkRealzins.min, { emitEvent: false });
+        this.darlehenForm
+          .get('kalkRealzins')
+          ?.setValue(this.kalkRealzins.min.toFixed(2), { emitEvent: false });
       }
     });
 
@@ -147,7 +155,7 @@ export class FormDarlehenNeubauService {
       });
 
     this.darlehenForm.get('kreditlaufzeit')?.valueChanges.subscribe((value) => {
-      if (value) {
+      if (value && Number(value) >= this.kreditlaufzeit.min) {
         this.noEndfaelliges = this.updateNoEndfaelliges(value);
         const kfWDarlehenFormControl = this.darlehenForm.get('kfWDarlehen');
         this.darlehenForm
@@ -162,6 +170,18 @@ export class FormDarlehenNeubauService {
         } else {
           this.kfWDarlehen.options[1].disabled = false;
         }
+      } else {
+        // Prevent non-realistic values and non-suported formats
+        this.darlehenForm
+          .get('kreditlaufzeitRange')
+          ?.setValue(this.kreditlaufzeit.value, { emitEvent: false });
+        this.darlehenForm
+          .get('kreditlaufzeit')
+          ?.setValue(this.kreditlaufzeit.value, { emitEvent: false });
+        this.kfWDarlehen.options[1].disabled = false;
+        this.noEndfaelliges = this.updateNoEndfaelliges(
+          this.kreditlaufzeit.value
+        );
       }
     });
   }

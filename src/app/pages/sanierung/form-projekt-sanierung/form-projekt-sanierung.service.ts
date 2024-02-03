@@ -115,35 +115,51 @@ export class FormProjektSanierungService {
     ],
     userPrice: [
       this.userPrice.value,
-      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+      {
+        Validators: [
+          Validators.min(this.userPrice.min),
+          Validators.max(this.userPrice.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     wohnflaecheRange: [
       this.wohnflaeche.value,
       [
+        Validators.required,
         Validators.min(this.wohnflaeche.min),
         Validators.max(this.wohnflaeche.max),
       ],
     ],
     wohnflaeche: [
       this.wohnflaeche.value,
-      [
-        Validators.min(this.wohnflaeche.min),
-        Validators.max(this.wohnflaeche.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.wohnflaeche.min),
+          Validators.max(this.wohnflaeche.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     anzahlWohnungenRange: [
       this.anzahlWohnungen.value,
       [
+        Validators.required,
         Validators.min(this.anzahlWohnungen.min),
         Validators.max(this.anzahlWohnungen.max),
       ],
     ],
     anzahlWohnungen: [
       this.anzahlWohnungen.value,
-      [
-        Validators.min(this.anzahlWohnungen.min),
-        Validators.max(this.anzahlWohnungen.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.anzahlWohnungen.min),
+          Validators.max(this.anzahlWohnungen.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     energiestandard: this.energiestandard.options[0].value,
     zertifizierung: this.zertifizierung.options[0].value,
@@ -172,7 +188,9 @@ export class FormProjektSanierungService {
     //User price
     this.projektFormSanierung
       .get('userPriceToggle')
-      ?.valueChanges.subscribe((value) => {});
+      ?.valueChanges.subscribe((value) => {
+        this.zustandBestand.options.forEach((obj) => (obj.disabled = value!));
+      });
 
     // User Price
     this.projektFormSanierung
@@ -184,12 +202,23 @@ export class FormProjektSanierungService {
           ?.setValue(value, { emitEvent: false });
       });
 
-    this.projektFormSanierung.get('userPrice')?.valueChanges.subscribe((value) => {
-      this.projektFormSanierung
-        // Update range input when number changes
-        .get('userPriceRange')
-        ?.setValue(value, { emitEvent: false });
-    });
+    this.projektFormSanierung
+      .get('userPrice')
+      ?.valueChanges.subscribe((value) => {
+        if (value && value >= this.userPrice.min) {
+          // Update range input when number changes
+          this.projektFormSanierung
+            .get('userPriceRange')
+            ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormSanierung
+            .get('userPriceRange')
+            ?.setValue(this.userPrice.min, { emitEvent: false });
+          this.projektFormSanierung
+            .get('userPrice')
+            ?.setValue(this.userPrice.min, { emitEvent: false });
+        }
+      });
 
     // Wohnflaeche
     this.projektFormSanierung
@@ -201,12 +230,23 @@ export class FormProjektSanierungService {
           ?.setValue(value, { emitEvent: false });
       });
 
-    this.projektFormSanierung.get('wohnflaeche')?.valueChanges.subscribe((value) => {
-      // Update range input when number input changes
-      this.projektFormSanierung
-        .get('wohnflaecheRange')
-        ?.setValue(value, { emitEvent: false });
-    });
+    this.projektFormSanierung
+      .get('wohnflaeche')
+      ?.valueChanges.subscribe((value) => {
+        if (value && value >= this.wohnflaeche.min) {
+          // Update range input when number input changes
+          this.projektFormSanierung
+            .get('wohnflaecheRange')
+            ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormSanierung
+            .get('wohnflaecheRange')
+            ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+          this.projektFormSanierung
+            .get('wohnflaeche')
+            ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+        }
+      });
 
     // Anzahl WohnungenRange
     this.projektFormSanierung
@@ -221,10 +261,19 @@ export class FormProjektSanierungService {
     this.projektFormSanierung
       .get('anzahlWohnungen')
       ?.valueChanges.subscribe((value) => {
-        // Update range input when number input changes
-        this.projektFormSanierung
-          .get('anzahlWohnungenRange')
-          ?.setValue(value, { emitEvent: false });
+        if (value && value >= this.anzahlWohnungen.min) {
+          // Update range input when number input changes
+          this.projektFormSanierung
+            .get('anzahlWohnungenRange')
+            ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormSanierung
+            .get('anzahlWohnungenRange')
+            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+          this.projektFormSanierung
+            .get('anzahlWohnungen')
+            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+        }
       });
 
     // Energiestandard
@@ -252,7 +301,8 @@ export class FormProjektSanierungService {
       .get('zertifizierung')
       ?.valueChanges.subscribe((value) => {
         // Relationship with Energiestandard
-        const energiestandard = this.projektFormSanierung.get('energiestandard');
+        const energiestandard =
+          this.projektFormSanierung.get('energiestandard');
         if (value === 'QNG' && energiestandard?.value != 'EH 40') {
           energiestandard?.setValue('EH 40');
           this.noQNG = true;

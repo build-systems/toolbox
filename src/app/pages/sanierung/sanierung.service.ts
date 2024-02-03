@@ -57,7 +57,7 @@ export class SanierungService {
         this.update();
       }
     );
-    this.formDarlehenService.darlehenFormSanierung.valueChanges.subscribe(
+    this.formDarlehenService.darlehenForm.valueChanges.subscribe(
       (value) => {
         this.kalkRealzins = value.kalkRealzinsRange!;
         this.kreditlaufzeit = value.kreditlaufzeitRange!;

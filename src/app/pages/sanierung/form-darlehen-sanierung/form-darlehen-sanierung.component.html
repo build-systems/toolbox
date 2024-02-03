@@ -1,4 +1,4 @@
-<form [formGroup]="formService.darlehenFormSanierung">
+<form [formGroup]="formService.darlehenForm">
     <fieldset>
       <legend title="Kalkulationszinssatz Bank Kredit (Realzins)">Kalkulationszinssatz [%] <sup>&#9432;</sup></legend>
       <span class="slidernumber">
@@ -17,6 +17,7 @@
           [min]="formService.kalkRealzins.min"
           [max]="formService.kalkRealzins.max"
           [step]="formService.kalkRealzins.step"
+          (keyup.enter)="onEnterKey($event)"
         />
       </span>
     </fieldset>
@@ -38,6 +39,7 @@
           [min]="formService.kreditlaufzeit.min"
           [max]="formService.kreditlaufzeit.max"
           [step]="formService.kreditlaufzeit.step"
+          (keyup.enter)="onEnterKey($event)"
         />
       </span>
     </fieldset>

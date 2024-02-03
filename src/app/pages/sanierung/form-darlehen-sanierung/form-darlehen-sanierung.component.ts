@@ -16,4 +16,10 @@ import { FormDarlehenSanierungService } from './form-darlehen-sanierung.service'
 export class FormDarlehenSanierungComponent {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
   constructor(public formService: FormDarlehenSanierungService) {}
+  
+  // Remove focus on enter
+  onEnterKey(event: any): void {
+    // Call the blur method on the target element to remove focus
+    event.target.blur();
+  }
 }

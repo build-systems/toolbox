@@ -40,10 +40,10 @@ export class FormDarlehenSanierungService {
       { id: 'bankd2', value: 'Endfälliges', disabled: false },
     ],
     title: 'Bank-Darlehen',
-    description: 'Bank-Darlehen description'
+    description: 'Bank-Darlehen description',
   };
 
-  darlehenFormSanierung = this.fb.group({
+  darlehenForm = this.fb.group({
     kalkRealzinsRange: [
       this.kalkRealzins.value,
       [
@@ -54,11 +54,14 @@ export class FormDarlehenSanierungService {
     ],
     kalkRealzins: [
       this.kalkRealzins.value.toFixed(2),
-      [
-        Validators.required,
-        Validators.min(this.kalkRealzins.min),
-        Validators.max(this.kalkRealzins.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.kalkRealzins.min),
+          Validators.max(this.kalkRealzins.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     kreditlaufzeitRange: [
       this.kreditlaufzeit.value,
@@ -70,11 +73,14 @@ export class FormDarlehenSanierungService {
     ],
     kreditlaufzeit: [
       this.kreditlaufzeit.value,
-      [
-        Validators.required,
-        Validators.min(this.kreditlaufzeit.min),
-        Validators.max(this.kreditlaufzeit.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.kreditlaufzeit.min),
+          Validators.max(this.kreditlaufzeit.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     kfWDarlehen: this.kfWDarlehen.options[0].value,
     bankDarlehen: this.bankDarlehen.options[0].value,
@@ -82,35 +88,48 @@ export class FormDarlehenSanierungService {
 
   constructor(private fb: FormBuilder) {
     // Kalkulationszinssatz (Realzins)
-    this.darlehenFormSanierung
+    this.darlehenForm
       .get('kalkRealzinsRange')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           // Update number input when range input changes
-          this.darlehenFormSanierung
+          this.darlehenForm
             .get('kalkRealzins')
             ?.setValue(value.toFixed(2), { emitEvent: false });
         }
       });
 
-    this.darlehenFormSanierung
-      .get('kalkRealzins')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          // Update range input when number input changes
-          this.darlehenFormSanierung
-            .get('kalkRealzinsRange')
-            ?.setValue(Number(value), { emitEvent: false });
-        }
-      });
+    this.darlehenForm.get('kalkRealzins')?.valueChanges.subscribe((value) => {
+      if (value && Number(value) >= this.kreditlaufzeit.min) {
+        const valueNumber = Number(value);
+        // Update range input when number input changes
+        this.darlehenForm
+          .get('kalkRealzinsRange')
+          ?.setValue(valueNumber, { emitEvent: false });
+        this.darlehenForm
+          .get('kalkRealzins')
+          ?.setValue(valueNumber.toFixed(2), {
+            emitEvent: false,
+          });
+      } else {
+        this.darlehenForm
+          .get('kalkRealzins')
+          ?.setValue(this.kalkRealzins.min.toFixed(2), {
+            emitEvent: false,
+          });
+        this.darlehenForm
+          .get('kalkRealzinsRange')
+          ?.setValue(this.kalkRealzins.min, { emitEvent: false });
+      }
+    });
 
     // Kreditlaufzeit
-    this.darlehenFormSanierung
+    this.darlehenForm
       .get('kreditlaufzeitRange')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           // Update number input when range input changes
-          this.darlehenFormSanierung
+          this.darlehenForm
             .get('kreditlaufzeit')
             ?.setValue(value, { emitEvent: false });
           // Check if inside Endfälliges range
@@ -119,18 +138,28 @@ export class FormDarlehenSanierungService {
       });
 
     // When number input changes...
-    this.darlehenFormSanierung
-      .get('kreditlaufzeit')
-      ?.valueChanges.subscribe((value) => {
-        if (value) {
-          // ...update range input
-          this.darlehenFormSanierung
-            .get('kreditlaufzeitRange')
-            ?.setValue(value, { emitEvent: false });
-          // Check if inside Endfälliges range
-          this.noEndfaelliges = this.updateNoEndfaelliges(value);
-        }
-      });
+    this.darlehenForm.get('kreditlaufzeit')?.valueChanges.subscribe((value) => {
+      if (value && value >= this.kreditlaufzeit.min) {
+        // ...update range input
+        this.darlehenForm
+          .get('kreditlaufzeitRange')
+          ?.setValue(value, { emitEvent: false });
+        // Check if inside Endfälliges range
+        this.noEndfaelliges = this.updateNoEndfaelliges(value);
+      } else {
+        // Prevent non-realistic values and non-suported formats
+        this.darlehenForm
+          .get('kreditlaufzeitRange')
+          ?.setValue(this.kreditlaufzeit.value, { emitEvent: false });
+        this.darlehenForm
+          .get('kreditlaufzeit')
+          ?.setValue(this.kreditlaufzeit.value, { emitEvent: false });
+        this.kfWDarlehen.options[1].disabled = false;
+        this.noEndfaelliges = this.updateNoEndfaelliges(
+          this.kreditlaufzeit.value
+        );
+      }
+    });
   }
 
   // Enfälliges not possible

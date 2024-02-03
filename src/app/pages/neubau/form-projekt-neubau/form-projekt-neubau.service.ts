@@ -212,7 +212,13 @@ export class FormProjektNeubauService {
     ],
     userPrice: [
       this.userPrice.value, // init
-      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+      {
+        Validators: [
+          Validators.min(this.userPrice.min),
+          Validators.max(this.userPrice.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     wohnflaecheRange: [
       // The values come from the FormProjektService
@@ -225,11 +231,14 @@ export class FormProjektNeubauService {
     ],
     wohnflaeche: [
       this.wohnflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.wohnflaeche.min),
-        Validators.max(this.wohnflaeche.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.wohnflaeche.min),
+          Validators.max(this.wohnflaeche.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     anzahlWohnungenRange: [
       this.anzahlWohnungen.value,
@@ -241,11 +250,14 @@ export class FormProjektNeubauService {
     ],
     anzahlWohnungen: [
       this.anzahlWohnungen.value,
-      [
-        Validators.required,
-        Validators.min(this.anzahlWohnungen.min),
-        Validators.max(this.anzahlWohnungen.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.anzahlWohnungen.min),
+          Validators.max(this.anzahlWohnungen.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     konstruktion: this.konstruktion.options[0].value,
     energiestandard: this.energiestandard.options[0].value,
@@ -268,11 +280,14 @@ export class FormProjektNeubauService {
     ],
     grundstuecksbezogeneKosten: [
       this.grundstKosten.value,
-      [
-        Validators.required,
-        Validators.min(this.grundstKosten.min),
-        Validators.max(this.grundstKosten.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.grundstKosten.min),
+          Validators.max(this.grundstKosten.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
     baunebenkostenKeinFinRange: [
       this.baunebenkostenKeinFin.init,
@@ -284,11 +299,14 @@ export class FormProjektNeubauService {
     ],
     baunebenkostenKeinFin: [
       this.baunebenkostenKeinFin.init,
-      [
-        Validators.required,
-        Validators.min(this.baunebenkostenKeinFin.min),
-        Validators.max(this.baunebenkostenKeinFin.max),
-      ],
+      {
+        Validators: [
+          Validators.required,
+          Validators.min(this.baunebenkostenKeinFin.min),
+          Validators.max(this.baunebenkostenKeinFin.max),
+        ],
+        updateOn: 'blur',
+      },
     ],
   });
 
@@ -321,9 +339,19 @@ export class FormProjektNeubauService {
 
     this.projektFormNeu.get('wohnflaeche')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      this.projektFormNeu
-        .get('wohnflaecheRange')
-        ?.setValue(value, { emitEvent: false });
+      if (value && value >= this.wohnflaeche.min) {
+        this.projektFormNeu
+          .get('wohnflaecheRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        // Prevent non-realistic values
+        this.projektFormNeu
+          .get('wohnflaeche')
+          ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+        this.projektFormNeu
+          .get('wohnflaecheRange')
+          ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+      }
     });
 
     // Anzahl WohnungenRange
@@ -339,10 +367,19 @@ export class FormProjektNeubauService {
     this.projektFormNeu
       .get('anzahlWohnungen')
       ?.valueChanges.subscribe((value) => {
-        // Update range input when number input changes
-        this.projektFormNeu
-          .get('anzahlWohnungenRange')
-          ?.setValue(value, { emitEvent: false });
+        if (value && value >= this.anzahlWohnungen.min) {
+          // Update range input when number input changes
+          this.projektFormNeu
+            .get('anzahlWohnungenRange')
+            ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormNeu
+            .get('anzahlWohnungen')
+            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+          this.projektFormNeu
+            .get('anzahlWohnungenRange')
+            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+        }
       });
 
     // Energiestandard
@@ -415,6 +452,7 @@ export class FormProjektNeubauService {
           this.noKellergeschoss = false;
         }
       });
+
     this.projektFormNeu
       .get('stellplaetzeIn')
       ?.valueChanges.subscribe((value) => {
@@ -427,6 +465,7 @@ export class FormProjektNeubauService {
           kellergeschossIn?.setValue('Vorhanden');
         }
       });
+
     this.projektFormNeu
       .get('grundstuecksbezogeneKostenRange')
       ?.valueChanges.subscribe((value) => {
@@ -436,15 +475,24 @@ export class FormProjektNeubauService {
             ?.setValue(value, { emitEvent: false });
         }
       });
+
     this.projektFormNeu
       .get('grundstuecksbezogeneKosten')
       ?.valueChanges.subscribe((value) => {
-        if (value) {
+        if (value && value >= this.grundstKosten.min) {
           this.projektFormNeu
             .get('grundstuecksbezogeneKostenRange')
             ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormNeu
+            .get('grundstuecksbezogeneKosten')
+            ?.setValue(this.grundstKosten.min, { emitEvent: false });
+          this.projektFormNeu
+            .get('grundstuecksbezogeneKostenRange')
+            ?.setValue(this.grundstKosten.min, { emitEvent: false });
         }
       });
+
     this.projektFormNeu
       .get('baunebenkostenKeinFinRange')
       ?.valueChanges.subscribe((value) => {
@@ -454,13 +502,21 @@ export class FormProjektNeubauService {
             ?.setValue(value, { emitEvent: false });
         }
       });
+
     this.projektFormNeu
       .get('baunebenkostenKeinFin')
       ?.valueChanges.subscribe((value) => {
-        if (value) {
+        if (value && value >= this.baunebenkostenKeinFin.min) {
           this.projektFormNeu
             .get('baunebenkostenKeinFinRange')
             ?.setValue(value, { emitEvent: false });
+        } else {
+          this.projektFormNeu
+            .get('baunebenkostenKeinFin')
+            ?.setValue(this.baunebenkostenKeinFin.min, { emitEvent: false });
+          this.projektFormNeu
+            .get('baunebenkostenKeinFinRange')
+            ?.setValue(this.baunebenkostenKeinFin.min, { emitEvent: false });
         }
       });
   }
