@@ -27,7 +27,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(projekt.investitionskostenM2),
+        Math.round(projekt.gestehungskosten),
         0,
       ];
       this.barChartData.datasets[1].data = [

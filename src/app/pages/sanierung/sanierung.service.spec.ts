@@ -484,24 +484,38 @@ describe('SanierungService', () => {
     expect(result).toBe(gesamtgestehungskostenMock);
   });
 
-  it('should update Restsumme = (gesamtgestehungskosten - maxKfwKredit) when result > 0', () => {
-    const maxKfwKreditMock = 1000;
-    const gesamtgestehungskostenMock = 2000;
+  it('should update Bank-Kredit = 450000 when maxKfwKredit is 150000 and gesamtgestehungskosten is 600000', () => {
+    const maxKfwKreditMock = 150000;
+    const gesamtgestehungskostenMock = 600000;
     const result = service.updateBankKredit(
       maxKfwKreditMock,
       gesamtgestehungskostenMock
     );
-    expect(result).toBe(1000);
+    expect(result).toBe(450000);
   });
 
-  it('should update Restsumme = 0 when (gesamtgestehungskosten - maxKfwKredit) < 0', () => {
-    const maxKfwKreditMock = 2000;
-    const gesamtgestehungskostenMock = 1000;
+  it('should update Bank-Kredit = 0 when maxKfwKredit is 600000 and gesamtgestehungskosten is 500000', () => {
+    const maxKfwKreditMock = 600000;
+    const gesamtgestehungskostenMock = 500000;
     const result = service.updateBankKredit(
       maxKfwKreditMock,
       gesamtgestehungskostenMock
     );
     expect(result).toBe(0);
+  });
+
+  it('should update Bank-Kredit / m² = 100 € when Bank-Kredit is 100000 and wohnflaeche is 1000 m²', () => {
+    const bankKredit = 100000;
+    const wohnflaeche = 1000;
+    const result = service.updateBankKreditM2(bankKredit, wohnflaeche);
+    expect(result).toBe(100);
+  });
+
+  it('should update Bank-Kredit / bau = 50000 € when Bank-Kredit is 100000 and anzahlWohnungen is 2', () => {
+    const bankKredit = 100000;
+    const anzahlWohnungen = 2;
+    const result = service.updateBankKreditM2(bankKredit, anzahlWohnungen);
+    expect(result).toBe(50000);
   });
 
   it('should update AF KfW = 0 if sollzinsKfw = 0 and kreditlaufzeit = 10', () => {
@@ -642,10 +656,177 @@ describe('SanierungService', () => {
     expect(result).toBe(18000);
   });
 
-  it('should return KfW Kredit = 100000€ when Foerdersumme is 160000€ and KfW Zuschuss is 60000€. It is their subtraction.', () => {
+  it('should update KfW Zuschuss / m² = 300 € when KfW Zuschuss is 30000 and Wohnflaeche is 100', () => {
+    const kfwZuschuss = 30000;
+    const wohnflaeche = 100;
+    const result = service.updateKfwZuschussM2(kfwZuschuss, wohnflaeche);
+    expect(result).toBe(300);
+  });
+
+  it('should update KfW Zuschuss / bau = 10000 € when KfW Zuschuss is 30000 and Anzahl Wohnungen is 3', () => {
+    const kfwZuschuss = 30000;
+    const anzahlWohnungen = 3;
+    const result = service.updateKfwZuschussProBau(
+      kfwZuschuss,
+      anzahlWohnungen
+    );
+    expect(result).toBe(10000);
+  });
+
+  it('should update KfW Kredit = 100000€ when Foerdersumme is 160000€ and KfW Zuschuss is 60000€. It is their subtraction.', () => {
     const foerdersumme = 160000;
     const kfwZuschuss = 60000;
     const result = service.updateKfwKredit(foerdersumme, kfwZuschuss);
     expect(result).toBe(100000);
   });
+
+  it('should update KfW Kredit / m² = 300 € when KfW Kredit is 30000 and Wohnflaeche is 100', () => {
+    const kfwKredit = 30000;
+    const wohnflaeche = 100;
+    const result = service.updateKfwKreditM2(kfwKredit, wohnflaeche);
+    expect(result).toBe(300);
+  });
+
+  it('should update KfW Kredit / bau = 10000 € when KfW Kredit is 30000 and Anzahl Wohnungen is 3', () => {
+    const kfwKredit = 30000;
+    const anzahlWohnungen = 3;
+    const result = service.updateKfwKreditProBau(kfwKredit, anzahlWohnungen);
+    expect(result).toBe(10000);
+  });
+
+  it('should update Annuitaet KfW = 10000 € if KfW Kredit is 100000 and AF KfW is 0.1', () => {
+    const kfwKredit = 100000;
+    const afKfw = 0.1;
+    const result = service.updateAnnuitaetBank(kfwKredit, afKfw);
+    expect(result).toBe(10000);
+  });
+
+  it('should update Annuitaet Bank = 10000 € if Bank Kredit is 100000 and AF Bank is 0.1', () => {
+    const bankKredit = 100000;
+    const afBank = 0.1;
+    const result = service.updateAnnuitaetBank(bankKredit, afBank);
+    expect(result).toBe(10000);
+  });
+
+  it('should update EF KfW = 20000 € if KfW Kredit is 100000 Sollzins KfW is 2 Kreditlaufzeit is 10', () => {
+    const kfwKredit = 100000;
+    const sollzinsKfw = 2;
+    const kreditlaufzeit = 10;
+    const result = service.updateEfKfw(kfwKredit, sollzinsKfw, kreditlaufzeit);
+    expect(result).toBe(20000);
+  });
+
+  it('should update EF Bank = 20000 € if Bank Kredit is 100000 Kalk. Realzins is 2 Kreditlaufzeit is 10', () => {
+    const bankKredit = 100000;
+    const kalkRealzins = 2;
+    const kreditlaufzeit = 10;
+    const result = service.updateEfBank(
+      bankKredit,
+      kalkRealzins,
+      kreditlaufzeit
+    );
+    expect(result).toBe(20000);
+  });
+
+  it('should update Finanzierungskosten KfW = 20000 if KfW Darlehen is Annuitäten, Annuitaet-KfW is 10000 kreditlaufzeit is 10, KfW-Kredit is 100000, EF-KfW is 10000', () => {
+    const kfWDarlehen: KfWDarlehen = 'Annuitäten';
+    const annuitaetKfW = 10000;
+    const kreditlaufzeit = 10;
+    const kfwKredit = 80000;
+    const efKfW = 10000;
+    const result = service.updateFinanzierungskostenKfw(
+      kfWDarlehen,
+      annuitaetKfW,
+      kreditlaufzeit,
+      kfwKredit,
+      efKfW
+    );
+    expect(result).toBe(20000);
+  });
+
+  it('should update Finanzierungskosten KfW = 10000 if KfW Darlehen is Endfälliges, Annuitaet-KfW is 10000 kreditlaufzeit is 10, KfW-Kredit is 100000, EF-KfW is 10000', () => {
+    const kfWDarlehen: KfWDarlehen = 'Endfälliges';
+    const annuitaetKfW = 10000;
+    const kreditlaufzeit = 10;
+    const kfwKredit = 80000;
+    const efKfW = 10000;
+    const result = service.updateFinanzierungskostenKfw(
+      kfWDarlehen,
+      annuitaetKfW,
+      kreditlaufzeit,
+      kfwKredit,
+      efKfW
+    );
+    expect(result).toBe(10000);
+  });
+
+  it('should update Finanzierungskosten KfW / m² = 300 € when Finanzierungskosten KfW is 30000 and Wohnflaeche is 100', () => {
+    const finanzierungskostenKfw = 30000;
+    const wohnflaeche = 100;
+    const result = service.updateFinanzierungskostenKfwM2(
+      finanzierungskostenKfw,
+      wohnflaeche
+    );
+    expect(result).toBe(300);
+  });
+
+  it('should update Finanzierungskosten (Finanzmarkt) = 20000 if bank Darlehen is Annuitäten, Annuitaet is 10000 kreditlaufzeit is 10, bank-Kredit is 100000, EF-KfW is 10000', () => {
+    const bankDarlehen: KfWDarlehen = 'Annuitäten';
+    const annuitaetBank = 10000;
+    const kreditlaufzeit = 10;
+    const bankKredit = 80000;
+    const efBank = 10000;
+    const result = service.updateFinanzierungskostenFinanzmarkt(
+      bankDarlehen,
+      annuitaetBank,
+      kreditlaufzeit,
+      bankKredit,
+      efBank
+    );
+    expect(result).toBe(20000);
+  });
+
+  it('should update Finanzierungskosten (Finanzmarkt) = 10000 if bank Darlehen is Endfälliges, Annuitaet is 8000 kreditlaufzeit is 10, bank-Kredit is 100000, EF-KfW is 10000', () => {
+    const bankDarlehen: KfWDarlehen = 'Endfälliges';
+    const annuitaetBank = 8000;
+    const kreditlaufzeit = 10;
+    const bankKredit = 80000;
+    const efBank = 10000;
+    const result = service.updateFinanzierungskostenFinanzmarkt(
+      bankDarlehen,
+      annuitaetBank,
+      kreditlaufzeit,
+      bankKredit,
+      efBank
+    );
+    expect(result).toBe(10000);
+  });
+
+  it('should update Finanzierungskosten (Finanzmarkt) / m² = 300 € when Finanzierungskosten (Finanzmarkt) is 30000 and Wohnflaeche is 100', () => {
+    const finanzierungskostenBank = 30000;
+    const wohnflaeche = 100;
+    const result = service.updateFinanzierungskostenFinanzmarktM2(
+      finanzierungskostenBank,
+      wohnflaeche
+    );
+    expect(result).toBe(300);
+  });
+
+  it('should update Investitionskosten = 600000 € if Wohnflaeche is 200 m² and gestehungskosten is 3000 €/m²', () => {
+    const wohnflaeche = 200;
+    const gestehungskosten = 3000;
+    const result = service.updateInvestitionskosten(wohnflaeche, gestehungskosten);
+    expect(result).toBe(600000);
+  });
+
+  it('should update Investitionskosten / bau = 300000 € when Investitionskosten is 600000 and Anzahl Wohnungen is 2', () => {
+    const investitionskosten = 600000;
+    const anzahlWohnungen = 2;
+    const result = service.updateInvestitionskostenProBau(
+      investitionskosten,
+      anzahlWohnungen
+    );
+    expect(result).toBe(300000);
+  });
+
 });

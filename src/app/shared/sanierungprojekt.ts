@@ -48,7 +48,6 @@ export interface SanierungProjekt {
   finanzierungskostenFinanzmarkt: number;
   finanzierungskostenFinanzmarktM2: number;
   investitionskosten: number;
-  investitionskostenM2: number;
   investitionskostenProBau: number;
   kfwZuschuss: number;
   kfwZuschussM2: number;

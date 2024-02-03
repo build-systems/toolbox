@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartGkostenSanierungComponent } from '../form-projekt-sanierung/chart-gkosten-sanierung/chart-gkosten-sanierung.component';
-import { ChartGkostenM2SanierungComponent } from '../form-projekt-sanierung/chart-gkosten-m2-sanierung/chart-gkosten-m2-sanierung.component';
-import { DashboardOutput } from '../../../shared/dashboard-output';
+import { ChartGkostenSanierungComponent } from './chart-gkosten-sanierung/chart-gkosten-sanierung.component';
+import { ChartGkostenM2SanierungComponent } from './chart-gkosten-m2-sanierung/chart-gkosten-m2-sanierung.component';
 import { SanierungService } from '../sanierung.service';
 import { ChartEinheitskostenSanierungComponent } from './chart-einheitskosten-sanierung/chart-einheitskosten-sanierung.component';
 import { SanierungProjekt } from '../../../shared/sanierungprojekt';

@@ -247,6 +247,16 @@ export class SanierungService {
     return Math.max(gesamtgestehungskosten - maxKfwKredit, 0);
   }
 
+  private _bankKreditM2 = 0;
+  updateBankKreditM2(bankKredit: number, wohnflaeche: number): number {
+    return bankKredit / wohnflaeche;
+  }
+
+  private _bankKreditProBau = 0;
+  updateBankKreditProBau(bankKredit: number, anzahlWohnungen: number): number {
+    return bankKredit / anzahlWohnungen;
+  }
+
   // #03
   // AF KFW [€]
   private _afKfw = 0;
@@ -293,193 +303,226 @@ export class SanierungService {
     );
   }
 
+  private _kfwZuschussM2 = 0;
+  updateKfwZuschussM2(kfwZuschuss: number, wohnflaeche: number): number {
+    return kfwZuschuss / wohnflaeche;
+  }
+
+  private _kfwZuschussProBau = 0;
+  updateKfwZuschussProBau(
+    kfwZuschuss: number,
+    anzahlWohnungen: number
+  ): number {
+    return kfwZuschuss / anzahlWohnungen;
+  }
+
   // KfW-Kredit [€]
   private _kfwKredit = 0;
   updateKfwKredit(foerdersumme: number, kfwZuschuss: number): number {
     return foerdersumme - kfwZuschuss;
   }
 
+  private _kfwKreditM2 = 0;
+  updateKfwKreditM2(kfwKredit: number, wohnflaeche: number): number {
+    return kfwKredit / wohnflaeche;
+  }
+
+  private _kfwKreditProBau = 0;
+  updateKfwKreditProBau(kfwKredit: number, anzahlWohnungen: number): number {
+    return kfwKredit / anzahlWohnungen;
+  }
+
   // Annuität KfW [€]
   private _annuitaetKfW = 0;
-  private updateAnnuitaetKfw() {
-    this._annuitaetKfW = this._afKfw * this._kfwKredit;
+  updateAnnuitaetKfw(kfwKredit: number, afKfw: number): number {
+    return kfwKredit * afKfw;
   }
 
   // Annuität Bank [€]
   private _annuitaetBank = 0;
-  private updateAnnuitaetBank() {
-    this._annuitaetBank = this._bankKredit * this._afBank;
+  updateAnnuitaetBank(bankKredit: number, afBank: number): number {
+    return bankKredit * afBank;
   }
 
   // EF KFW [€]
   private _efKfW = 0;
-  private updateEfKfw() {
-    this._efKfW =
-      ((this._kfwKredit * this._sollzinsKfw) / 100) * this.kreditlaufzeit;
+  updateEfKfw(
+    kfwKredit: number,
+    sollzinsKfw: number,
+    kreditlaufzeit: number
+  ): number {
+    return ((kfwKredit * sollzinsKfw) / 100) * kreditlaufzeit;
   }
 
   // EF B [€]
   private _efBank = 0;
-  private updateEfBank() {
-    this._efBank =
-      ((this.kalkRealzins * this._bankKredit) / 100) * this.kreditlaufzeit;
+  updateEfBank(
+    bankKredit: number,
+    kalkRealzins: number,
+    kreditlaufzeit: number
+  ): number {
+    return ((kalkRealzins * bankKredit) / 100) * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
   private _finanzierungskostenKfw = 0;
-  private updateFinanzierungskostenKfw() {
-    if (this.kfWDarlehen === 'Annuitäten') {
-      this._finanzierungskostenKfw =
-        this._annuitaetKfW * this.kreditlaufzeit - this._kfwKredit;
-    } else if (this.kfWDarlehen === 'Endfälliges') {
-      this._finanzierungskostenKfw = this._efKfW;
+  updateFinanzierungskostenKfw(
+    kfWDarlehen: KfWDarlehen,
+    annuitaetKfW: number,
+    kreditlaufzeit: number,
+    kfwKredit: number,
+    efKfW: number
+  ): number {
+    if (kfWDarlehen === 'Annuitäten') {
+      return annuitaetKfW * kreditlaufzeit - kfwKredit;
+    } else if (kfWDarlehen === 'Endfälliges') {
+      return efKfW;
     } else {
-      this._finanzierungskostenKfw = 0;
+      return 0;
     }
+  }
+
+  private _finanzierungskostenKfwM2 = 0;
+  updateFinanzierungskostenKfwM2(
+    finanzierungskostenKfw: number,
+    wohnflaeche: number
+  ): number {
+    return finanzierungskostenKfw / wohnflaeche;
   }
 
   // Finazierungskosten (Finanzmarkt) [€]
   private _finanzierungskostenFinanzmarkt = 0;
-  private updateFinanzierungskostenFinanzmarkt() {
-    if (this.bankDarlehen === 'Annuitäten') {
-      this._finanzierungskostenFinanzmarkt =
-        this._annuitaetBank * this.kreditlaufzeit - this._bankKredit;
-    } else if (this.bankDarlehen === 'Endfälliges') {
-      this._finanzierungskostenFinanzmarkt = this._efBank;
+  updateFinanzierungskostenFinanzmarkt(
+    bankDarlehen: BankDarlehen,
+    annuitaetBank: number,
+    kreditlaufzeit: number,
+    bankKredit: number,
+    efBank: number
+  ): number {
+    if (bankDarlehen === 'Annuitäten') {
+      return annuitaetBank * kreditlaufzeit - bankKredit;
+    } else if (bankDarlehen === 'Endfälliges') {
+      return efBank;
     } else {
-      this._finanzierungskostenFinanzmarkt = 0;
+      return 0;
     }
+  }
+
+  private _finanzierungskostenFinanzmarktM2 = 0;
+  updateFinanzierungskostenFinanzmarktM2(
+    finanzierungskostenFinanzmarkt: number,
+    wohnflaeche: number
+  ): number {
+    return finanzierungskostenFinanzmarkt / wohnflaeche;
   }
 
   // Investitionskosten [€]
   private _investitionskosten = 0;
-  private updateInvestitionskosten() {
-    this._investitionskosten = this.wohnflaeche * this._gestehungskosten;
+  updateInvestitionskosten(
+    wohnflaeche: number,
+    gestehungskosten: number
+  ): number {
+    return wohnflaeche * gestehungskosten;
+  }
+
+  private _investitionskostenProBau = 0;
+  updateInvestitionskostenProBau(
+    investitionskosten: number,
+    anzahlWohnungen: number
+  ) {
+    return investitionskosten / anzahlWohnungen;
   }
 
   // #04
   // GB: Annuität [€]
   private _gbAnnuitaet = 0;
-  private updateGbAnnuitaet() {
-    this._gbAnnuitaet =
-      (this._foerdersumme + this._bankKredit) *
-        this._afBank *
-        this.kreditlaufzeit -
-      (this._foerdersumme + this._bankKredit);
+  updateGbAnnuitaet(
+    foerdersumme: number,
+    bankKredit: number,
+    afBank: number,
+    kreditlaufzeit: number
+  ): number {
+    return (
+      (foerdersumme + bankKredit) * afBank * kreditlaufzeit -
+      (foerdersumme + bankKredit)
+    );
   }
 
   // GB: EFD [€]
   private _gbEfd = 0;
-  private updateGbEfd() {
-    this._gbEfd =
-      ((this.kalkRealzins * (this._foerdersumme + this._bankKredit)) / 100) *
-      this.kreditlaufzeit;
+  private updateGbEfd(
+    kalkRealzins: number,
+    foerdersumme: number,
+    bankKredit: number,
+    kreditlaufzeit: number
+  ): number {
+    return (
+      ((kalkRealzins * (foerdersumme + bankKredit)) / 100) * kreditlaufzeit
+    );
   }
 
   // Option 1: ohne KfW [€]
   private _ohneKfw = 0;
-  private updateOhneKfw() {
-    if (this.bankDarlehen === 'Endfälliges') {
-      this._ohneKfw = this._gbEfd;
+  updateOhneKfw(
+    bankDarlehen: BankDarlehen,
+    gbEfd: number,
+    gbAnnuitaet: number
+  ): number {
+    if (bankDarlehen === 'Endfälliges') {
+      return gbEfd;
     } else {
-      this._ohneKfw = this._gbAnnuitaet;
+      return gbAnnuitaet;
     }
+  }
+
+  private _ohneKfwM2 = 0;
+  updateOhneKfwM2(ohneKfw: number, wohnflaeche: number): number {
+    return ohneKfw / wohnflaeche;
   }
 
   // Option 2: mit KfW [€]
   private _mitKfw = 0;
-  private updateMitKfw() {
-    this._mitKfw =
-      this._finanzierungskostenKfw + this._finanzierungskostenFinanzmarkt;
+  updateMitKfw(
+    finanzierungskostenKfw: number,
+    finanzierungskostenFinanzmarkt: number
+  ): number {
+    return finanzierungskostenKfw + finanzierungskostenFinanzmarkt;
+  }
+
+  private _mitKfwM2 = 0;
+  updateMitKfwM2(mitKfw: number, wohnflaeche: number): number {
+    return mitKfw / wohnflaeche;
   }
 
   // Gesamtkosten
   private _gInvestition = 0;
-  private updateGInvestition() {
-    this._gInvestition = this._investitionskosten - this._kfwZuschuss;
-  }
-
-  private _gFinanzierung = 0;
-  private updateGFinanzierung() {
-    this._gFinanzierung =
-      this._kfwKredit +
-      this._bankKredit +
-      this._finanzierungskostenKfw +
-      this._finanzierungskostenFinanzmarkt;
-  }
-
-  private _kfwZuschussM2 = 0;
-  private updateKfwZuschussM2() {
-    this._kfwZuschussM2 = this._kfwZuschuss / this.wohnflaeche;
-  }
-
-  private _kfwKreditM2 = 0;
-  private updateKfwKreditM2() {
-    this._kfwKreditM2 = this._kfwKredit / this.wohnflaeche;
-  }
-
-  private _bankKreditM2 = 0;
-  private updateBankKreditM2() {
-    this._bankKreditM2 = this._bankKredit / this.wohnflaeche;
-  }
-
-  private _finanzierungskostenKfwM2 = 0;
-  private updateFinanzierungskostenKfwM2() {
-    this._finanzierungskostenKfwM2 =
-      this._finanzierungskostenKfw / this.wohnflaeche;
-  }
-
-  private _finanzierungskostenFinanzmarktM2 = 0;
-  private updateFinanzierungskostenFinanzmarktM2() {
-    this._finanzierungskostenFinanzmarktM2 =
-      this._finanzierungskostenFinanzmarkt / this.wohnflaeche;
-  }
-
-  private _investitionskostenM2 = 0;
-  private updateInvestitionskostenM2() {
-    this._investitionskostenM2 = this._investitionskosten / this.wohnflaeche;
+  updateGInvestition(investitionskosten: number, kfwZuschuss: number): number {
+    return investitionskosten - kfwZuschuss;
   }
 
   private _gInvestitionM2 = 0;
-  private updateGInvestitionM2() {
-    this._gInvestitionM2 = this._gInvestition / this.wohnflaeche;
+  updateGInvestitionM2(gInvestition: number, wohnflaeche: number): number {
+    return gInvestition / wohnflaeche;
+  }
+
+  private _gFinanzierung = 0;
+  updateGFinanzierung(
+    kfwKredit: number,
+    bankKredit: number,
+    finanzierungskostenKfw: number,
+    finanzierungskostenFinanzmarkt: number
+  ): number {
+    return (
+      kfwKredit +
+      bankKredit +
+      finanzierungskostenKfw +
+      finanzierungskostenFinanzmarkt
+    );
   }
 
   private _gFinanzierungM2 = 0;
-  private updateGFinanzierungM2() {
-    this._gFinanzierungM2 = this._gFinanzierung / this.wohnflaeche;
-  }
-
-  private _ohneKfwM2 = 0;
-  private updateOhneKfwM2() {
-    this._ohneKfwM2 = this._ohneKfw / this.wohnflaeche;
-  }
-
-  private _mitKfwM2 = 0;
-  private updateMitKfwM2() {
-    this._mitKfwM2 = this._mitKfw / this.wohnflaeche;
-  }
-
-  private _kfwKreditProBau = 0;
-  private updateKfwKreditProBau() {
-    this._kfwKreditProBau = this._kfwKredit / this.anzahlWohnungen;
-  }
-
-  private _bankKreditProBau = 0;
-  private updateBankKreditProBau() {
-    this._bankKreditProBau = this._bankKredit / this.anzahlWohnungen;
-  }
-
-  // investitionskostenProBau
-  private _investitionskostenProBau = 0;
-  private updateInvestitionskostenProBau() {
-    this._investitionskostenProBau =
-      this._investitionskosten / this.anzahlWohnungen;
-  }
-
-  private _kfwZuschussProBau = 0;
-  private updateKfwZuschussProBau() {
-    this._kfwZuschussProBau = this._kfwZuschuss / this.anzahlWohnungen;
+  updateGFinanzierungM2(gFinanzierung: number, wohnflaeche: number): number {
+    return gFinanzierung / wohnflaeche;
   }
 
   // Sanierung Output to be used in the Save and Export
@@ -529,6 +572,14 @@ export class SanierungService {
       this._gesamtgestehungskosten,
       this._maxKfwKredit
     );
+    this._bankKreditM2 = this.updateBankKreditM2(
+      this._bankKredit,
+      this.wohnflaeche
+    );
+    this._bankKreditProBau = this.updateBankKreditProBau(
+      this._bankKredit,
+      this.anzahlWohnungen
+    );
     this._afKfw = this.updateAfKfW(this._sollzinsKfw, this.kreditlaufzeit);
     this._afBank = this.updateAfBank(this.kalkRealzins, this.kreditlaufzeit);
     this._kfwZuschuss = this.updateKfwZuschuss(
@@ -539,34 +590,112 @@ export class SanierungService {
       this._serSanBonus,
       this._foerdersumme
     );
-    this.updateKfwZuschussM2();
-    this.updateKfwZuschussProBau();
-    this._kfwKredit = this.updateKfwKredit(this._foerdersumme, this._kfwZuschuss);
-    this.updateKfwKreditM2();
-    this.updateKfwKreditProBau();
-    this.updateBankKreditM2();
-    this.updateBankKreditProBau();
-    this.updateAnnuitaetKfw();
-    this.updateAnnuitaetBank();
-    this.updateEfKfw();
-    this.updateEfBank();
-    this.updateFinanzierungskostenKfw();
-    this.updateFinanzierungskostenKfwM2();
-    this.updateFinanzierungskostenFinanzmarkt();
-    this.updateFinanzierungskostenFinanzmarktM2();
-    this.updateInvestitionskosten();
-    this.updateInvestitionskostenM2();
-    this.updateInvestitionskostenProBau();
-    this.updateGbAnnuitaet();
-    this.updateGbEfd();
-    this.updateOhneKfw();
-    this.updateOhneKfwM2();
-    this.updateMitKfw();
-    this.updateMitKfwM2();
-    this.updateGInvestition();
-    this.updateGInvestitionM2();
-    this.updateGFinanzierung();
-    this.updateGFinanzierungM2();
+    this._kfwZuschussM2 = this.updateKfwZuschussM2(
+      this._kfwZuschuss,
+      this.wohnflaeche
+    );
+    this.updateKfwZuschussProBau(this._kfwZuschuss, this.anzahlWohnungen);
+    this._kfwKredit = this.updateKfwKredit(
+      this._foerdersumme,
+      this._kfwZuschuss
+    );
+    this._kfwKreditM2 = this.updateKfwKreditM2(
+      this._kfwKredit,
+      this.wohnflaeche
+    );
+    this._kfwKreditProBau = this.updateKfwKreditProBau(
+      this._kfwKredit,
+      this.anzahlWohnungen
+    );
+    this._annuitaetKfW = this.updateAnnuitaetKfw(this._kfwKredit, this._afKfw);
+    this._annuitaetBank = this.updateAnnuitaetBank(
+      this._bankKredit,
+      this._afBank
+    );
+    this._efKfW = this.updateEfKfw(
+      this._kfwKredit,
+      this._sollzinsKfw,
+      this.kreditlaufzeit
+    );
+    this._efBank = this.updateEfBank(
+      this._bankKredit,
+      this.kalkRealzins,
+      this.kreditlaufzeit
+    );
+    this._finanzierungskostenKfw = this.updateFinanzierungskostenKfw(
+      this.kfWDarlehen,
+      this._annuitaetKfW,
+      this.kreditlaufzeit,
+      this._kfwKredit,
+      this._efKfW
+    );
+    this._finanzierungskostenKfwM2 = this.updateFinanzierungskostenKfwM2(
+      this._finanzierungskostenKfw,
+      this.wohnflaeche
+    );
+    this._finanzierungskostenFinanzmarkt =
+      this.updateFinanzierungskostenFinanzmarkt(
+        this.bankDarlehen,
+        this._annuitaetBank,
+        this.kreditlaufzeit,
+        this._bankKredit,
+        this._efBank
+      );
+    this._finanzierungskostenFinanzmarktM2 =
+      this.updateFinanzierungskostenFinanzmarktM2(
+        this._finanzierungskostenFinanzmarkt,
+        this.wohnflaeche
+      );
+    this._investitionskosten = this.updateInvestitionskosten(
+      this.wohnflaeche,
+      this._gestehungskosten
+    );
+    this._investitionskostenProBau = this.updateInvestitionskostenProBau(
+      this._investitionskosten,
+      this.anzahlWohnungen
+    );
+    // continue here
+    this._gbAnnuitaet = this.updateGbAnnuitaet(
+      this._foerdersumme,
+      this._bankKredit,
+      this._afBank,
+      this.kreditlaufzeit
+    );
+    this._gbEfd = this.updateGbEfd(
+      this.kalkRealzins,
+      this._foerdersumme,
+      this._bankKredit,
+      this.kreditlaufzeit
+    );
+    this._ohneKfw = this.updateOhneKfw(
+      this.bankDarlehen,
+      this._gbEfd,
+      this._gbAnnuitaet
+    );
+    this._ohneKfwM2 = this.updateOhneKfwM2(this._ohneKfw, this.wohnflaeche);
+    this._mitKfw = this.updateMitKfw(
+      this._finanzierungskostenKfw,
+      this._finanzierungskostenFinanzmarkt
+    );
+    this._mitKfwM2 = this.updateMitKfwM2(this._mitKfw, this.wohnflaeche);
+    this._gInvestition = this.updateGInvestition(
+      this._investitionskosten,
+      this._kfwZuschuss
+    );
+    this._gInvestitionM2 = this.updateGInvestitionM2(
+      this._gInvestition,
+      this.wohnflaeche
+    );
+    this._gFinanzierung = this.updateGFinanzierung(
+      this._kfwKredit,
+      this._bankKredit,
+      this._finanzierungskostenKfw,
+      this._finanzierungskostenFinanzmarkt
+    );
+    this._gFinanzierungM2 = this.updateGFinanzierungM2(
+      this._gFinanzierung,
+      this.wohnflaeche
+    );
 
     this.outputSanierungSource.next(
       (this.outputSanierung = {
@@ -619,7 +748,6 @@ export class SanierungService {
         finanzierungskostenFinanzmarktM2:
           this._finanzierungskostenFinanzmarktM2,
         investitionskosten: this._investitionskosten,
-        investitionskostenM2: this._investitionskostenM2,
         investitionskostenProBau: this._investitionskostenProBau,
         kfwZuschuss: this._kfwZuschuss,
         kfwZuschussM2: this._kfwZuschussM2,
