@@ -195,12 +195,6 @@ describe('SanierungService', () => {
     expect(result).toBe(service.userPrice);
   });
 
-  it('should return Gestehungskosten safety multiplier = 1.3', () => {
-    // ATTENTION: VALUE HARD CODED.
-    // If constant change, this test will fail
-    expect(constants.safetyMultiplier).toBe(1.3);
-  });
-
   it('should update Gestehungskosten for EH 40 and Umfassend saniert = 680 €/m²', () => {
     // ATTENTION: VALUES HARD CODED.
     // If the chart change values, this test will fail
@@ -210,7 +204,7 @@ describe('SanierungService', () => {
       'EH 40',
       'Umfassend saniert'
     );
-    expect(result).toBe(680 * constants.safetyMultiplier);
+    expect(result).toBe(680);
   });
 
   it('should update Gestehungskosten for EH 40 and Teilsaniert = 770 €/m²', () => {
@@ -222,7 +216,7 @@ describe('SanierungService', () => {
       'EH 40',
       'Teilsaniert'
     );
-    expect(result).toBe(770 * constants.safetyMultiplier);
+    expect(result).toBe(770);
   });
 
   it('should update Gestehungskosten for EH 40 and Unsaniert = 760 €/m²', () => {
@@ -234,7 +228,7 @@ describe('SanierungService', () => {
       'EH 40',
       'Unsaniert'
     );
-    expect(result).toBe(760 * constants.safetyMultiplier);
+    expect(result).toBe(760);
   });
 
   it('should update Gestehungskosten for EH 55 and Umfassend saniert = 490 €/m²', () => {
@@ -246,7 +240,7 @@ describe('SanierungService', () => {
       'EH 55',
       'Umfassend saniert'
     );
-    expect(result).toBe(490 * constants.safetyMultiplier);
+    expect(result).toBe(490);
   });
 
   it('should update Gestehungskosten for EH 55 and Teilsaniert = 660 €/m²', () => {
@@ -258,7 +252,7 @@ describe('SanierungService', () => {
       'EH 55',
       'Teilsaniert'
     );
-    expect(result).toBe(660 * constants.safetyMultiplier);
+    expect(result).toBe(660);
   });
 
   it('should update Gestehungskosten for EH 55 and Unsaniert = 650 €/m²', () => {
@@ -270,7 +264,7 @@ describe('SanierungService', () => {
       'EH 55',
       'Unsaniert'
     );
-    expect(result).toBe(650 * constants.safetyMultiplier);
+    expect(result).toBe(650);
   });
 
   it('should update Gestehungskosten for EH 70 and Umfassend saniert = 300 €/m²', () => {
@@ -282,7 +276,7 @@ describe('SanierungService', () => {
       'EH 70',
       'Umfassend saniert'
     );
-    expect(result).toBe(300 * constants.safetyMultiplier);
+    expect(result).toBe(300);
   });
 
   it('should update Gestehungskosten for EH 70 and Teilsaniert = 530 €/m²', () => {
@@ -294,7 +288,7 @@ describe('SanierungService', () => {
       'EH 70',
       'Teilsaniert'
     );
-    expect(result).toBe(530 * constants.safetyMultiplier);
+    expect(result).toBe(530);
   });
 
   it('should update Gestehungskosten for EH 70 and Unsaniert = 520 €/m²', () => {
@@ -306,7 +300,7 @@ describe('SanierungService', () => {
       'EH 70',
       'Unsaniert'
     );
-    expect(result).toBe(520 * constants.safetyMultiplier);
+    expect(result).toBe(520);
   });
 
   it('should update Gestehungskosten for EH 85 and Unsaniert saniert = 270 €/m²', () => {
@@ -318,7 +312,7 @@ describe('SanierungService', () => {
       'EH 85',
       'Umfassend saniert'
     );
-    expect(result).toBe(270 * constants.safetyMultiplier);
+    expect(result).toBe(270);
   });
 
   it('should update Gestehungskosten for EH 85 and Teilsaniert = 510 €/m²', () => {
@@ -330,7 +324,7 @@ describe('SanierungService', () => {
       'EH 85',
       'Teilsaniert'
     );
-    expect(result).toBe(510 * constants.safetyMultiplier);
+    expect(result).toBe(510);
   });
 
   it('should update Gestehungskosten for EH 85 and Teilsaniert = 500 €/m²', () => {
@@ -342,7 +336,7 @@ describe('SanierungService', () => {
       'EH 85',
       'Unsaniert'
     );
-    expect(result).toBe(500 * constants.safetyMultiplier);
+    expect(result).toBe(500);
   });
 
   it('should return NR-kredit constant "lessThan10" = 0.99% for kreditlaufzeit smaller than 10 years', () => {
@@ -776,7 +770,7 @@ describe('SanierungService', () => {
     const kreditlaufzeit = 10;
     const bankKredit = 80000;
     const efBank = 10000;
-    const result = service.updateFinanzierungskostenFinanzmarkt(
+    const result = service.updateFinanzierungskostenBank(
       bankDarlehen,
       annuitaetBank,
       kreditlaufzeit,
@@ -792,7 +786,7 @@ describe('SanierungService', () => {
     const kreditlaufzeit = 10;
     const bankKredit = 80000;
     const efBank = 10000;
-    const result = service.updateFinanzierungskostenFinanzmarkt(
+    const result = service.updateFinanzierungskostenBank(
       bankDarlehen,
       annuitaetBank,
       kreditlaufzeit,
@@ -805,7 +799,7 @@ describe('SanierungService', () => {
   it('should update Finanzierungskosten-Bank pro m² = 300 € when Finanzierungskosten-Bank is 30000 and Wohnflaeche is 100', () => {
     const finanzierungskostenBank = 30000;
     const wohnflaeche = 100;
-    const result = service.updateFinanzierungskostenFinanzmarktM2(
+    const result = service.updateFinanzierungskostenBankM2(
       finanzierungskostenBank,
       wohnflaeche
     );
@@ -913,10 +907,10 @@ describe('SanierungService', () => {
 
   it('should update Mit-KfW = 150000 Finanzierungskosten-Kfw is 50000 and Finanzierungskosten-Bank is 100000', () => {
     const finanzierungskostenKfw = 50000;
-    const finanzierungskostenFinanzmarkt = 100000;
+    const finanzierungskostenBank = 100000;
     const result = service.updateMitKfw(
       finanzierungskostenKfw,
-      finanzierungskostenFinanzmarkt
+      finanzierungskostenBank
     );
     expect(result).toBe(150000);
   });
@@ -925,41 +919,6 @@ describe('SanierungService', () => {
     const mitKfW = 30000;
     const wohnflaeche = 100;
     const result = service.updateMitKfwM2(mitKfW, wohnflaeche);
-    expect(result).toBe(300);
-  });
-
-  it('should update Gesamtkosten Investition = 300000 when investitionkosten(baukosten) is 400000 and KfW-Zuschuss is 100000', () => {
-    const investitionkosten = 400000;
-    const kfwZuschuss = 100000;
-    const result = service.updateGInvestition(investitionkosten, kfwZuschuss);
-    expect(result).toBe(300000);
-  });
-
-  it('should update Gesamtkosten Investition pro m² = 300 € when Gesamtkosten Investition is 30000 and Wohnflaeche is 100', () => {
-    const gInvestition = 30000;
-    const wohnflaeche = 100;
-    const result = service.updateGInvestitionM2(gInvestition, wohnflaeche);
-    expect(result).toBe(300);
-  });
-
-  it('should update Gesamtkosten Finanzierung = 850000 € when KfW-Kredit is 200000, Bank-Kredit is 300000, Finanzierungskosten-KfW is 150000, and finanzierungskosten-Bank is 200000', () => {
-    const kfwKredit = 200_000;
-    const bankKredit = 300_000;
-    const finanzierungskostenKfw = 150_000;
-    const finanzierungskostenFinanzmarkt = 200_000;
-    const result = service.updateGFinanzierung(
-      kfwKredit,
-      bankKredit,
-      finanzierungskostenKfw,
-      finanzierungskostenFinanzmarkt
-    );
-    expect(result).toBe(850000);
-  });
-
-  it('should update Gesamtkosten Finanzierung pro m² = 300 € when Gesamtkosten Finanzierung is 30000 and Wohnflaeche is 100', () => {
-    const gFinanzierung = 30000;
-    const wohnflaeche = 100;
-    const result = service.updateGFinanzierungM2(gFinanzierung, wohnflaeche);
     expect(result).toBe(300);
   });
 });

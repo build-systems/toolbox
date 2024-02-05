@@ -34,7 +34,7 @@ export class DashboardDarlehenNeubauComponent implements OnInit {
         this.investitionskosten = this.output.investitionskosten;
         this.sollzinsKfw = this.output.sollzinsKfw;
         this.finanzierungskostenFinanzmarkt =
-          this.output.finanzierungskostenFinanzmarkt;
+          this.output.finanzierungskostenBank;
         this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
         this.bankKredit = this.output.bankKredit;
         this.kfwKredit = this.output.kfwKredit;

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class neubau {
-  public kellerVorhanden = 192 - 45;
+  public kellerVorhanden = 147; // 192 - 45;
   public stellplaetze = {
     tiefgarage: 490,
     garage: 68,
@@ -15,7 +15,7 @@ export class neubau {
   public barriere = {
     reduziert: 62,
     frei: 199,
-    reduziertR: 348,
+    freiR: 348,
   };
   public dachbegruenungVorhanden = 55;
   public baustellenlogistikVorhanden = 212;
@@ -25,11 +25,12 @@ export class neubau {
     hoch: 277,
   };
   public energetischerStandardPrice = {
-    EH40: 294 - 138,
-    EH55: 0,
+    EH40: 156, // 294 - 138
+    GEG: 0,
     EH70: 0,
     // EH85: 0,
   };
+  public gestehungskostenBase = 2436;
   public nrKredit = {
     lessThan10: 0.01,
     between10And25: 0.79,
@@ -40,9 +41,7 @@ export class neubau {
     lower: 100_000,
     higher: 150_000,
   };
-  public restsummeHolzbau = 1.05;
-  public gestehungskostenBase = 2436;
-  public safetyMultiplier = 1.30;
+  public holzbauBonus = 1.05;
 }
 
 @Injectable({
@@ -68,7 +67,7 @@ export class sanierung {
     moreThan20: 1.97,
   };
   // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
-  sollzinsKfw_Endfälliges = 2.06; 
+  sollzinsKfw_Endfälliges = 2.06;
   // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   public kfwKreditLimit = {
     lower: 120_000,
@@ -78,6 +77,4 @@ export class sanierung {
   // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
   //
   public kfwZuschussMinMultiplier = 0.4;
-  // Safety multiplier
-  public safetyMultiplier = 1.30;
 }

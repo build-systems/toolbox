@@ -35,7 +35,6 @@ export interface NeubauProjekt {
     nrKredit: number;
     sollzinsKfw: number;
     gesamtgestehungskosten: number;
-    restsumme: number;
     afKfw: number;
     afBank: number;
     annuitaetKfW: number;
@@ -53,15 +52,11 @@ export interface NeubauProjekt {
     bankKreditProBau: number;
     finanzierungskostenKfw: number;
     finanzierungskostenKfwM2: number;
-    finanzierungskostenFinanzmarkt: number;
-    finanzierungskostenFinanzmarktM2: number;
+    finanzierungskostenBank: number;
+    finanzierungskostenBankM2: number;
     investitionskosten: number;
     investitionskostenM2: number;
     investitionskostenProBau: number;
-    gInvestition: number;
-    gInvestitionM2: number;
-    gFinanzierung: number;
-    gFinanzierungM2: number;
     // Vergleichsrechnung
     ohneKfw: number;
     ohneKfwM2: number;

@@ -171,7 +171,7 @@ export class SanierungService {
           filterByProperties(item, desiredProperties)
         );
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
-        return tableResult * this.constants.safetyMultiplier;
+        return tableResult;
       } catch (error) {
         console.log(error);
         return 0;
@@ -395,9 +395,9 @@ export class SanierungService {
     return finanzierungskostenKfw / wohnflaeche;
   }
 
-  // Finazierungskosten (Finanzmarkt) [€]
-  private _finanzierungskostenFinanzmarkt = 0;
-  updateFinanzierungskostenFinanzmarkt(
+  // Finazierungskosten Bank (Finanzmarkt) [€]
+  private _finanzierungskostenBank = 0;
+  updateFinanzierungskostenBank(
     bankDarlehen: BankDarlehen,
     annuitaetBank: number,
     kreditlaufzeit: number,
@@ -413,12 +413,12 @@ export class SanierungService {
     }
   }
 
-  private _finanzierungskostenFinanzmarktM2 = 0;
-  updateFinanzierungskostenFinanzmarktM2(
-    finanzierungskostenFinanzmarkt: number,
+  private _finanzierungskostenBankM2 = 0;
+  updateFinanzierungskostenBankM2(
+    finanzierungskostenBank: number,
     wohnflaeche: number
   ): number {
-    return finanzierungskostenFinanzmarkt / wohnflaeche;
+    return finanzierungskostenBank / wohnflaeche;
   }
 
   // Investitionskosten [€]
@@ -489,45 +489,14 @@ export class SanierungService {
   private _mitKfw = 0;
   updateMitKfw(
     finanzierungskostenKfw: number,
-    finanzierungskostenFinanzmarkt: number
+    finanzierungskostenBank: number
   ): number {
-    return finanzierungskostenKfw + finanzierungskostenFinanzmarkt;
+    return finanzierungskostenKfw + finanzierungskostenBank;
   }
 
   private _mitKfwM2 = 0;
   updateMitKfwM2(mitKfw: number, wohnflaeche: number): number {
     return mitKfw / wohnflaeche;
-  }
-
-  // Gesamtkosten
-  private _gInvestition = 0;
-  updateGInvestition(investitionskosten: number, kfwZuschuss: number): number {
-    return investitionskosten - kfwZuschuss;
-  }
-
-  private _gInvestitionM2 = 0;
-  updateGInvestitionM2(gInvestition: number, wohnflaeche: number): number {
-    return gInvestition / wohnflaeche;
-  }
-
-  private _gFinanzierung = 0;
-  updateGFinanzierung(
-    kfwKredit: number,
-    bankKredit: number,
-    finanzierungskostenKfw: number,
-    finanzierungskostenFinanzmarkt: number
-  ): number {
-    return (
-      kfwKredit +
-      bankKredit +
-      finanzierungskostenKfw +
-      finanzierungskostenFinanzmarkt
-    );
-  }
-
-  private _gFinanzierungM2 = 0;
-  updateGFinanzierungM2(gFinanzierung: number, wohnflaeche: number): number {
-    return gFinanzierung / wohnflaeche;
   }
 
   // Sanierung Output to be used in the Save and Export
@@ -599,7 +568,10 @@ export class SanierungService {
       this._kfwZuschuss,
       this.wohnflaeche
     );
-    this.updateKfwZuschussProBau(this._kfwZuschuss, this.anzahlWohnungen);
+    this._kfwZuschussProBau = this.updateKfwZuschussProBau(
+      this._kfwZuschuss,
+      this.anzahlWohnungen
+    );
     this._kfwKredit = this.updateKfwKredit(
       this._foerdersumme,
       this._kfwZuschuss
@@ -638,17 +610,17 @@ export class SanierungService {
       this._finanzierungskostenKfw,
       this.wohnflaeche
     );
-    this._finanzierungskostenFinanzmarkt =
-      this.updateFinanzierungskostenFinanzmarkt(
+    this._finanzierungskostenBank =
+      this.updateFinanzierungskostenBank(
         this.bankDarlehen,
         this._annuitaetBank,
         this.kreditlaufzeit,
         this._bankKredit,
         this._efBank
       );
-    this._finanzierungskostenFinanzmarktM2 =
-      this.updateFinanzierungskostenFinanzmarktM2(
-        this._finanzierungskostenFinanzmarkt,
+    this._finanzierungskostenBankM2 =
+      this.updateFinanzierungskostenBankM2(
+        this._finanzierungskostenBank,
         this.wohnflaeche
       );
     this._investitionskosten = this.updateInvestitionskosten(
@@ -680,27 +652,9 @@ export class SanierungService {
     this._ohneKfwM2 = this.updateOhneKfwM2(this._ohneKfw, this.wohnflaeche);
     this._mitKfw = this.updateMitKfw(
       this._finanzierungskostenKfw,
-      this._finanzierungskostenFinanzmarkt
+      this._finanzierungskostenBank
     );
     this._mitKfwM2 = this.updateMitKfwM2(this._mitKfw, this.wohnflaeche);
-    this._gInvestition = this.updateGInvestition(
-      this._investitionskosten,
-      this._kfwZuschuss
-    );
-    this._gInvestitionM2 = this.updateGInvestitionM2(
-      this._gInvestition,
-      this.wohnflaeche
-    );
-    this._gFinanzierung = this.updateGFinanzierung(
-      this._kfwKredit,
-      this._bankKredit,
-      this._finanzierungskostenKfw,
-      this._finanzierungskostenFinanzmarkt
-    );
-    this._gFinanzierungM2 = this.updateGFinanzierungM2(
-      this._gFinanzierung,
-      this.wohnflaeche
-    );
 
     this.outputSanierungSource.next(
       (this.outputSanierung = {
@@ -749,18 +703,14 @@ export class SanierungService {
         bankKreditProBau: this._bankKreditProBau,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
         finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
-        finanzierungskostenFinanzmarkt: this._finanzierungskostenFinanzmarkt,
-        finanzierungskostenFinanzmarktM2:
-          this._finanzierungskostenFinanzmarktM2,
+        finanzierungskostenBank: this._finanzierungskostenBank,
+        finanzierungskostenBankM2:
+          this._finanzierungskostenBankM2,
         investitionskosten: this._investitionskosten,
         investitionskostenProBau: this._investitionskostenProBau,
         kfwZuschuss: this._kfwZuschuss,
         kfwZuschussM2: this._kfwZuschussM2,
         kfwZuschussProBau: this._kfwZuschussProBau,
-        gInvestition: this._gInvestition,
-        gInvestitionM2: this._gInvestitionM2,
-        gFinanzierung: this._gFinanzierung,
-        gFinanzierungM2: this._gFinanzierungM2,
         // Vergleichsrechnung
         ohneKfw: this._ohneKfw,
         ohneKfwM2: this._ohneKfwM2,
@@ -768,7 +718,6 @@ export class SanierungService {
         mitKfwM2: this._mitKfwM2,
       })
     );
-    console.log(this.outputSanierung);
   }
 
   public reset() {
