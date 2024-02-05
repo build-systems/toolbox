@@ -438,7 +438,7 @@ export class SanierungService {
   private _gbAnnuitaet = 0;
   updateGbAnnuitaet(
     foerdersumme: number,
-    bankKredit: number,
+    bankKredit: number, // Same as Daniel's Restsumme
     afBank: number,
     kreditlaufzeit: number
   ): number {
@@ -450,7 +450,7 @@ export class SanierungService {
 
   // GB: EFD [€]
   private _gbEfd = 0;
-  private updateGbEfd(
+  updateGbEfd(
     kalkRealzins: number,
     foerdersumme: number,
     bankKredit: number,
