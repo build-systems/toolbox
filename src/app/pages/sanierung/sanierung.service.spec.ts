@@ -947,7 +947,12 @@ describe('SanierungService', () => {
     const bankKredit = 300_000;
     const finanzierungskostenKfw = 150_000;
     const finanzierungskostenFinanzmarkt = 200_000;
-    const result = service.updateGFinanzierung(kfwKredit, bankKredit, finanzierungskostenKfw, finanzierungskostenFinanzmarkt);
+    const result = service.updateGFinanzierung(
+      kfwKredit,
+      bankKredit,
+      finanzierungskostenKfw,
+      finanzierungskostenFinanzmarkt
+    );
     expect(result).toBe(850000);
   });
 
@@ -957,5 +962,4 @@ describe('SanierungService', () => {
     const result = service.updateGFinanzierungM2(gFinanzierung, wohnflaeche);
     expect(result).toBe(300);
   });
-
 });

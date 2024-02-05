@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -168,8 +168,6 @@ export class FormProjektSanierungService {
     zustandBestand: this.zustandBestand.options[0].value,
     eeKlasse: this.eeKlasse.value,
   });
-
-  //// REFACTOR
 
   // Observable and set function for user price toggle
   private userPriceToggleSource = new BehaviorSubject<boolean>(

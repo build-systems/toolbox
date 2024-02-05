@@ -3,6 +3,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap");
 
+/* ABC Diatype, ABC Diatype Mono */
+@import url("https://assets.buildsystems.de/font.css");
+
 :root {
   --primary: white;
   --primary90: rgba(255, 255, 255, 0.9);
@@ -38,7 +41,7 @@
 }
 
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: "ABC Diatype", sans-serif;
   font-weight: 300;
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
@@ -191,7 +194,7 @@ li {
   font-size: 1.2rem;
   cursor: pointer;
   background-color: var(--bg-secondary);
-  font-family: "Inconsolata", sans-serif;
+  font-family: "ABC Diatype Mono", sans-serif;
   height: var(--button-height);
   text-align: center;
   border-radius: var(--button-radius);
@@ -224,12 +227,12 @@ li {
 
 input {
   background-color: var(--bg-primary);
-  font-family: "Inconsolata", sans-serif;
+  font-family: "ABC Diatype Mono", sans-serif;
   font-size: 1rem;
 }
 
 label {
-  font-family: "Inconsolata", sans-serif;
+  font-family: "ABC Diatype Mono", sans-serif;
   font-size: 1rem;
 }
 
@@ -312,7 +315,7 @@ legend {
 }
 
 .label-toggle {
-  font-family: "Montserrat";
+  font-family: "ABC Diatype";
   width: calc(100% - 5rem);
 }
 
@@ -739,7 +742,7 @@ input[type="number"]:disabled:hover {
 }
 
 .pill {
-  font-family: "Montserrat", sans-serif;
+  font-family: "ABC Diatype", sans-serif;
   font-size: 1rem;
   padding: 1rem;
   cursor: pointer;

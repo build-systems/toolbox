@@ -244,7 +244,12 @@ export class SanierungService {
     maxKfwKredit: number,
     gesamtgestehungskosten: number
   ): number {
-    return Math.max(gesamtgestehungskosten - maxKfwKredit, 0);
+    if (maxKfwKredit >= gesamtgestehungskosten) {
+      return 0;
+    } else {
+      return gesamtgestehungskosten - maxKfwKredit;
+    }
+    // return Math.max(gesamtgestehungskosten - maxKfwKredit, 0);
   }
 
   private _bankKreditM2 = 0;
@@ -569,8 +574,8 @@ export class SanierungService {
       this._gesamtgestehungskosten
     );
     this._bankKredit = this.updateBankKredit(
-      this._gesamtgestehungskosten,
-      this._maxKfwKredit
+      this._maxKfwKredit,
+      this._gesamtgestehungskosten
     );
     this._bankKreditM2 = this.updateBankKreditM2(
       this._bankKredit,
@@ -763,6 +768,7 @@ export class SanierungService {
         mitKfwM2: this._mitKfwM2,
       })
     );
+    console.log(this.outputSanierung);
   }
 
   public reset() {
