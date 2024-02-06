@@ -33,7 +33,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should return constants for Stellplaetze: Tiefgarage = 490, Garage = 68, Parkpalette = 95', () => {
+  it('should return constants for Stellplaetze: Tiefgarage = 490; Garage = 68; Parkpalette = 95', () => {
     expect(constants.stellplaetze.tiefgarage).toBe(490);
     expect(constants.stellplaetze.garage).toBe(68);
     expect(constants.stellplaetze.parkpalette).toBe(95);
@@ -91,7 +91,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should return constants for Barrierefreies Bauen: Reduziert = 62, Frei = 199, Frei (R) = 348', () => {
+  it('should return constants for Barrierefreies Bauen: Reduziert = 62; Frei = 199; Frei (R) = 348', () => {
     expect(constants.barriere.reduziert).toBe(62);
     expect(constants.barriere.frei).toBe(199);
     expect(constants.barriere.freiR).toBe(348);
@@ -157,7 +157,7 @@ describe('NeubauService', () => {
   // mittel: 150,
   // hoch: 277
 
-  it('should return constants for Aussenanlagen: Gering = 62, Mittel = 150, Hoch = 277', () => {
+  it('should return constants for Aussenanlagen: Gering = 62; Mittel = 150; Hoch = 277', () => {
     expect(constants.aussenanlagen.gering).toBe(62);
     expect(constants.aussenanlagen.mittel).toBe(150);
     expect(constants.aussenanlagen.hoch).toBe(277);
@@ -181,7 +181,7 @@ describe('NeubauService', () => {
     expect(result).toBe(constants.aussenanlagen.hoch);
   });
 
-  it('should return constants for Energetischer Standard Price: EH 40 = 156, GEG = 0, EH 70 = 0', () => {
+  it('should return constants for Energetischer Standard Price: EH 40 = 156; GEG = 0; EH 70 = 0', () => {
     expect(constants.energetischerStandardPrice.EH40).toBe(156);
     expect(constants.energetischerStandardPrice.GEG).toBe(0);
     expect(constants.energetischerStandardPrice.EH70).toBe(0);
@@ -205,11 +205,11 @@ describe('NeubauService', () => {
     expect(result).toBe(constants.energetischerStandardPrice.EH70);
   });
 
-  it('should return constant gestehungskostenBase = 2436', () => {
+  it('should return constant gestehungskostenBase = 2,436', () => {
     expect(constants.gestehungskostenBase).toBe(2436);
   });
 
-  it('should update Gestehungskosten to 3645 user price disabled', () => {
+  it('should update Gestehungskosten to 3,645 when user price is disabled (and other options are on)', () => {
     const userPrice = 3000;
     const userPriceDisabled = true;
     const kellergeschossOut = 147;
@@ -241,7 +241,7 @@ describe('NeubauService', () => {
     expect(result).toBe(3645);
   });
 
-  it('should update Gestehungskosten to 3000 user price enabled', () => {
+  it('should update Gestehungskosten to 3,000 when user price is enabled and User Price is 3,000', () => {
     const userPrice = 3000;
     const userPriceDisabled = false;
     const kellergeschossOut = 147;
@@ -279,7 +279,7 @@ describe('NeubauService', () => {
   //   moreThan25: 1.02,
   // };
 
-  it('should return constants for NR-Kredit: lessThan10: 0.01, between10And25: 0.79, moreThan25: 1.02', () => {
+  it('should return constants for NR-Kredit: lessThan10: 0.01; between10And25: 0.79; moreThan25: 1.02', () => {
     expect(constants.nrKredit.lessThan10).toBe(0.01);
     expect(constants.nrKredit.between10And25).toBe(0.79);
     expect(constants.nrKredit.moreThan25).toBe(1.02);
@@ -360,7 +360,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should update Gesamtgestehungskosten = 3000000 when Gestehungskosten is 3000 and Wohnflaeche is 1000', () => {
+  it('should update Gesamtgestehungskosten = 3000,000 when Gestehungskosten is 3,000 and Wohnflaeche is 1,000', () => {
     const gestehungskosten = 3000;
     const wohnflaeche = 1000;
     const result = service.updateGesamtgestehungskosten(
@@ -370,12 +370,12 @@ describe('NeubauService', () => {
     expect(result).toBe(3000000);
   });
 
-  it('should return KfW-Kredit Limit constants: lower = 100000, higher= 150000', () => {
-    expect(constants.kfwKreditLimit.lower).toBe(100000);
-    expect(constants.kfwKreditLimit.higher).toBe(150000);
+  it('should return KfW-Kredit Limit constants: lower = 100,000; higher= 150,000', () => {
+    expect(constants.kfwKreditLimit.lower).toBe(100_000);
+    expect(constants.kfwKreditLimit.higher).toBe(150_000);
   });
 
-  it('should update KfW-Kredit = 1500000 when Zertifizierung is mit QNG, Energiestandard is EH 40, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 1,500,000 when Zertifizierung is mit QNG; Energiestandard is EH 40; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'mit QNG';
     const energetischerStandard: EnergiestandardNeubau = 'EH 40';
     const anzahlWohnungen = 10;
@@ -384,10 +384,10 @@ describe('NeubauService', () => {
       energetischerStandard,
       anzahlWohnungen
     );
-    expect(result).toBe(1500000);
+    expect(result).toBe(1_500_000);
   });
 
-  it('should update KfW-Kredit = 1000000 when Zertifizierung is ohne QNG, Energiestandard is EH 40, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 1,000,000 when Zertifizierung is ohne QNG; Energiestandard is EH 40; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'ohne QNG';
     const energetischerStandard: EnergiestandardNeubau = 'EH 40';
     const anzahlWohnungen = 10;
@@ -396,10 +396,10 @@ describe('NeubauService', () => {
       energetischerStandard,
       anzahlWohnungen
     );
-    expect(result).toBe(1000000);
+    expect(result).toBe(1_000_000);
   });
 
-  it('should update KfW-Kredit = 0 when Zertifizierung is mit QNG, Energiestandard is GEG, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 0 when Zertifizierung is mit QNG; Energiestandard is GEG; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'mit QNG';
     const energetischerStandard: EnergiestandardNeubau = 'GEG';
     const anzahlWohnungen = 10;
@@ -411,7 +411,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should update KfW-Kredit = 0 when Zertifizierung is ohne QNG, Energiestandard is GEG, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 0 when Zertifizierung is ohne QNG; Energiestandard is GEG; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'ohne QNG';
     const energetischerStandard: EnergiestandardNeubau = 'GEG';
     const anzahlWohnungen = 10;
@@ -423,7 +423,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should update KfW-Kredit = 0 when Zertifizierung is ohne QNG, Energiestandard is EH 70, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 0 when Zertifizierung is ohne QNG; Energiestandard is EH 70; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'ohne QNG';
     const energetischerStandard: EnergiestandardNeubau = 'EH 70';
     const anzahlWohnungen = 10;
@@ -435,7 +435,7 @@ describe('NeubauService', () => {
     expect(result).toBe(0);
   });
 
-  it('should update KfW-Kredit = 0 when Zertifizierung is mit QNG, Energiestandard is EH 70, Anzahl Wohnungen is 10', () => {
+  it('should update KfW-Kredit = 0 when Zertifizierung is mit QNG; Energiestandard is EH 70; Anzahl Wohnungen is 10', () => {
     const zertifizierung: ZertifizierungNeubau = 'mit QNG';
     const energetischerStandard: EnergiestandardNeubau = 'EH 70';
     const anzahlWohnungen = 10;
@@ -445,39 +445,308 @@ describe('NeubauService', () => {
       anzahlWohnungen
     );
     expect(result).toBe(0);
+  });
+
+  it('should update KfW-Kredit pro m² = 500 when KfW-Kredit is 500,000; and wohnflaeche is 1,000', () => {
+    const kfwKredit: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateKfwKreditM2(kfwKredit, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update KfW-Kredit pro Bau = 500,000 when KfW-Kredit is 5,000,000; and Anzahl Wohnungen is 10', () => {
+    const kfwKredit: number = 5_000_000;
+    const anzahlWohnungen: number = 10;
+    const result = service.updateKfwKreditProBau(kfwKredit, anzahlWohnungen);
+    expect(result).toBe(500_000);
   });
 
   it('should return Restsumme Holzbau constant = 1.05', () => {
     expect(constants.holzbauBonus).toBe(1.05);
   });
 
-  it('should update Bank-Kredit = 4050000 when Konstruction is Holzbau, Wohnflaeche is 1000, Gestehungskosten is 5000 and KfW-Kredit is 1200000', () => {
+  it('should update Bank-Kredit = 4,050,000 when Konstruction is Holzbau; Wohnflaeche is 1,000; Gestehungskosten is 5,000 and KfW-Kredit is 1,200,000', () => {
     const konstruktion: Konstruktion = 'Holzbau';
     const wohnflaeche: number = 1000;
     const gestehungskosten: number = 5000;
-    const kfwKredit: number = 1200000;
+    const kfwKredit: number = 1_200_000;
     const result = service.updateBankKredit(
       konstruktion,
       wohnflaeche,
       gestehungskosten,
       kfwKredit
     );
-    expect(result).toBe(4050000);
+    expect(result).toBe(4_050_000);
   });
 
-  it('should update Bank-Kredit = 3800000 when Konstruction is not Holzbau, Wohnflaeche is 1000, Gestehungskosten is 5000 and KfW-Kredit is 1200000', () => {
+  it('should update Bank-Kredit = 3,800,000 when Konstruction is not Holzbau; Wohnflaeche is 1,000; Gestehungskosten is 5,000 and KfW-Kredit is 1,200,000', () => {
     const konstruktion: Konstruktion = 'Konventionell';
     const wohnflaeche: number = 1000;
     const gestehungskosten: number = 5000;
-    const kfwKredit: number = 1200000;
+    const kfwKredit: number = 1_200_000;
     const result = service.updateBankKredit(
       konstruktion,
       wohnflaeche,
       gestehungskosten,
       kfwKredit
     );
-    expect(result).toBe(3800000);
+    expect(result).toBe(3_800_000);
   });
 
-  // updateAfKfW
+  it('should update Bank-Kredit pro m² = 500 when Bank-Kredit is 500,000; and wohnflaeche is 1,000', () => {
+    const bankKredit: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateBankKreditM2(bankKredit, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update Bank-Kredit pro Bau = 500,000 when Bank-Kredit is 5,000,000; and Anzahl Wohnungen is 10', () => {
+    const bankKredit: number = 5_000_000;
+    const anzahlWohnungen: number = 10;
+    const result = service.updateBankKreditProBau(bankKredit, anzahlWohnungen);
+    expect(result).toBe(500_000);
+  });
+
+  it('should update AF-KfW to approx. 0.10439628 when Sollzins-KfW is 0.79 and kreditlaufzeit is 10', () => {
+    const sollzinsKfw: number = 0.79;
+    const kreditlaufzeit: number = 10;
+    const result = service.updateAfKfW(sollzinsKfw, kreditlaufzeit);
+    expect(result).toBeCloseTo(0.10439628);
+  });
+
+  it('should update Bank-KfW to approx. 0.12329094 when Kalk.Realzins is 4 and kreditlaufzeit is 10', () => {
+    const kalkRealzins: number = 4;
+    const kreditlaufzeit: number = 10;
+    const result = service.updateAfBank(kalkRealzins, kreditlaufzeit);
+    expect(result).toBeCloseTo(0.12329094);
+  });
+
+  it('should update Annuitaet-KfW to 10,000 when AF-KfW is 0.1 KfW-Kredit is 100,000', () => {
+    const afKfw: number = 0.1;
+    const kfwKredit: number = 100_000;
+    const result = service.updateAnnuitaetKfw(afKfw, kfwKredit);
+    expect(result).toBe(10_000);
+  });
+
+  it('should update Annuitaet-Bank to 10,000 when AF-Bank is 0.1 Bank-Kredit is 100,000', () => {
+    const afBank: number = 0.1;
+    const BankKredit: number = 100_000;
+    const result = service.updateAnnuitaetBank(afBank, BankKredit);
+    expect(result).toBe(10_000);
+  });
+
+  it('should update EF-KfW = 1,000 when KfW-Kredit is 100,000; Sollzins-KfW is 0.1 Kreditlaufzeit is 10', () => {
+    const kfwKredit: number = 100_000;
+    const sollzinsKfw: number = 0.1;
+    const kreditlaufzeit: number = 10;
+    const result = service.updateEfKfw(kfwKredit, sollzinsKfw, kreditlaufzeit);
+    expect(result).toBe(1000);
+  });
+
+  it('should update EF-Bank = 1,000 when Bank-Kredit is 100,000; Kalk.Realzins is 0.1 Kreditlaufzeit is 10', () => {
+    const bankKredit: number = 100_000;
+    const kalkRealzins: number = 4;
+    const kreditlaufzeit: number = 10;
+    const result = service.updateEfBank(
+      bankKredit,
+      kalkRealzins,
+      kreditlaufzeit
+    );
+    expect(result).toBe(40_000);
+  });
+
+  it('should update Finanzierungskosten-KfW = 300,000 when kfW-Darlehen is Annuitäten; Annuitaet-KfW is 20000; Kreditlaufzeit is 20; KfW-Kredit is 100000; and EF-KfW is 1,000', () => {
+    const kfWDarlehen: KfWDarlehen = 'Annuitäten';
+    const annuitaetKfW: number = 20_000;
+    const kreditlaufzeit: number = 20;
+    const kfwKredit: number = 100_000;
+    const efKfW: number = 1000;
+    const result = service.updateFinanzierungskostenKfw(
+      kfWDarlehen,
+      annuitaetKfW,
+      kreditlaufzeit,
+      kfwKredit,
+      efKfW
+    );
+    expect(result).toBe(300_000);
+  });
+
+  it('should update Finanzierungskosten-KfW pro m² = 500 when Finanzierungskosten-KfW is 500,000; and wohnflaeche is 1,000', () => {
+    const finanzierungskostenKfW: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateFinanzierungskostenKfwM2(finanzierungskostenKfW, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update Finanzierungskosten-KfW = 40,000 when kfW-Darlehen is Endfälliges and EF-KfW is 40,000', () => {
+    const kfWDarlehen: KfWDarlehen = 'Endfälliges';
+    const annuitaetKfW: number = 20_000;
+    const kreditlaufzeit: number = 20;
+    const kfwKredit: number = 100_000;
+    const efKfW: number = 40_000;
+    const result = service.updateFinanzierungskostenKfw(
+      kfWDarlehen,
+      annuitaetKfW,
+      kreditlaufzeit,
+      kfwKredit,
+      efKfW
+    );
+    expect(result).toBe(40_000);
+  });
+
+  it('should update Finanzierungskosten-KfW = 0 when kfW-Darlehen is kein', () => {
+    const kfWDarlehen: KfWDarlehen = 'kein';
+    const annuitaetKfW: number = 20_000;
+    const kreditlaufzeit: number = 20;
+    const kfwKredit: number = 100_000;
+    const efKfW: number = 40_000;
+    const result = service.updateFinanzierungskostenKfw(
+      kfWDarlehen,
+      annuitaetKfW,
+      kreditlaufzeit,
+      kfwKredit,
+      efKfW
+    );
+    expect(result).toBe(0);
+  });
+
+  // Bank
+  it('should update Finanzierungskosten-Bank = 300,000 when: Bank-Darlehen is Annuitäten; Annuitaet-Bank is 20,000; Kreditlaufzeit is 20; Bank-Kredit is 100,000; and EF-Bank is 1,000', () => {
+    const BankDarlehen: BankDarlehen = 'Annuitäten';
+    const annuitaetBank: number = 20_000;
+    const kreditlaufzeit: number = 20;
+    const BankKredit: number = 100_000;
+    const efBank: number = 1000;
+    const result = service.updateFinanzierungskostenBank(
+      BankDarlehen,
+      annuitaetBank,
+      kreditlaufzeit,
+      BankKredit,
+      efBank
+    );
+    expect(result).toBe(300_000);
+  });
+
+  it('should update Finanzierungskosten-Bank = 40,000 when Bank-Darlehen is Endfälliges and EF-Bank is 40,000', () => {
+    const bankDarlehen: BankDarlehen = 'Endfälliges';
+    const annuitaetBank: number = 20_000;
+    const kreditlaufzeit: number = 20;
+    const BankKredit: number = 100_000;
+    const efBank: number = 40_000;
+    const result = service.updateFinanzierungskostenBank(
+      bankDarlehen,
+      annuitaetBank,
+      kreditlaufzeit,
+      BankKredit,
+      efBank
+    );
+    expect(result).toBe(40_000);
+  });
+
+  it('should update Finanzierungskosten-Bank pro m² = 500 when Finanzierungskosten-Bank is 500,000; and wohnflaeche is 1,000', () => {
+    const finanzierungskostenBank: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateFinanzierungskostenBankM2(finanzierungskostenBank, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update investitionkosten = 10,000,000 when wohnflaeche 1,000 and gestehungskosten is 10,000', () => {
+    const wohnflaeche: number = 1000;
+    const gestehungskosten: number = 10_000;
+    const result = service.updateInvestitionskosten(
+      wohnflaeche,
+      gestehungskosten
+    );
+    expect(result).toBe(10_000_000);
+  });
+
+  it('should update Investitionskosten pro m² = 500 when Investitionskosten is 500,000; and wohnflaeche is 1,000', () => {
+    const investitionskosten: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateInvestitionskostenM2(investitionskosten, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update Investitionskosten pro Bau = 500,000 when Investitionskosten is 5,000,000; and Anzahl Wohnungen is 10', () => {
+    const investitionskosten: number = 5_000_000;
+    const anzahlWohnungen: number = 10;
+    const result = service.updateInvestitionskostenProBau(investitionskosten, anzahlWohnungen);
+    expect(result).toBe(500_000);
+  });
+
+  it('should update GB-Annuitaet = 5,000,000 when KfW-Kredit is 2,000,000; Bank-Kredit is 3_000_000; AF-Bank is 0.1; Kreditlaufzeit is 20', () => {
+    const kfwKredit: number = 2_000_000;
+    const bankKredit: number = 3_000_000;
+    const afBank: number = 0.1;
+    const kreditlaufzeit: number = 20;
+    const result = service.updateGbAnnuitaet(
+      kfwKredit,
+      bankKredit,
+      afBank,
+      kreditlaufzeit
+    );
+    expect(result).toBe(5_000_000);
+  });
+
+  it('should update GB-Endfaelliges = 4,000,000 when Kalk.Realzins is 4; KfW-Kredit is 2,000,000; Bank-Kredit is 3,000,000; and Kreditlaufzeitis 20', () => {
+    const kalkRealzins: number = 4;
+    const kfwKredit: number = 2_000_000;
+    const bankKredit: number = 3_000_000;
+    const kreditlaufzeit: number = 20;
+    const result = service.updateGbEndfaelliges(
+      kalkRealzins,
+      kfwKredit,
+      bankKredit,
+      kreditlaufzeit
+    );
+    expect(result).toBe(4_000_000);
+  });
+
+  it('should update Ohne-KfW = 500,000 when Bank-Darlehen is Annuitäten; and GB-Annuitaet is 500,000', () => {
+    const bankDarlehen: BankDarlehen = 'Annuitäten';
+    const gbEndfaelliges: number = 3_000_000;
+    const gbAnnuitaet: number = 500_000;
+    const result = service.updateFinKostenOhneKfw(
+      bankDarlehen,
+      gbEndfaelliges,
+      gbAnnuitaet
+    );
+    expect(result).toBe(gbAnnuitaet);
+  });
+
+  it('should update Finanzierungskosten Ohne-KfW = 3,000,000 when Bank-Darlehen is Endfälliges; and GB-Endfaelliges is 3,000,000', () => {
+    const bankDarlehen: BankDarlehen = 'Endfälliges';
+    const gbEndfaelliges: number = 3_000_000;
+    const gbAnnuitaet: number = 500_000;
+    const result = service.updateFinKostenOhneKfw(
+      bankDarlehen,
+      gbEndfaelliges,
+      gbAnnuitaet
+    );
+    expect(result).toBe(gbEndfaelliges);
+  });
+
+  it('should update Finanzierungskosten Ohne-KfW pro m² = 500 when Finanzierungskosten Ohne-KfW is 500,000; and wohnflaeche is 1,000', () => {
+    const finKostenOhneKfw: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateFinKostenOhneKfwM2(finKostenOhneKfw, wohnflaeche);
+    expect(result).toBe(500);
+  });
+
+  it('should update Mit-KfW = 5,000,000 when Finanzierungskosten-KfW is 2,000,000 and Finanzierungskosten-Bank is 3,000,000', () => {
+    const finanzierungskostenKfw: number = 2_000_000;
+    const finanzierungskostenBank: number = 3_000_000;
+    const result = service.updateFinKostenMitKfw(
+      finanzierungskostenKfw,
+      finanzierungskostenBank
+    );
+    expect(result).toBe(5_000_000);
+  });
+
+  it('should update Finanzierungskosten Mit-KfW pro m² = 500 when Finanzierungskosten Mit-KfW is 500,000; and wohnflaeche is 1,000', () => {
+    const finKostenMitKfw: number = 500_000;
+    const wohnflaeche: number = 1000;
+    const result = service.updateFinKostenMitKfwM2(finKostenMitKfw, wohnflaeche);
+    expect(result).toBe(500);
+  });
 });

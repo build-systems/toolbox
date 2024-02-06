@@ -31,8 +31,8 @@ export class ChartFinanzierungskostenNeubauComponent {
     this.neubauService.currentOutputNeubau$
       .subscribe((projekt: NeubauProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.ohneKfw),
-          Math.round(projekt.mitKfw),
+          Math.round(projekt.finKostenOhneKfw),
+          Math.round(projekt.finKostenMitKfw),
         ];
         this.chart?.update();
       });

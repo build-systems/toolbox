@@ -744,7 +744,7 @@ input[type="number"]:disabled:hover {
 
 .pill {
   font-family: "ABC Diatype", sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   padding: 1rem;
   cursor: pointer;
   width: 50%;

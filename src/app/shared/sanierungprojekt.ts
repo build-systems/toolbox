@@ -35,7 +35,7 @@ export interface SanierungProjekt {
   efKfW: number;
   efBank: number;
   gbAnnuitaet: number;
-  gbEfd: number;
+  gbEndfaelliges: number;
   // Zusammenfassung Ergebnisse
   kfwKredit: number;
   kfwKreditM2: number;
@@ -53,8 +53,8 @@ export interface SanierungProjekt {
   kfwZuschussM2: number;
   kfwZuschussProBau: number;
   // Vergleichsrechnung
-  ohneKfw: number;
-  ohneKfwM2: number;
-  mitKfw: number;
-  mitKfwM2: number;
+  finKostenOhneKfw: number;
+  finKostenOhneKfwM2: number;
+  finKostenMitKfw: number;
+  finKostenMitKfwM2: number;
 }

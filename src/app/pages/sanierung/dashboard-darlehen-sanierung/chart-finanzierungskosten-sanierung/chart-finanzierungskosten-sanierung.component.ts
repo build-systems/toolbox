@@ -27,8 +27,8 @@ export class ChartFinanzierungskostenSanierungComponent {
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(projekt.ohneKfw),
-        Math.round(projekt.mitKfw),
+        Math.round(projekt.finKostenOhneKfw),
+        Math.round(projekt.finKostenMitKfw),
       ];
       this.chart?.update();
     });

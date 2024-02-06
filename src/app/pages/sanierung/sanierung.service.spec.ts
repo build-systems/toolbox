@@ -854,12 +854,12 @@ describe('SanierungService', () => {
     expect(result).toBeCloseTo(159932.07);
   });
 
-  it('should update GB EFD = 416000 € when kalkRealzins is 4, foerdersumme is 480000, bankKredit is 40000, kreditlaufzeit is 20', () => {
+  it('should update GB Endfaelliges = 416000 € when kalkRealzins is 4, foerdersumme is 480000, bankKredit is 40000, kreditlaufzeit is 20', () => {
     const kalkRealzins = 4;
     const foerdersumme = 480000;
     const bankKredit = 40000;
     const kreditlaufzeit = 20;
-    const result = service.updateGbEfd(
+    const result = service.updateGbEndfaelliges(
       kalkRealzins,
       foerdersumme,
       bankKredit,
@@ -868,12 +868,12 @@ describe('SanierungService', () => {
     expect(result).toBe(416000);
   });
 
-  it('should update GB EFD = 416000 € when kalkRealzins is 4, foerdersumme is 480000, bankKredit is 40000, kreditlaufzeit is 20', () => {
+  it('should update GB Endfaelliges = 416000 € when kalkRealzins is 4, foerdersumme is 480000, bankKredit is 40000, kreditlaufzeit is 20', () => {
     const kalkRealzins = 4;
     const foerdersumme = 520000;
     const bankKredit = 0;
     const kreditlaufzeit = 20;
-    const result = service.updateGbEfd(
+    const result = service.updateGbEndfaelliges(
       kalkRealzins,
       foerdersumme,
       bankKredit,
@@ -882,19 +882,19 @@ describe('SanierungService', () => {
     expect(result).toBe(416000);
   });
 
-  it('should update Ohne-KfW = 160000 € when Bank Darlehen is Annuität, GB-EFD is 280000, and GB-Annuität is 160000', () => {
+  it('should update Ohne-KfW = 160000 € when Bank Darlehen is Annuität, GB-Endfaelliges is 280000, and GB-Annuität is 160000', () => {
     const bankDarlehen: BankDarlehen = 'Annuitäten';
-    const gbEfd = 280000;
+    const gbEndfaelliges = 280000;
     const gbAnnuitaet = 160000;
-    const result = service.updateOhneKfw(bankDarlehen, gbEfd, gbAnnuitaet);
+    const result = service.updatefinKostenOhneKfw(bankDarlehen, gbEndfaelliges, gbAnnuitaet);
     expect(result).toBe(160000);
   });
 
-  it('should update Ohne-KfW = 280000 € when Bank Darlehen is Endfälliges, GB-EFD is 280000, and GB-Annuität is 160000', () => {
+  it('should update Ohne-KfW = 280000 € when Bank Darlehen is Endfälliges, GB-Endfaelliges is 280000, and GB-Annuität is 160000', () => {
     const bankDarlehen: BankDarlehen = 'Endfälliges';
-    const gbEfd = 280000;
+    const gbEndfaelliges = 280000;
     const gbAnnuitaet = 160000;
-    const result = service.updateOhneKfw(bankDarlehen, gbEfd, gbAnnuitaet);
+    const result = service.updatefinKostenOhneKfw(bankDarlehen, gbEndfaelliges, gbAnnuitaet);
     expect(result).toBe(280000);
   });
 
@@ -908,7 +908,7 @@ describe('SanierungService', () => {
   it('should update Mit-KfW = 150000 Finanzierungskosten-Kfw is 50000 and Finanzierungskosten-Bank is 100000', () => {
     const finanzierungskostenKfw = 50000;
     const finanzierungskostenBank = 100000;
-    const result = service.updateMitKfw(
+    const result = service.updatefinKostenMitKfw(
       finanzierungskostenKfw,
       finanzierungskostenBank
     );

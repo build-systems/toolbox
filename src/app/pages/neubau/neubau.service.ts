@@ -286,6 +286,16 @@ export class NeubauService {
     }
   }
 
+  private _kfwKreditM2 = 0;
+  updateKfwKreditM2(kfwKredit: number, wohnflaeche: number): number {
+    return kfwKredit / wohnflaeche;
+  }
+
+  private _kfwKreditProBau = 0;
+  updateKfwKreditProBau(kfwKredit: number, anzahlWohnungen: number): number {
+    return kfwKredit / anzahlWohnungen;
+  }
+
   // Bank-Kredit [€] (Daniel's Restsumme and Bank-Kredit were merged)
   private _bankKredit =
     this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
@@ -303,6 +313,16 @@ export class NeubauService {
       var bankKredit = wohnflaeche * gestehungskosten - kfwKredit;
       return Math.max(bankKredit, 0); // Make sure it doesn't go negative
     }
+  }
+
+  private _bankKreditM2 = 0;
+  updateBankKreditM2(bankKredit: number, wohnflaeche: number): number {
+    return bankKredit / wohnflaeche;
+  }
+
+  private _bankKreditProBau = 0;
+  updateBankKreditProBau(bankKredit: number, anzahlWohnungen: number): number {
+    return bankKredit / anzahlWohnungen;
   }
 
   // #03
@@ -350,11 +370,11 @@ export class NeubauService {
   // EF Bank [€]
   private _efBank = 0;
   updateEfBank(
-    kalkRealzins: number,
     bankKredit: number,
+    kalkRealzins: number,
     kreditlaufzeit: number
   ): number {
-    return ((kalkRealzins * bankKredit) / 100) * kreditlaufzeit;
+    return ((bankKredit * kalkRealzins) / 100) * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -375,7 +395,15 @@ export class NeubauService {
     }
   }
 
-  // Finazierungskosten (Finanzmarkt) [€]
+  private _finanzierungskostenKfwM2 = 0;
+  updateFinanzierungskostenKfwM2(
+    finanzierungskostenKfw: number,
+    wohnflaeche: number
+  ): number {
+    return finanzierungskostenKfw / wohnflaeche;
+  }
+
+  // Finazierungskosten Bank (Finanzmarkt) [€]
   private _finanzierungskostenBank = 0;
   updateFinanzierungskostenBank(
     bankDarlehen: BankDarlehen,
@@ -393,6 +421,14 @@ export class NeubauService {
     }
   }
 
+  private _finanzierungskostenBankM2 = 0;
+  updateFinanzierungskostenBankM2(
+    finanzierungskostenBank: number,
+    wohnflaeche: number
+  ): number {
+    return finanzierungskostenBank / wohnflaeche;
+  }
+
   // Investitionskosten [€]
   private _investitionskosten = 0;
   updateInvestitionskosten(
@@ -400,81 +436,6 @@ export class NeubauService {
     gestehungskosten: number
   ): number {
     return wohnflaeche * gestehungskosten;
-  }
-
-  // #04
-  // GB: Annuität [€]
-  private _gbAnnuitaet = 0;
-  updateGbAnnuitaet(
-    kfwKredit: number,
-    bankKredit: number,
-    afBank: number,
-    kreditlaufzeit: number
-  ): number {
-    return (
-      (kfwKredit + bankKredit) * afBank * kreditlaufzeit -
-      (kfwKredit + bankKredit)
-    );
-  }
-
-  // GB: EFD [€]
-  private _gbEfd = 0;
-  updateGbEfd(
-    kalkRealzins: number,
-    kfwKredit: number,
-    bankKredit: number,
-    kreditlaufzeit: number
-  ): number {
-    return ((kalkRealzins * (kfwKredit + bankKredit)) / 100) * kreditlaufzeit;
-  }
-
-  // Option 1: ohne KfW [€]
-  private _ohneKfw = 0;
-  updateOhneKfw(
-    bankDarlehen: BankDarlehen,
-    gbEfd: number,
-    gbAnnuitaet: number
-  ): number {
-    if (bankDarlehen === 'Endfälliges') {
-      return gbEfd;
-    } else {
-      return gbAnnuitaet;
-    }
-  }
-
-  // Option 2: mit KfW [€]
-  private _mitKfw = 0;
-  updateMitKfw(
-    finanzierungskostenKfw: number,
-    finanzierungskostenBank: number
-  ) {
-    return finanzierungskostenKfw + finanzierungskostenBank;
-  }
-
-  private _kfwKreditM2 = 0;
-  updateKfwKreditM2(kfwKredit: number, wohnflaeche: number): number {
-    return kfwKredit / wohnflaeche;
-  }
-
-  private _bankKreditM2 = 0;
-  updateBankKreditM2(bankKredit: number, wohnflaeche: number): number {
-    return bankKredit / wohnflaeche;
-  }
-
-  private _finanzierungskostenKfwM2 = 0;
-  updateFinanzierungskostenKfwM2(
-    finanzierungskostenKfw: number,
-    wohnflaeche: number
-  ): number {
-    return finanzierungskostenKfw / wohnflaeche;
-  }
-
-  private _finanzierungskostenBankM2 = 0;
-  updateFinanzierungskostenBankM2(
-    finanzierungskostenBank: number,
-    wohnflaeche: number
-  ): number {
-    return finanzierungskostenBank / wohnflaeche;
   }
 
   private _investitionskostenM2 = 0;
@@ -493,24 +454,63 @@ export class NeubauService {
     return investitionskosten / anzahlWohnungen;
   }
 
-  private _ohneKfwM2 = 0;
-  updateOhneKfwM2(ohneKfw: number, wohnflaeche: number): number {
+  // #04
+  // GB: Annuität [€]
+  private _gbAnnuitaet = 0;
+  updateGbAnnuitaet(
+    kfwKredit: number,
+    bankKredit: number,
+    afBank: number,
+    kreditlaufzeit: number
+  ): number {
+    return (
+      (kfwKredit + bankKredit) * afBank * kreditlaufzeit -
+      (kfwKredit + bankKredit)
+    );
+  }
+
+  // GB: Endfaelliges [€]
+  private _gbEndfaelliges = 0;
+  updateGbEndfaelliges(
+    kalkRealzins: number,
+    kfwKredit: number,
+    bankKredit: number,
+    kreditlaufzeit: number
+  ): number {
+    return ((kalkRealzins * (kfwKredit + bankKredit)) / 100) * kreditlaufzeit;
+  }
+
+  // Option 1: Finanzierungskosten ohne KfW [€]
+  private _finKostenOhneKfw = 0;
+  updateFinKostenOhneKfw(
+    bankDarlehen: BankDarlehen,
+    gbEndfaelliges: number,
+    gbAnnuitaet: number
+  ): number {
+    if (bankDarlehen === 'Endfälliges') {
+      return gbEndfaelliges;
+    } else {
+      return gbAnnuitaet;
+    }
+  }
+
+  private _finKostenOhneKfwM2 = 0;
+  updateFinKostenOhneKfwM2(ohneKfw: number, wohnflaeche: number): number {
     return ohneKfw / wohnflaeche;
   }
 
-  private _mitKfwM2 = 0;
-  updateMitKfwM2(mitKfw: number, wohnflaeche: number): number {
+  // Option 2: Finanzierungskosten mit KfW [€]
+  private _finKostenMitKfw = 0;
+  updateFinKostenMitKfw(
+    finanzierungskostenKfw: number,
+    finanzierungskostenBank: number
+  ) {
+    return finanzierungskostenKfw + finanzierungskostenBank;
+  }
+
+  private _finKostenMitKfwM2 = 0;
+  updateFinKostenMitKfwM2(mitKfw: number, wohnflaeche: number): number {
     return mitKfw / wohnflaeche;
-  }
-
-  private _kfwKreditProBau = 0;
-  updateKfwKreditProBau(kfwKredit: number, anzahlWohnungen: number): number {
-    return kfwKredit / anzahlWohnungen;
-  }
-
-  private _bankKreditProBau = 0;
-  updateBankKreditProBau(bankKredit: number, anzahlWohnungen: number): number {
-    return bankKredit / anzahlWohnungen;
   }
 
   // Neubau Output to be used in the Save and Export
@@ -607,8 +607,8 @@ export class NeubauService {
       this.kreditlaufzeit
     );
     this._efBank = this.updateEfBank(
-      this.kalkRealzins,
       this._bankKredit,
+      this.kalkRealzins,
       this.kreditlaufzeit
     );
     this._finanzierungskostenKfw = this.updateFinanzierungskostenKfw(
@@ -651,23 +651,29 @@ export class NeubauService {
       this._afBank,
       this.kreditlaufzeit
     );
-    this._gbEfd = this.updateGbEfd(
+    this._gbEndfaelliges = this.updateGbEndfaelliges(
       this.kalkRealzins,
       this._kfwKredit,
       this._bankKredit,
       this.kreditlaufzeit
     );
-    this._ohneKfw = this.updateOhneKfw(
+    this._finKostenOhneKfw = this.updateFinKostenOhneKfw(
       this.bankDarlehen,
-      this._gbEfd,
+      this._gbEndfaelliges,
       this._gbAnnuitaet
     );
-    this._ohneKfwM2 = this.updateOhneKfwM2(this._ohneKfw, this.wohnflaeche);
-    this._mitKfw = this.updateMitKfw(
+    this._finKostenOhneKfwM2 = this.updateFinKostenOhneKfwM2(
+      this._finKostenOhneKfw,
+      this.wohnflaeche
+    );
+    this._finKostenMitKfw = this.updateFinKostenMitKfw(
       this._finanzierungskostenKfw,
       this._finanzierungskostenBank
     );
-    this._mitKfwM2 = this.updateMitKfwM2(this._mitKfw, this.wohnflaeche);
+    this._finKostenMitKfwM2 = this.updateFinKostenMitKfwM2(
+      this._finKostenMitKfw,
+      this.wohnflaeche
+    );
 
     this.outputNeubauSource.next(
       (this.outputNeubau = {
@@ -717,7 +723,7 @@ export class NeubauService {
         efKfW: this._efKfW,
         efBank: this._efBank,
         gbAnnuitaet: this._gbAnnuitaet,
-        gbEfd: this._gbEfd,
+        gbEndfaelliges: this._gbEndfaelliges,
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
         kfwKreditM2: this._kfwKreditM2,
@@ -730,12 +736,13 @@ export class NeubauService {
         investitionskostenM2: this._investitionskostenM2,
         investitionskostenProBau: this._investitionskostenProBau,
         // Vergleichsrechnung
-        ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfwM2,
-        mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfwM2,
+        finKostenOhneKfw: this._finKostenOhneKfw,
+        finKostenOhneKfwM2: this._finKostenOhneKfwM2,
+        finKostenMitKfw: this._finKostenMitKfw,
+        finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
+    console.log(this.outputNeubau);
   }
 
   // Reset was created to make sure the outputs match the form values

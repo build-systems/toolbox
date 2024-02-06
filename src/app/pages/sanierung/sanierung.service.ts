@@ -453,9 +453,9 @@ export class SanierungService {
     );
   }
 
-  // GB: EFD [€]
-  private _gbEfd = 0;
-  updateGbEfd(
+  // GB: Endfaelliges [€]
+  private _gbEndfaelliges = 0;
+  updateGbEndfaelliges(
     kalkRealzins: number,
     foerdersumme: number,
     bankKredit: number,
@@ -467,34 +467,34 @@ export class SanierungService {
   }
 
   // Option 1: ohne KfW [€]
-  private _ohneKfw = 0;
-  updateOhneKfw(
+  private _finKostenOhneKfw = 0;
+  updatefinKostenOhneKfw(
     bankDarlehen: BankDarlehen,
-    gbEfd: number,
+    gbEndfaelliges: number,
     gbAnnuitaet: number
   ): number {
     if (bankDarlehen === 'Endfälliges') {
-      return gbEfd;
+      return gbEndfaelliges;
     } else {
       return gbAnnuitaet;
     }
   }
 
-  private _ohneKfwM2 = 0;
+  private _finKostenohneKfwM2 = 0;
   updateOhneKfwM2(ohneKfw: number, wohnflaeche: number): number {
     return ohneKfw / wohnflaeche;
   }
 
   // Option 2: mit KfW [€]
-  private _mitKfw = 0;
-  updateMitKfw(
+  private _finKostenmitKfw = 0;
+  updatefinKostenMitKfw(
     finanzierungskostenKfw: number,
     finanzierungskostenBank: number
   ): number {
     return finanzierungskostenKfw + finanzierungskostenBank;
   }
 
-  private _mitKfwM2 = 0;
+  private _finKostenMitKfwM2 = 0;
   updateMitKfwM2(mitKfw: number, wohnflaeche: number): number {
     return mitKfw / wohnflaeche;
   }
@@ -638,23 +638,23 @@ export class SanierungService {
       this._afBank,
       this.kreditlaufzeit
     );
-    this._gbEfd = this.updateGbEfd(
+    this._gbEndfaelliges = this.updateGbEndfaelliges(
       this.kalkRealzins,
       this._foerdersumme,
       this._bankKredit,
       this.kreditlaufzeit
     );
-    this._ohneKfw = this.updateOhneKfw(
+    this._finKostenOhneKfw = this.updatefinKostenOhneKfw(
       this.bankDarlehen,
-      this._gbEfd,
+      this._gbEndfaelliges,
       this._gbAnnuitaet
     );
-    this._ohneKfwM2 = this.updateOhneKfwM2(this._ohneKfw, this.wohnflaeche);
-    this._mitKfw = this.updateMitKfw(
+    this._finKostenohneKfwM2 = this.updateOhneKfwM2(this._finKostenOhneKfw, this.wohnflaeche);
+    this._finKostenmitKfw = this.updatefinKostenMitKfw(
       this._finanzierungskostenKfw,
       this._finanzierungskostenBank
     );
-    this._mitKfwM2 = this.updateMitKfwM2(this._mitKfw, this.wohnflaeche);
+    this._finKostenMitKfwM2 = this.updateMitKfwM2(this._finKostenmitKfw, this.wohnflaeche);
 
     this.outputSanierungSource.next(
       (this.outputSanierung = {
@@ -693,7 +693,7 @@ export class SanierungService {
         efKfW: this._efKfW,
         efBank: this._efBank,
         gbAnnuitaet: this._gbAnnuitaet,
-        gbEfd: this._gbEfd,
+        gbEndfaelliges: this._gbEndfaelliges,
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
         kfwKreditM2: this._kfwKreditM2,
@@ -712,10 +712,10 @@ export class SanierungService {
         kfwZuschussM2: this._kfwZuschussM2,
         kfwZuschussProBau: this._kfwZuschussProBau,
         // Vergleichsrechnung
-        ohneKfw: this._ohneKfw,
-        ohneKfwM2: this._ohneKfwM2,
-        mitKfw: this._mitKfw,
-        mitKfwM2: this._mitKfwM2,
+        finKostenOhneKfw: this._finKostenOhneKfw,
+        finKostenOhneKfwM2: this._finKostenohneKfwM2,
+        finKostenMitKfw: this._finKostenmitKfw,
+        finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
   }
