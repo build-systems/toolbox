@@ -243,7 +243,7 @@ type baunebenkostenKeinFinObj = {
   title: string;
   description: string;
   disabled: boolean;
-}
+};
 
 // Darlehen
 // Kalkulationszinssatz (Realzins)
@@ -269,7 +269,7 @@ type KreditlaufzeitObj = {
 };
 
 // KfW Darlehen
-type KfWDarlehen = 'Annuitäten' | 'Endfälliges' | 'kein';
+type KfWDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
 type KfWDarlehenOptions = {
   id: string;
   value: KfWDarlehen;

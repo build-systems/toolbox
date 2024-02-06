@@ -32,64 +32,67 @@ export class ChartAnnuitaetenSanierungComponent {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
-      projekt = projekt;
-      // If kreditlaufzeit is updated assign new value and create labels
-      if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
-        this.kreditlaufzeit = projekt.kreditlaufzeit;
-        this.chartLabels = [];
-        // Create labels
-        for (var i = 1; i <= this.kreditlaufzeit; i++) {
-          this.chartLabels.push(this.currentYear + i);
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
+        projekt = projekt;
+        // If kreditlaufzeit is updated assign new value and create labels
+        if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
+          this.kreditlaufzeit = projekt.kreditlaufzeit;
+          this.chartLabels = [];
+          // Create labels
+          for (var i = 1; i <= this.kreditlaufzeit; i++) {
+            this.chartLabels.push(this.currentYear + i);
+          }
+          // Update labels
+          this.barChartData.labels = this.chartLabels;
         }
-        // Update labels
-        this.barChartData.labels = this.chartLabels;
-      }
-      // Monthly KfW-Darlehen
-      this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
-      // KfW-Darlehen
-      if (projekt.kfWDarlehen === 'Annuitäten') {
-        this.annuitaeten = this.annuitaeten.map(
-          (num) => num + projekt.annuitaetKfW
-        );
-      } else if (projekt.kfWDarlehen === 'Endfälliges') {
-        for (var i = 0; i < this.kreditlaufzeit; i++) {
-          // If it is the last installment, add Annuität and KfW-Kredit
-          if (i === this.kreditlaufzeit - 1) {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] +
-              projekt.efKfW / this.kreditlaufzeit +
-              projekt.kfwKredit;
-            // Otherwise add just Annuität
-          } else {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+        // Monthly KfW-Darlehen
+        this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
+        // KfW-Darlehen
+        if (projekt.kfWDarlehen === 'Annuitäten') {
+          this.annuitaeten = this.annuitaeten.map(
+            (num) => num + projekt.annuitaetKfW
+          );
+        } else if (projekt.kfWDarlehen === 'Endfälliges') {
+          for (var i = 0; i < this.kreditlaufzeit; i++) {
+            // If it is the last installment, add Annuität and KfW-Kredit
+            if (i === this.kreditlaufzeit - 1) {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] +
+                projekt.efKfW / this.kreditlaufzeit +
+                projekt.kfwKredit;
+              // Otherwise add just Annuität
+            } else {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+            }
           }
         }
-      }
-      // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
-      if (projekt.bankDarlehen === 'Annuitäten') {
-        this.annuitaeten = this.annuitaeten.map(
-          (num) => num + projekt.annuitaetBank
-        );
-      } else if (projekt.bankDarlehen === 'Endfälliges') {
-        for (var i = 0; i < this.kreditlaufzeit; i++) {
-          if (i === this.kreditlaufzeit - 1) {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] +
-              projekt.efBank / this.kreditlaufzeit +
-              projekt.bankKredit;
-          } else {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
+        // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
+        if (projekt.bankDarlehen === 'Annuitäten') {
+          this.annuitaeten = this.annuitaeten.map(
+            (num) => num + projekt.annuitaetBank
+            );
+            console.log(this.annuitaeten);
+        } else if (projekt.bankDarlehen === 'Endfälliges') {
+          for (var i = 0; i < this.kreditlaufzeit; i++) {
+            if (i === this.kreditlaufzeit - 1) {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] +
+                projekt.efBank / this.kreditlaufzeit +
+                projekt.bankKredit;
+            } else {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
+            }
           }
         }
+        // Update chart data
+        this.barChartData.datasets[0].data = this.annuitaeten;
+        // If KfW-Darlehen === kein Darlehen
+        this.chart?.update();
       }
-      // Update chart data
-      this.barChartData.datasets[0].data = this.annuitaeten;
-      // If KfW-Darlehen === kein Darlehen
-      this.chart?.update();
-    });
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {

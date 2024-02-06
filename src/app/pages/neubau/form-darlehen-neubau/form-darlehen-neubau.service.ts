@@ -36,7 +36,7 @@ export class FormDarlehenNeubauService {
     options: [
       { id: 'kfwd1', value: 'Annuitäten', disabled: false },
       { id: 'kfwd2', value: 'Endfälliges', disabled: false },
-      { id: 'kfwd3', value: 'kein', disabled: false },
+      // { id: 'kfwd3', value: 'kein', disabled: false },
     ],
     title: 'KfW-Darlehen ',
     description: 'KfW-Darlehen description',

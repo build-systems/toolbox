@@ -25,9 +25,9 @@ export class FormDarlehenSanierungService {
   // KfW-Darlehen centralized form values
   kfWDarlehen: KfWDarlehenObj = {
     options: [
-      { id: 'kfwd2', value: 'Annuitäten', disabled: false },
-      { id: 'kfwd3', value: 'Endfälliges', disabled: false },
-      { id: 'kfwd1', value: 'kein', disabled: false },
+      { id: 'kfwd1', value: 'Annuitäten', disabled: false },
+      { id: 'kfwd2', value: 'Endfälliges', disabled: false },
+      // { id: 'kfwd3', value: 'kein', disabled: false },
     ],
     title: 'KfW-Darlehen ',
     description: 'KfW-Darlehen description',
