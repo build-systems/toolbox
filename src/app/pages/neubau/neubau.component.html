@@ -1,5 +1,31 @@
 <div class="title" #top>
   <h1>{{ title }}</h1>
+  <div class="kfw-info">
+    <div class="kfw-number-container">
+      <p class="kfw-number">298</p>
+    </div>
+    <div class="arrow-and-text" (click)="toggleExpand()">
+      <div class="arrow-container">
+        <div class="arrow"><span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'">&#9658;</span></div>
+      </div>
+      <div class="kfw-text">
+        <h2>Klimafreundlicher Neubau – Wohngebäude</h2>
+        <h3>BUNDESFÖRDERUNG FÜR EFFIZIENTE GEBÄUDE</h3>
+        <div class="kfw-description" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
+          <h4>Haus und Wohnung energieeffizient und nachhaltig bauen</h4>
+          <p>
+            Gefördert wird die Klimafreundliches Wohngebäude und Klimafreundliches
+            Wohngebäude mit QNG.
+            Erreichen Sie die Stufe Klimafreundliches Wohngebäude, fördern wir Ihr
+            Vorhaben mit einem Kredit­betrag von bis zu 100.000 Euro je Wohnung.
+            Der maximale Kreditbetrag steigt auf 150.000 Euro je Wohnung, wenn
+            Ihre Immobilie die Stufe Klimafreundliches Wohngebäude – mit QNG
+            erfüllt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container-tool">
   <div class="inputs">
@@ -37,8 +63,8 @@
     </div>
   </div>
   @if (this.neubauService.currentTab() === 1) {
-    <app-dashboard-projekt-neubau></app-dashboard-projekt-neubau>
+  <app-dashboard-projekt-neubau></app-dashboard-projekt-neubau>
   } @else {
-    <app-dashboard-darlehen-neubau></app-dashboard-darlehen-neubau>
+  <app-dashboard-darlehen-neubau></app-dashboard-darlehen-neubau>
   }
 </div>

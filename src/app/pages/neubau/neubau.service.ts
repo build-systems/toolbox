@@ -236,12 +236,12 @@ export class NeubauService {
   }
 
   // NR-Kredit [%]
-  private _nrKredit = this.constants.nrKredit.lessThan10;
+  private _nrKredit = this.constants.nrKredit.lessThan11;
   updateNrKredit(kreditlaufzeit: number): number {
-    if (kreditlaufzeit < 10) {
-      return this.constants.nrKredit.lessThan10;
-    } else if (kreditlaufzeit >= 10 && kreditlaufzeit <= 25) {
-      return this.constants.nrKredit.between10And25;
+    if (kreditlaufzeit < 11) {
+      return this.constants.nrKredit.lessThan11;
+    } else if (kreditlaufzeit >= 11 && kreditlaufzeit <= 25) {
+      return this.constants.nrKredit.between11And25;
     } else {
       return this.constants.nrKredit.moreThan25;
     }

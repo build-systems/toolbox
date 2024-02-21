@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FormProjektSanierungService {
   userPrice: userPriceObj = {
     min: 100,
-    value: 2000,
+    value: 3000,
     max: 10000,
     step: 10,
     title: 'Price estimation [€/m²] ',

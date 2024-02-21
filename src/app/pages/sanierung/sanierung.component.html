@@ -1,5 +1,34 @@
 <div class="title" #top>
   <h1>{{ title }}</h1>
+  <div class="kfw-info">
+    <div class="kfw-number-container">
+      <p class="kfw-number">261</p>
+    </div>
+    <div class="arrow-and-text" (click)="toggleExpand()">
+      <div class="arrow-container">
+        <div class="arrow"><span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'">&#9658;</span>
+        </div>
+      </div>
+      <div class="kfw-text">
+        <h2>Wohngebäude – Kredit</h2>
+        <h3>BUNDESFÖRDERUNG FÜR EFFIZIENTE GEBÄUDE</h3>
+        <div class="kfw-description" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
+          <h4>Haus und Wohnung energieeffizient sanieren</h4>
+          <p>
+            Gefördert wird die Komplettsanierung zum Effizienzhaus oder die
+            Umwidmung von Nichtwohnfläche in Wohnfläche.
+            Erreichen Sie die Effizienz­haus-Stufe 85 oder besser, fördern wir Ihr
+            Vorhaben mit einem Kredit­betrag von bis zu 120.000 Euro je Wohneinheit.
+            Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn
+            Ihre Immobilie zusätzlich die Kriterien für
+            eine Erneuerbare-Energien-Klasse oder eine Nachhaltigkeits-Klasse
+            erreicht. In Abhängigkeit zur Effizienzhaus-Stufe erhalten sie zudem
+            einen Tilgungszuschuss von bis zu 30%.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="container-tool">
   <div class="inputs">
@@ -31,13 +60,15 @@
       <app-form-projekt-sanierung
         [hidden]="!(this.sanierungService.currentTab() === 1)"
       ></app-form-projekt-sanierung>
-      <app-form-darlehen-sanierung [hidden]="!(this.sanierungService.currentTab() === 2)"></app-form-darlehen-sanierung>
+      <app-form-darlehen-sanierung
+        [hidden]="!(this.sanierungService.currentTab() === 2)"
+      ></app-form-darlehen-sanierung>
     </div>
   </div>
   @if (this.sanierungService.currentTab() === 1) {
-    <app-dashboard-projekt-sanierung></app-dashboard-projekt-sanierung>
+  <app-dashboard-projekt-sanierung></app-dashboard-projekt-sanierung>
 
   } @else {
-    <app-dashboard-darlehen-sanierung></app-dashboard-darlehen-sanierung>
+  <app-dashboard-darlehen-sanierung></app-dashboard-darlehen-sanierung>
   }
 </div>

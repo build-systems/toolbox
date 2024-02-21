@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+// KfW 298, Checked on 2024/02/21
+// https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)/
+// https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 @Injectable({
   providedIn: 'root',
 })
@@ -32,11 +35,11 @@ export class neubau {
   };
   public gestehungskostenBase = 2436;
   public nrKredit = {
-    lessThan10: 0.01,
-    between10And25: 0.79,
-    moreThan25: 1.02,
+    lessThan11: 1.14,
+    between11And25: 1.98,
+    moreThan25: 2.11,
   };
-  public sollzinsKfw_Endfälliges = 1.14; // KfW 298 offline. 2024-01-19
+  public sollzinsKfw_Endfälliges = 2.18;
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -44,6 +47,9 @@ export class neubau {
   public holzbauBonus = 1.05;
 }
 
+// KfW 261, Checked on 2024/02/21
+// https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
+// https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 @Injectable({
   providedIn: 'root',
 })
@@ -58,23 +64,17 @@ export class sanierung {
   nhBonusPossible = 5;
   wpbBonusPossible = 10;
   // Seriellen Sanierung
-  // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
   serSanBonusPossible = 15;
-  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   public nrKredit = {
-    lessThan10: 0.99,
-    between10And20: 1.78,
-    moreThan20: 1.97,
+    lessThan11: 1.64,
+    between11And20: 2.26,
+    moreThan20: 2.41,
   };
-  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
-  sollzinsKfw_Endfälliges = 2.06;
-  // KfW 261, Checked on 2024/01/19 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
+  sollzinsKfw_Endfälliges = 2.49;
   public kfwKreditLimit = {
     lower: 120_000,
     higher: 150_000,
   };
-  // Percentages are also influenced by year the repayment start:
-  // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
-  //
-  public kfwZuschussMinMultiplier = 0.4;
+  // Percentages are also influenced by year the repayment start. Check on kfw page above
+  public kfwZuschussMaxMultiplier = 0.45;
 }

@@ -1,8 +1,3 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&display=swap"); */
-
 /* BuildSystems Official Font Family */
 /* ABC Diatype, ABC Diatype Mono */
 @import url("https://assets.buildsystems.de/font.css");
@@ -20,6 +15,8 @@
   --bg-secondary: #333;
   --bg-tertiary: #444;
   --bg-tertiary95: rgba(68, 68, 68, 0.95);
+  --font-family-primary: "ABC Diatype";
+  --font-family-secondary: "ABC Diatype Mono";
   --layout-padding: 1rem;
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
@@ -42,7 +39,7 @@
 }
 
 html {
-  font-family: "ABC Diatype", sans-serif;
+  font-family: var(--font-family-primary), sans-serif;
   font-weight: 300;
   scroll-behavior: smooth;
   background-color: var(--bg-primary);
@@ -73,20 +70,55 @@ html {
   padding-left: var(--layout-padding);
   padding-top: calc(var(--layout-padding) / 2);
   padding-bottom: calc(var(--layout-padding) / 2);
+  & h1 {
+    width: fit-content;
+  }
 }
 
 h1 {
-  font-size: 58px;
-  font-weight: 400;
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 3.6rem;
+  font-weight: 500;
 }
 
 h2 {
-  font-weight: 400;
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 110%;
 }
 
 h3 {
-  font-size: 16px;
-  font-weight: 300;
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 110%;
+}
+
+h4 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 110%;
+}
+
+h5 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 110%;
+}
+
+h6 {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 110%;
+}
+
+p {
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 a {
@@ -103,6 +135,66 @@ li {
   flex-direction: column;
   height: 100svh;
   padding-bottom: var(--layout-padding);
+}
+
+.kfw-info {
+  display: flex;
+}
+
+.kfw-number {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  padding: 0 1rem;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--button-radius);
+}
+
+.arrow {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  border-radius: calc(var(--button-radius) / 2);
+}
+
+.arrow-and-text {
+  display: flex;
+  padding: 0 0.5rem;
+}
+
+.arrow-and-text:hover .arrow {
+  background-color: var(--bg-secondary);
+}
+
+.kfw-text {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  & h2 {
+    white-space: nowrap;
+    order: 1;
+  }
+  & h3 {
+    order: 0;
+  }
+  & .kfw-description {
+    order: 2;
+  }
+}
+
+.kfw-description {
+  background-color: var(--bg-tertiary);
+  width: clamp(300px, 100%, 50rem);
+  font-family: var(--font-family-primary);
+  overflow: hidden;
+  padding: var(--layout-padding);
+  border-radius: var(--button-radius);
+  & h4 {
+    padding: 0.4rem 0;
+  }
 }
 
 .container-tool {
@@ -144,7 +236,6 @@ li {
   position: relative;
   top: 0;
   left: 0;
-  /* flex: 1; */
   flex-direction: column;
   overflow-y: auto;
 }
@@ -316,7 +407,7 @@ legend {
 }
 
 .label-toggle {
-  font-family: "ABC Diatype";
+  font-family: var(--font-family-primary);
   width: calc(100% - 5rem);
 }
 
@@ -417,25 +508,6 @@ input:checked + .toggle-round:before {
     height: var(--button-height);
   }
 }
-
-/* Hiding the other options would be better using Angular 
-animations to remove the form fields from the DOM */
-/* .toggle-wrapper:has(input:checked) ~ fieldset:not(.userPrice) {
-  pointer-events: none;
-  opacity: 0;
-  margin-top: 0;
-  padding-top: 0;
-  height: 0;
-  -webkit-transition: all 0.2s ease-out 0s;
-  transition: all 0.2s ease-out 0s;
-  & legend,
-  span {
-    -webkit-transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
-    transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
-    height: 0;
-    opacity: 0;
-  }
-} */
 
 .slidernumber {
   display: flex;
@@ -742,7 +814,7 @@ input[type="number"]:disabled:hover {
 }
 
 .pill {
-  font-family: "ABC Diatype", sans-serif;
+  font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
   padding: 1rem;
   cursor: pointer;
@@ -930,7 +1002,6 @@ input[type="number"]:disabled:hover {
   padding: var(--layout-padding);
   & h1 {
     font-size: 36px;
-    /* text-align: center; */
     padding-bottom: var(--mobile-padding);
   }
   & h2 {
@@ -947,13 +1018,11 @@ input[type="number"]:disabled:hover {
   flex-direction: column;
   justify-content: center;
   padding: var(--layout-padding);
-  /* background-color: var(--bg-secondary); */
   border-radius: var(--button-radius);
   border: 1px solid var(--primary);
   & form {
     & div {
       padding-top: var(--layout-padding);
-      /* padding-bottom: var(--layout-padding); */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -976,13 +1045,10 @@ input[type="number"]:disabled:hover {
 .host-account {
   width: 100%;
   height: 100%;
-  /* padding: 5rem 0 10rem 0; */
 }
 
 .warning {
-  /* color: tomato; */
   color: #c9971c;
-  /* font-size: 0.8rem; */
   position: absolute;
   font-size: small;
   padding-top: 0.2rem;

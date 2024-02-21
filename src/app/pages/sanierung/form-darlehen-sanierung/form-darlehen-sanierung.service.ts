@@ -15,8 +15,9 @@ export class FormDarlehenSanierungService {
   };
 
   // Kreditlaufzeit centralized form values
+  // KfW 261, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   kreditlaufzeit = {
-    min: 1,
+    min: 4,
     value: 10,
     max: 30,
     step: 1,

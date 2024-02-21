@@ -27,7 +27,6 @@ export interface SanierungProjekt {
   maxKfwKredit: number;
   gesamtgestehungskosten: number;
   foerdersumme: number;
-  restsumme: number;
   afKfw: number;
   afBank: number;
   annuitaetKfW: number;

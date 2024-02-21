@@ -342,43 +342,43 @@ describe('SanierungService', () => {
   it('should return NR-kredit constant "lessThan10" = 0.99% for kreditlaufzeit smaller than 10 years', () => {
     // ATTENTION: VALUE HARD CODED.
     // If constant change, this test will fail
-    expect(constants.nrKredit.lessThan10).toBe(0.99);
+    expect(constants.nrKredit.lessThan11).toBe(0.99);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 1 year (using lessThan10 constant)', () => {
     const result = service.updateNrKredit(1);
-    expect(result).toBe(constants.nrKredit.lessThan10);
+    expect(result).toBe(constants.nrKredit.lessThan11);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 5 year (using lessThan10 constant)', () => {
     const result = service.updateNrKredit(5);
-    expect(result).toBe(constants.nrKredit.lessThan10);
+    expect(result).toBe(constants.nrKredit.lessThan11);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 9 years (using lessThan10 constant)', () => {
     const result = service.updateNrKredit(9);
-    expect(result).toBe(constants.nrKredit.lessThan10);
+    expect(result).toBe(constants.nrKredit.lessThan11);
   });
 
   it('should return NR-kredit constant "between10And20" = 1.78% for kreditlaufzeit between 10 and 20 years', () => {
     // ATTENTION: VALUE HARD CODED.
     // If constant change, this test will fail
-    expect(constants.nrKredit.between10And20).toBe(1.78);
+    expect(constants.nrKredit.between11And20).toBe(1.78);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 10 years (using between10And20 constant)', () => {
     const result = service.updateNrKredit(10);
-    expect(result).toBe(constants.nrKredit.between10And20);
+    expect(result).toBe(constants.nrKredit.between11And20);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 15 years (using between10And20 constant)', () => {
     const result = service.updateNrKredit(15);
-    expect(result).toBe(constants.nrKredit.between10And20);
+    expect(result).toBe(constants.nrKredit.between11And20);
   });
 
   it('should update NR-Kredit for kreditlaufzeit = 20 years (using between10And20 constant)', () => {
     const result = service.updateNrKredit(20);
-    expect(result).toBe(constants.nrKredit.between10And20);
+    expect(result).toBe(constants.nrKredit.between11And20);
   });
 
   it('should return NR-kredit constant "moreThan20" = 1.97% for kreditlaufzeit bigger than 20 years', () => {
@@ -557,7 +557,7 @@ describe('SanierungService', () => {
   it('should return KfW-Zuschuss min multiplier constant = 0.4', () => {
     // ATTENTION: VALUE HARD CODED.
     // If constant change, this test will fail
-    expect(constants.kfwZuschussMinMultiplier).toBe(0.4);
+    expect(constants.kfwZuschussMaxMultiplier).toBe(0.4);
   });
 
   it('should update KfW-Zuschuss = 60000€ if Tilgungszuschuss = 20, EE-Bonus = 5, NH-Bonus = 5, WPB-Bonus = 10, SerSan-Bonus = 15, Foerdersumme = 150000€', () => {

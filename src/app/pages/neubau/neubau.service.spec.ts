@@ -280,45 +280,45 @@ describe('NeubauService', () => {
   // };
 
   it('should return constants for NR-Kredit: lessThan10: 0.01; between10And25: 0.79; moreThan25: 1.02', () => {
-    expect(constants.nrKredit.lessThan10).toBe(0.01);
-    expect(constants.nrKredit.between10And25).toBe(0.79);
+    expect(constants.nrKredit.lessThan11).toBe(0.01);
+    expect(constants.nrKredit.between11And25).toBe(0.79);
     expect(constants.nrKredit.moreThan25).toBe(1.02);
   });
 
   it('should updtade NR-kredit to lessThan10 constant when kreditlaufzeit is 9', () => {
     const kreditlaufzeit = 9;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.lessThan10);
+    expect(result).toBe(constants.nrKredit.lessThan11);
   });
 
   it('should updtade NR-kredit to lessThan10 constant when kreditlaufzeit is 2', () => {
     const kreditlaufzeit = 2;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.lessThan10);
+    expect(result).toBe(constants.nrKredit.lessThan11);
   });
 
   it('should updtade NR-kredit to between10And25 constant when kreditlaufzeit is 11', () => {
     const kreditlaufzeit = 11;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.between10And25);
+    expect(result).toBe(constants.nrKredit.between11And25);
   });
 
   it('should updtade NR-kredit to between10And25 constant when kreditlaufzeit is 15', () => {
     const kreditlaufzeit = 15;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.between10And25);
+    expect(result).toBe(constants.nrKredit.between11And25);
   });
 
   it('should updtade NR-kredit to between10And25 constant when kreditlaufzeit is 20', () => {
     const kreditlaufzeit = 20;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.between10And25);
+    expect(result).toBe(constants.nrKredit.between11And25);
   });
 
   it('should updtade NR-kredit to between10And25 constant when kreditlaufzeit is 25', () => {
     const kreditlaufzeit = 25;
     const result = service.updateNrKredit(kreditlaufzeit);
-    expect(result).toBe(constants.nrKredit.between10And25);
+    expect(result).toBe(constants.nrKredit.between11And25);
   });
 
   it('should updtade NR-kredit to moreThan25 constant when kreditlaufzeit is 26', () => {

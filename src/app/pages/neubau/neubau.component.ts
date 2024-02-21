@@ -5,6 +5,13 @@ import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-n
 import { FormDarlehenNeubauComponent } from './form-darlehen-neubau/form-darlehen-neubau.component';
 import { DashboardProjektNeubauComponent } from './dashboard-projekt-neubau/dashboard-projekt-neubau.component';
 import { DashboardDarlehenNeubauComponent } from './dashboard-darlehen-neubau/dashboard-darlehen-neubau.component';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-neubau',
@@ -14,13 +21,42 @@ import { DashboardDarlehenNeubauComponent } from './dashboard-darlehen-neubau/da
     FormProjektNeubauComponent,
     FormDarlehenNeubauComponent,
     DashboardProjektNeubauComponent,
-    DashboardDarlehenNeubauComponent
+    DashboardDarlehenNeubauComponent,
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {
     class: 'host-tool',
   },
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: '0',
+        backgroundColor: "#222",
+        padding: '0 1rem',
+      })),
+      state('expanded', style({
+        height: '*',
+      })),
+      transition('collapsed => expanded', [
+        animate('300ms ease-out')
+      ]),
+      transition('expanded => collapsed', [
+        animate('300ms ease-in')
+      ]),
+    ]),
+    trigger('rotateArrow', [
+      state('collapsed', style({
+        transform: 'rotate(0deg)'
+      })),
+      state('expanded', style({
+        transform: 'rotate(90deg)'
+      })),
+      transition('collapsed <=> expanded', [
+        animate('300ms ease-out')
+      ]),
+    ])
+  ],
 })
 export class NeubauComponent {
   // ATTENTION: the page is composed of multiple components, each one has a service.
@@ -32,6 +68,12 @@ export class NeubauComponent {
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
+  }
+
+  isExpanded: boolean = false;
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
   }
 
   constructor(public neubauService: NeubauService) {

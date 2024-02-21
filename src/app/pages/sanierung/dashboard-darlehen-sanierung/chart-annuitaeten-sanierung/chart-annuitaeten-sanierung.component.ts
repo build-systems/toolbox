@@ -73,7 +73,6 @@ export class ChartAnnuitaetenSanierungComponent {
           this.annuitaeten = this.annuitaeten.map(
             (num) => num + projekt.annuitaetBank
             );
-            console.log(this.annuitaeten);
         } else if (projekt.bankDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             if (i === this.kreditlaufzeit - 1) {

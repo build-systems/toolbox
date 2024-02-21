@@ -21,10 +21,11 @@ export class FormDarlehenNeubauService {
   };
 
   // Kreditlaufzeit centralized form values
+  // KfW 298, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   kreditlaufzeit: KreditlaufzeitObj = {
-    min: 1,
+    min: 4,
     value: 10,
-    max: 30,
+    max: 35,
     step: 1,
     title: 'Kreditlaufzeit ',
     description: 'Kreditlaufzeit description',

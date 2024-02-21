@@ -182,12 +182,12 @@ export class SanierungService {
   }
 
   // NR-Kredit [%]
-  private _nrKredit = this.constants.nrKredit.lessThan10;
+  private _nrKredit = this.constants.nrKredit.lessThan11;
   updateNrKredit(kreditlaufzeit: number): number {
-    if (kreditlaufzeit < 10) {
-      return this.constants.nrKredit.lessThan10;
-    } else if (kreditlaufzeit >= 10 && kreditlaufzeit <= 20) {
-      return this.constants.nrKredit.between10And20;
+    if (kreditlaufzeit < 11) {
+      return this.constants.nrKredit.lessThan11;
+    } else if (kreditlaufzeit >= 11 && kreditlaufzeit <= 20) {
+      return this.constants.nrKredit.between11And20;
     } else {
       return this.constants.nrKredit.moreThan20;
     }
@@ -304,7 +304,7 @@ export class SanierungService {
     return Math.min(
       ((tilgungszuschuss + eeBonus + nhBonus + wpbBonus + serSanBonus) / 100) *
         foerdersumme,
-      this.constants.kfwZuschussMinMultiplier * foerdersumme
+      this.constants.kfwZuschussMaxMultiplier * foerdersumme
     );
   }
 
@@ -685,7 +685,6 @@ export class SanierungService {
         maxKfwKredit: this._maxKfwKredit,
         gesamtgestehungskosten: this._gesamtgestehungskosten,
         foerdersumme: this._foerdersumme,
-        restsumme: this._bankKredit,
         afKfw: this._afKfw,
         afBank: this._afBank,
         annuitaetKfW: this._annuitaetKfW,

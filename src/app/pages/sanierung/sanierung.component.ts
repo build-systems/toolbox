@@ -5,6 +5,7 @@ import { SanierungService } from './sanierung.service';
 import { FormDarlehenSanierungComponent } from './form-darlehen-sanierung/form-darlehen-sanierung.component';
 import { DashboardProjektSanierungComponent } from './dashboard-projekt-sanierung/dashboard-projekt-sanierung.component';
 import { DashboardDarlehenSanierungComponent } from './dashboard-darlehen-sanierung/dashboard-darlehen-sanierung.component';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-sanierung',
@@ -21,6 +22,35 @@ import { DashboardDarlehenSanierungComponent } from './dashboard-darlehen-sanier
   host: {
     class: 'host-tool',
   },
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: '0',
+        backgroundColor: "#222",
+        padding: '0 1rem',
+      })),
+      state('expanded', style({
+        height: '*',
+      })),
+      transition('collapsed => expanded', [
+        animate('300ms ease-out')
+      ]),
+      transition('expanded => collapsed', [
+        animate('300ms ease-in')
+      ]),
+    ]),
+    trigger('rotateArrow', [
+      state('collapsed', style({
+        transform: 'rotate(0deg)'
+      })),
+      state('expanded', style({
+        transform: 'rotate(90deg)'
+      })),
+      transition('collapsed <=> expanded', [
+        animate('300ms ease-out')
+      ]),
+    ])
+  ],
 })
 export class SanierungComponent {
   // ATTENTION: the page is composed of multiple components, each one has a service.
@@ -32,6 +62,12 @@ export class SanierungComponent {
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
+  }
+
+  isExpanded: boolean = false;
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
   }
 
   constructor(public sanierungService: SanierungService) {
