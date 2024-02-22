@@ -5,6 +5,9 @@ import { ChartGkostenNeubauComponent } from './chart-gkosten-neubau/chart-gkoste
 import { ChartGkostenM2NeubauComponent } from './chart-gkosten-m2-neubau/chart-gkosten-m2-neubau.component';
 import { ChartEinheitskostenNeubauComponent } from './chart-einheitskosten-neubau/chart-einheitskosten-neubau.component';
 import { NeubauProjekt } from '../../../shared/neubauprojekt';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de'
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-dashboard-projekt-neubau',

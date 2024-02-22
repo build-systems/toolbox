@@ -45,7 +45,7 @@ export class NeubauService {
     this.formProjektService.baunebenkostenKeinFin.init;
 
   // Darlehen parameters
-  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value;
+  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value / 100; // Conersion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
@@ -78,7 +78,7 @@ export class NeubauService {
     });
 
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
-      this.kalkRealzins = value.kalkRealzinsRange!;
+      this.kalkRealzins = value.kalkRealzinsRange! / 100; // Conersion from percentage to fraction multiplier
       this.kreditlaufzeit = value.kreditlaufzeit!;
       this.kfWDarlehen = value.kfWDarlehen!;
       this.bankDarlehen = value.bankDarlehen!;
@@ -330,8 +330,8 @@ export class NeubauService {
   private _afKfw = 0;
   updateAfKfW(sollzinsKfw: number, kreditlaufzeit: number): number {
     return (
-      ((sollzinsKfw / 100) * Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit)) /
-      (Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit) - 1)
+      ((sollzinsKfw) * Math.pow(1 + sollzinsKfw, kreditlaufzeit)) /
+      (Math.pow(1 + sollzinsKfw, kreditlaufzeit) - 1)
     );
   }
 
@@ -339,9 +339,9 @@ export class NeubauService {
   private _afBank = 0;
   updateAfBank(kalkRealzins: number, kreditlaufzeit: number): number {
     return (
-      ((kalkRealzins / 100) *
-        Math.pow(1 + kalkRealzins / 100, kreditlaufzeit)) /
-      (Math.pow(1 + kalkRealzins / 100, kreditlaufzeit) - 1)
+      ((kalkRealzins) *
+        Math.pow(1 + kalkRealzins, kreditlaufzeit)) /
+      (Math.pow(1 + kalkRealzins, kreditlaufzeit) - 1)
     );
   }
 
@@ -364,7 +364,7 @@ export class NeubauService {
     sollzinsKfw: number,
     kreditlaufzeit: number
   ): number {
-    return ((kfwKredit * sollzinsKfw) / 100) * kreditlaufzeit;
+    return (kfwKredit * sollzinsKfw) * kreditlaufzeit;
   }
 
   // EF Bank [€]
@@ -374,7 +374,7 @@ export class NeubauService {
     kalkRealzins: number,
     kreditlaufzeit: number
   ): number {
-    return ((bankKredit * kalkRealzins) / 100) * kreditlaufzeit;
+    return (bankKredit * kalkRealzins) * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -477,7 +477,7 @@ export class NeubauService {
     bankKredit: number,
     kreditlaufzeit: number
   ): number {
-    return ((kalkRealzins * (kfwKredit + bankKredit)) / 100) * kreditlaufzeit;
+    return (kalkRealzins * (kfwKredit + bankKredit)) * kreditlaufzeit;
   }
 
   // Option 1: Finanzierungskosten ohne KfW [€]

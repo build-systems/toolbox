@@ -96,8 +96,13 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
             family: this.styleService.ticks.font.family,
             weight: this.styleService.ticks.font.weight,
           },
-          callback: function (value, index, values) {
-            return value + ' €';
+          callback: function (value) {
+            return value.toLocaleString('de-DE', {
+              style: 'currency',
+              currency: 'EUR',
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0,
+            });
           },
         },
       },
@@ -131,7 +136,7 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
       tooltip: {
         callbacks: {
           label: (item) =>
-            `${item.dataset.label}: ${item.formattedValue} €`,
+            `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
         },
       },
     },

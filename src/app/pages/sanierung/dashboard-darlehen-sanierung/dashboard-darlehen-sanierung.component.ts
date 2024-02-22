@@ -5,6 +5,9 @@ import { ChartTilgungSanierungComponent } from './chart-tilgung-sanierung/chart-
 import { ChartAnnuitaetenSanierungComponent } from './chart-annuitaeten-sanierung/chart-annuitaeten-sanierung.component';
 import { SanierungService } from '../sanierung.service';
 import { SanierungProjekt } from '../../../shared/sanierungprojekt';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de'
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-dashboard-darlehen-sanierung',

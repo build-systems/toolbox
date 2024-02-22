@@ -5,6 +5,9 @@ import { ChartFinanzierungskostenNeubauComponent } from './chart-finanzierungsko
 import { ChartTilgungNeubauComponent } from './chart-tilgung-neubau/chart-tilgung-neubau.component';
 import { ChartAnnuitaetenNeubauComponent } from './chart-annuitaeten-neubau/chart-annuitaeten-neubau.component';
 import { NeubauProjekt } from '../../../shared/neubauprojekt';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de'
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-dashboard-darlehen-neubau',

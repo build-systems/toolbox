@@ -149,7 +149,30 @@
   </fieldset>
   <br />
   <h2>Projektierung</h2>
-  
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.energiestandard.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.energiestandard.description
+        }}</span></sup
+      >
+    </legend>
+    <span
+      class="radio-option"
+      *ngFor="let item of formService.energiestandard.options"
+    >
+      <input
+        type="radio"
+        [id]="item.id"
+        [value]="item.value"
+        name="energiestandard"
+        formControlName="energiestandard"
+        [attr.disabled]="item.disabled ? '' : null"
+      />
+      <label [for]="item.id">{{ item.value }}</label>
+    </span>
+  </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.nachhaltigkeitskriterien.title

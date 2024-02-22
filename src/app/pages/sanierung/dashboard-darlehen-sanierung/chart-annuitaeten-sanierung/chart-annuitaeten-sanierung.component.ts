@@ -173,7 +173,7 @@ export class ChartAnnuitaetenSanierungComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${item.formattedValue} €`,
+          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
         },
         // usePointStyle: true,
       },

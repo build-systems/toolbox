@@ -35,16 +35,16 @@ export class neubau {
   };
   public gestehungskostenBase = 2436;
   public nrKredit = {
-    lessThan11: 1.14,
-    between11And25: 1.98,
-    moreThan25: 2.11,
+    lessThan11: 0.0114,
+    between11And25: 0.0198,
+    moreThan25: 0.0211,
   };
-  public sollzinsKfw_Endfälliges = 2.18;
+  public sollzinsKfw_Endfälliges = 0.0218;
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
   };
-  public holzbauBonus = 1.05;
+  public holzbauBonus = 1.05; // Extra 5%
 }
 
 // KfW 261, Checked on 2024/02/21
@@ -55,22 +55,22 @@ export class neubau {
 })
 export class sanierung {
   public tilgungszuschuss = {
-    EH40: 20,
-    EH55: 15,
-    EH70: 10,
-    EH85: 5,
+    EH40: 0.20,
+    EH55: 0.15,
+    EH70: 0.10,
+    EH85: 0.05,
   };
-  eeBonusPossible = 5;
-  nhBonusPossible = 5;
-  wpbBonusPossible = 10;
+  eeBonusPossible = 0.05;
+  nhBonusPossible = 0.05;
+  wpbBonusPossible = 0.10;
   // Seriellen Sanierung
-  serSanBonusPossible = 15;
+  serSanBonusPossible = 0.15;
   public nrKredit = {
-    lessThan11: 1.64,
-    between11And20: 2.26,
-    moreThan20: 2.41,
+    lessThan11: 0.0164,
+    between11And20: 0.0226,
+    moreThan20: 0.0241,
   };
-  sollzinsKfw_Endfälliges = 2.49;
+  sollzinsKfw_Endfälliges = 0.0249;
   public kfwKreditLimit = {
     lower: 120_000,
     higher: 150_000,

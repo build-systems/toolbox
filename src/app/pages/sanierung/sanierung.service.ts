@@ -20,7 +20,7 @@ export class SanierungService {
   anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardSanierung =
     this.formProjektService.energiestandard.options[0].value;
-  nachhaltigkeitskriterien: Nachhaltigkeitskriterien =
+  _nachhaltigkeitskriterien: Nachhaltigkeitskriterien =
     this.formProjektService.nachhaltigkeitskriterien.options[0].value;
   worstPerformingBuilding: boolean =
     this.formProjektService.worstPerformingBuilding.value;
@@ -29,7 +29,7 @@ export class SanierungService {
     this.formProjektService.zustandBestand.options[0].value;
 
   // Initial darlehen parameters
-  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value;
+  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value / 100; // Conersion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
@@ -48,7 +48,7 @@ export class SanierungService {
         this.wohnflaeche = value.wohnflaecheRange!;
         this.anzahlWohnungen = value.anzahlWohnungenRange!;
         this.energiestandard = value.energiestandard!;
-        this.nachhaltigkeitskriterien = value.nachhaltigkeitskriterien!;
+        this._nachhaltigkeitskriterien = value.nachhaltigkeitskriterien!;
         this.worstPerformingBuilding = value.worstPerformingBuilding!;
         this.serielleSanierung = value.serielleSanierung!;
         this.zustandBestand = value.zustandBestand!;
@@ -56,7 +56,7 @@ export class SanierungService {
       }
     );
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
-      this.kalkRealzins = value.kalkRealzinsRange!;
+      this.kalkRealzins = value.kalkRealzinsRange! / 100; // Conersion from percentage to fraction multiplier
       this.kreditlaufzeit = value.kreditlaufzeitRange!;
       this.kfWDarlehen = value.kfWDarlehen!;
       this.bankDarlehen = value.bankDarlehen!;
@@ -203,18 +203,25 @@ export class SanierungService {
     }
   }
 
-  // Max. KFW-Kredit [€]
-  private _maxKfwKredit =
-    this.anzahlWohnungen * this.constants.kfwKreditLimit.lower;
-  updateMaxKfwKredit(
-    nachhaltigkeitskriterien: Nachhaltigkeitskriterien,
-    anzahlWohnungen: number
+  // KfW Kreditschwelle / WE
+  private _kfwKreditschwelleProWe = 0;
+  updateKfwKreditschwelleProWe(
+    nachhaltigkeitskriterien: Nachhaltigkeitskriterien
   ): number {
     if (nachhaltigkeitskriterien !== 'Keine') {
-      return anzahlWohnungen * this.constants.kfwKreditLimit.higher;
+      return this.constants.kfwKreditLimit.higher;
     } else {
-      return anzahlWohnungen * this.constants.kfwKreditLimit.lower;
+      return this.constants.kfwKreditLimit.lower;
     }
+  }
+
+  // Max. KFW-Kredit [€]
+  private _maxKfwKredit = 0;
+  updateMaxKfwKredit(
+    kfwKreditschwelleProWe: number,
+    anzahlWohnungen: number
+  ): number {
+    return anzahlWohnungen * kfwKreditschwelleProWe;
   }
 
   // Gesamtgestehungskosten [€]
@@ -267,9 +274,9 @@ export class SanierungService {
       return 0;
     } else {
       return (
-        ((sollzinsKfw / 100) *
-          Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit)) /
-        (Math.pow(1 + sollzinsKfw / 100, kreditlaufzeit) - 1)
+        (sollzinsKfw *
+          Math.pow(1 + sollzinsKfw, kreditlaufzeit)) /
+        (Math.pow(1 + sollzinsKfw, kreditlaufzeit) - 1)
       );
     }
   }
@@ -281,28 +288,35 @@ export class SanierungService {
       return 0;
     } else {
       return (
-        ((kalkRealzins / 100) *
-          Math.pow(1 + kalkRealzins / 100, kreditlaufzeit)) /
-        (Math.pow(1 + kalkRealzins / 100, kreditlaufzeit) - 1)
+        ((kalkRealzins) *
+          Math.pow(1 + kalkRealzins, kreditlaufzeit)) /
+        (Math.pow(1 + kalkRealzins, kreditlaufzeit) - 1)
       );
     }
   }
 
   // Zuschuss (KfW) [€]
-  private _kfwZuschuss = 0;
-  updateKfwZuschuss(
+  private _kfwZuschussPercentage = 0;
+  updateKfwZuschussPercentage(
     tilgungszuschuss: number,
     eeBonus: number,
     nhBonus: number,
     wpbBonus: number,
-    serSanBonus: number,
-    foerdersumme: number
+    serSanBonus: number
   ): number {
     return Math.min(
-      ((tilgungszuschuss + eeBonus + nhBonus + wpbBonus + serSanBonus) / 100) *
-        foerdersumme,
-      this.constants.kfwZuschussMaxMultiplier * foerdersumme
+      tilgungszuschuss + eeBonus + nhBonus + wpbBonus + serSanBonus,
+      this.constants.kfwZuschussMaxMultiplier
     );
+  }
+
+  // Zuschuss (KfW) [€]
+  private _kfwZuschuss = 0;
+  updateKfwZuschuss(
+    kfwZuschussPercentage: number,
+    foerdersumme: number
+  ): number {
+    return kfwZuschussPercentage * foerdersumme;
   }
 
   private _kfwZuschussM2 = 0;
@@ -353,7 +367,7 @@ export class SanierungService {
     sollzinsKfw: number,
     kreditlaufzeit: number
   ): number {
-    return ((kfwKredit * sollzinsKfw) / 100) * kreditlaufzeit;
+    return (kfwKredit * sollzinsKfw) * kreditlaufzeit;
   }
 
   // EF B [€]
@@ -363,7 +377,7 @@ export class SanierungService {
     kalkRealzins: number,
     kreditlaufzeit: number
   ): number {
-    return ((kalkRealzins * bankKredit) / 100) * kreditlaufzeit;
+    return (kalkRealzins * bankKredit) * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -459,7 +473,7 @@ export class SanierungService {
     kreditlaufzeit: number
   ): number {
     return (
-      ((kalkRealzins * (foerdersumme + bankKredit)) / 100) * kreditlaufzeit
+      (kalkRealzins * (foerdersumme + bankKredit)) * kreditlaufzeit
     );
   }
 
@@ -505,8 +519,8 @@ export class SanierungService {
 
   public update() {
     this._tilgungszuschuss = this.updateTilgungszuschuss(this.energiestandard);
-    this._eeBonus = this.updateEeBonus(this.nachhaltigkeitskriterien);
-    this._nhBonus = this.updateNhBonus(this.nachhaltigkeitskriterien);
+    this._eeBonus = this.updateEeBonus(this._nachhaltigkeitskriterien);
+    this._nhBonus = this.updateNhBonus(this._nachhaltigkeitskriterien);
     this._wpbBonus = this.updateWpbBonus(
       this.worstPerformingBuilding,
       this.energiestandard
@@ -526,8 +540,9 @@ export class SanierungService {
       this.kfWDarlehen,
       this._nrKredit
     );
+    this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(this._nachhaltigkeitskriterien);
     this._maxKfwKredit = this.updateMaxKfwKredit(
-      this.nachhaltigkeitskriterien,
+      this._kfwKreditschwelleProWe,
       this.anzahlWohnungen
     );
     this._gesamtgestehungskosten = this.updateGesamtgestehungskosten(
@@ -552,12 +567,15 @@ export class SanierungService {
     );
     this._afKfw = this.updateAfKfW(this._sollzinsKfw, this.kreditlaufzeit);
     this._afBank = this.updateAfBank(this.kalkRealzins, this.kreditlaufzeit);
-    this._kfwZuschuss = this.updateKfwZuschuss(
+    this._kfwZuschussPercentage = this.updateKfwZuschussPercentage(
       this._tilgungszuschuss,
       this._eeBonus,
       this._nhBonus,
       this._wpbBonus,
-      this._serSanBonus,
+      this._serSanBonus
+    );
+    this._kfwZuschuss = this.updateKfwZuschuss(
+      this._kfwZuschussPercentage,
       this._foerdersumme
     );
     this._kfwZuschussM2 = this.updateKfwZuschussM2(
@@ -665,7 +683,7 @@ export class SanierungService {
         worstPerformingBuilding: this.worstPerformingBuilding,
         serielleSanierung: this.serielleSanierung,
         zustandBestand: this.zustandBestand,
-        nachhaltigkeitskriterien: this.nachhaltigkeitskriterien,
+        nachhaltigkeitskriterien: this._nachhaltigkeitskriterien,
         // Dalehen
         kalkRealzins: this.kalkRealzins,
         kreditlaufzeit: this.kreditlaufzeit,
@@ -680,6 +698,7 @@ export class SanierungService {
         gestehungskosten: this._gestehungskosten,
         nrKredit: this._nrKredit,
         sollzinsKfw: this._sollzinsKfw,
+        kfwKreditschwelleProWe: this._kfwKreditschwelleProWe,
         maxKfwKredit: this._maxKfwKredit,
         gesamtgestehungskosten: this._gesamtgestehungskosten,
         foerdersumme: this._foerdersumme,
@@ -704,6 +723,7 @@ export class SanierungService {
         finanzierungskostenBankM2: this._finanzierungskostenBankM2,
         investitionskosten: this._investitionskosten,
         investitionskostenProBau: this._investitionskostenProBau,
+        kfwZuschussPercentage: this._kfwZuschussPercentage,
         kfwZuschuss: this._kfwZuschuss,
         kfwZuschussM2: this._kfwZuschussM2,
         kfwZuschussProBau: this._kfwZuschussProBau,

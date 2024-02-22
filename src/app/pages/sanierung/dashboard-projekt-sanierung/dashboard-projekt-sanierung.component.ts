@@ -5,6 +5,9 @@ import { ChartGkostenM2SanierungComponent } from './chart-gkosten-m2-sanierung/c
 import { SanierungService } from '../sanierung.service';
 import { ChartEinheitskostenSanierungComponent } from './chart-einheitskosten-sanierung/chart-einheitskosten-sanierung.component';
 import { SanierungProjekt } from '../../../shared/sanierungprojekt';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de'
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-dashboard-projekt-sanierung',
@@ -20,27 +23,25 @@ import { SanierungProjekt } from '../../../shared/sanierungprojekt';
   host: { class: 'host-output' },
 })
 export class DashboardProjektSanierungComponent implements OnInit {
-  kfwZuschuss: number = 0;
+  output!: SanierungProjekt;
   investitionskosten: number = 0;
-  finanzierungskostenFinanzmarkt: number = 0;
-  finanzierungskostenKfw: number = 0;
   bankKredit: number = 0;
   kfwKredit: number = 0;
-  sollzinsKfw: number = 0;
-  output!: SanierungProjekt;
+  kfwZuschuss: number = 0;
+  kfwZuschussPercent: number = 0;
+  KfwKreditschwelleProWe: number = 0;
 
   constructor(private sanierungService: SanierungService) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
-      this.kfwZuschuss = this.output.kfwZuschuss;
       this.investitionskosten = this.output.investitionskosten;
-      this.finanzierungskostenFinanzmarkt =
-        this.output.finanzierungskostenBank;
-      this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
       this.bankKredit = this.output.bankKredit;
       this.kfwKredit = this.output.kfwKredit;
+      this.kfwZuschuss = this.output.kfwZuschuss;
+      this.kfwZuschussPercent = this.output.kfwZuschussPercentage;
+      this.KfwKreditschwelleProWe = this.output.kfwKreditschwelleProWe;
     });
   }
 }
