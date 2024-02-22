@@ -1,4 +1,5 @@
 <form [formGroup]="this.formService.projektFormSanierung">
+  <h2>Stammdaten</h2>
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
@@ -58,56 +59,28 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.energiestandard.title
+      {{ formService.zustandBestand.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-bottom">{{
-          formService.energiestandard.description
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.zustandBestand.description
         }}</span></sup
       >
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.energiestandard.options"
+      *ngFor="let item of formService.zustandBestand.options"
     >
       <input
         type="radio"
         [id]="item.id"
         [value]="item.value"
-        name="energiestandard"
-        formControlName="energiestandard"
+        name="zustandBestand"
+        formControlName="zustandBestand"
         [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
     </span>
   </fieldset>
-  <fieldset class="radio-fieldset">
-    <legend>
-      {{ formService.zertifizierung.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-left">{{
-          formService.zertifizierung.description
-        }}</span></sup
-      >
-    </legend>
-    <span
-      class="radio-option"
-      *ngFor="let item of formService.zertifizierung.options"
-    >
-      <input
-        type="radio"
-        [id]="item.id"
-        [value]="item.value"
-        name="zertifizierung"
-        formControlName="zertifizierung"
-        [attr.disabled]="item.disabled ? '' : null"
-      />
-      <label [for]="item.id">{{ item.text }}</label>
-    </span>
-  </fieldset>
-  @if (formService.zertifizierung.options[0].disabled ||
-  formService.zertifizierung.options[1].disabled) {
-  <div class="warning-block">*QNG ist nur mit EH 40 möglich</div>
-  }
   <fieldset>
     <legend>
       {{ formService.worstPerformingBuilding.title
@@ -128,49 +101,11 @@
       <span class="checkmark"></span>
     </label>
   </fieldset>
-  <fieldset>
-    <legend>
-      {{ formService.serielleSanierung.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-top">{{
-          formService.serielleSanierung.description
-        }}</span></sup
-      >
-    </legend>
-    <input
-      type="checkbox"
-      id="serielleSanierung"
-      formControlName="serielleSanierung"
-      [attr.disabled]="formService.serielleSanierung.disabled ? '' : null"
-    />
-    <label for="serielleSanierung" class="checkbox-container">
-      Ja
-      <span class="checkmark"></span>
-    </label>
-  </fieldset>
-  <fieldset>
-    <legend>
-      {{ formService.eeKlasse.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-top">{{
-          formService.eeKlasse.description
-        }}</span></sup
-      >
-    </legend>
-    <input
-      type="checkbox"
-      id="eeKlasse"
-      formControlName="eeKlasse"
-      [attr.disabled]="formService.eeKlasse.disabled ? '' : null"
-    />
-    <label for="eeKlasse" class="checkbox-container">
-      Ja
-      <span class="checkmark"></span>
-    </label>
-  </fieldset>
+  <br />
+  <h2>Eigene Kostenberechnung</h2>
   <div class="toggle-wrapper">
     <label for="userPriceToggle" class="label-toggle">
-      Set my own price estimation
+      Eigene Kostenberechnung
       <sup class="tooltip"
         >&#9432;<span class="tooltiptext tooltip-bottom"
           >Define your own estimated budget</span
@@ -212,28 +147,52 @@
       />
     </span>
   </fieldset>
+  <br />
+  <h2>Projektierung</h2>
+  
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.zustandBestand.title
+      {{ formService.nachhaltigkeitskriterien.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-top">{{
-          formService.zustandBestand.description
+        >&#9432;<span class="tooltiptext tooltip-left">{{
+          formService.nachhaltigkeitskriterien.description
         }}</span></sup
       >
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.zustandBestand.options"
+      *ngFor="let item of formService.nachhaltigkeitskriterien.options"
     >
       <input
         type="radio"
         [id]="item.id"
         [value]="item.value"
-        name="zustandBestand"
-        formControlName="zustandBestand"
+        name="nachhaltigkeitskriterien"
+        formControlName="nachhaltigkeitskriterien"
         [attr.disabled]="item.disabled ? '' : null"
       />
-      <label [for]="item.id">{{ item.value }}</label>
+      <label [for]="item.id">{{ item.text }}</label>
     </span>
   </fieldset>
+  <fieldset>
+    <legend>
+      {{ formService.serielleSanierung.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-top">{{
+          formService.serielleSanierung.description
+        }}</span></sup
+      >
+    </legend>
+    <input
+      type="checkbox"
+      id="serielleSanierung"
+      formControlName="serielleSanierung"
+      [attr.disabled]="formService.serielleSanierung.disabled ? '' : null"
+    />
+    <label for="serielleSanierung" class="checkbox-container">
+      Ja
+      <span class="checkmark"></span>
+    </label>
+  </fieldset>
+
 </form>

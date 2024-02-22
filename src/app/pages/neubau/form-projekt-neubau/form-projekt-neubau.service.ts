@@ -12,7 +12,7 @@ export class FormProjektNeubauService {
     min: 100,
     max: 20000,
     step: 10,
-    title: 'Price estimation [€/m²] ',
+    title: 'Kostenberechnung [€/m²] ',
     description: 'Price estimation description',
     disabled: true,
   };

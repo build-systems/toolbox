@@ -94,19 +94,19 @@ type ZertifizierungNeubauObj = {
   description: string;
 };
 
-// Zertifizierung Sanierung
-type ZertifizierungSanierung = 'Keine Zertifizierung' | 'QNG';
-type ZertifizierungSanierungOptions = {
+// Zusätzliche Nachhaltigkeitskriterien
+type Nachhaltigkeitskriterien = 'EE' | 'NH' | 'Keine';
+type NachhaltigkeitskriterienOptions = {
   id: string;
-  value: ZertifizierungSanierung;
+  value: Nachhaltigkeitskriterien;
   text?: string;
   disabled: boolean;
-};
-type ZertifizierungSanierungObj = {
-  options: ZertifizierungSanierungOptions[];
+}
+type NachhaltigkeitskriterienObj = {
+  options: NachhaltigkeitskriterienOptions[];
   title: string;
   description: string;
-};
+}
 
 // Zustand Bestand
 type ZustandBestand = 'Unsaniert' | 'Teilsaniert' | 'Umfassend saniert';
@@ -306,14 +306,6 @@ type WorstPerformingBuildingObj = {
 
 // Serielle Sanierung
 type SerielleSanierungObj = {
-  value: boolean;
-  title: string;
-  description: string;
-  disabled: boolean;
-};
-
-// EE Klasse
-type EeKlasseObj = {
   value: boolean;
   title: string;
   description: string;

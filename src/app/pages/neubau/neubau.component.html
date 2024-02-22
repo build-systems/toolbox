@@ -1,26 +1,44 @@
-<div class="title" #top>
-  <h1>{{ title }}</h1>
-  <div class="kfw-info">
-    <div class="kfw-number-container">
-      <p class="kfw-number">298</p>
-    </div>
-    <div class="arrow-and-text" (click)="toggleExpand()">
-      <div class="arrow-container">
-        <div class="arrow"><span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'">&#9658;</span></div>
+<div class="title" #top (click)="toggleExpand()">
+  <div class="arrow-and-h1">
+    <div class="arrow-container">
+      <div class="arrow">
+        <span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'"
+          >&#9658;</span
+        >
       </div>
-      <div class="kfw-text">
-        <h2>Klimafreundlicher Neubau – Wohngebäude</h2>
-        <h3>BUNDESFÖRDERUNG FÜR EFFIZIENTE GEBÄUDE</h3>
-        <div class="kfw-description" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
-          <h4>Haus und Wohnung energieeffizient und nachhaltig bauen</h4>
+    </div>
+    <h1>Klimafreundlicher Neubau von Wohngebäuden</h1>
+  </div>
+  <div class="kfw-info">
+    <div class="kfw-text">
+      <div
+        class="kfw-description"
+        [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"
+      >
+        <div class="kfw-number-container">
+          <div class="kfw-number">
+            <div class="kfw-id">KfW id</div>
+            297/298
+          </div>
+        </div>
+        <div>
+          <h2>Bundesförderung für Effiziente Gebäude</h2>
+          <h3>Haus und Wohnung energieeffizient und nachhaltig bauen</h3>
           <p>
-            Gefördert wird die Klimafreundliches Wohngebäude und Klimafreundliches
-            Wohngebäude mit QNG.
-            Erreichen Sie die Stufe Klimafreundliches Wohngebäude, fördern wir Ihr
-            Vorhaben mit einem Kredit­betrag von bis zu 100.000 Euro je Wohnung.
-            Der maximale Kreditbetrag steigt auf 150.000 Euro je Wohnung, wenn
-            Ihre Immobilie die Stufe Klimafreundliches Wohngebäude – mit QNG
-            erfüllt.
+            Gefördert wird der Neubau von
+            energieeffizienten und nachhaltigen Wohngebäuden Erreichen Sie die
+            Effizienz­haus-Stufe 40 mit der Zertifizierung klimafreundlicher
+            Neubau, fördern wir Ihr Vorhaben mit einem Kredit­betrag von bis
+            zu 100.000 Euro je Wohneinheit. Der maximale Kredit­betrag steigt
+            auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich ein
+            Qualitätssigel Nachhaltiges Gebäude vorweisen kann. Aktuell sind
+            die entsprechenden Haushaltsmittel erschöpft, deshalb ist keine
+            Antragstellung möglich.
+            <a
+              target="_blank"
+              href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)/"
+              >KfW Seite ↗</a
+            >
           </p>
         </div>
       </div>

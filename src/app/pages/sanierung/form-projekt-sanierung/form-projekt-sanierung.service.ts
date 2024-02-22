@@ -11,7 +11,7 @@ export class FormProjektSanierungService {
     value: 3000,
     max: 10000,
     step: 10,
-    title: 'Price estimation [€/m²] ',
+    title: 'Kostenberechnung [€/m²] ',
     description: 'Price estimation description',
     disabled: true,
   };
@@ -49,19 +49,16 @@ export class FormProjektSanierungService {
     description: 'Energiestandard description',
   };
 
-  // Zertifizierung centralized form values
-  zertifizierung: ZertifizierungSanierungObj = {
+  // Zusätzliche Nachhaltigkeitskriterien
+  nachhaltigkeitskriterien: NachhaltigkeitskriterienObj = {
     options: [
-      { id: 'zert1', value: 'QNG', text: 'mit QNG Siegel', disabled: false },
-      {
-        id: 'zert2',
-        value: 'Keine Zertifizierung',
-        text: 'Keine',
-        disabled: false,
-      },
+      { id: 'kn', value: 'Keine', text: 'Keine', disabled: false },
+      { id: 'ee', value: 'EE', text: 'EE-Klasse', disabled: false },
+      { id: 'nh', value: 'NH', text: 'NH-Klasse', disabled: false },
     ],
-    title: 'Zertifizierung klimafreundlicher ',
-    description: 'Zertifizierung klimafreundlicher description',
+    title: 'Zusätzliche Nachhaltigkeitskriterien',
+    description:
+      'Zusätzliche Nachhaltigkeitskriterien description. Erneuerbare-Energien-Klasse und Nachhaltigkeits-Klasse',
   };
 
   // This will be converted to the ABCDEFGH energieaussweis
@@ -90,18 +87,8 @@ export class FormProjektSanierungService {
       { id: 'zusbest2', value: 'Teilsaniert', disabled: false },
       { id: 'zusbest3', value: 'Umfassend saniert', disabled: false },
     ],
-    title: 'Zustand Bestand',
+    title: 'Zustand Bestand ',
     description: 'Zustand Bestand description',
-  };
-
-  // Erneuerbare-Energien-Klasse
-  eeKlasse: EeKlasseObj = {
-    value: true,
-    // title: 'Erneuerbare-Energien-Klasse ',
-    title: 'EE-Klasse ',
-    description:
-      'Die höhere Förderung für die Erneuerbare-Energien-Klasse können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz\u00ADhaus eine neue Heizungs\u00ADanlage auf Basis erneuer\u00ADbarer Energien einbauen und damit mindestens 65% des Energie\u00ADbedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65% des Energie\u00ADbedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden (kfw.de)',
-    disabled: false,
   };
 
   // Zertifizierung warning: if user try to select conflicting
@@ -162,11 +149,10 @@ export class FormProjektSanierungService {
       },
     ],
     energiestandard: this.energiestandard.options[0].value,
-    zertifizierung: this.zertifizierung.options[0].value,
+    nachhaltigkeitskriterien: this.nachhaltigkeitskriterien.options[0].value,
     worstPerformingBuilding: this.worstPerformingBuilding.value,
     serielleSanierung: this.serielleSanierung.value,
     zustandBestand: this.zustandBestand.options[0].value,
-    eeKlasse: this.eeKlasse.value,
   });
 
   // Observable and set function for user price toggle
@@ -281,30 +267,12 @@ export class FormProjektSanierungService {
         // Relationship with Zertifizierung
         const zertifizierung = this.projektFormSanierung.get('zertifizierung');
         if (value != 'EH 40') {
-          if (zertifizierung?.value === 'QNG') {
-            zertifizierung?.setValue('Keine Zertifizierung');
-          }
           // Disable mit QNG Siegel
-          this.zertifizierung.options[0].disabled = true;
+          // this.zertifizierung.options[0].disabled = true;
           this.noQNG = true;
         } else {
           // Enable mit QNG Siegel
-          this.zertifizierung.options[0].disabled = false;
-          this.noQNG = false;
-        }
-      });
-
-    // Zertifizierung
-    this.projektFormSanierung
-      .get('zertifizierung')
-      ?.valueChanges.subscribe((value) => {
-        // Relationship with Energiestandard
-        const energiestandard =
-          this.projektFormSanierung.get('energiestandard');
-        if (value === 'QNG' && energiestandard?.value != 'EH 40') {
-          energiestandard?.setValue('EH 40');
-          this.noQNG = true;
-        } else {
+          // this.zertifizierung.options[0].disabled = false;
           this.noQNG = false;
         }
       });

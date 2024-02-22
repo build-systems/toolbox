@@ -1,6 +1,36 @@
-<div class="title" #top>
-  <h1>{{ title }}</h1>
+<div class="title" #top (click)="toggleExpand()">
+  <div class="arrow-and-h1">
+    <div class="arrow-container">
+      <div class="arrow"><span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'">&#9658;</span>
+      </div>
+    </div>
+    <h1>Sanierung Wohngebäude</h1>
+  </div>
   <div class="kfw-info">
+    <div class="kfw-text">
+      <div class="kfw-description" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
+        <div class="kfw-number-container">
+          <div class="kfw-number"><div class="kfw-id">KfW id</div>261</div>
+        </div>
+        <div>
+          <h2>Bundesförderung für Effiziente Gebäude</h2>
+          <h3>Haus und Wohnung energieeffizient sanieren</h3>
+          <p>
+            Gefördert wird die Komplettsanierung zum Effizienzhaus oder die
+            Umwidmung von Nichtwohnfläche in Wohnfläche.
+            Erreichen Sie die Effizienz­haus-Stufe 85 oder besser, fördern wir Ihr
+            Vorhaben mit einem Kredit­betrag von bis zu 120.000 Euro je Wohneinheit.
+            Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn
+            Ihre Immobilie zusätzlich die Kriterien für
+            eine Erneuerbare-Energien-Klasse oder eine Nachhaltigkeits-Klasse
+            erreicht. In Abhängigkeit zur Effizienzhaus-Stufe erhalten sie zudem
+            einen Tilgungszuschuss von bis zu 30%. <a target="_blank" href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/">KfW Seite ↗</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="kfw-info">
     <div class="kfw-number-container">
       <p class="kfw-number">261</p>
     </div>
@@ -10,7 +40,6 @@
         </div>
       </div>
       <div class="kfw-text">
-        <h2>Wohngebäude – Kredit</h2>
         <h3>BUNDESFÖRDERUNG FÜR EFFIZIENTE GEBÄUDE</h3>
         <div class="kfw-description" [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
           <h4>Haus und Wohnung energieeffizient sanieren</h4>
@@ -28,7 +57,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="container-tool">
   <div class="inputs">

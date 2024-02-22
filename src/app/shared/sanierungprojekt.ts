@@ -4,12 +4,11 @@ export interface SanierungProjekt {
   anzahlWohnungen: number;
   energiestandard: EnergiestandardSanierung;
   konstruktion?: Konstruktion;
-  zertifizierung: ZertifizierungSanierung;
   // Sanierung
   worstPerformingBuilding: boolean;
   serielleSanierung: boolean;
   zustandBestand: ZustandBestand;
-  eeKlasse: boolean;
+  nachhaltigkeitskriterien: Nachhaltigkeitskriterien;
   // Dalehen
   kalkRealzins: number;
   kreditlaufzeit: number;
