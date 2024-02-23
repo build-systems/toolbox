@@ -1253,11 +1253,12 @@ span.nowrap {
 
 @media screen and (max-width: 850px) {
   h1 { 
+    font-size: 1.8rem;
     line-height: 100%;
   }
   
   .arrow-container {
-    margin-top: 0.1rem;
+    margin-top: 0;
     }
   
   .card {
