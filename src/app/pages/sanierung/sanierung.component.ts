@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormProjektSanierungComponent } from './form-projekt-sanierung/form-projekt-sanierung.component';
 import { SanierungService } from './sanierung.service';
 import { FormDarlehenSanierungComponent } from './form-darlehen-sanierung/form-darlehen-sanierung.component';
-import { DashboardProjektSanierungComponent } from './dashboard-projekt-sanierung/dashboard-projekt-sanierung.component';
-import { DashboardDarlehenSanierungComponent } from './dashboard-darlehen-sanierung/dashboard-darlehen-sanierung.component';
+import { ChartsProjektSanierungComponent } from './charts-projekt-sanierung/charts-projekt-sanierung.component';
+import { ChartsDarlehenSanierungComponent } from './charts-darlehen-sanierung/charts-darlehen-sanierung.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NumbersProjektSanierungComponent } from './numbers-projekt-sanierung/numbers-projekt-sanierung.component';
+import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/numbers-darlehen-sanierung.component';
 
 @Component({
   selector: 'app-sanierung',
@@ -14,8 +16,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     CommonModule,
     FormProjektSanierungComponent,
     FormDarlehenSanierungComponent,
-    DashboardProjektSanierungComponent,
-    DashboardDarlehenSanierungComponent
+    ChartsProjektSanierungComponent,
+    ChartsDarlehenSanierungComponent,
+    NumbersProjektSanierungComponent,
+    NumbersDarlehenSanierungComponent
   ],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',

@@ -1,41 +1,37 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { ChartEvent } from 'chart.js/dist/core/core.plugins';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { SanierungService } from '../../sanierung.service';
+import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
 
 @Component({
-  selector: 'app-chart-finanzierungskosten-neubau',
+  selector: 'app-chart-finanzierungskosten-sanierung',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-finanzierungskosten-neubau.component.html',
-  styleUrl: './chart-finanzierungskosten-neubau.component.css',
+  templateUrl: './chart-finanzierungskosten-sanierung.component.html',
+  styleUrl: './chart-finanzierungskosten-sanierung.component.css',
   host: {
     class: 'host-chart host-chart4',
   },
 })
-export class ChartFinanzierungskostenNeubauComponent {
+export class ChartFinanzierungskostenSanierungComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   constructor(
-    private neubauService: NeubauService,
+    private sanierungService: SanierungService,
     private styleService: ChartsSettingsService
-  ) {  }
+  ) {}
 
-  // Here I made a copy of the subscription to both observables.
-  // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$
-      .subscribe((projekt: NeubauProjekt) => {
-        this.barChartData.datasets[0].data = [
-          Math.round(projekt.finKostenOhneKfw),
-          Math.round(projekt.finKostenMitKfw),
-        ];
-        this.chart?.update();
-      });
+    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
+      this.barChartData.datasets[0].data = [
+        Math.round(projekt.finKostenOhneKfw),
+        Math.round(projekt.finKostenMitKfw),
+      ];
+      this.chart?.update();
+    });
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -135,7 +131,8 @@ export class ChartFinanzierungskostenNeubauComponent {
         borderWidth: this.styleService.datasets.borderWidth,
         backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
-        hoverBackgroundColor: this.styleService.datasets.color04.hoverBackgroundColor,
+        hoverBackgroundColor:
+          this.styleService.datasets.color04.hoverBackgroundColor,
       },
     ],
   };

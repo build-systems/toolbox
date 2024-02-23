@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { NeubauService } from '../../neubau.service';
@@ -8,32 +8,49 @@ import { ChartEvent } from 'chart.js/dist/core/core.plugins';
 import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 
 @Component({
-  selector: 'app-chart-finanzierungskosten-neubau',
+  selector: 'app-chart-einheitskosten-neubau',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-finanzierungskosten-neubau.component.html',
-  styleUrl: './chart-finanzierungskosten-neubau.component.css',
+  templateUrl: './chart-einheitskosten-neubau.component.html',
+  styleUrl: './chart-einheitskosten-neubau.component.css',
   host: {
-    class: 'host-chart host-chart4',
+    class: 'host-chart host-chart3',
   },
 })
-export class ChartFinanzierungskostenNeubauComponent {
+export class ChartEinheitskostenNeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  output!: NeubauProjekt;
 
   constructor(
     private neubauService: NeubauService,
     private styleService: ChartsSettingsService
-  ) {  }
+  ) {}
 
-  // Here I made a copy of the subscription to both observables.
-  // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
     this.neubauService.currentOutputNeubau$
-      .subscribe((projekt: NeubauProjekt) => {
+      .subscribe((value) => {
+        this.output = value;
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.finKostenOhneKfw),
-          Math.round(projekt.finKostenMitKfw),
+          Math.round(this.output['investitionskostenProBau']),
+          0,
         ];
+        this.barChartData.datasets[1].data = [
+          0,
+          Math.round(this.output['bankKreditProBau']),
+        ];
+        this.barChartData.datasets[2].data = [
+          0,
+          Math.round(this.output['kfwKreditProBau']),
+        ];
+        // this.barChartData.datasets[3].data = [
+        //   0,
+        //   Math.round(this.output['finanzierungskostenFinanzmarktM2']),
+        // ];
+        // this.barChartData.datasets[4].data = [
+        //   0,
+        //   Math.round(this.output['finanzierungskostenKfwM2']),
+        // ];
         this.chart?.update();
       });
   }
@@ -47,6 +64,7 @@ export class ChartFinanzierungskostenNeubauComponent {
     },
     scales: {
       x: {
+        stacked: true,
         alignToPixels: true,
         border: {
           display: false,
@@ -64,6 +82,7 @@ export class ChartFinanzierungskostenNeubauComponent {
         },
       },
       y: {
+        stacked: true,
         alignToPixels: true,
         border: {
           display: false,
@@ -102,7 +121,7 @@ export class ChartFinanzierungskostenNeubauComponent {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Finanzierungskosten [€]',
+          text: 'Einheitskosten [€]',
         },
         display: true,
         labels: {
@@ -120,25 +139,73 @@ export class ChartFinanzierungskostenNeubauComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
         },
       },
     },
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['ohne KfW', 'mit KfW'],
+    labels: ['Kosten', 'Fin.'],
     datasets: [
       {
-        data: [0, 0],
-        label: 'Gesamt',
+        // Baukosten (Investitionskosten)
+        data: [0, null],
+        label: 'Baukosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
-        hoverBackgroundColor: this.styleService.datasets.color04.hoverBackgroundColor,
+        backgroundColor: this.styleService.datasets.color01.backgroundColor,
+        borderColor: this.styleService.datasets.color01.borderColor,
+        hoverBackgroundColor:
+          this.styleService.datasets.color01.hoverBackgroundColor,
       },
+      {
+        // Bank Kredit
+        data: [null, 0],
+        label: 'Bank Kredit',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color02.backgroundColor,
+        borderColor: this.styleService.datasets.color02.borderColor,
+        hoverBackgroundColor:
+          this.styleService.datasets.color02.hoverBackgroundColor,
+      },
+      {
+        data: [null, 0],
+        label: 'KfW Kredit',
+        borderWidth: this.styleService.datasets.borderWidth,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
+        borderColor: this.styleService.datasets.color03.borderColor,
+        hoverBackgroundColor:
+          this.styleService.datasets.color03.hoverBackgroundColor,
+      },
+      // {
+      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten Bank',
+      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      //   borderColor: 'rgb(57, 190, 193)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
+      // },
+      // {
+      //   data: [null, 0],
+      //   label: 'Finanzierungskosten KfW',
+      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      //   borderColor: 'rgb(58, 194, 104)',
+      //   borderWidth: 1,
+      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
+      // },
     ],
   };
+
+  // events
+  public chartClicked({
+    event,
+    active,
+  }: {
+    event?: ChartEvent;
+    active?: object[];
+  }): void {}
 
   public chartHovered({
     event,

@@ -1,23 +1,23 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType, Color } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
+// import { BaseChartDirective, NgChartsModule, Color } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { ChartEvent } from 'chart.js/dist/core/core.plugins';
-import { NeubauService } from '../../neubau.service';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { SanierungService } from '../../sanierung.service';
+import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
 
 @Component({
-  selector: 'app-chart-annuitaeten-neubau',
+  selector: 'app-chart-annuitaeten-sanierung',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-annuitaeten-neubau.component.html',
-  styleUrl: './chart-annuitaeten-neubau.component.css',
+  templateUrl: './chart-annuitaeten-sanierung.component.html',
+  styleUrl: './chart-annuitaeten-sanierung.component.css',
   host: {
     class: 'host-chart  host-chart6',
   },
 })
-export class ChartAnnuitaetenNeubauComponent {
+export class ChartAnnuitaetenSanierungComponent {
   // ATENTION: The logic is different from chart-tilgung.
   // It has one more item in each array so we can start on zero and current year
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
@@ -28,14 +28,15 @@ export class ChartAnnuitaetenNeubauComponent {
   kreditlaufzeit!: number;
 
   constructor(
-    private neubauService: NeubauService,
+    private sanierungService: SanierungService,
     private styleService: ChartsSettingsService
   ) {}
 
   ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$
-      .subscribe((projekt: NeubauProjekt) => {
-        // If kreditlaufzeit was updated assign new value and create labels
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
+        projekt = projekt;
+        // If kreditlaufzeit is updated assign new value and create labels
         if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
           this.kreditlaufzeit = projekt.kreditlaufzeit;
           this.chartLabels = [];
@@ -90,7 +91,8 @@ export class ChartAnnuitaetenNeubauComponent {
         this.barChartData.datasets[0].data = this.annuitaeten;
         // If KfW-Darlehen === kein Darlehen
         this.chart?.update();
-      });
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -133,7 +135,7 @@ export class ChartAnnuitaetenNeubauComponent {
             family: this.styleService.ticks.font.family,
             weight: this.styleService.ticks.font.weight,
           },
-          callback: function (value) {
+          callback: function (value, index, values) {
             return value.toLocaleString('de-DE', {
               style: 'currency',
               currency: 'EUR',
@@ -172,7 +174,12 @@ export class ChartAnnuitaetenNeubauComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
         // usePointStyle: true,
       },

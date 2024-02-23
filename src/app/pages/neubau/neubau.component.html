@@ -25,15 +25,14 @@
           <h2>Bundesförderung für Effiziente Gebäude</h2>
           <h3>Haus und Wohnung energieeffizient und nachhaltig bauen</h3>
           <p>
-            Gefördert wird der Neubau von
-            energieeffizienten und nachhaltigen Wohngebäuden Erreichen Sie die
-            Effizienz­haus-Stufe 40 mit der Zertifizierung klimafreundlicher
-            Neubau, fördern wir Ihr Vorhaben mit einem Kredit­betrag von bis
-            zu 100.000 Euro je Wohneinheit. Der maximale Kredit­betrag steigt
-            auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich ein
-            Qualitätssigel Nachhaltiges Gebäude vorweisen kann. Aktuell sind
-            die entsprechenden Haushaltsmittel erschöpft, deshalb ist keine
-            Antragstellung möglich.
+            Gefördert wird der Neubau von energieeffizienten und nachhaltigen
+            Wohngebäuden Erreichen Sie die Effizienz­haus-Stufe 40 mit der
+            Zertifizierung klimafreundlicher Neubau, fördern wir Ihr Vorhaben
+            mit einem Kredit­betrag von bis zu 100.000 Euro je Wohneinheit. Der
+            maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn
+            Ihre Immobilie zusätzlich ein Qualitätssigel Nachhaltiges Gebäude
+            vorweisen kann. Aktuell sind die entsprechenden Haushaltsmittel
+            erschöpft, deshalb ist keine Antragstellung möglich.
             <a
               target="_blank"
               href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)/"
@@ -46,6 +45,15 @@
   </div>
 </div>
 <div class="container-tool">
+  @if (this.neubauService.currentTab() === 1) {
+  <div class="numbers-mover tablet">
+    <app-numbers-projekt-neubau></app-numbers-projekt-neubau>
+  </div>
+  } @else {
+  <div class="numbers-mover tablet">
+    <app-numbers-darlehen-neubau></app-numbers-darlehen-neubau>
+  </div>
+  }
   <div class="inputs">
     <div class="tool-tab">
       <input
@@ -81,8 +89,18 @@
     </div>
   </div>
   @if (this.neubauService.currentTab() === 1) {
-  <app-dashboard-projekt-neubau></app-dashboard-projekt-neubau>
+  <div class="output">
+    <div class="numbers-mover">
+      <app-numbers-projekt-neubau></app-numbers-projekt-neubau>
+    </div>
+    <app-charts-projekt-neubau></app-charts-projekt-neubau>
+  </div>
   } @else {
-  <app-dashboard-darlehen-neubau></app-dashboard-darlehen-neubau>
+  <div class="output">
+    <div class="numbers-mover">
+      <app-numbers-darlehen-neubau></app-numbers-darlehen-neubau>
+    </div>
+    <app-dashboard-darlehen-neubau></app-dashboard-darlehen-neubau>
+  </div>
   }
 </div>

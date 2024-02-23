@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NeubauService } from './neubau.service';
 import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-neubau.component';
 import { FormDarlehenNeubauComponent } from './form-darlehen-neubau/form-darlehen-neubau.component';
-import { DashboardProjektNeubauComponent } from './dashboard-projekt-neubau/dashboard-projekt-neubau.component';
+import { ChartsProjektNeubauComponent } from './charts-projekt-neubau/charts-projekt-neubau.component';
 import { DashboardDarlehenNeubauComponent } from './dashboard-darlehen-neubau/dashboard-darlehen-neubau.component';
 import {
   animate,
@@ -12,6 +12,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { NumbersProjektNeubauComponent } from './numbers-projekt-neubau/numbers-projekt-neubau.component';
+import { NumbersDarlehenNeubauComponent } from './numbers-darlehen-neubau/numbers-darlehen-neubau.component';
 
 @Component({
   selector: 'app-neubau',
@@ -20,8 +22,10 @@ import {
     CommonModule,
     FormProjektNeubauComponent,
     FormDarlehenNeubauComponent,
-    DashboardProjektNeubauComponent,
+    ChartsProjektNeubauComponent,
     DashboardDarlehenNeubauComponent,
+    NumbersProjektNeubauComponent,
+    NumbersDarlehenNeubauComponent
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
