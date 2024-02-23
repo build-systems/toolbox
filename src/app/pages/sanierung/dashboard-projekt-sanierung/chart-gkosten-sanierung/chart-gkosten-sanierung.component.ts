@@ -29,7 +29,7 @@ export class ChartGkostenSanierungComponent implements OnInit {
     this.sanierungService.currentOutputSanierung$
       .subscribe((projekt: SanierungProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.investitionskosten),
+          Math.round(projekt.baukosten),
           0,
         ];
         this.barChartData.datasets[1].data = [
@@ -49,6 +49,8 @@ export class ChartGkostenSanierungComponent implements OnInit {
         this.chart?.update();
       });
   }
+
+  
 
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
@@ -141,7 +143,7 @@ export class ChartGkostenSanierungComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['Investition', 'Finanzierung'],
+    labels: ['Kosten', 'Fin.'],
     datasets: [
       {
         // Baukosten (Investitionskosten)
@@ -168,7 +170,7 @@ export class ChartGkostenSanierungComponent implements OnInit {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
         borderColor: this.styleService.datasets.color03.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color03.hoverBackgroundColor,
@@ -178,7 +180,7 @@ export class ChartGkostenSanierungComponent implements OnInit {
         data: [null, 0],
         label: 'KfW Zuschuss',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,

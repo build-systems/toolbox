@@ -36,7 +36,7 @@ export class DashboardProjektSanierungComponent implements OnInit {
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
-      this.investitionskosten = this.output.investitionskosten;
+      this.investitionskosten = this.output.baukosten;
       this.bankKredit = this.output.bankKredit;
       this.kfwKredit = this.output.kfwKredit;
       this.kfwZuschuss = this.output.kfwZuschuss;

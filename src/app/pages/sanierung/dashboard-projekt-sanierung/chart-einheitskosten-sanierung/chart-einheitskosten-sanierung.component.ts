@@ -17,9 +17,8 @@ import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
     class: 'host-chart col-start-5 col-span-2',
   },
 })
-export class ChartEinheitskostenSanierungComponent  implements OnInit {
+export class ChartEinheitskostenSanierungComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
 
   constructor(
     private sanierungService: SanierungService,
@@ -27,8 +26,8 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$
-      .subscribe((projekt: SanierungProjekt) => {
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
         this.barChartData.datasets[0].data = [
           Math.round(projekt.investitionskostenProBau),
           0,
@@ -48,7 +47,8 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
         // this.barChartData.datasets[4].data = [0, Math.round(this.output['finanzierungskostenFinanzmarktM2'])];
         // this.barChartData.datasets[5].data = [0, Math.round(this.output['finanzierungskostenKfwM2'])];
         this.chart?.update();
-      });
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -136,14 +136,18 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
       tooltip: {
         callbacks: {
           label: (item) =>
-            `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['Investition', 'Finanzierung'],
+    labels: ['Kosten', 'Fin.'],
     datasets: [
       {
         // Baukosten (Investitionskosten)
@@ -169,17 +173,17 @@ export class ChartEinheitskostenSanierungComponent  implements OnInit {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor,
-        borderColor: this.styleService.datasets.color03.borderColor,
-        hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
+          borderColor: this.styleService.datasets.color03.borderColor,
+          hoverBackgroundColor:
+            this.styleService.datasets.color03.hoverBackgroundColor,
       },
       {
         // KfW Zuschuss
         data: [null, 0],
         label: 'KfW Zuschuss',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,

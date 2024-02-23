@@ -147,7 +147,7 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['Investition', 'Finanzierung'],
+    labels: ['Kosten', 'Fin.'],
     datasets: [
       {
         // Baukosten (Investitionskosten)
@@ -173,7 +173,7 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
         borderColor: this.styleService.datasets.color03.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color03.hoverBackgroundColor,

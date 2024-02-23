@@ -809,7 +809,7 @@ describe('SanierungService', () => {
   it('should update Investitionskosten = 600000 € if Wohnflaeche is 200 m² and gestehungskosten is 3000 €/m²', () => {
     const wohnflaeche = 200;
     const gestehungskosten = 3000;
-    const result = service.updateInvestitionskosten(
+    const result = service.updateBaukosten(
       wohnflaeche,
       gestehungskosten
     );
@@ -819,7 +819,7 @@ describe('SanierungService', () => {
   it('should update Investitionskosten pro bau = 300000 € when Investitionskosten is 600000 and Anzahl Wohnungen is 2', () => {
     const investitionskosten = 600000;
     const anzahlWohnungen = 2;
-    const result = service.updateInvestitionskostenProBau(
+    const result = service.updateBaukostenProBau(
       investitionskosten,
       anzahlWohnungen
     );

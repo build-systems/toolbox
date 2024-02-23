@@ -209,7 +209,7 @@ export class ChartTilgungNeubauComponent {
         data: this.repaymentTotal,
         fill: 'start',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor:this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,
@@ -217,7 +217,7 @@ export class ChartTilgungNeubauComponent {
         pointRadius: 2,
         pointBorderColor: this.styleService.datasets.color04.borderColor,
         pointBackgroundColor:
-          this.styleService.datasets.color04.backgroundColor,
+          this.styleService.datasets.color04.backgroundColor01,
       },
     ],
   };

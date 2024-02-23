@@ -38,7 +38,7 @@ export class DashboardDarlehenSanierungComponent implements OnInit {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
       this.kfwZuschuss = this.output.kfwZuschuss;
-      this.investitionskosten = this.output.investitionskosten;
+      this.investitionskosten = this.output.baukosten;
       this.finanzierungskostenFinanzmarkt =
         this.output.finanzierungskostenBank;
       this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;

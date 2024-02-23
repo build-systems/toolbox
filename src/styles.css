@@ -181,7 +181,7 @@ li {
 
 .arrow-and-h1 {
   display: flex;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   cursor: pointer;
   align-items: center;
 }
@@ -1182,7 +1182,11 @@ input[type="number"]:disabled:hover {
   }
 }
 
-@media screen and (max-width: 1200px) {
+span.nowrap {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 1210px) {
   .container-tool {
     display: flex;
     flex-direction: column;

@@ -433,20 +433,20 @@ export class SanierungService {
   }
 
   // Investitionskosten [€]
-  private _investitionskosten = 0;
-  updateInvestitionskosten(
+  private _baukosten = 0;
+  updateBaukosten(
     wohnflaeche: number,
     gestehungskosten: number
   ): number {
     return wohnflaeche * gestehungskosten;
   }
 
-  private _investitionskostenProBau = 0;
-  updateInvestitionskostenProBau(
-    investitionskosten: number,
+  private _baukostenProBau = 0;
+  updateBaukostenProBau(
+    baukosten: number,
     anzahlWohnungen: number
   ) {
-    return investitionskosten / anzahlWohnungen;
+    return baukosten / anzahlWohnungen;
   }
 
   // #04
@@ -635,12 +635,12 @@ export class SanierungService {
       this._finanzierungskostenBank,
       this.wohnflaeche
     );
-    this._investitionskosten = this.updateInvestitionskosten(
+    this._baukosten = this.updateBaukosten(
       this.wohnflaeche,
       this._gestehungskosten
     );
-    this._investitionskostenProBau = this.updateInvestitionskostenProBau(
-      this._investitionskosten,
+    this._baukostenProBau = this.updateBaukostenProBau(
+      this._baukosten,
       this.anzahlWohnungen
     );
     this._gbAnnuitaet = this.updateGbAnnuitaet(
@@ -721,8 +721,8 @@ export class SanierungService {
         finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenBank: this._finanzierungskostenBank,
         finanzierungskostenBankM2: this._finanzierungskostenBankM2,
-        investitionskosten: this._investitionskosten,
-        investitionskostenProBau: this._investitionskostenProBau,
+        baukosten: this._baukosten,
+        investitionskostenProBau: this._baukostenProBau,
         kfwZuschussPercentage: this._kfwZuschussPercentage,
         kfwZuschuss: this._kfwZuschuss,
         kfwZuschussM2: this._kfwZuschussM2,
@@ -734,7 +734,6 @@ export class SanierungService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
-    console.log(this.outputSanierung);
   }
 
   public reset() {

@@ -187,7 +187,7 @@ export class ChartAnnuitaetenNeubauComponent {
         data: this.annuitaeten,
         pointStyle: 'circle',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
@@ -26,6 +26,8 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
+     
+
       this.barChartData.datasets[0].data = [
         Math.round(projekt.gestehungskosten),
         0,
@@ -114,7 +116,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Gesamtkosten [€ / m²]',
+          text: 'Gesamtkosten [€/m²]',
         },
         display: true,
         labels: {
@@ -140,7 +142,8 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
   };
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['Investition', 'Finanzierung'],
+    labels: ['Kosten', 'Fin.'],
+    // labels: ['Investition', 'Finanzierung'],
     datasets: [
       {
         // Baukosten (Investitionskosten)
@@ -167,7 +170,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor,
+        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
         borderColor: this.styleService.datasets.color03.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color03.hoverBackgroundColor,
@@ -177,7 +180,7 @@ export class ChartGkostenM2SanierungComponent implements OnInit {
         data: [null, 0],
         label: 'KfW Zuschuss',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,

@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType, Color } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
+// import { BaseChartDirective, NgChartsModule, Color } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { SanierungService } from '../../sanierung.service';
 import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
@@ -72,7 +73,7 @@ export class ChartAnnuitaetenSanierungComponent {
         if (projekt.bankDarlehen === 'Annuitäten') {
           this.annuitaeten = this.annuitaeten.map(
             (num) => num + projekt.annuitaetBank
-            );
+          );
         } else if (projekt.bankDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             if (i === this.kreditlaufzeit - 1) {
@@ -173,7 +174,12 @@ export class ChartAnnuitaetenSanierungComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
         // usePointStyle: true,
       },
@@ -188,7 +194,7 @@ export class ChartAnnuitaetenSanierungComponent {
         data: this.annuitaeten,
         pointStyle: 'circle',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor,
+        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
         borderColor: this.styleService.datasets.color04.borderColor,
         hoverBackgroundColor:
           this.styleService.datasets.color04.hoverBackgroundColor,

@@ -46,7 +46,7 @@ export interface SanierungProjekt {
   finanzierungskostenKfwM2: number;
   finanzierungskostenBank: number;
   finanzierungskostenBankM2: number;
-  investitionskosten: number;
+  baukosten: number;
   investitionskostenProBau: number;
   kfwZuschussPercentage: number;
   kfwZuschuss: number;
