@@ -1252,6 +1252,10 @@ span.nowrap {
 }
 
 @media screen and (max-width: 850px) {
+  h1 { 
+    line-height: 100%;
+  }
+  
   .card {
     flex-basis: 40%;
   }
