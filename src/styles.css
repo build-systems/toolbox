@@ -1256,6 +1256,10 @@ span.nowrap {
     line-height: 100%;
   }
   
+  .arrow {
+    margin-top: 0;
+    }
+  
   .card {
     flex-basis: 40%;
   }
