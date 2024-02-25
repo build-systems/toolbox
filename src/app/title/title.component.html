@@ -1,0 +1,39 @@
+<div class="title" #top (click)="toggleExpand()">
+    <div class="arrow-and-h1">
+      <div class="arrow-container">
+        <div class="arrow">
+          <span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'"
+            >&#9658;</span
+          >
+        </div>
+      </div>
+      <h1>{{ title() }}</h1>
+    </div>
+    <div class="kfw-info">
+      <div class="kfw-text">
+        <div
+          class="kfw-description"
+          [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"
+        >
+          <div class="kfw-number-container">
+            <div class="kfw-number">
+              <div class="kfw-id">KfW id</div>
+              {{ kfwId() }}
+            </div>
+          </div>
+          <div>
+            <h2>{{ kfwH2() }}</h2>
+            <h3>{{ kfwH3() }}</h3>
+            <p>
+              {{ kfwDescription() }}
+              <a
+                target="_blank"
+                [href]="kfwLink()"
+                >KfW Seite ↗</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

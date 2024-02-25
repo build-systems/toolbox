@@ -14,12 +14,14 @@ import {
 } from '@angular/animations';
 import { NumbersProjektNeubauComponent } from './numbers-projekt-neubau/numbers-projekt-neubau.component';
 import { NumbersDarlehenNeubauComponent } from './numbers-darlehen-neubau/numbers-darlehen-neubau.component';
+import { TitleComponent } from '../../title/title.component';
 
 @Component({
   selector: 'app-neubau',
   standalone: true,
   imports: [
     CommonModule,
+    TitleComponent,
     FormProjektNeubauComponent,
     FormDarlehenNeubauComponent,
     ChartsProjektNeubauComponent,
@@ -67,7 +69,13 @@ export class NeubauComponent {
   // for example, FormProjektComponent.ts has the form-projekt.service.ts
   // This top component has types at neubauprojekt.ts
 
-  title = 'Neubau';
+  // Information for the title section
+  title = 'Klimafreundlicher Neubau von Wohngebäuden';
+  kfwId = '297/298';
+  kfwH2 = 'Bundesförderung für Effiziente Gebäude';
+  kfwH3 = 'Haus und Wohnung energieeffizient und nachhaltig bauen';
+  kfwDescription = 'Gefördert wird der Neubau von energieeffizienten und nachhaltigen Wohngebäuden Erreichen Sie die Effizienz­haus-Stufe 40 mit der Zertifizierung klimafreundlicher Neubau, fördern wir Ihr Vorhaben mit einem Kredit­betrag von bis zu 100.000 Euro je Wohneinheit. Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich ein Qualitätssigel Nachhaltiges Gebäude vorweisen kann. Aktuell sind die entsprechenden Haushaltsmittel erschöpft, deshalb ist keine Antragstellung möglich.';
+  kfwLink = 'https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)/';
 
   // To scroll to element
   scroll(el: HTMLElement) {

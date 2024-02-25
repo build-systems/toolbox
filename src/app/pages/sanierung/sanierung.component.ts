@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormProjektSanierungComponent } from './form-projekt-sanierung/form-projekt-sanierung.component';
 import { SanierungService } from './sanierung.service';
+import { FormProjektSanierungComponent } from './form-projekt-sanierung/form-projekt-sanierung.component';
 import { FormDarlehenSanierungComponent } from './form-darlehen-sanierung/form-darlehen-sanierung.component';
 import { ChartsProjektSanierungComponent } from './charts-projekt-sanierung/charts-projekt-sanierung.component';
 import { ChartsDarlehenSanierungComponent } from './charts-darlehen-sanierung/charts-darlehen-sanierung.component';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NumbersProjektSanierungComponent } from './numbers-projekt-sanierung/numbers-projekt-sanierung.component';
 import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/numbers-darlehen-sanierung.component';
+import { TitleComponent } from '../../title/title.component';
 
 @Component({
   selector: 'app-sanierung',
   standalone: true,
   imports: [
     CommonModule,
+    TitleComponent,
     FormProjektSanierungComponent,
     FormDarlehenSanierungComponent,
     ChartsProjektSanierungComponent,
@@ -26,62 +27,26 @@ import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/
   host: {
     class: 'host-tool',
   },
-  animations: [
-    trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0',
-        backgroundColor: "#222",
-        padding: '0 1rem',
-      })),
-      state('expanded', style({
-        height: '*',
-      })),
-      transition('collapsed => expanded', [
-        animate('300ms ease-out')
-      ]),
-      transition('expanded => collapsed', [
-        animate('300ms ease-in')
-      ]),
-    ]),
-    trigger('rotateArrow', [
-      state('collapsed', style({
-        transform: 'rotate(0deg)'
-      })),
-      state('expanded', style({
-        transform: 'rotate(90deg)'
-      })),
-      transition('collapsed <=> expanded', [
-        animate('300ms ease-out')
-      ]),
-    ])
-  ],
 })
 export class SanierungComponent {
   // ATTENTION: the page is composed of multiple components, each one has a service.
   // for example, FormProjektComponent.ts has the form-projekt.service.ts
   // This top component has types at sanierungprojekt.ts
 
-  title = 'Sanierung';
+  // Information for the title
+  title = 'Sanierung Wohngebäude';
+  kfwId = '261';
+  kfwH2 = 'Bundesförderung für Effiziente Gebäude';
+  kfwH3 = 'Haus und Wohnung energieeffizient sanieren';
+  kfwDescription = 'Gefördert wird die Komplettsanierung zum Effizienzhaus oder die Umwidmung von Nichtwohnfläche in Wohnfläche. Erreichen Sie die Effizienz­haus-Stufe 85 oder besser, fördern wir Ihr Vorhaben mit einem Kredit­betrag von bis zu 120.000 Euro je Wohneinheit. Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich die Kriterien für eine Erneuerbare-Energien-Klasse oder eine Nachhaltigkeits-Klasse erreicht. In Abhängigkeit zur Effizienzhaus-Stufe erhalten sie zudem einen Tilgungszuschuss von bis zu 30%.';
+  kfwLink = 'https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/';
 
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
   }
 
-  isExpanded: boolean = false;
-
-  toggleExpand() {
-    this.isExpanded = !this.isExpanded;
-  }
-
   constructor(public sanierungService: SanierungService) {
-    // Reset was created to make sure the outputs match the form values
-    // After doing some changes, going to another route and then coming back, the outputs were the same
-    // while the form had reset to default values
-    // Another solution would be to restore the previous values. But that would require more work.
-    // The main problem is that the forms are being reused across different projects/routes
-    // So it would require separating the forms.
-    // I think it could easily be done using signals
-    // sanierungService.reset();
+    // Service is used to check the current tab (Projekt or Darlehen).
   }
 }
