@@ -859,8 +859,8 @@ input[type="number"]:disabled:hover {
 
 .dashboard-numbers {
   display: flex;
-  flex-basis: 100px;
-  min-width: 200px;
+  /* flex-basis: 100px; */
+  /* min-width: 200px; */
   gap: calc(var(--layout-padding) / 2);
 }
 
@@ -1271,6 +1271,10 @@ span.nowrap {
     height: 1.5rem;
     width: 1.5rem;
   }
+
+  /* .dashboard-numbers { 
+    flex-direction: column;
+  } */
   
   .card {
     flex-basis: 40%;

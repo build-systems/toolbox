@@ -29,7 +29,7 @@ export class ChartEinheitskostenSanierungComponent implements OnInit {
     this.sanierungService.currentOutputSanierung$.subscribe(
       (projekt: SanierungProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.investitionskostenProBau),
+          Math.round(projekt.baukostenProBau),
           0,
         ];
         this.barChartData.datasets[1].data = [

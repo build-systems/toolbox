@@ -1,31 +1,40 @@
-<div class="dashboard-numbers">
-    <div
-      title="Baukosten: {{
-        investitionskosten | currency : 'EUR' : 'symbol' : '3.0' : 'de'
-      }} "
-      class="card"
-    >
-      <h3>Baukosten</h3>
-      <div>
-        {{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
-      </div>
-    </div>
-    <div
-      title="Bank Kredit: {{
-        bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-      }}"
-      class="card"
-    >
-      <h3>Bank Kredit</h3>
-      <div>{{ bankKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
-    </div>
-    <div
-      title="KfW Kredit: {{
-        kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-      }}"
-      class="card"
-    >
-      <h3>KfW Kredit</h3>
-      <div>{{ kfwKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
-    </div>
+<div
+  title="Baukosten: {{
+    baukosten | currency : 'EUR' : 'symbol' : '3.0' : 'de'
+  }} "
+  class="card"
+>
+  <h3>Baukosten</h3>
+  <div>
+    {{ baukosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
   </div>
+</div>
+<div
+  title="Bank Kredit: {{
+    bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
+  }}"
+  class="card"
+>
+  <h3>Bank Kredit</h3>
+  <div>{{ bankKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
+</div>
+<div
+  title="KfW Kredit: {{
+    kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
+  }}"
+  class="card"
+>
+  <h3>KfW Kredit</h3>
+  <div>{{ kfwKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
+</div>
+<div
+  title="KfW Kredit/WE: {{
+    KfwKreditschwelleProWe | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
+  }}"
+  class="card"
+>
+  <h3>KfW Kredit/WE</h3>
+  <div>
+    {{ KfwKreditschwelleProWe | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+  </div>
+</div>

@@ -31,7 +31,7 @@ export class ChartGkostenNeubauComponent implements OnInit {
   ngOnInit(): void {
     this.neubauService.currentOutputNeubau$.subscribe((projekt: NeubauProjekt) => {
       this.barChartData.datasets[0].data = [
-        Math.round(projekt.investitionskosten),
+        Math.round(projekt.baukosten),
         0,
       ];
       this.barChartData.datasets[1].data = [

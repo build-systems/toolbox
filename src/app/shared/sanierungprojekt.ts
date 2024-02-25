@@ -25,7 +25,8 @@ export interface SanierungProjekt {
   sollzinsKfw: number;
   kfwKreditschwelleProWe: number;
   maxKfwKredit: number;
-  gesamtgestehungskosten: number;
+  baukosten: number;
+  baukostenProBau: number;
   foerdersumme: number;
   afKfw: number;
   afBank: number;
@@ -46,8 +47,6 @@ export interface SanierungProjekt {
   finanzierungskostenKfwM2: number;
   finanzierungskostenBank: number;
   finanzierungskostenBankM2: number;
-  baukosten: number;
-  investitionskostenProBau: number;
   kfwZuschussPercentage: number;
   kfwZuschuss: number;
   kfwZuschussM2: number;

@@ -363,7 +363,7 @@ describe('NeubauService', () => {
   it('should update Gesamtgestehungskosten = 3000,000 when Gestehungskosten is 3,000 and Wohnflaeche is 1,000', () => {
     const gestehungskosten = 3000;
     const wohnflaeche = 1000;
-    const result = service.updateGesamtgestehungskosten(
+    const result = service.updateBaukosten(
       gestehungskosten,
       wohnflaeche
     );
@@ -653,7 +653,7 @@ describe('NeubauService', () => {
   it('should update investitionkosten = 10,000,000 when wohnflaeche 1,000 and gestehungskosten is 10,000', () => {
     const wohnflaeche: number = 1000;
     const gestehungskosten: number = 10_000;
-    const result = service.updateInvestitionskosten(
+    const result = service.updateBaukosten(
       wohnflaeche,
       gestehungskosten
     );
@@ -663,14 +663,14 @@ describe('NeubauService', () => {
   it('should update Investitionskosten pro m² = 500 when Investitionskosten is 500,000; and wohnflaeche is 1,000', () => {
     const investitionskosten: number = 500_000;
     const wohnflaeche: number = 1000;
-    const result = service.updateInvestitionskostenM2(investitionskosten, wohnflaeche);
+    const result = service.updateBaukostenM2(investitionskosten, wohnflaeche);
     expect(result).toBe(500);
   });
 
   it('should update Investitionskosten pro Bau = 500,000 when Investitionskosten is 5,000,000; and Anzahl Wohnungen is 10', () => {
     const investitionskosten: number = 5_000_000;
     const anzahlWohnungen: number = 10;
-    const result = service.updateInvestitionskostenProBau(investitionskosten, anzahlWohnungen);
+    const result = service.updateBaukostenProBau(investitionskosten, anzahlWohnungen);
     expect(result).toBe(500_000);
   });
 

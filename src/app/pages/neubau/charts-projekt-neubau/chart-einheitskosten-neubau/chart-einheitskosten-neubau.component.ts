@@ -32,7 +32,7 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
       .subscribe((value) => {
         this.output = value;
         this.barChartData.datasets[0].data = [
-          Math.round(this.output['investitionskostenProBau']),
+          Math.round(this.output['baukostenProBau']),
           0,
         ];
         this.barChartData.datasets[1].data = [

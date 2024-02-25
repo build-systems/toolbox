@@ -28,7 +28,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
     this.neubauService.currentOutputNeubau$.subscribe(
       (projekt: NeubauProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.investitionskostenM2),
+          Math.round(projekt.gestehungskosten),
           0,
         ];
         this.barChartData.datasets[1].data = [

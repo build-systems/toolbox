@@ -224,13 +224,21 @@ export class SanierungService {
     return anzahlWohnungen * kfwKreditschwelleProWe;
   }
 
-  // Gesamtgestehungskosten [€]
-  private _gesamtgestehungskosten = this._gestehungskosten * this.wohnflaeche;
-  updateGesamtgestehungskosten(
+  // Baukosten / Investitionskosten [€]
+  private _baukosten = this._gestehungskosten * this.wohnflaeche;
+  updateBaukosten(
     gestehungskosten: number,
     wohnflaeche: number
   ): number {
     return gestehungskosten * wohnflaeche;
+  }
+
+  private _baukostenProBau = 0;
+  updateBaukostenProBau(
+    baukosten: number,
+    anzahlWohnungen: number
+  ) {
+    return baukosten / anzahlWohnungen;
   }
 
   // Fördersumme [€]
@@ -432,23 +440,6 @@ export class SanierungService {
     return finanzierungskostenBank / wohnflaeche;
   }
 
-  // Investitionskosten [€]
-  private _baukosten = 0;
-  updateBaukosten(
-    wohnflaeche: number,
-    gestehungskosten: number
-  ): number {
-    return wohnflaeche * gestehungskosten;
-  }
-
-  private _baukostenProBau = 0;
-  updateBaukostenProBau(
-    baukosten: number,
-    anzahlWohnungen: number
-  ) {
-    return baukosten / anzahlWohnungen;
-  }
-
   // #04
   // GB: Annuität [€]
   private _gbAnnuitaet = 0;
@@ -545,17 +536,21 @@ export class SanierungService {
       this._kfwKreditschwelleProWe,
       this.anzahlWohnungen
     );
-    this._gesamtgestehungskosten = this.updateGesamtgestehungskosten(
+    this._baukosten = this.updateBaukosten(
       this._gestehungskosten,
       this.wohnflaeche
     );
+    this._baukostenProBau = this.updateBaukostenProBau(
+      this._baukosten,
+      this.anzahlWohnungen
+    );
     this._foerdersumme = this.updateFoerdersumme(
       this._maxKfwKredit,
-      this._gesamtgestehungskosten
+      this._baukosten
     );
     this._bankKredit = this.updateBankKredit(
       this._maxKfwKredit,
-      this._gesamtgestehungskosten
+      this._baukosten
     );
     this._bankKreditM2 = this.updateBankKreditM2(
       this._bankKredit,
@@ -635,14 +630,6 @@ export class SanierungService {
       this._finanzierungskostenBank,
       this.wohnflaeche
     );
-    this._baukosten = this.updateBaukosten(
-      this.wohnflaeche,
-      this._gestehungskosten
-    );
-    this._baukostenProBau = this.updateBaukostenProBau(
-      this._baukosten,
-      this.anzahlWohnungen
-    );
     this._gbAnnuitaet = this.updateGbAnnuitaet(
       this._foerdersumme,
       this._bankKredit,
@@ -700,7 +687,6 @@ export class SanierungService {
         sollzinsKfw: this._sollzinsKfw,
         kfwKreditschwelleProWe: this._kfwKreditschwelleProWe,
         maxKfwKredit: this._maxKfwKredit,
-        gesamtgestehungskosten: this._gesamtgestehungskosten,
         foerdersumme: this._foerdersumme,
         afKfw: this._afKfw,
         afBank: this._afBank,
@@ -722,7 +708,7 @@ export class SanierungService {
         finanzierungskostenBank: this._finanzierungskostenBank,
         finanzierungskostenBankM2: this._finanzierungskostenBankM2,
         baukosten: this._baukosten,
-        investitionskostenProBau: this._baukostenProBau,
+        baukostenProBau: this._baukostenProBau,
         kfwZuschussPercentage: this._kfwZuschussPercentage,
         kfwZuschuss: this._kfwZuschuss,
         kfwZuschussM2: this._kfwZuschussM2,
@@ -734,6 +720,7 @@ export class SanierungService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
+    console.log(this.outputSanierung);
   }
 
   public reset() {

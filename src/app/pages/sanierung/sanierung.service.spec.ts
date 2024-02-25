@@ -454,7 +454,7 @@ describe('SanierungService', () => {
   });
 
   it('should update Gesamtgestehungskosten multiplying gestehungskosten and wohnflaeche', () => {
-    const result = service.updateGesamtgestehungskosten(200, 3);
+    const result = service.updateBaukosten(200, 3);
     expect(result).toBe(600);
   });
 

@@ -28,7 +28,7 @@ export class NumbersDarlehenNeubauComponent implements OnInit {
   ngOnInit(): void {
     this.neubauService.currentOutputNeubau$.subscribe((value) => {
       this.output = value;
-      this.investitionskosten = this.output.investitionskosten;
+      this.investitionskosten = this.output.baukosten;
       this.sollzinsKfw = this.output.sollzinsKfw;
       this.finanzierungskostenFinanzmarkt = this.output.finanzierungskostenBank;
       this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
