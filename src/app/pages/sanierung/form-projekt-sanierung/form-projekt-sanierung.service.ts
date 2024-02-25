@@ -155,20 +155,26 @@ export class FormProjektSanierungService {
     zustandBestand: this.zustandBestand.options[0].value,
   });
 
-  // Observable and set function for user price toggle
-  private userPriceToggleSource = new BehaviorSubject<boolean>(
-    this.userPrice.disabled
-  );
-  currentUserPriceToggle$ = this.userPriceToggleSource.asObservable();
+  // // Observable and set function for user price toggle
+  // private userPriceToggleSource = new BehaviorSubject<boolean>(
+  //   this.userPrice.disabled
+  // );
+  // currentUserPriceToggle$ = this.userPriceToggleSource.asObservable();
 
-  // Here it has to be the oposite of the toggle (!data)
-  public setUserPriceToggle(data: boolean) {
-    this.userPriceToggleSource.next(!data);
-    // Disable all the following form elements
-    this.zustandBestand.options.forEach((obj) => (obj.disabled = data));
-  }
+  // // Here it has to be the oposite of the toggle (!data)
+  // public setUserPriceToggle(data: boolean) {
+  //   this.userPriceToggleSource.next(!data);
+  //   // Disable all the following form elements
+  //   this.zustandBestand.options.forEach((obj) => (obj.disabled = data));
+  // }
 
   constructor(private fb: FormBuilder) {
+    this.projektFormSanierung
+      .get('userPriceToggle')
+      ?.valueChanges.subscribe((value) => {
+        this.zustandBestand.options.forEach((obj) => (obj.disabled = value!));
+      });
+
     //User price
     this.projektFormSanierung
       .get('userPriceToggle')
