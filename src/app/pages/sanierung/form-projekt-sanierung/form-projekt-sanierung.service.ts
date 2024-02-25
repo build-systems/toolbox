@@ -176,6 +176,7 @@ export class FormProjektSanierungService {
     this.projektFormSanierung
       .get('userPrice')
       ?.valueChanges.subscribe((value) => {
+        // Condition to avoid non-numeric or numbers unrealistically small
         if (value && value >= this.userPrice.min) {
           // Update range input when number changes
           this.projektFormSanierung

@@ -325,7 +325,36 @@ export class FormProjektNeubauService {
         this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
         this.grundstKosten.disabled = value!;
         this.baunebenkostenKeinFin.disabled = value!;
-      });
+    });
+
+     // User Price
+     this.projektFormNeu
+     .get('userPriceRange')
+     ?.valueChanges.subscribe((value) => {
+       // Update number input when range changes
+       this.projektFormNeu
+         .get('userPrice')
+         ?.setValue(value, { emitEvent: false });
+     });
+
+   this.projektFormNeu
+     .get('userPrice')
+     ?.valueChanges.subscribe((value) => {
+       // Condition to avoid non-numeric or numbers unrealistically small
+       if (value && value >= this.userPrice.min) {
+         // Update range input when number changes
+         this.projektFormNeu
+           .get('userPriceRange')
+           ?.setValue(value, { emitEvent: false });
+       } else {
+         this.projektFormNeu
+           .get('userPriceRange')
+           ?.setValue(this.userPrice.min, { emitEvent: false });
+         this.projektFormNeu
+           .get('userPrice')
+           ?.setValue(this.userPrice.min, { emitEvent: false });
+       }
+     });
 
     // Wohnflaeche
     this.projektFormNeu
