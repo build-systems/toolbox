@@ -1314,6 +1314,10 @@ span.nowrap {
     padding-top: 0;
   }
 
+  .kfw-description {
+    flex-direction: column;
+  }
+
   .container-tool {
     overflow-y: visible;
     padding-left: var(--mobile-padding);
