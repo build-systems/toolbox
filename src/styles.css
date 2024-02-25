@@ -1337,4 +1337,13 @@ span.nowrap {
     display: flex;
     flex-direction: column;
   }
+  
+  .card {
+    & h3 {
+      font-size: 0.85rem;
+    }
+   & div {
+      font-size: 1.25rem;
+    }
+  }
 }
