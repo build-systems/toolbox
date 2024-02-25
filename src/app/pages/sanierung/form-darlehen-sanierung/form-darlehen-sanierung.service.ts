@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormDarlehenSanierungService {
-  // Kalkulationszinssatz (Realzins) centralized form values
-  kalkRealzins = {
-    min: 0.1,
+  // Zinssatz Hausbank (Sollzins) old Kalkulationszinssatz (Realzins)
+  zinssatzBank: zinssatzBankObj = {
     value: 4,
+    min: 0.1,
     max: 8,
     step: 0.1,
+    title: 'Zinssatz Hausbank (Sollzins) [%] ',
+    description: 'Zinssatz Hausbank (Sollzins) description',
+    disabled: false
   };
 
   // Kreditlaufzeit centralized form values
   // KfW 261, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
-  kreditlaufzeit = {
-    min: 4,
+
+  kreditlaufzeit: KreditlaufzeitObj = {
     value: 10,
+    min: 4,
     max: 30,
     step: 1,
+    title: 'Kreditlaufzeit [a] ',
+    description: 'Kreditlaufzeit description',
+    disabled: false
   };
 
   // KfW-Darlehen centralized form values
@@ -40,26 +46,26 @@ export class FormDarlehenSanierungService {
       { id: 'bankd1', value: 'Annuitäten', disabled: false },
       { id: 'bankd2', value: 'Endfälliges', disabled: false },
     ],
-    title: 'Bank-Darlehen',
+    title: 'Bank-Darlehen ',
     description: 'Bank-Darlehen description',
   };
 
   darlehenForm = this.fb.group({
-    kalkRealzinsRange: [
-      this.kalkRealzins.value,
+    zinssatzBankRange: [
+      this.zinssatzBank.value,
       [
         Validators.required,
-        Validators.min(this.kalkRealzins.min),
-        Validators.max(this.kalkRealzins.max),
+        Validators.min(this.zinssatzBank.min),
+        Validators.max(this.zinssatzBank.max),
       ],
     ],
-    kalkRealzins: [
-      this.kalkRealzins.value.toFixed(2),
+    zinssatzBank: [
+      this.zinssatzBank.value.toFixed(2),
       {
         Validators: [
           Validators.required,
-          Validators.min(this.kalkRealzins.min),
-          Validators.max(this.kalkRealzins.max),
+          Validators.min(this.zinssatzBank.min),
+          Validators.max(this.zinssatzBank.max),
         ],
         updateOn: 'blur',
       },
@@ -90,37 +96,37 @@ export class FormDarlehenSanierungService {
   constructor(private fb: FormBuilder) {
     // Kalkulationszinssatz (Realzins)
     this.darlehenForm
-      .get('kalkRealzinsRange')
+      .get('zinssatzBankRange')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           // Update number input when range input changes
           this.darlehenForm
-            .get('kalkRealzins')
+            .get('zinssatzBank')
             ?.setValue(value.toFixed(2), { emitEvent: false });
         }
       });
 
-    this.darlehenForm.get('kalkRealzins')?.valueChanges.subscribe((value) => {
+    this.darlehenForm.get('zinssatzBank')?.valueChanges.subscribe((value) => {
       if (value && Number(value) >= this.kreditlaufzeit.min) {
         const valueNumber = Number(value);
         // Update range input when number input changes
         this.darlehenForm
-          .get('kalkRealzinsRange')
+          .get('zinssatzBankRange')
           ?.setValue(valueNumber, { emitEvent: false });
         this.darlehenForm
-          .get('kalkRealzins')
+          .get('zinssatzBank')
           ?.setValue(valueNumber.toFixed(2), {
             emitEvent: false,
           });
       } else {
         this.darlehenForm
-          .get('kalkRealzins')
-          ?.setValue(this.kalkRealzins.min.toFixed(2), {
+          .get('zinssatzBank')
+          ?.setValue(this.zinssatzBank.min.toFixed(2), {
             emitEvent: false,
           });
         this.darlehenForm
-          .get('kalkRealzinsRange')
-          ?.setValue(this.kalkRealzins.min, { emitEvent: false });
+          .get('zinssatzBankRange')
+          ?.setValue(this.zinssatzBank.min, { emitEvent: false });
       }
     });
 

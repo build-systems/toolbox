@@ -10,7 +10,7 @@ export interface SanierungProjekt {
   zustandBestand: ZustandBestand;
   nachhaltigkeitskriterien: Nachhaltigkeitskriterien;
   // Dalehen
-  kalkRealzins: number;
+  zinssatzBank: number;
   kreditlaufzeit: number;
   kfWDarlehen: KfWDarlehen;
   bankDarlehen: BankDarlehen;
@@ -22,7 +22,7 @@ export interface SanierungProjekt {
   serSanBonus: number;
   gestehungskosten: number;
   nrKredit: number;
-  sollzinsKfw: number;
+  zinssatzKfw: number;
   kfwKreditschwelleProWe: number;
   maxKfwKredit: number;
   baukosten: number;

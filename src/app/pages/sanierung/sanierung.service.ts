@@ -29,7 +29,7 @@ export class SanierungService {
     this.formProjektService.zustandBestand.options[0].value;
 
   // Initial darlehen parameters
-  kalkRealzins: number = this.formDarlehenService.kalkRealzins.value / 100; // Conersion from percentage to fraction multiplier
+  zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
@@ -56,7 +56,7 @@ export class SanierungService {
       }
     );
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
-      this.kalkRealzins = value.kalkRealzinsRange! / 100; // Conersion from percentage to fraction multiplier
+      this.zinssatzBank = value.zinssatzBankRange! / 100; // Conersion from percentage to fraction multiplier
       this.kreditlaufzeit = value.kreditlaufzeitRange!;
       this.kfWDarlehen = value.kfWDarlehen!;
       this.bankDarlehen = value.bankDarlehen!;
@@ -192,8 +192,8 @@ export class SanierungService {
   }
 
   // Sollzins KFW [%]
-  private _sollzinsKfw = 0;
-  updateSollzinsKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
+  private _zinssatzKfw = 0;
+  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
     if (kfWDarlehen === 'Endfälliges') {
       return this.constants.sollzinsKfw_Endfälliges;
     } else if (kfWDarlehen === 'Annuitäten') {
@@ -291,14 +291,14 @@ export class SanierungService {
 
   // AF Bank [€]
   private _afBank = 0;
-  updateAfBank(kalkRealzins: number, kreditlaufzeit: number): number {
-    if (kalkRealzins === 0 || kreditlaufzeit === 0) {
+  updateAfBank(zinssatzBank: number, kreditlaufzeit: number): number {
+    if (zinssatzBank === 0 || kreditlaufzeit === 0) {
       return 0;
     } else {
       return (
-        ((kalkRealzins) *
-          Math.pow(1 + kalkRealzins, kreditlaufzeit)) /
-        (Math.pow(1 + kalkRealzins, kreditlaufzeit) - 1)
+        ((zinssatzBank) *
+          Math.pow(1 + zinssatzBank, kreditlaufzeit)) /
+        (Math.pow(1 + zinssatzBank, kreditlaufzeit) - 1)
       );
     }
   }
@@ -382,10 +382,10 @@ export class SanierungService {
   private _efBank = 0;
   updateEfBank(
     bankKredit: number,
-    kalkRealzins: number,
+    zinssatzBank: number,
     kreditlaufzeit: number
   ): number {
-    return (kalkRealzins * bankKredit) * kreditlaufzeit;
+    return (zinssatzBank * bankKredit) * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -458,13 +458,13 @@ export class SanierungService {
   // GB: Endfaelliges [€]
   private _gbEndfaelliges = 0;
   updateGbEndfaelliges(
-    kalkRealzins: number,
+    zinssatzBank: number,
     foerdersumme: number,
     bankKredit: number,
     kreditlaufzeit: number
   ): number {
     return (
-      (kalkRealzins * (foerdersumme + bankKredit)) * kreditlaufzeit
+      (zinssatzBank * (foerdersumme + bankKredit)) * kreditlaufzeit
     );
   }
 
@@ -527,7 +527,7 @@ export class SanierungService {
       this.zustandBestand
     );
     this._nrKredit = this.updateNrKredit(this.kreditlaufzeit);
-    this._sollzinsKfw = this.updateSollzinsKfw(
+    this._zinssatzKfw = this.updateZinssatzKfw(
       this.kfWDarlehen,
       this._nrKredit
     );
@@ -560,8 +560,8 @@ export class SanierungService {
       this._bankKredit,
       this.anzahlWohnungen
     );
-    this._afKfw = this.updateAfKfW(this._sollzinsKfw, this.kreditlaufzeit);
-    this._afBank = this.updateAfBank(this.kalkRealzins, this.kreditlaufzeit);
+    this._afKfw = this.updateAfKfW(this._zinssatzKfw, this.kreditlaufzeit);
+    this._afBank = this.updateAfBank(this.zinssatzBank, this.kreditlaufzeit);
     this._kfwZuschussPercentage = this.updateKfwZuschussPercentage(
       this._tilgungszuschuss,
       this._eeBonus,
@@ -600,12 +600,12 @@ export class SanierungService {
     );
     this._efKfW = this.updateEfKfw(
       this._kfwKredit,
-      this._sollzinsKfw,
+      this._zinssatzKfw,
       this.kreditlaufzeit
     );
     this._efBank = this.updateEfBank(
       this._bankKredit,
-      this.kalkRealzins,
+      this.zinssatzBank,
       this.kreditlaufzeit
     );
     this._finanzierungskostenKfw = this.updateFinanzierungskostenKfw(
@@ -637,7 +637,7 @@ export class SanierungService {
       this.kreditlaufzeit
     );
     this._gbEndfaelliges = this.updateGbEndfaelliges(
-      this.kalkRealzins,
+      this.zinssatzBank,
       this._foerdersumme,
       this._bankKredit,
       this.kreditlaufzeit
@@ -672,7 +672,7 @@ export class SanierungService {
         zustandBestand: this.zustandBestand,
         nachhaltigkeitskriterien: this._nachhaltigkeitskriterien,
         // Dalehen
-        kalkRealzins: this.kalkRealzins,
+        zinssatzBank: this.zinssatzBank,
         kreditlaufzeit: this.kreditlaufzeit,
         kfWDarlehen: this.kfWDarlehen,
         bankDarlehen: this.bankDarlehen,
@@ -684,7 +684,7 @@ export class SanierungService {
         serSanBonus: this._serSanBonus,
         gestehungskosten: this._gestehungskosten,
         nrKredit: this._nrKredit,
-        sollzinsKfw: this._sollzinsKfw,
+        zinssatzKfw: this._zinssatzKfw,
         kfwKreditschwelleProWe: this._kfwKreditschwelleProWe,
         maxKfwKredit: this._maxKfwKredit,
         foerdersumme: this._foerdersumme,
@@ -737,7 +737,7 @@ export class SanierungService {
     // this.eeKlasse = this.formProjektService.eeKlasse.value;
 
     // Darlehen parameters
-    this.kalkRealzins = this.formDarlehenService.kalkRealzins.value;
+    this.zinssatzBank = this.formDarlehenService.zinssatzBank.value;
     this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
     this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
     this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;

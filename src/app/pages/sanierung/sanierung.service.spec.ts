@@ -405,19 +405,19 @@ describe('SanierungService', () => {
 
   it('should update Sollzins-KfW = sollzinsKfw_Endfälliges constant if "Endfälliges" is selected', () => {
     const mockNrKredit = 1;
-    const result = service.updateSollzinsKfw('Endfälliges', mockNrKredit);
+    const result = service.updateZinssatzKfw('Endfälliges', mockNrKredit);
     expect(result).toBe(constants.sollzinsKfw_Endfälliges);
   });
 
   it('should update Sollzins-KfW = NR Kredit if "Annuitäten" is selected', () => {
     const mockNrKredit = 1;
-    const result = service.updateSollzinsKfw('Annuitäten', mockNrKredit);
+    const result = service.updateZinssatzKfw('Annuitäten', mockNrKredit);
     expect(result).toBe(mockNrKredit);
   });
 
   it('should update Sollzins-KfW = zero if "kein" is selected', () => {
     const mockNrKredit = 1;
-    const result = service.updateSollzinsKfw('kein', mockNrKredit);
+    const result = service.updateZinssatzKfw('kein', mockNrKredit);
     expect(result).toBe(0);
   });
 

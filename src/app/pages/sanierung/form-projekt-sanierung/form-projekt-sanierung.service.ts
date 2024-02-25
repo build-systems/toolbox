@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,8 +44,8 @@ export class FormProjektSanierungService {
       { id: 'enstd3', value: 'EH 70', disabled: false },
       { id: 'enstd4', value: 'EH 85', disabled: false },
     ],
-    title: 'Energiestandard ',
-    description: 'Energiestandard description',
+    title: 'Stufe Energieeffizienzhaus ',
+    description: 'Stufe Energieeffizienzhaus description',
   };
 
   // Zusätzliche Nachhaltigkeitskriterien
@@ -63,7 +62,7 @@ export class FormProjektSanierungService {
 
   // This will be converted to the ABCDEFGH energieaussweis
   worstPerformingBuilding: WorstPerformingBuildingObj = {
-    value: true,
+    value: false,
     title: 'Worst Performing Building ',
     description:
       'Ein "Worst Performing Building" ist ein Gebäude, das hinsichtlich des energetischen Sanierungs\u00ADzustands zu den schlechtesten 25% der Gebäude in Deutschland gehört. Erfüllen Sie mit Ihrer Immobilie die Anforderungen an ein Worst Performing Building? Dann steigt Ihr Tilgungs\u00ADzuschuss um 10 Prozentpunkte (kfw.de)',
@@ -73,7 +72,7 @@ export class FormProjektSanierungService {
   // Martin metioned this is more for big enterprises?
   // Should it be activated after a certain square meters?
   serielleSanierung: SerielleSanierungObj = {
-    value: true,
+    value: false,
     title: 'Serielle Sanierung ',
     description:
       'Das heißt, Sie verwenden vorgefertigte Bauele\u00ADmente für Fassa\u00ADde und gegebenen\u00ADfalls Dach. Erreicht Ihre Immobilie im Rahmen der Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55? Dann steigt Ihr Tilgungs\u00ADzuschuss um 15 Prozentpunkte (kfw.de)',

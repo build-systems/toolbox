@@ -123,7 +123,7 @@ type ZustandBestandObj = {
 };
 
 // Kellergeschoss
-type Kellergeschoss = 'Vorhanden' | 'Nicht Vorhanden';
+type Kellergeschoss = 'Geplant' | 'Nicht geplant';
 type KellergeschossOptions = {
   id: string;
   value: Kellergeschoss;
@@ -151,7 +151,7 @@ type StellplaetzeObj = {
 };
 
 // Aufzugsanlage
-type Aufzugsanlage = 'Vorhanden' | 'Nicht Vorhanden';
+type Aufzugsanlage = 'Geplant' | 'Nicht geplant';
 type AufzugsanlageOptions = {
   id: string;
   value: Aufzugsanlage;
@@ -183,7 +183,7 @@ type BarrierefreiesBauenObj = {
 };
 
 // Dachbegruenung
-type Dachbegruenung = 'Vorhanden' | 'Nicht Vorhanden';
+type Dachbegruenung = 'Geplant' | 'Nicht geplant';
 type DachbegruenungOptions = {
   id: string;
   value: Dachbegruenung;
@@ -235,6 +235,7 @@ type grundstKostenObj = {
   disabled: boolean;
 };
 
+// Baunebenkosten Kein Fin
 type baunebenkostenKeinFinObj = {
   value: number;
   min: number;
@@ -246,8 +247,8 @@ type baunebenkostenKeinFinObj = {
 };
 
 // Darlehen
-// Kalkulationszinssatz (Realzins)
-type KalkRealzinsObj = {
+// Zinssatz Hausbank (Sollzins) old Kalkulationszinssatz (Realzins)
+type zinssatzBankObj = {
   value: number;
   min: number;
   max: number;

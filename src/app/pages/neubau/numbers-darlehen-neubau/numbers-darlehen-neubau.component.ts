@@ -14,7 +14,7 @@ registerLocaleData(localeDe, 'de');
 })
 export class NumbersDarlehenNeubauComponent implements OnInit {
   investitionskosten: number = 0;
-  sollzinsKfw: number = 0;
+  zinssatzKfw: number = 0;
   finanzierungskostenFinanzmarkt: number = 0;
   finanzierungskostenKfw: number = 0;
   bankKredit: number = 0;
@@ -29,7 +29,7 @@ export class NumbersDarlehenNeubauComponent implements OnInit {
     this.neubauService.currentOutputNeubau$.subscribe((value) => {
       this.output = value;
       this.investitionskosten = this.output.baukosten;
-      this.sollzinsKfw = this.output.sollzinsKfw;
+      this.zinssatzKfw = this.output.zinssatzKfw;
       this.finanzierungskostenFinanzmarkt = this.output.finanzierungskostenBank;
       this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
       this.bankKredit = this.output.bankKredit;

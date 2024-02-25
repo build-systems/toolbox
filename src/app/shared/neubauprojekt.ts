@@ -26,14 +26,14 @@ export interface NeubauProjekt {
   aussenanlagenOut: number;
   energetischerStandard: number;
   // Dalehen
-  kalkRealzins: number;
+  zinssatzBank: number;
   kreditlaufzeit: number;
   kfWDarlehen: KfWDarlehen;
   bankDarlehen: BankDarlehen;
   // Output
   gestehungskosten: number;
   nrKredit: number;
-  sollzinsKfw: number;
+  zinssatzKfw: number;
   baukosten: number;
   baukostenProBau: number;
   kfwKreditschwelleProWe: number;

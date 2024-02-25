@@ -48,8 +48,8 @@ export class FormProjektNeubauService {
       // { id: 'enstd4', value: 'EH 100' },
       // { id: 'enstd5', value: 'EH 115' },
     ],
-    title: 'Energiestandard ',
-    description: 'Energiestandard description',
+    title: 'Stufe Energieeffizienzhaus ',
+    description: 'Stufe Energieeffizienzhaus description',
   };
 
   // Konstruktion centralized form values
@@ -94,8 +94,8 @@ export class FormProjektNeubauService {
   // Kellergeschoss
   kellergeschoss: KellergeschossObj = {
     options: [
-      { id: 'kelgesc1', value: 'Vorhanden', disabled: false },
-      { id: 'kelgesc2', value: 'Nicht Vorhanden', disabled: false },
+      { id: 'kelgesc1', value: 'Geplant', disabled: false },
+      { id: 'kelgesc2', value: 'Nicht geplant', disabled: false },
     ],
     title: 'Kellergeschoss ',
     description: 'Kellergeschoss description',
@@ -114,8 +114,8 @@ export class FormProjektNeubauService {
   // Aufzugsanlage
   aufzugsanlage: AufzugsanlageObj = {
     options: [
-      { id: 'aufanl1', value: 'Vorhanden', disabled: false },
-      { id: 'aufanl2', value: 'Nicht Vorhanden', disabled: false },
+      { id: 'aufanl1', value: 'Geplant', disabled: false },
+      { id: 'aufanl2', value: 'Nicht geplant', disabled: false },
     ],
     title: 'Aufzugsanlage ',
     description: 'Aufzugsanlage description',
@@ -144,15 +144,15 @@ export class FormProjektNeubauService {
         disabled: false,
       },
     ],
-    title: 'Barrierefreies Bauen ',
+    title: 'Barrierefreies Gebäude ',
     description: 'Barrierefreiheit description',
   };
 
   // Dachbegruenung
   dachbegruenung: DachbegruenungObj = {
     options: [
-      { id: 'dachbe1', value: 'Vorhanden', disabled: false },
-      { id: 'dachbe2', value: 'Nicht Vorhanden', disabled: false },
+      { id: 'dachbe1', value: 'Geplant', disabled: false },
+      { id: 'dachbe2', value: 'Nicht geplant', disabled: false },
     ],
     title: 'Dachbegrünung ',
     description: 'Dachbegruenung description',
@@ -472,7 +472,7 @@ export class FormProjektNeubauService {
       ?.valueChanges.subscribe((value) => {
         // If 'Nicht Vorhanden' is selected, then Tiefgarage is unsellected
         const stellplaetzeIn = this.projektFormNeu.get('stellplaetzeIn');
-        if (value === 'Nicht Vorhanden') {
+        if (value === 'Nicht geplant') {
           stellplaetzeIn?.setValue('Garage');
           this.stellplaetze.options[0].disabled = true;
           this.noKellergeschoss = true;
@@ -489,9 +489,9 @@ export class FormProjektNeubauService {
         const kellergeschossIn = this.projektFormNeu.get('kellergeschossIn');
         if (
           value === 'Tiefgarage' &&
-          kellergeschossIn?.value === 'Nicht Vorhanden'
+          kellergeschossIn?.value === 'Nicht geplant'
         ) {
-          kellergeschossIn?.setValue('Vorhanden');
+          kellergeschossIn?.setValue('Geplant');
         }
       });
 

@@ -117,7 +117,7 @@ export class ChartEinheitskostenSanierungComponent implements OnInit {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Einheitskosten [€]',
+          text: 'Kosten pro Wohneinheit [€]',
         },
         display: true,
         labels: {

@@ -336,27 +336,27 @@ describe('NeubauService', () => {
   // sollzinsKfw_Endfälliges = 1.14
 
   it('should return Sollzins-KfW Endfälliges constant = 1.14', () => {
-    expect(constants.sollzinsKfw_Endfälliges).toBe(1.14);
+    expect(constants.zinssatzKfw_Endfälliges).toBe(1.14);
   });
 
   it('should update Sollzins-KfW to Endfälliges constant when Endfälliges is selected', () => {
     const kfWDarlehen: KfWDarlehen = 'Endfälliges';
     const nrKredit = 2;
-    const result = service.updateSollzinsKfw(kfWDarlehen, nrKredit);
-    expect(result).toBe(constants.sollzinsKfw_Endfälliges);
+    const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
+    expect(result).toBe(constants.zinssatzKfw_Endfälliges);
   });
 
   it('should update Sollzins-KfW to NR-Kredit when Annuitäten is selected', () => {
     const kfWDarlehen: KfWDarlehen = 'Annuitäten';
     const nrKredit = 2;
-    const result = service.updateSollzinsKfw(kfWDarlehen, nrKredit);
+    const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
     expect(result).toBe(nrKredit);
   });
 
   it('should update Sollzins-KfW to 0 when kein is selected', () => {
     const kfWDarlehen: KfWDarlehen = 'kein';
     const nrKredit = 2;
-    const result = service.updateSollzinsKfw(kfWDarlehen, nrKredit);
+    const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
     expect(result).toBe(0);
   });
 

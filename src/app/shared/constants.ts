@@ -39,7 +39,7 @@ export class neubau {
     between11And25: 0.0198,
     moreThan25: 0.0211,
   };
-  public sollzinsKfw_Endfälliges = 0.0218;
+  public zinssatzKfw_Endfälliges = 0.0218;
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,

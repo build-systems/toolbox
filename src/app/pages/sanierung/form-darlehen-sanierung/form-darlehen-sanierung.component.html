@@ -1,28 +1,37 @@
 <form [formGroup]="formService.darlehenForm">
     <fieldset>
-      <legend title="Kalkulationszinssatz Bank Kredit (Realzins)">Kalkulationszinssatz [%] <sup>&#9432;</sup></legend>
+      <legend>{{ formService.zinssatzBank.title }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.zinssatzBank.description
+        }}</span></sup
+      ></legend>
       <span class="slidernumber">
         <input
           type="range"
-          formControlName="kalkRealzinsRange"
-          [min]="formService.kalkRealzins.min"
-          [max]="formService.kalkRealzins.max"
-          [step]="formService.kalkRealzins.step"
+          formControlName="zinssatzBankRange"
+          [min]="formService.zinssatzBank.min"
+          [max]="formService.zinssatzBank.max"
+          [step]="formService.zinssatzBank.step"
           class="slider"
         />
         <input
           type="number"
-          formControlName="kalkRealzins"
-          name="kalkRealzins"
-          [min]="formService.kalkRealzins.min"
-          [max]="formService.kalkRealzins.max"
-          [step]="formService.kalkRealzins.step"
+          formControlName="zinssatzBank"
+          name="zinssatzBank"
+          [min]="formService.zinssatzBank.min"
+          [max]="formService.zinssatzBank.max"
+          [step]="formService.zinssatzBank.step"
           (keyup.enter)="onEnterKey($event)"
         />
       </span>
     </fieldset>
     <fieldset>
-      <legend>Kreditlaufzeit <sup>&#9432;</sup></legend>
+      <legend>{{ formService.kreditlaufzeit.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.kreditlaufzeit.description
+        }}</span></sup
+      ></legend>
       <span class="slidernumber">
         <input
           type="range"
@@ -44,7 +53,12 @@
       </span>
     </fieldset>
     <fieldset class="radio-fieldset">
-      <legend>KfW-Darlehen <sup>&#9432;</sup></legend>
+      <legend>{{ formService.kfWDarlehen.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.kfWDarlehen.description
+        }}</span></sup
+      ></legend>
       <span class="radio-option" *ngFor="let item of formService.kfWDarlehen.options">
         <input
           type="radio"
@@ -63,7 +77,12 @@
       </div>
       }
     <fieldset class="radio-fieldset">
-      <legend>Bank-Darlehen <sup>&#9432;</sup></legend>
+      <legend>{{ formService.bankDarlehen.title
+      }}<sup class="tooltip"
+        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+          formService.bankDarlehen.description
+        }}</span></sup
+      ></legend>
       <span class="radio-option" *ngFor="let item of formService.bankDarlehen.options">
         <input
           type="radio"

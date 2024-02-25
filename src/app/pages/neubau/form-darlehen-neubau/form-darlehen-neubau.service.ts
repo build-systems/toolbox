@@ -10,24 +10,24 @@ export class FormDarlehenNeubauService {
   // It is a source for Neubau Service.
 
   // Kalkulationszinssatz (Realzins) centralized form values
-  kalkRealzins: KalkRealzinsObj = {
-    min: 0.1,
+  zinssatzBank: zinssatzBankObj = {
     value: 4,
+    min: 0.1,
     max: 8,
     step: 0.1,
-    title: 'Kalkulationszinssatz [%] ',
-    description: 'Kalkulationszinssatz description',
+    title: 'Zinssatz Hausbank (Sollzins) ',
+    description: 'Zinssatz Hausbank (Sollzins) description',
     disabled: false,
   };
 
   // Kreditlaufzeit centralized form values
   // KfW 298, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
   kreditlaufzeit: KreditlaufzeitObj = {
-    min: 4,
     value: 10,
+    min: 4,
     max: 35,
     step: 1,
-    title: 'Kreditlaufzeit ',
+    title: 'Kreditlaufzeit [a] ',
     description: 'Kreditlaufzeit description',
     disabled: false,
   };
@@ -55,22 +55,22 @@ export class FormDarlehenNeubauService {
 
   // Define form controls
   darlehenForm = this.fb.group({
-    kalkRealzinsRange: [
-      this.kalkRealzins.value,
+    zinssatzBankRange: [
+      this.zinssatzBank.value,
       [
         Validators.required,
-        Validators.min(this.kalkRealzins.min),
-        Validators.max(this.kalkRealzins.max),
+        Validators.min(this.zinssatzBank.min),
+        Validators.max(this.zinssatzBank.max),
       ],
     ],
-    kalkRealzins: [
+    zinssatzBank: [
       // This form control is a string to have always two decimal places using toFixed
-      this.kalkRealzins.value.toFixed(2),
+      this.zinssatzBank.value.toFixed(2),
       {
         Validators: [
           Validators.required,
-          Validators.min(this.kalkRealzins.min),
-          Validators.max(this.kalkRealzins.max),
+          Validators.min(this.zinssatzBank.min),
+          Validators.max(this.zinssatzBank.max),
         ],
         updateOn: 'blur',
       },
@@ -101,34 +101,34 @@ export class FormDarlehenNeubauService {
   constructor(private fb: FormBuilder) {
     // Kalkulationszinssatz (Realzins)
     this.darlehenForm
-      .get('kalkRealzinsRange')
+      .get('zinssatzBankRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
         if (value) {
           this.darlehenForm
-            .get('kalkRealzins')
+            .get('zinssatzBank')
             ?.setValue(value.toFixed(2), { emitEvent: false });
         }
       });
 
-    this.darlehenForm.get('kalkRealzins')?.valueChanges.subscribe((value) => {
+    this.darlehenForm.get('zinssatzBank')?.valueChanges.subscribe((value) => {
       // Update range input when number input changes
-      if (value && Number(value) >= this.kalkRealzins.min) {
+      if (value && Number(value) >= this.zinssatzBank.min) {
         const valueNumber = Number(value);
         this.darlehenForm
-          .get('kalkRealzinsRange')
+          .get('zinssatzBankRange')
           ?.setValue(valueNumber, { emitEvent: false });
         this.darlehenForm
-          .get('kalkRealzins')
+          .get('zinssatzBank')
           ?.setValue(valueNumber.toFixed(2), { emitEvent: false });
       } else {
         // Prevent non-realistic values and non-suported formats
         this.darlehenForm
-          .get('kalkRealzinsRange')
-          ?.setValue(this.kalkRealzins.min, { emitEvent: false });
+          .get('zinssatzBankRange')
+          ?.setValue(this.zinssatzBank.min, { emitEvent: false });
         this.darlehenForm
-          .get('kalkRealzins')
-          ?.setValue(this.kalkRealzins.min.toFixed(2), { emitEvent: false });
+          .get('zinssatzBank')
+          ?.setValue(this.zinssatzBank.min.toFixed(2), { emitEvent: false });
       }
     });
 
