@@ -32,16 +32,16 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
       .subscribe((value) => {
         this.output = value;
         this.barChartData.datasets[0].data = [
-          Math.round(this.output['baukostenProBau']),
+          Math.round(this.output.investitionkostenProBau),
           0,
         ];
         this.barChartData.datasets[1].data = [
           0,
-          Math.round(this.output['bankKreditProBau']),
+          Math.round(this.output.bankKreditProBau),
         ];
         this.barChartData.datasets[2].data = [
           0,
-          Math.round(this.output['kfwKreditProBau']),
+          Math.round(this.output.kfwKreditschwelleProWe),
         ];
         // this.barChartData.datasets[3].data = [
         //   0,
@@ -150,9 +150,9 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
     labels: ['Kosten', 'Fin.'],
     datasets: [
       {
-        // Baukosten (Investitionskosten)
+        // Investitionskosten
         data: [0, null],
-        label: 'Baukosten',
+        label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
         backgroundColor: this.styleService.datasets.color01.backgroundColor,
         borderColor: this.styleService.datasets.color01.borderColor,

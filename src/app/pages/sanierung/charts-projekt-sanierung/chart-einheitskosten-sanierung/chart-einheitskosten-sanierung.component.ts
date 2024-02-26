@@ -150,9 +150,9 @@ export class ChartEinheitskostenSanierungComponent implements OnInit {
     labels: ['Kosten', 'Fin.'],
     datasets: [
       {
-        // Baukosten (Investitionskosten)
+        // Investitionskosten
         data: [0, null],
-        label: 'Baukosten',
+        label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
         backgroundColor: this.styleService.datasets.color01.backgroundColor,
         borderColor: this.styleService.datasets.color01.borderColor,

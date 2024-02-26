@@ -14,7 +14,7 @@ export interface NeubauProjekt {
   baustellenlogistikIn: Baustellenlogistik;
   aussenanlagenIn: Aussenanlagen;
   grundstuecksbezogeneKosten: number;
-  baunebenkostenKeinFin: number;
+  baunebenkostenOhneFinIn: number;
   // Neubau output
   kellergeschossOut: number;
   stellplaetzeOut: number;
@@ -25,6 +25,7 @@ export interface NeubauProjekt {
   baustellenlogistikOut: number;
   aussenanlagenOut: number;
   energetischerStandard: number;
+  baunebenkostenOhneFinOut: number;
   // Dalehen
   zinssatzBank: number;
   kreditlaufzeit: number;
@@ -36,7 +37,9 @@ export interface NeubauProjekt {
   zinssatzKfw: number;
   baukosten: number;
   baukostenProBau: number;
-  kfwKreditschwelleProWe: number;
+  investitionkosten: number,
+  investitionkostenM2: number,
+  investitionkostenProBau: number,
   afKfw: number;
   afBank: number;
   annuitaetKfW: number;
@@ -48,7 +51,7 @@ export interface NeubauProjekt {
   // Zusammenfassung Ergebnisse
   kfwKredit: number;
   kfwKreditM2: number;
-  kfwKreditProBau: number;
+  kfwKreditschwelleProWe: number;
   bankKredit: number;
   bankKreditM2: number;
   bankKreditProBau: number;

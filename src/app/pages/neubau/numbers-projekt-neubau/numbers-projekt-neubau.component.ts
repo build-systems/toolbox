@@ -17,7 +17,7 @@ registerLocaleData(localeDe, 'de');
 })
 export class NumbersProjektNeubauComponent  implements OnInit {
   output!: NeubauProjekt;
-  baukosten: number = 0;
+  investitionskosten: number = 0;
   finanzierungskostenFinanzmarkt: number = 0;
   finanzierungskostenKfw: number = 0;
   bankKredit: number = 0;
@@ -30,7 +30,7 @@ export class NumbersProjektNeubauComponent  implements OnInit {
     this.neubauService.currentOutputNeubau$
       .subscribe((value) => {
         this.output = value;
-        this.baukosten = this.output.baukosten;
+        this.investitionskosten = this.output.investitionkosten;
         this.finanzierungskostenFinanzmarkt =
           this.output.finanzierungskostenBank;
         this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;

@@ -382,29 +382,29 @@
   </fieldset>
   <fieldset>
     <legend>
-      {{ formService.baunebenkostenKeinFin.title
+      {{ formService.baunebenkostenOhneFin.title
       }}<sup class="tooltip"
         >&#9432;<span class="tooltiptext tooltip-left">{{
-          formService.baunebenkostenKeinFin.description
+          formService.baunebenkostenOhneFin.description
         }}</span></sup
       >
     </legend>
     <span class="slidernumber">
       <input
         type="range"
-        formControlName="baunebenkostenKeinFinRange"
-        [min]="formService.baunebenkostenKeinFin.min"
-        [max]="formService.baunebenkostenKeinFin.max"
-        [step]="formService.baunebenkostenKeinFin.step"
+        formControlName="baunebenkostenOhneFinRange"
+        [min]="formService.baunebenkostenOhneFin.min"
+        [max]="formService.baunebenkostenOhneFin.max"
+        [step]="formService.baunebenkostenOhneFin.step"
         class="slider"
         [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />
       <input
         type="number"
-        formControlName="baunebenkostenKeinFin"
-        name="baunebenkostenKeinFin"
-        [min]="formService.baunebenkostenKeinFin.min"
-        [max]="formService.baunebenkostenKeinFin.max"
+        formControlName="baunebenkostenOhneFin"
+        name="baunebenkostenOhneFin"
+        [min]="formService.baunebenkostenOhneFin.min"
+        [max]="formService.baunebenkostenOhneFin.max"
         (keyup.enter)="onEnterKey($event)"
         [attr.disabled]="formService.grundstKosten.disabled ? '' : null"
       />

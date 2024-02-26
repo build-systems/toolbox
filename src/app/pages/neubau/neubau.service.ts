@@ -41,8 +41,8 @@ export class NeubauService {
     this.formProjektService.aussenanlagen.options[0].value;
   grundstuecksbezogeneKosten: number =
     this.formProjektService.grundstKosten.value;
-  baunebenkostenKeinFin: number =
-    this.formProjektService.baunebenkostenKeinFin.init;
+  baunebenkostenOhneFinIn: number =
+    this.formProjektService.baunebenkostenOhneFin.value / 100; // Conersion from percentage to fraction multiplier;
 
   // Darlehen parameters
   zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
@@ -73,7 +73,7 @@ export class NeubauService {
       this.baustellenlogistikIn = value.baustellenlogistikIn!;
       this.aussenanlagenIn = value.aussenanlagenIn!;
       this.grundstuecksbezogeneKosten = value.grundstuecksbezogeneKostenRange!;
-      this.baunebenkostenKeinFin = value.baunebenkostenKeinFinRange!;
+      this.baunebenkostenOhneFinIn = value.baunebenkostenOhneFinRange! / 100; // Conersion from percentage to fraction multiplier;
       this.update();
     });
 
@@ -188,10 +188,10 @@ export class NeubauService {
       return this.constants.energetischerStandardPrice.EH40;
     } else if (energiestandard === 'GEG') {
       return this.constants.energetischerStandardPrice.GEG;
-    // } else if (energiestandard === 'EH 70') {
-    //   return this.constants.energetischerStandardPrice.EH70;
-    // } else if (energiestandard === 'EH 85') {
-    // return this.constants.energetischerStandardPrice.EH85;
+      // } else if (energiestandard === 'EH 70') {
+      //   return this.constants.energetischerStandardPrice.EH70;
+      // } else if (energiestandard === 'EH 85') {
+      // return this.constants.energetischerStandardPrice.EH85;
     } else {
       return 0;
     }
@@ -212,8 +212,7 @@ export class NeubauService {
     baustellenlogistikOut: number,
     energetischerStandardOut: number,
     aussenanlagenOut: number,
-    grundstuecksbezogeneKosten: number,
-    baunebenkostenKeinFin: number
+    grundstuecksbezogeneKosten: number
   ): number {
     if (userPriceDisabled) {
       return (
@@ -227,8 +226,7 @@ export class NeubauService {
         baustellenlogistikOut +
         energetischerStandardOut +
         aussenanlagenOut +
-        grundstuecksbezogeneKosten +
-        baunebenkostenKeinFin
+        grundstuecksbezogeneKosten
       );
     } else {
       return userPrice;
@@ -270,6 +268,44 @@ export class NeubauService {
     return baukosten / anzahlWohnungen;
   }
 
+  // Baunebenkosten ohne Finanzierungskosten [%]
+  private _baunebenkostenOhneFinOut =
+    this._baukosten * this.baunebenkostenOhneFinIn;
+  updateBaunebenkostenOhneFin(
+    baukosten: number,
+    baunebenkostenOhneFinIn: number
+  ) {
+    return baukosten * baunebenkostenOhneFinIn;
+  }
+
+  private _investitionskosten =
+    this._baukosten + this._baunebenkostenOhneFinOut;
+  updateInvestitionskosten(
+    baukosten: number,
+    baunebenkostenOhneFinOut: number
+  ) {
+    return baukosten + baunebenkostenOhneFinOut;
+  }
+
+  private _investitionskostenM2 =
+    this._gestehungskosten +
+    this._gestehungskosten * this.baunebenkostenOhneFinIn;
+  updateInvestitionskostenM2(
+    gestehungskosten: number,
+    baunebenkostenOhneFinIn: number
+  ) {
+    return gestehungskosten + gestehungskosten * baunebenkostenOhneFinIn;
+  }
+
+  private _investitionskostenProBau =
+    this._investitionskosten / this.anzahlWohnungen;
+  updateInvestitionskostenProBau(
+    investitionkosten: number,
+    anzahlWohnungen: number
+  ) {
+    return investitionkosten / anzahlWohnungen;
+  }
+
   // KfW Kreditschwelle / WE
   private _kfwKreditschwelleProWe = 0;
   updateKfwKreditschwelleProWe(
@@ -301,26 +337,18 @@ export class NeubauService {
     return kfwKredit / wohnflaeche;
   }
 
-  private _kfwKreditProBau = 0;
-  updateKfwKreditProBau(kfwKredit: number, anzahlWohnungen: number): number {
-    return kfwKredit / anzahlWohnungen;
-  }
-
   // Bank-Kredit [€] (Daniel's Restsumme and Bank-Kredit were merged)
-  private _bankKredit =
-    this.wohnflaeche * this._gestehungskosten - this._kfwKredit;
+  // Also _investitionkosten = baukosten + baunebenkosten
+  private _bankKredit = this._investitionskosten - this._kfwKredit;
   updateBankKredit(
     konstruktion: Konstruktion,
-    wohnflaeche: number,
-    gestehungskosten: number,
+    investitionkosten: number,
     kfwKredit: number
   ): number {
     if (konstruktion === 'Holzbau') {
-      return (
-        wohnflaeche * gestehungskosten * this.constants.holzbauBonus - kfwKredit
-      );
+      return investitionkosten * this.constants.holzbauBonus - kfwKredit;
     } else {
-      var bankKredit = wohnflaeche * gestehungskosten - kfwKredit;
+      var bankKredit = investitionkosten - kfwKredit;
       return Math.max(bankKredit, 0); // Make sure it doesn't go negative
     }
   }
@@ -538,8 +566,7 @@ export class NeubauService {
       this._baustellenlogistikOut,
       this._energetischerStandardOut,
       this._aussenanlagenOut,
-      this.grundstuecksbezogeneKosten,
-      this.baunebenkostenKeinFin
+      this.grundstuecksbezogeneKosten
     );
     this._nrKredit = this.updateNrKredit(this.kreditlaufzeit);
     this._zinssatzKfw = this.updateZinssatzKfw(
@@ -554,6 +581,22 @@ export class NeubauService {
       this._baukosten,
       this.anzahlWohnungen
     );
+    this._baunebenkostenOhneFinOut = this.updateBaunebenkostenOhneFin(
+      this._baukosten,
+      this.baunebenkostenOhneFinIn
+    );
+    this._investitionskosten = this.updateInvestitionskosten(
+      this._baukosten,
+      this._baunebenkostenOhneFinOut
+    );
+    this._investitionskostenM2 = this.updateInvestitionskostenM2(
+      this._gestehungskosten,
+      this.baunebenkostenOhneFinIn
+    );
+    this._investitionskostenProBau = this.updateInvestitionskostenProBau(
+      this._investitionskosten,
+      this.anzahlWohnungen
+    );
     this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(
       this.zertifizierung,
       this.energiestandard
@@ -566,14 +609,9 @@ export class NeubauService {
       this._kfwKredit,
       this.wohnflaeche
     );
-    this._kfwKreditProBau = this.updateKfwKreditProBau(
-      this._kfwKredit,
-      this.anzahlWohnungen
-    );
     this._bankKredit = this.updateBankKredit(
       this.konstruktion,
-      this.wohnflaeche,
-      this._gestehungskosten,
+      this._investitionskosten,
       this._kfwKredit
     );
     this._bankKreditM2 = this.updateBankKreditM2(
@@ -670,7 +708,7 @@ export class NeubauService {
         baustellenlogistikIn: this.baustellenlogistikIn,
         aussenanlagenIn: this.aussenanlagenIn,
         grundstuecksbezogeneKosten: this.grundstuecksbezogeneKosten,
-        baunebenkostenKeinFin: this.baunebenkostenKeinFin,
+        baunebenkostenOhneFinIn: this.baunebenkostenOhneFinIn,
         // Neubau output
         kellergeschossOut: this._kellergeschossOut,
         stellplaetzeOut: this._stellplaetzeOut,
@@ -681,6 +719,7 @@ export class NeubauService {
         baustellenlogistikOut: this._baustellenlogistikOut,
         aussenanlagenOut: this._aussenanlagenOut,
         energetischerStandard: this._energetischerStandardOut,
+        baunebenkostenOhneFinOut: this._baunebenkostenOhneFinOut,
         // Dalehen
         zinssatzBank: this.zinssatzBank,
         kreditlaufzeit: this.kreditlaufzeit,
@@ -692,10 +731,12 @@ export class NeubauService {
         zinssatzKfw: this._zinssatzKfw,
         baukosten: this._baukosten,
         baukostenProBau: this._baukostenProBau,
+        investitionkosten: this._investitionskosten,
+        investitionkostenM2: this._investitionskostenM2,
+        investitionkostenProBau: this._investitionskostenProBau,
         bankKredit: this._bankKredit,
         bankKreditM2: this._bankKreditM2,
         bankKreditProBau: this._bankKreditProBau,
-        kfwKreditschwelleProWe: this._kfwKreditschwelleProWe,
         afKfw: this._afKfw,
         afBank: this._afBank,
         annuitaetKfW: this._annuitaetKfW,
@@ -707,7 +748,7 @@ export class NeubauService {
         // Zusammenfassung Ergebnisse
         kfwKredit: this._kfwKredit,
         kfwKreditM2: this._kfwKreditM2,
-        kfwKreditProBau: this._kfwKreditProBau,
+        kfwKreditschwelleProWe: this._kfwKreditschwelleProWe,
         finanzierungskostenKfw: this._finanzierungskostenKfw,
         finanzierungskostenKfwM2: this._finanzierungskostenKfwM2,
         finanzierungskostenBank: this._finanzierungskostenBank,
@@ -755,8 +796,8 @@ export class NeubauService {
       this.formProjektService.aussenanlagen.options[0].value;
     this.grundstuecksbezogeneKosten =
       this.formProjektService.grundstKosten.value;
-    this.baunebenkostenKeinFin =
-      this.formProjektService.baunebenkostenKeinFin.init;
+    this.baunebenkostenOhneFinIn =
+      this.formProjektService.baunebenkostenOhneFin.value;
 
     // Darlehen parameters
     this.zinssatzBank = this.formDarlehenService.zinssatzBank.value;

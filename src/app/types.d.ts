@@ -236,7 +236,7 @@ type grundstKostenObj = {
 };
 
 // Baunebenkosten Kein Fin
-type baunebenkostenKeinFinObj = {
+type BaunebenkostenOhneFinObj = {
   value: number;
   min: number;
   max: number;

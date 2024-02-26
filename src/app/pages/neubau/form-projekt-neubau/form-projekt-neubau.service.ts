@@ -191,12 +191,12 @@ export class FormProjektNeubauService {
   };
 
   // Baunebenkosten (excl. Finanzierung)
-  baunebenkostenKeinFin = {
-    init: 0,
+  baunebenkostenOhneFin: BaunebenkostenOhneFinObj = {
+    value: 20,
     min: 0,
-    max: 1000,
+    max: 100,
     step: 1,
-    title: 'Baunebenkosten Kein Finanz. [€/m²] ',
+    title: 'Baunebenkosten ohne Finanzierungskosten [%] ',
     description: 'Baunebenkosten (excl. Finanzierung) description',
     disabled: false,
   };
@@ -289,21 +289,21 @@ export class FormProjektNeubauService {
         updateOn: 'blur',
       },
     ],
-    baunebenkostenKeinFinRange: [
-      this.baunebenkostenKeinFin.init,
+    baunebenkostenOhneFinRange: [
+      this.baunebenkostenOhneFin.value,
       [
         Validators.required,
-        Validators.min(this.baunebenkostenKeinFin.min),
-        Validators.max(this.baunebenkostenKeinFin.max),
+        Validators.min(this.baunebenkostenOhneFin.min),
+        Validators.max(this.baunebenkostenOhneFin.max),
       ],
     ],
-    baunebenkostenKeinFin: [
-      this.baunebenkostenKeinFin.init,
+    baunebenkostenOhneFin: [
+      this.baunebenkostenOhneFin.value,
       {
         Validators: [
           Validators.required,
-          Validators.min(this.baunebenkostenKeinFin.min),
-          Validators.max(this.baunebenkostenKeinFin.max),
+          Validators.min(this.baunebenkostenOhneFin.min),
+          Validators.max(this.baunebenkostenOhneFin.max),
         ],
         updateOn: 'blur',
       },
@@ -324,7 +324,7 @@ export class FormProjektNeubauService {
         );
         this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
         this.grundstKosten.disabled = value!;
-        this.baunebenkostenKeinFin.disabled = value!;
+        this.baunebenkostenOhneFin.disabled = value!;
     });
 
      // User Price
@@ -523,29 +523,29 @@ export class FormProjektNeubauService {
       });
 
     this.projektFormNeu
-      .get('baunebenkostenKeinFinRange')
+      .get('baunebenkostenOhneFinRange')
       ?.valueChanges.subscribe((value) => {
         if (value) {
           this.projektFormNeu
-            .get('baunebenkostenKeinFin')
+            .get('baunebenkostenOhneFin')
             ?.setValue(value, { emitEvent: false });
         }
       });
 
     this.projektFormNeu
-      .get('baunebenkostenKeinFin')
+      .get('baunebenkostenOhneFin')
       ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.baunebenkostenKeinFin.min) {
+        if (value && value >= this.baunebenkostenOhneFin.min) {
           this.projektFormNeu
-            .get('baunebenkostenKeinFinRange')
+            .get('baunebenkostenOhneFinRange')
             ?.setValue(value, { emitEvent: false });
         } else {
           this.projektFormNeu
-            .get('baunebenkostenKeinFin')
-            ?.setValue(this.baunebenkostenKeinFin.min, { emitEvent: false });
+            .get('baunebenkostenOhneFin')
+            ?.setValue(this.baunebenkostenOhneFin.min, { emitEvent: false });
           this.projektFormNeu
-            .get('baunebenkostenKeinFinRange')
-            ?.setValue(this.baunebenkostenKeinFin.min, { emitEvent: false });
+            .get('baunebenkostenOhneFinRange')
+            ?.setValue(this.baunebenkostenOhneFin.min, { emitEvent: false });
         }
       });
   }

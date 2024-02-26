@@ -28,7 +28,7 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
     this.neubauService.currentOutputNeubau$.subscribe(
       (projekt: NeubauProjekt) => {
         this.barChartData.datasets[0].data = [
-          Math.round(projekt.gestehungskosten),
+          Math.round(projekt.investitionkostenM2),
           0,
         ];
         this.barChartData.datasets[1].data = [
@@ -144,9 +144,9 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
     labels: ['Kosten', 'Fin.'],
     datasets: [
       {
-        // Baukosten (Investitionskosten)
+        // Investitionskosten
         data: [0, null],
-        label: 'Baukosten',
+        label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
         backgroundColor: this.styleService.datasets.color01.backgroundColor,
         borderColor: this.styleService.datasets.color01.borderColor,
