@@ -44,7 +44,7 @@ export class FormProjektNeubauService {
     options: [
       { id: 'enstd1', value: 'EH 40', disabled: false },
       { id: 'enstd2', value: 'GEG', disabled: false },
-      { id: 'enstd3', value: 'EH 70', disabled: false },
+      // { id: 'enstd3', value: 'EH 70', disabled: false },
       // { id: 'enstd4', value: 'EH 100' },
       // { id: 'enstd5', value: 'EH 115' },
     ],

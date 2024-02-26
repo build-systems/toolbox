@@ -137,10 +137,6 @@ li {
   }
 }
 
-.kfw-info {
-  display: flex;
-}
-
 .kfw-number-container {
   width: fit-content;
   justify-content: center;
@@ -193,7 +189,6 @@ li {
 .kfw-info {
   display: flex;
   flex-direction: column;
-  margin-right: var(--layout-padding);
   & h2 {
     padding-bottom: 0.4rem;
   }
@@ -875,7 +870,7 @@ input[type="number"]:disabled:hover {
   width: 100%;
   flex-grow: 1;
   text-align: center;
-  padding: calc(var(--layout-padding) / 2);
+  padding: var(--layout-padding);
   border-radius: var(--button-radius);
   background-color: var(--bg-tertiary);
   & h3 {
@@ -1277,6 +1272,7 @@ span.nowrap {
   } */
   
   .card {
+    padding: var(--mobile-padding);
     flex-basis: 40%;
   }
 
