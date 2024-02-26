@@ -49,18 +49,17 @@ export class FormProjektSanierungService {
   };
 
   // Zusätzliche Nachhaltigkeitskriterien
-  nachhaltigkeitskriterien: NachhaltigkeitskriterienObj = {
+  foerderbonus: FoerderbonusObj = {
     options: [
       { id: 'kn', value: 'Keine', text: 'Keine', disabled: false },
       { id: 'ee', value: 'EE', text: 'EE-Klasse', disabled: false },
       { id: 'nh', value: 'NH', text: 'NH-Klasse', disabled: false },
     ],
-    title: 'Zusätzliche Nachhaltigkeitskriterien',
+    title: 'Förderbonus ',
     description:
-      'Zusätzliche Nachhaltigkeitskriterien description. Erneuerbare-Energien-Klasse und Nachhaltigkeits-Klasse',
+      'Förderbonus description. Erneuerbare-Energien-Klasse und Nachhaltigkeits-Klasse',
   };
 
-  // This will be converted to the ABCDEFGH energieaussweis
   worstPerformingBuilding: WorstPerformingBuildingObj = {
     value: false,
     title: 'Worst Performing Building ',
@@ -79,15 +78,15 @@ export class FormProjektSanierungService {
     disabled: false,
   };
 
-  // Zustand Bestand
-  zustandBestand: ZustandBestandObj = {
+  // Umfänglichkeit bisher durchgeführter Modernisierung (old Zustand Bestand)
+  umfangModernisierung: UmfangModernisierungObj = {
     options: [
-      { id: 'zusbest1', value: 'Unsaniert', disabled: false },
-      { id: 'zusbest2', value: 'Teilsaniert', disabled: false },
-      { id: 'zusbest3', value: 'Umfassend saniert', disabled: false },
+      { id: 'zusbest1', value: 'Nicht/gering', disabled: false },
+      { id: 'zusbest2', value: 'Größtenteils', disabled: false },
+      { id: 'zusbest3', value: 'Umfassend', disabled: false },
     ],
-    title: 'Zustand Bestand ',
-    description: 'Zustand Bestand description',
+    title: 'Umfänglichkeit bisher durchgeführter Modernisierung ',
+    description: 'Umfänglichkeit bisher durchgeführter Modernisierung description',
   };
 
   // Zertifizierung warning: if user try to select conflicting
@@ -148,10 +147,10 @@ export class FormProjektSanierungService {
       },
     ],
     energiestandard: this.energiestandard.options[0].value,
-    nachhaltigkeitskriterien: this.nachhaltigkeitskriterien.options[0].value,
+    foerderbonus: this.foerderbonus.options[0].value,
     worstPerformingBuilding: this.worstPerformingBuilding.value,
     serielleSanierung: this.serielleSanierung.value,
-    zustandBestand: this.zustandBestand.options[0].value,
+    umfangModernisierung: this.umfangModernisierung.options[0].value,
   });
 
   constructor(private fb: FormBuilder) {
@@ -159,7 +158,7 @@ export class FormProjektSanierungService {
     this.projektFormSanierung
       .get('userPriceToggle')
       ?.valueChanges.subscribe((value) => {
-        this.zustandBestand.options.forEach((obj) => (obj.disabled = value!));
+        this.umfangModernisierung.options.forEach((obj) => (obj.disabled = value!));
       });
 
     // User Price

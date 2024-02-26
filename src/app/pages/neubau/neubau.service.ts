@@ -188,10 +188,10 @@ export class NeubauService {
       return this.constants.energetischerStandardPrice.EH40;
     } else if (energiestandard === 'GEG') {
       return this.constants.energetischerStandardPrice.GEG;
-    } else if (energiestandard === 'EH 70') {
-      return this.constants.energetischerStandardPrice.EH70;
-      // } else if (energiestandard === 'EH 85') {
-      // return this.constants.energetischerStandardPrice.EH85;
+    // } else if (energiestandard === 'EH 70') {
+    //   return this.constants.energetischerStandardPrice.EH70;
+    // } else if (energiestandard === 'EH 85') {
+    // return this.constants.energetischerStandardPrice.EH85;
     } else {
       return 0;
     }

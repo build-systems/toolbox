@@ -1,109 +1,109 @@
 [
   {
     "Energiestandard": "EH 115",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 350,
     "Max": 630
   },
   {
     "Energiestandard": "EH 115",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 300,
     "Max": 480
   },
   {
     "Energiestandard": "EH 115",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 0,
     "Max": 0
   },
   {
     "Energiestandard": "EH 100",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 430,
     "Max": 700
   },
   {
     "Energiestandard": "EH 100",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 410,
     "Max": 620
   },
   {
     "Energiestandard": "EH 100",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 190,
     "Max": 310
   },
   {
     "Energiestandard": "EH 85",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 500,
     "Max": 720
   },
   {
     "Energiestandard": "EH 85",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 510,
     "Max": 720
   },
   {
     "Energiestandard": "EH 85",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 270,
     "Max": 400
   },
   {
     "Energiestandard": "EH 70",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 520,
     "Max": 730
   },
   {
     "Energiestandard": "EH 70",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 530,
     "Max": 730
   },
   {
     "Energiestandard": "EH 70",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 300,
     "Max": 430
   },
   {
     "Energiestandard": "EH 55",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 650,
     "Max": 850
   },
   {
     "Energiestandard": "EH 55",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 660,
     "Max": 870
   },
   {
     "Energiestandard": "EH 55",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 490,
     "Max": 690
   },
   {
     "Energiestandard": "EH 40",
-    "ZustandBestand": "Unsaniert",
+    "UmfangModernisierung": "Nicht/gering",
     "Min": 760,
     "Max": 970
   },
   {
     "Energiestandard": "EH 40",
-    "ZustandBestand": "Teilsaniert",
+    "UmfangModernisierung": "Größtenteils",
     "Min": 770,
     "Max": 990
   },
   {
     "Energiestandard": "EH 40",
-    "ZustandBestand": "Umfassend saniert",
+    "UmfangModernisierung": "Umfassend",
     "Min": 680,
     "Max": 910
   }

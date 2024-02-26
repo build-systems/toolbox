@@ -7,8 +7,8 @@ export interface SanierungProjekt {
   // Sanierung
   worstPerformingBuilding: boolean;
   serielleSanierung: boolean;
-  zustandBestand: ZustandBestand;
-  nachhaltigkeitskriterien: Nachhaltigkeitskriterien;
+  umfangModernisierung: UmfangModernisierung;
+  foerderbonus: Foerderbonus;
   // Dalehen
   zinssatzBank: number;
   kreditlaufzeit: number;

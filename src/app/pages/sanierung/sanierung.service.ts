@@ -20,13 +20,13 @@ export class SanierungService {
   anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardSanierung =
     this.formProjektService.energiestandard.options[0].value;
-  _nachhaltigkeitskriterien: Nachhaltigkeitskriterien =
-    this.formProjektService.nachhaltigkeitskriterien.options[0].value;
+  _foerderbonus: Foerderbonus =
+    this.formProjektService.foerderbonus.options[0].value;
   worstPerformingBuilding: boolean =
     this.formProjektService.worstPerformingBuilding.value;
   serielleSanierung: boolean = this.formProjektService.serielleSanierung.value;
-  zustandBestand: ZustandBestand =
-    this.formProjektService.zustandBestand.options[0].value;
+  umfangModernisierung: UmfangModernisierung =
+    this.formProjektService.umfangModernisierung.options[0].value;
 
   // Initial darlehen parameters
   zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
@@ -48,10 +48,10 @@ export class SanierungService {
         this.wohnflaeche = value.wohnflaecheRange!;
         this.anzahlWohnungen = value.anzahlWohnungenRange!;
         this.energiestandard = value.energiestandard!;
-        this._nachhaltigkeitskriterien = value.nachhaltigkeitskriterien!;
+        this._foerderbonus = value.foerderbonus!;
         this.worstPerformingBuilding = value.worstPerformingBuilding!;
         this.serielleSanierung = value.serielleSanierung!;
-        this.zustandBestand = value.zustandBestand!;
+        this.umfangModernisierung = value.umfangModernisierung!;
         this.update();
       }
     );
@@ -86,8 +86,8 @@ export class SanierungService {
 
   // EE-Bonus [%]
   private _eeBonus = 0;
-  updateEeBonus(nachhaltigkeitskriterien: Nachhaltigkeitskriterien): number {
-    if (nachhaltigkeitskriterien === 'EE') {
+  updateEeBonus(foerderbonus: Foerderbonus): number {
+    if (foerderbonus === 'EE') {
       return this.constants.eeBonusPossible;
     } else {
       return 0;
@@ -96,8 +96,8 @@ export class SanierungService {
 
   // NH-Bonus [%]
   private _nhBonus = 0;
-  updateNhBonus(nachhaltigkeitskriterien: Nachhaltigkeitskriterien): number {
-    if (nachhaltigkeitskriterien === 'NH') {
+  updateNhBonus(foerderbonus: Foerderbonus): number {
+    if (foerderbonus === 'NH') {
       return this.constants.nhBonusPossible;
     } else {
       return 0;
@@ -145,14 +145,14 @@ export class SanierungService {
     userPriceDisabled: boolean,
     userPrice: number,
     energiestandard: EnergiestandardSanierung,
-    zustandBestand: ZustandBestand
+    umfangModernisierung: UmfangModernisierung
   ): number {
     // First check if the user chose to input their own price estimation
     // If not, then search in the table (JSON file)
     if (userPriceDisabled) {
       const desiredProperties = {
         Energiestandard: energiestandard,
-        ZustandBestand: zustandBestand,
+        UmfangModernisierung: umfangModernisierung,
       };
       // Callback function
       function filterByProperties(item: any, desiredProperties: any) {
@@ -206,9 +206,9 @@ export class SanierungService {
   // KfW Kreditschwelle / WE
   private _kfwKreditschwelleProWe = 0;
   updateKfwKreditschwelleProWe(
-    nachhaltigkeitskriterien: Nachhaltigkeitskriterien
+    foerderbonus: Foerderbonus
   ): number {
-    if (nachhaltigkeitskriterien !== 'Keine') {
+    if (foerderbonus !== 'Keine') {
       return this.constants.kfwKreditLimit.higher;
     } else {
       return this.constants.kfwKreditLimit.lower;
@@ -510,8 +510,8 @@ export class SanierungService {
 
   public update() {
     this._tilgungszuschuss = this.updateTilgungszuschuss(this.energiestandard);
-    this._eeBonus = this.updateEeBonus(this._nachhaltigkeitskriterien);
-    this._nhBonus = this.updateNhBonus(this._nachhaltigkeitskriterien);
+    this._eeBonus = this.updateEeBonus(this._foerderbonus);
+    this._nhBonus = this.updateNhBonus(this._foerderbonus);
     this._wpbBonus = this.updateWpbBonus(
       this.worstPerformingBuilding,
       this.energiestandard
@@ -524,14 +524,14 @@ export class SanierungService {
       this.userPriceDisabled,
       this.userPrice,
       this.energiestandard,
-      this.zustandBestand
+      this.umfangModernisierung
     );
     this._nrKredit = this.updateNrKredit(this.kreditlaufzeit);
     this._zinssatzKfw = this.updateZinssatzKfw(
       this.kfWDarlehen,
       this._nrKredit
     );
-    this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(this._nachhaltigkeitskriterien);
+    this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(this._foerderbonus);
     this._maxKfwKredit = this.updateMaxKfwKredit(
       this._kfwKreditschwelleProWe,
       this.anzahlWohnungen
@@ -669,8 +669,8 @@ export class SanierungService {
         // Sanierung
         worstPerformingBuilding: this.worstPerformingBuilding,
         serielleSanierung: this.serielleSanierung,
-        zustandBestand: this.zustandBestand,
-        nachhaltigkeitskriterien: this._nachhaltigkeitskriterien,
+        umfangModernisierung: this.umfangModernisierung,
+        foerderbonus: this._foerderbonus,
         // Dalehen
         zinssatzBank: this.zinssatzBank,
         kreditlaufzeit: this.kreditlaufzeit,
@@ -732,8 +732,8 @@ export class SanierungService {
     this.worstPerformingBuilding =
       this.formProjektService.worstPerformingBuilding.value;
     this.serielleSanierung = this.formProjektService.serielleSanierung.value;
-    this.zustandBestand =
-      this.formProjektService.zustandBestand.options[0].value;
+    this.umfangModernisierung =
+      this.formProjektService.umfangModernisierung.options[0].value;
     // this.eeKlasse = this.formProjektService.eeKlasse.value;
 
     // Darlehen parameters

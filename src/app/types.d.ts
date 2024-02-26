@@ -95,29 +95,29 @@ type ZertifizierungNeubauObj = {
 };
 
 // Zusätzliche Nachhaltigkeitskriterien
-type Nachhaltigkeitskriterien = 'EE' | 'NH' | 'Keine';
-type NachhaltigkeitskriterienOptions = {
+type Foerderbonus = 'EE' | 'NH' | 'Keine';
+type FoerderbonusOptions = {
   id: string;
-  value: Nachhaltigkeitskriterien;
+  value: Foerderbonus;
   text?: string;
   disabled: boolean;
 }
-type NachhaltigkeitskriterienObj = {
-  options: NachhaltigkeitskriterienOptions[];
+type FoerderbonusObj = {
+  options: FoerderbonusOptions[];
   title: string;
   description: string;
 }
 
 // Zustand Bestand
-type ZustandBestand = 'Unsaniert' | 'Teilsaniert' | 'Umfassend saniert';
-type ZustandBestandOptions = {
+type UmfangModernisierung = 'Nicht/gering' | 'Größtenteils' | 'Umfassend';
+type UmfangModernisierungOptions = {
   id: string;
-  value: ZustandBestand;
+  value: UmfangModernisierung;
   text?: string;
   disabled: boolean;
 };
-type ZustandBestandObj = {
-  options: ZustandBestandOptions[];
+type UmfangModernisierungObj = {
+  options: UmfangModernisierungOptions[];
   title: string;
   description: string;
 };

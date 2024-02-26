@@ -59,23 +59,23 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.zustandBestand.title
+      {{ formService.umfangModernisierung.title
       }}<sup class="tooltip"
         >&#9432;<span class="tooltiptext tooltip-top">{{
-          formService.zustandBestand.description
+          formService.umfangModernisierung.description
         }}</span></sup
       >
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.zustandBestand.options"
+      *ngFor="let item of formService.umfangModernisierung.options"
     >
       <input
         type="radio"
         [id]="item.id"
         [value]="item.value"
-        name="zustandBestand"
-        formControlName="zustandBestand"
+        name="umfangModernisierung"
+        formControlName="umfangModernisierung"
         [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.value }}</label>
@@ -170,23 +170,23 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.nachhaltigkeitskriterien.title
+      {{ formService.foerderbonus.title
       }}<sup class="tooltip"
         >&#9432;<span class="tooltiptext tooltip-left">{{
-          formService.nachhaltigkeitskriterien.description
+          formService.foerderbonus.description
         }}</span></sup
       >
     </legend>
     <span
       class="radio-option"
-      *ngFor="let item of formService.nachhaltigkeitskriterien.options"
+      *ngFor="let item of formService.foerderbonus.options"
     >
       <input
         type="radio"
         [id]="item.id"
         [value]="item.value"
-        name="nachhaltigkeitskriterien"
-        formControlName="nachhaltigkeitskriterien"
+        name="foerderbonus"
+        formControlName="foerderbonus"
         [attr.disabled]="item.disabled ? '' : null"
       />
       <label [for]="item.id">{{ item.text }}</label>

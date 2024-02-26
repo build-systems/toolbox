@@ -244,7 +244,7 @@ li {
   padding-top: calc(var(--layout-padding) * 2);
   padding-bottom: calc(var(--layout-padding) * 2);
   background-color: var(--bg-tertiary);
-  word-break: break-all;
+  /* word-break: break-all; */
   border-radius: 0 0 var(--button-radius) var(--button-radius);
   border: none;
   & * + h2 {
@@ -1194,7 +1194,7 @@ span.nowrap {
   white-space: nowrap;
 }
 
-@media screen and (max-width: 1210px) {
+@media screen and (max-width: 1280px) {
   .container-tool {
     display: flex;
     flex-direction: column;
@@ -1232,7 +1232,7 @@ span.nowrap {
   }
 
   .card {
-    flex-basis: 30%;
+    flex-basis: 24%;
   }
 
   .host-chart {
@@ -1267,10 +1267,6 @@ span.nowrap {
     width: 1.5rem;
   }
 
-  /* .dashboard-numbers { 
-    flex-direction: column;
-  } */
-  
   .card {
     padding: var(--mobile-padding);
     flex-basis: 40%;
@@ -1312,6 +1308,7 @@ span.nowrap {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
     padding-top: 0;
+    padding-bottom: 0;
   }
 
   .kfw-description {
