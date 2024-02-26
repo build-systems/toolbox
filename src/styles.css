@@ -891,7 +891,7 @@ input[type="number"]:disabled:hover {
 
 .charts-container {
   width: 100%;
-  flex: 1;
+  /* flex: 1; */
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   /* grid-template-rows: repeat(2, minmax(0, 1fr)); */
@@ -974,6 +974,7 @@ input[type="number"]:disabled:hover {
 
 .host-charts-plural {
   display: flex;
+  /* height: 100%; */
   flex: 1 0 300px;
 }
 

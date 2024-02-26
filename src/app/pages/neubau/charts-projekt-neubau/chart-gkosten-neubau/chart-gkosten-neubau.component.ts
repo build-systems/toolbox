@@ -18,7 +18,8 @@ import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 })
 export class ChartGkostenNeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-
+  
+  delayed: boolean = false;
 
   // Router links. There must be better way to get the strings from app.routes.ts
   constructor(
@@ -42,12 +43,11 @@ export class ChartGkostenNeubauComponent implements OnInit {
         0,
         Math.round(projekt.kfwKredit),
       ];
-      // this.barChartData.datasets[3].data = [0, Math.round(value['finanzierungskostenFinanzmarkt'])];
-      // this.barChartData.datasets[4].data = [0, Math.round(value['finanzierungskostenKfw'])];
       this.chart?.update();
     });
   }
 
+  
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
     elements: {
