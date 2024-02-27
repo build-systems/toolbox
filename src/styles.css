@@ -1352,6 +1352,7 @@ span.nowrap {
 
   .kfw-description {
     flex-direction: column;
+    margin-bottom: var(--mobile-padding);
   }
 
   .container-tool {
