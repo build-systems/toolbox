@@ -1270,7 +1270,7 @@ span.nowrap {
     top: 0;
     z-index: 5;
     background-color: var(--bg-primary);
-    max-height: 0;
+    max-height: 600px;
     transition: all 0.4s;
   }
 
