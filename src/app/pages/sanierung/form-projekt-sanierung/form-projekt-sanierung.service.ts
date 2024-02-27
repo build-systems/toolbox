@@ -10,8 +10,7 @@ export class FormProjektSanierungService {
     value: 3000,
     max: 10000,
     step: 10,
-    title: 'Kostenberechnung [€/m²] ',
-    description: 'Geben Sie hier Kosten ein, die Sie selbst oder mit Hilfe Ihrer Expert:innen kalkuliert haben. Dabei sollten folgende Kostengruppen nach DIN276 berücksichtigt werden: KG 300 & 400.',
+    title: 'Kostenberechnung [€/m²]',
     disabled: true,
   };
 
@@ -21,8 +20,7 @@ export class FormProjektSanierungService {
     value: 1000,
     max: 10000,
     step: 1,
-    title: 'Wohnfläche [m²] ',
-    description: 'Tragen Sie hier die Wohnfläche Ihrer Immobilie nach "Wohnflächenverordnung - WoFlV" ein.',
+    title: 'Wohnfläche [m²]',
     disabled: false,
   };
   // Wohnflächenverordnung - WoFlV https://www.gesetze-im-internet.de/woflv/
@@ -33,8 +31,7 @@ export class FormProjektSanierungService {
     value: 10,
     max: 100,
     step: 1,
-    title: 'Anzahl Wohnungen ',
-    description: 'Hier wird bestimmt, wie viele Wohneinheiten sich in Ihrer Immobilien befinden. Zu einer Wohnung oder Wohn­einheit gehört ein eigener Zugang, eine Küche oder Koch­nische, Bade­zimmer und Toilette. Die Wohnung muss zur dauer­haften Wohn­nutzung geeignet und bestimmt sein. Eine Einlieger­wohnung zählt als separate Wohnung, wenn sie abge­schlossen ist. Bei Sanierung berück­sichtigen wir die Anzahl der Wohnungen nach Sanierung.',
+    title: 'Anzahl Wohnungen',
     disabled: false,
   };
 
@@ -45,8 +42,7 @@ export class FormProjektSanierungService {
       { id: 'enstd3', value: 'EH 70', disabled: false },
       { id: 'enstd4', value: 'EH 85', disabled: false },
     ],
-    title: 'Stufe Energieeffizienzhaus ',
-    description: 'Das Effizienz­haus ist ein technischer Standard, den die KfW in ihren Förder­produkten nutzt und der entsprechend in der Bundesförderung für effiziente Gebäude (BEG) verankert ist. Die Zahlen­werte 40, 55, 70, 85 geben an, wie viel Primärenergiebedarf ein energie­effizientes Gebäude im Vergleich zu einem Referenz­gebäude (nach Gebäude­energie­gesetz) hat. Es gilt: Je niedriger die Zahl, desto höher ist die Energie­effizienz. Der Standard eines Effizienz­hauses ergibt sich immer aus der Kombination verschiedener baulicher und technischer Maßnahmen, vor allem aus den Bereichen Gebäudehülle und Haustechnik.',
+    title: 'Stufe Energieeffizienzhaus',
   };
   // Effizienz­haus https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Das-Effizienzhaus/
   
@@ -57,16 +53,12 @@ export class FormProjektSanierungService {
       { id: 'ee', value: 'EE', text: 'EE-Klasse', disabled: false },
       { id: 'nh', value: 'NH', text: 'NH-Klasse', disabled: false },
     ],
-    title: 'Förderbonus ',
-    description:
-      'Mit der Erneuerbare-Energien-Klasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz­haus eine neue Heizungs­anlage auf Basis erneuer­barer Energien einbauen und damit mindestens 65 % des Energie­bedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65 % des Energie­bedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden. Sie können die EE- und NH-Klasse nicht miteinander kombinieren. Mit der Nachhaltigkeitsklasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Ihr Wohn­gebäude Gebäude die Anforderungen des staatlichen „Qualitäts­siegels Nachhaltiges Gebäude“ erfüllt. Sie können die EE- und NH-Klasse nicht miteinander kombinieren.',
+    title: 'Förderbonus',
   };
 
   worstPerformingBuilding: WorstPerformingBuildingObj = {
     value: false,
-    title: 'Worst Performing Building ',
-    description:
-      'Erfüllt Ihre Immobilie diese Anforderung erhalten Sie 10 % mehr Tilgungszuschuss. Ein „Worst Performing Building" ist ein Gebäude, das hinsichtlich des energetischen Sanierungs­zustands zu den schlechtesten 25 % der Gebäude in Deutschland gehört. Ein Wohngebäude definieren wir als Worst Performing Building, wenn das Gebäude laut Energie­ausweis in die Klasse H fällt. Eine Immobilie zählt ebenfalls zu den Worst Performing Buildings, wenn das Gebäude 1957 oder früher gebaut wurde und mindestens 75 % der Außen­wand­fläche nicht energetisch saniert sind.',
+    title: 'Worst Performing Building',
     disabled: false,
   };
 
@@ -74,9 +66,7 @@ export class FormProjektSanierungService {
   // Should it be activated after a certain square meters?
   serielleSanierung: SerielleSanierungObj = {
     value: false,
-    title: 'Serielle Sanierung ',
-    description:
-      'Wenn Sie mit einer Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55 erreichen, erhalten Sie 15 % Extra-Tilgungszuschuss. Für eine Serielle Sanierung werden vorgefertigte Bauele­mente für Fassa­de und gegebenen­falls Dach verwendet.',
+    title: 'Serielle Sanierung',
     disabled: false,
   };
 
@@ -88,7 +78,6 @@ export class FormProjektSanierungService {
       { id: 'umfmod3', value: 'Umfassend', disabled: false },
     ],
     title: 'Umfänglichkeit bisher durchgeführter Modernisierung ',
-    description: 'Diese Kategorie beschreibt den aktuellen Modernisierungszustand des Gebäudes zum Zeitpunkt vor der Umsetzung von Maßnahmen, die durch die KfW gefördert werden sollen. Dabei steht der Umfang der energetischen Modernisierungen an wesentlichen Bauteilen der Gebäudehülle und der Anlagentechnik in Verbindung mit dessen Ausführungsqualität wie Umfang, Materialien, Komponenten, Ausführungsart, energetischer Standard etc. im Fokus. Ein Gebäude wird als nicht/gering modernisiert bezeichnet, wenn seit der Errichtung keine energetischen Modernisierungen bzw. nur an einzelnen Bauteilen der Gebäudehülle und/oder Teilen der Anlagentechnik durchgeführt wurden. Größtenteils modernisiert bedeutet, dass energetische Modernisierungen an einigen/mehreren Bauteilen der Gebäudehülle und Anlagentechnik durchgeführt wurden, während der Zustand umfassend modernisiert eine ganzheitliche energetische Modernisierung bedingt. Die Kategorie Größtenteils modernisiert wird mit erhöhten Kostenkennwerten bewertet, da es gegebenenfalls zusätzlich zu Rückbauarbeiten oder Mehraufwand kommen kann.',
   };
 
   // Zertifizierung warning: if user try to select conflicting

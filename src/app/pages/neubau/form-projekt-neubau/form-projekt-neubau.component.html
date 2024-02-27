@@ -2,10 +2,11 @@
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.wohnflaeche.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.wohnflaeche"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span class="slidernumber">
@@ -30,10 +31,11 @@
   <fieldset>
     <legend>
       {{ formService.anzahlWohnungen.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.anzahlWohnungen.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.anzahlWohneinheiten"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span class="slidernumber">
@@ -59,10 +61,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.energiestandard.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.energiestandard.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.energiestandard"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -83,10 +86,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.konstruktion.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.konstruktion.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.konstruktion"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -107,10 +111,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.zertifizierung.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.zertifizierung.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.zeritifizierung"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -138,10 +143,11 @@
   <div class="toggle-wrapper">
     <label for="userPriceToggle" class="label-toggle">
       Eigene Kostenberechnung
-      <sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right"
-          >Define your own estimated budget</span
-        ></sup
+      <sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
+        placement="right"
+        >&#9432;</sup
       >
     </label>
     <div class="checkbox-toggle-wrapper">
@@ -181,12 +187,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.kellergeschoss.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.kellergeschoss.description
-        }}</span></sup
-      >
+      {{ formService.kellergeschoss.title }}
     </legend>
     <span
       class="radio-option"
@@ -205,12 +206,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.stellplaetze.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.stellplaetze.description
-        }}</span></sup
-      >
+      {{ formService.stellplaetze.title }}
     </legend>
     <span
       class="radio-option"
@@ -232,12 +228,7 @@
   }
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.aufzugsanlage.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.aufzugsanlage.description
-        }}</span></sup
-      >
+      {{ formService.aufzugsanlage.title }}
     </legend>
     <span
       class="radio-option"
@@ -257,10 +248,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.barrierefreiheit.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.barrierefreiheit.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.barrierefreies"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -281,10 +273,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.dachbegruenung.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.dachbegruenung.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.dachbegruenung"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -305,10 +298,11 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.baustellenlogistik.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.baustellenlogistik.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.baustellenlogistik"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span
@@ -329,12 +323,7 @@
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.aussenanlagen.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.aussenanlagen.description
-        }}</span></sup
-      >
-    </legend>
+      }}</legend>
     <span
       class="radio-option"
       *ngFor="let item of formService.aussenanlagen.options"
@@ -353,10 +342,11 @@
   <fieldset>
     <legend>
       {{ formService.grundstKosten.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.grundstKosten.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.grundstKosten"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span class="slidernumber">
@@ -383,10 +373,11 @@
   <fieldset>
     <legend>
       {{ formService.baunebenkostenOhneFin.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.baunebenkostenOhneFin.description
-        }}</span></sup
+      }}<sup
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.baunebenkostenOhneFin"
+        placement="right"
+        >&#9432;</sup
       >
     </legend>
     <span class="slidernumber">

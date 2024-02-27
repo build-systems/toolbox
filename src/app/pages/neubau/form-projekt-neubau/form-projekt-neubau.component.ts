@@ -4,11 +4,13 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { FormProjektNeubauService } from './form-projekt-neubau.service';
+import { TooltipDirective } from '../../../shared/tooltip.directive';
+import { allgemein, neubau } from '../../../shared/tooltips';
 
 @Component({
   selector: 'app-form-projekt-neubau',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TooltipDirective],
   templateUrl: './form-projekt-neubau.component.html',
   styleUrl: './form-projekt-neubau.component.css',
   host: {
@@ -19,7 +21,9 @@ export class FormProjektNeubauComponent {
   // ATTENTION: All form variables are stored at form-projekt-neubau.service.ts
 
   constructor(
-    public formService: FormProjektNeubauService
+    public formService: FormProjektNeubauService,
+    public allgemeinTooltips: allgemein,
+    public neubauTooltips: neubau
   ) {}
 
   // Remove focus on enter

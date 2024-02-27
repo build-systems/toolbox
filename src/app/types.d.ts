@@ -12,7 +12,6 @@ type userPriceObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -23,7 +22,6 @@ type wohnflaecheObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -34,7 +32,6 @@ type anzahlWohnungenObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -49,7 +46,6 @@ type EnergiestandardNeubauOptions = {
 type EnergiestandardNeubauObj = {
   options: EnergiestandardNeubauOptions[];
   title: string;
-  description: string;
 };
 
 // Energiestandard Sanierung
@@ -63,7 +59,6 @@ type EnergiestandardSanierungOptions = {
 type EnergiestandardSanierungObj = {
   options: EnergiestandardSanierungOptions[];
   title: string;
-  description: string;
 };
 
 // Konstruktion typ
@@ -77,7 +72,6 @@ type KonstruktionOptions = {
 type KonstruktionObj = {
   options: KonstruktionOptions[];
   title: string;
-  description: string;
 };
 
 // Zertifizierung Neubau
@@ -91,7 +85,6 @@ type ZertifizierungNeubauOptions = {
 type ZertifizierungNeubauObj = {
   options: ZertifizierungNeubauOptions[];
   title: string;
-  description: string;
 };
 
 // Zusätzliche Nachhaltigkeitskriterien
@@ -105,7 +98,6 @@ type FoerderbonusOptions = {
 type FoerderbonusObj = {
   options: FoerderbonusOptions[];
   title: string;
-  description: string;
 }
 
 // Zustand Bestand
@@ -119,7 +111,6 @@ type UmfangModernisierungOptions = {
 type UmfangModernisierungObj = {
   options: UmfangModernisierungOptions[];
   title: string;
-  description: string;
 };
 
 // Kellergeschoss
@@ -133,7 +124,6 @@ type KellergeschossOptions = {
 type KellergeschossObj = {
   options: KellergeschossOptions[];
   title: string;
-  description: string;
 };
 
 // Stellplaetze
@@ -147,7 +137,6 @@ type StellplaetzeOptions = {
 type StellplaetzeObj = {
   options: StellplaetzeOptions[];
   title: string;
-  description: string;
 };
 
 // Aufzugsanlage
@@ -161,7 +150,6 @@ type AufzugsanlageOptions = {
 type AufzugsanlageObj = {
   options: AufzugsanlageOptions[];
   title: string;
-  description: string;
 };
 
 // Barrierefreies Bauen
@@ -179,7 +167,6 @@ type BarrierefreiesBauenOptions = {
 type BarrierefreiesBauenObj = {
   options: BarrierefreiesBauenOptions[];
   title: string;
-  description: string;
 };
 
 // Dachbegruenung
@@ -193,7 +180,6 @@ type DachbegruenungOptions = {
 type DachbegruenungObj = {
   options: DachbegruenungOptions[];
   title: string;
-  description: string;
 };
 
 // Anspruchsvolle Baustellenlogistik
@@ -207,7 +193,6 @@ type BaustellenlogistikOptions = {
 type BaustellenlogistikObj = {
   options: BaustellenlogistikOptions[];
   title: string;
-  description: string;
 };
 
 // Außenanlagen
@@ -221,7 +206,6 @@ type AussenanlagenOptions = {
 type AussenanlagenObj = {
   options: AussenanlagenOptions[];
   title: string;
-  description: string;
 };
 
 // Grundstuecksbezogene Kosten
@@ -231,7 +215,6 @@ type grundstKostenObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -242,7 +225,6 @@ type BaunebenkostenOhneFinObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -254,7 +236,6 @@ type zinssatzBankObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -265,7 +246,6 @@ type KreditlaufzeitObj = {
   max: number;
   step: number;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -280,7 +260,6 @@ type KfWDarlehenOptions = {
 type KfWDarlehenObj = {
   options: KfWDarlehenOptions[];
   title: string;
-  description: string;
 };
 
 // Bank Darlehen
@@ -294,14 +273,12 @@ type BankDarlehenOptions = {
 type BankDarlehenObj = {
   options: BankDarlehenOptions[];
   title: string;
-  description: string;
 };
 
 // Worst Performing Building
 type WorstPerformingBuildingObj = {
   value: boolean;
   title: string;
-  description: string;
   disabled: boolean;
 };
 
@@ -309,6 +286,5 @@ type WorstPerformingBuildingObj = {
 type SerielleSanierungObj = {
   value: boolean;
   title: string;
-  description: string;
   disabled: boolean;
 };

@@ -4,7 +4,7 @@ import { NeubauService } from './neubau.service';
 import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-neubau.component';
 import { FormDarlehenNeubauComponent } from './form-darlehen-neubau/form-darlehen-neubau.component';
 import { ChartsProjektNeubauComponent } from './charts-projekt-neubau/charts-projekt-neubau.component';
-import { DashboardDarlehenNeubauComponent } from './dashboard-darlehen-neubau/dashboard-darlehen-neubau.component';
+import { ChartsDarlehenNeubauComponent } from './charts-darlehen-neubau/charts-darlehen-neubau.component';
 import {
   animate,
   state,
@@ -25,7 +25,7 @@ import { TitleComponent } from '../../title/title.component';
     FormProjektNeubauComponent,
     FormDarlehenNeubauComponent,
     ChartsProjektNeubauComponent,
-    DashboardDarlehenNeubauComponent,
+    ChartsDarlehenNeubauComponent,
     NumbersProjektNeubauComponent,
     NumbersDarlehenNeubauComponent
   ],

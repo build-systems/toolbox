@@ -9,14 +9,21 @@
   --primary70: rgba(255, 255, 255, 0.7);
   --primary50: rgba(255, 255, 255, 0.5);
   --primary30: rgba(255, 255, 255, 0.3);
+  --primary20: rgba(255, 255, 255, 0.2);
   --secondary: aquamarine;
   --bg-primary: #222;
   --bg-primary75: rgba(34, 34, 34, 0.75);
+  --bg-primary85: rgba(34, 34, 34, 0.85);
+  --bg-primary95: rgba(34, 34, 34, 0.95);
+  --bg-primary97: rgba(34, 34, 34, 0.97);
   --bg-secondary: #333;
   --bg-tertiary: #444;
   --bg-tertiary95: rgba(68, 68, 68, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
+  --font-tooltip: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
   --layout-padding: 1rem;
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
@@ -415,6 +422,36 @@ legend {
   top: -28px;
   bottom: auto;
   right: 125%;
+}
+
+/* Tooltip styles for directive */
+.tooltip-icon {
+  cursor: pointer;
+}
+
+.ng-tooltip {
+  font-family: var(--font-tooltip);
+  position: absolute;
+  border-radius: 6px;
+  padding: var(--layout-padding);
+  color: var(--primary);
+  background-color: var(--bg-primary97);
+  border: 1px solid var(--primary20);
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 2;
+  max-width: 700px;
+  & p {
+    font-weight: 300;
+    font-size: 1rem;
+  }
+  & a {
+    color: var(--secondary);
+  }
+}
+
+.ng-tooltip-show {
+  opacity: 1;
 }
 
 .toggle-wrapper {
@@ -1253,16 +1290,16 @@ span.nowrap {
 }
 
 @media screen and (max-width: 850px) {
-  h1 { 
+  h1 {
     margin: 1rem 0;
     font-size: 1.8rem;
     line-height: 100%;
   }
-  
+
   .arrow-container {
     margin-top: 0;
   }
-  
+
   .arrow {
     margin: 1.05rem 0;
     height: 1.5rem;
@@ -1332,12 +1369,12 @@ span.nowrap {
     display: flex;
     flex-direction: column;
   }
-  
+
   .card {
     & h3 {
       font-size: 0.85rem;
     }
-   & div {
+    & div {
       font-size: 1.25rem;
     }
   }

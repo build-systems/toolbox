@@ -1,9 +1,10 @@
 <form [formGroup]="formService.darlehenForm">
     <fieldset>
-      <legend>{{ formService.zinssatzBank.title }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.zinssatzBank.description
-        }}</span></sup
+      <legend>{{ formService.zinssatzBank.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.bankZinssatz"
+        placement="right"
+        >&#9432;</sup
       ></legend>
       <span class="slidernumber">
         <input
@@ -27,10 +28,11 @@
     </fieldset>
     <fieldset>
       <legend>{{ formService.kreditlaufzeit.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.kreditlaufzeit.description
-        }}</span></sup
+      }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.kreditlaufzeit"
+        placement="right"
+        >&#9432;</sup
       ></legend>
       <span class="slidernumber">
         <input
@@ -54,10 +56,11 @@
     </fieldset>
     <fieldset class="radio-fieldset">
       <legend>{{ formService.kfWDarlehen.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.kfWDarlehen.description
-        }}</span></sup
+      }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.kfwDarlehen"
+        placement="right"
+        >&#9432;</sup
       ></legend>
       <span class="radio-option" *ngFor="let item of formService.kfWDarlehen.options">
         <input
@@ -78,10 +81,11 @@
       }
     <fieldset class="radio-fieldset">
       <legend>{{ formService.bankDarlehen.title
-      }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-right">{{
-          formService.bankDarlehen.description
-        }}</span></sup
+      }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.bankDarlehen"
+        placement="right"
+        >&#9432;</sup
       ></legend>
       <span class="radio-option" *ngFor="let item of formService.bankDarlehen.options">
         <input

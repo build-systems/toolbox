@@ -3,12 +3,14 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { NeubauProjekt } from '../../../shared/neubauprojekt';
 import { NeubauService } from '../neubau.service';
 import localeDe from '@angular/common/locales/de'
+import { TooltipDirective } from '../../../shared/tooltip.directive';
 registerLocaleData(localeDe, 'de');
+import { allgemein } from '../../../shared/tooltips'
 
 @Component({
   selector: 'app-numbers-projekt-neubau',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TooltipDirective],
   templateUrl: './numbers-projekt-neubau.component.html',
   styleUrl: './numbers-projekt-neubau.component.css',
   host: {
@@ -24,10 +26,7 @@ export class NumbersProjektNeubauComponent  implements OnInit {
   kfwKredit: number = 0;
   KfwKreditschwelleProWe: number = 0;
 
-  investitionskostenDescription: string = 'Die Höhe des Kreditbetrags hängt von zwei Faktoren ab: Die Energie­effizienz ihrer sanierten oder neu gebauten Immo­bilie und der Höhe ihrer förderfähigen Kosten. In unserer Kalkulation wurden folgende Kostengruppen nach DIN276 berücksichtigt: KG 300 und 400. "Förder­fähige Kosten" sind jene Kosten, die für Ihre Förderung anrechen­bar sind. Beispiel: Wenn Sie Ihre bestehende Immo­bilie zum Effizienz­haus sanieren, sind die Kosten für den Einbau eines Öl­brenn­wert­kessels nicht förder­fähig. Details finden Sie in der Förderrichtlinie.';
-  // Förderrichtlinie https://www.bafa.de/SharedDocs/Downloads/DE/Energie/beg_infoblatt_foerderfaehige_kosten.html
-
-  constructor(private neubauService: NeubauService) {}
+  constructor(private neubauService: NeubauService, public allgemeinTooltips: allgemein) {}
 
   ngOnInit(): void {
     this.neubauService.currentOutputNeubau$

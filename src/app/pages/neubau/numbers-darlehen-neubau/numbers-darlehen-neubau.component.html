@@ -1,11 +1,13 @@
 <div class="dashboard-numbers">
   <div
-    title="Investitionskosten: {{
-      investitionskosten | currency : 'EUR' : 'symbol' : '3.0' : 'de'
-    }} "
     class="card"
   >
-    <h3>Investitionskosten</h3>
+    <h3>Investitionskosten&nbsp;<sup
+      class="tooltip-icon"
+      [appTooltip]="allgemeinTooltips.investitionskosten"
+      placement="bottom"
+      >&#9432;</sup
+    ></h3>
     <div>
       {{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
     </div>
@@ -39,10 +41,14 @@
     </div>
   </div>
   <div
-    title="KfW Zinssatz (Sollzins): {{ zinssatzKfw | percent : '1.0-3' : 'de' }}"
     class="card"
   >
-    <h3>KfW Zinssatz</h3>
+    <h3>KfW Zinssatz&nbsp;<sup
+      class="tooltip-icon"
+      [appTooltip]="allgemeinTooltips.kfwZinssatz"
+      placement="bottom"
+      >&#9432;</sup
+    ></h3>
     <div>
       {{ zinssatzKfw | percent : "1.0-3" : "de" }}
     </div>

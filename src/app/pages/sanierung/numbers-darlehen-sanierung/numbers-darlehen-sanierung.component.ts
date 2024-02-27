@@ -3,12 +3,14 @@ import { SanierungService } from '../sanierung.service';
 import { SanierungProjekt } from '../../../shared/sanierungprojekt';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
+import { TooltipDirective } from '../../../shared/tooltip.directive';
+import { allgemein } from '../../../shared/tooltips';
 registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-numbers-darlehen-sanierung',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TooltipDirective],
   templateUrl: './numbers-darlehen-sanierung.component.html',
   styleUrl: './numbers-darlehen-sanierung.component.css'
 })
@@ -22,9 +24,8 @@ export class NumbersDarlehenSanierungComponent implements OnInit {
   zinssatzKfw: number = 0;
   output!: SanierungProjekt;
 
-  kfwZinssatzDescription: string = 'Der Zinssatz, der durch die KfW angeboten wird, ist abhängig von der Laufzeit des Darlehens und der Art des Darlehens (Annuitäten oder Endfälliges Darlehen). Alle Zinsraten sind als Sollzins angegeben.';
 
-  constructor(private sanierungService: SanierungService) {}
+  constructor(private sanierungService: SanierungService, public allgemeinTooltips: allgemein) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {

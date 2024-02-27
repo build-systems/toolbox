@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartFinanzierungskostenSanierungComponent } from './chart-finanzierungskosten-sanierung/chart-finanzierungskosten-sanierung.component';
 import { ChartTilgungSanierungComponent } from './chart-tilgung-sanierung/chart-tilgung-sanierung.component';

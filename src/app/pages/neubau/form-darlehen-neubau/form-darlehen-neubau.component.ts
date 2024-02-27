@@ -1,18 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormDarlehenNeubauService } from './form-darlehen-neubau.service';
+import { TooltipDirective } from '../../../shared/tooltip.directive';
+import { allgemein } from '../../../shared/tooltips';
 
 @Component({
   selector: 'app-form-darlehen-neubau',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TooltipDirective],
   templateUrl: './form-darlehen-neubau.component.html',
   styleUrl: './form-darlehen-neubau.component.css',
   host: {
@@ -23,7 +19,10 @@ export class FormDarlehenNeubauComponent {
   // export class FormDarlehenNeubauComponent implements OnInit {
   // ATTENTION: All form variables are stored at form-projekt.service.ts
 
-  constructor(public formService: FormDarlehenNeubauService) {}
+  constructor(
+    public formService: FormDarlehenNeubauService,
+    public allgemeinTooltips: allgemein
+  ) {}
 
   // Remove focus on enter
   onEnterKey(event: any): void {
