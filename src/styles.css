@@ -878,7 +878,7 @@ input[type="number"]:disabled:hover {
   background-color: var(--bg-primary);
   color: var(--primary);
   border-top: 2px solid var(--secondary);
-  transition: all 0.2s;
+  transition: all 0.4s;
 }
 
 .grayed-pill {
@@ -1270,6 +1270,7 @@ span.nowrap {
     top: 0;
     z-index: 5;
     background-color: var(--bg-primary);
+    transition: all 0.4s;
   }
 
   .card {
