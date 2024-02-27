@@ -878,6 +878,7 @@ input[type="number"]:disabled:hover {
   background-color: var(--bg-primary);
   color: var(--primary);
   border-top: 2px solid var(--secondary);
+  transition: all 0.2s;
 }
 
 .grayed-pill {
