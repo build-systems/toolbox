@@ -1,14 +1,12 @@
 <app-title [title]="title" [kfwId]="kfwId" [kfwH2]="kfwH2" [kfwH3]="kfwH3" [kfwDescription]="kfwDescription" [kfwLink]="kfwLink"></app-title>
 <div class="container-tool">
-  @if (this.sanierungService.currentTab() === 1) {
   <div class="numbers-mover tablet">
+  @if(this.sanierungService.currentTab() === 1) {
     <app-numbers-projekt-sanierung></app-numbers-projekt-sanierung>
-  </div>
   } @else {
-  <div class="numbers-mover tablet">
     <app-numbers-darlehen-sanierung></app-numbers-darlehen-sanierung>
+    }
   </div>
-  }
   <div class="inputs">
     <div class="tool-tab">
       <input
