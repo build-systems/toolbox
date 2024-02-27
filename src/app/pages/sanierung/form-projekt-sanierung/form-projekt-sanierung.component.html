@@ -1,10 +1,9 @@
 <form [formGroup]="this.formService.projektFormSanierung">
-  <!-- <h2>Stammdaten</h2> -->
   <fieldset>
     <legend>
       {{ formService.wohnflaeche.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.wohnflaeche.description
         }}</span></sup
       >
@@ -32,7 +31,7 @@
     <legend>
       {{ formService.anzahlWohnungen.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.anzahlWohnungen.description
         }}</span></sup
       >
@@ -61,7 +60,7 @@
     <legend>
       {{ formService.umfangModernisierung.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-top">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.umfangModernisierung.description
         }}</span></sup
       >
@@ -85,7 +84,7 @@
     <legend>
       {{ formService.worstPerformingBuilding.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-left">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.worstPerformingBuilding.description
         }}</span></sup
       >
@@ -102,10 +101,9 @@
     </label>
   </fieldset>
   <br />
-  <!-- <h2>Eigene Kostenberechnung</h2> -->
   <div class="toggle-wrapper">
     <label for="userPriceToggle" class="label-toggle">
-      Eigene Kostenberechnung <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">Define your own estimated budget</span></sup>
+      Eigene Kostenberechnung <sup class="tooltip">&#9432;<span class="tooltiptext tooltip-right">Define your own estimated budget</span></sup>
     </label>
     <div class="checkbox-toggle-wrapper">
       <label class="toggle-box">
@@ -143,12 +141,11 @@
     </span>
   </fieldset>
   <br />
-  <!-- <h2>Projektierung</h2> -->
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.energiestandard.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-bottom">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.energiestandard.description
         }}</span></sup
       >
@@ -172,7 +169,7 @@
     <legend>
       {{ formService.foerderbonus.title
       }}<sup class="tooltip"
-        >&#9432;<span class="tooltiptext tooltip-left">{{
+        >&#9432;<span class="tooltiptext tooltip-right">{{
           formService.foerderbonus.description
         }}</span></sup
       >

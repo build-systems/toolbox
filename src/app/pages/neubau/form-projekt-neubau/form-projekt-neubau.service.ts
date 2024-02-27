@@ -13,7 +13,7 @@ export class FormProjektNeubauService {
     max: 20000,
     step: 10,
     title: 'Kostenberechnung [€/m²] ',
-    description: 'Price estimation description',
+    description: 'Geben Sie hier Kosten ein, die Sie selbst oder mit Hilfe Ihrer Expert:innen kalkuliert haben. Dabei sollten folgende Kostengruppen nach DIN276 berücksichtigt werden: KG 300 & 400.',
     disabled: true,
   };
 
@@ -24,9 +24,10 @@ export class FormProjektNeubauService {
     max: 10000,
     step: 1,
     title: 'Wohnfläche [m²] ',
-    description: 'Wohnflaeche description',
+    description: 'Tragen Sie hier die Wohnfläche Ihrer Immobilie nach "Wohnflächenverordnung - WoFlV" ein.',
     disabled: false,
   };
+  // Wohnflächenverordnung - WoFlV https://www.gesetze-im-internet.de/woflv/
 
   // Anzahl Wohnungen centralized form values
   anzahlWohnungen: anzahlWohnungenObj = {
@@ -35,7 +36,7 @@ export class FormProjektNeubauService {
     max: 100,
     step: 1,
     title: 'Anzahl Wohnungen ',
-    description: 'Anzahl Wohnungen description',
+    description: 'Hier wird bestimmt, wie viele Wohneinheiten sich in Ihrer Immobilien befinden. Zu einer Wohnung oder Wohn­einheit gehört ein eigener Zugang, eine Küche oder Koch­nische, Bade­zimmer und Toilette. Die Wohnung muss zur dauer­haften Wohn­nutzung geeignet und bestimmt sein. Eine Einlieger­wohnung zählt als separate Wohnung, wenn sie abge­schlossen ist. Bei Sanierung berück­sichtigen wir die Anzahl der Wohnungen nach Sanierung.',
     disabled: false,
   };
 
@@ -49,8 +50,9 @@ export class FormProjektNeubauService {
       // { id: 'enstd5', value: 'EH 115' },
     ],
     title: 'Stufe Energieeffizienzhaus ',
-    description: 'Stufe Energieeffizienzhaus description',
+    description: 'Das Effizienz­haus ist ein technischer Standard, den die KfW in ihren Förder­produkten nutzt und der entsprechend in der Bundesförderung für effiziente Gebäude (BEG) verankert ist. Der Zahlen­wert 40 gibt an, dass das Effizienz­haus nur 40 % Primär­energie benötigt, verglichen mit einem Referenz­gebäude (nach Gebäude­energie­gesetz GEG). Der Standard eines Effizienz­hauses ergibt sich immer aus der Kombination verschiedener baulicher und technischer Maßnahmen, vor allem aus den Bereichen Heizung, Lüftung und Dämmung.',
   };
+  // [Effizienz­haus](https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/Das-Effizienzhaus/) 
 
   // Konstruktion centralized form values
   konstruktion: KonstruktionObj = {
@@ -59,7 +61,7 @@ export class FormProjektNeubauService {
       { id: 'konst2', value: 'Konventionell', disabled: false },
     ],
     title: 'Konstruktion ',
-    description: 'Konstruktion description',
+    description: 'Geben Sie hier ein, ob Ihre Immobilien in Holzbauweise oder in konventioneller Bauweise ohne die Nutzung von Nachwachsenden Rohstoffen umgesetzt werden soll. Dieser Aspekt ist ausschlaggebend, da die Anforderungen des „Qualitäts­siegels Nachhaltiges Gebäude” im Bereich der Treibhaus­gas­emissionen zumeist nicht erfüllt werden, wenn in konventioneller Bauweise geplant wird. Die Erfüllung dieser Anforderungen ist in einer Ökobilanzierung nachzuweisen und ausschlaggebend für die Qualifikation zur KfW-Förderung.',
   };
 
   // Zertifizierung centralized form values
@@ -85,8 +87,9 @@ export class FormProjektNeubauService {
       },
     ],
     title: 'Zertifizierung klimafreundlicher Neubau ',
-    description: 'Neubau Zertifizierung klimafreundlicher description',
+    description: 'Eine Zertifizierung zum klimafreundlichen Neubau ist unerlässlich, damit sich Ihr Neubau für eine Förderung durch die KfW qualifiziert. Ein Gebäude gilt als klima­freundlich, wenn es wenig Energie verbraucht und damit als Effizienz­haus 40 einge­stuft wird, wenig Treibhausgase ausstößt und damit die Anforderung an Treibhaus­gas­emissionen des "Qualitäts­siegels Nachhaltiges Gebäude Plus" erfüllt und nicht mit Öl, Gas oder Biomasse beheizt wird. Der  maximale Kredit­betrag steigt von 100.000 Euro auf 150.000 Euro je Wohn­einheit, wenn das "Qualitäts­siegels Nachhaltiges Gebäude Plus oder Premium" zusätzlich durch ein Nachhaltigkeits­zertifikat wie z.B. das der DGNB bestätigt wird.',
   };
+  // „[Qualitäts­siegels Nachhaltiges Gebäude Plus](https://www.qng.info/qng/qng-anforderungen/)“
   // Signal to edit the disable property
   zertifizierungWarningMessage$i = signal('');
 
@@ -145,8 +148,9 @@ export class FormProjektNeubauService {
       },
     ],
     title: 'Barrierefreies Gebäude ',
-    description: 'Barrierefreiheit description',
+    description: 'Bei Beschreibungen wie "barrierereduziert" oder "seniorengerecht" handelt es sich um unbestimmte Begriffe, denen keine verbindlichen Kriterien zugeordnet sind. Für Wohngebäude wird bei KfW-Förderungen der Aspekt altengerechtes Wohnen betrachtet. Die Kategorien "barrierefrei" und "barrierefrei (R)" beziehen sich auf die "DIN Norm 18040-2: Wohnungen" und werden laut dieser definiert. Ziel dieser Norm ist „die Barrierefreiheit baulicher Anlagen, damit sie für Menschen mit Behinderungen in der allgemein üblichen Weise, ohne besondere Erschwernis und grundsätzlich ohne fremde Hilfe zugänglich und nutzbar sind. Barrierefrei bezieht sich auf die Mindestanforderungen, während mit der "R"-Kennzeichnung die über den Mindeststandard hinausgehenden zusätzlichen Anforderungen für Rollstuhlfahrer ausgewiesen werden.',
   };
+  // DIN Norm (18040-2) (https://www.aktion-barrierefreies-bad.de/glossar/din-18040-2/)
 
   // Dachbegruenung
   dachbegruenung: DachbegruenungObj = {
@@ -165,7 +169,7 @@ export class FormProjektNeubauService {
       { id: 'baulog2', value: 'Nicht Vorhanden', disabled: false },
     ],
     title: 'Anspruchsvolle Baustellenlogistik ',
-    description: 'Baustellenlogistik description',
+    description: 'Unter einer anspruchsvollen Baustellenlogistik sind vorwiegend die Anforderungen von innerstädtischem Bauen zu verstehen. Auf Grund von geringen Aufstellflächen und einer schwierigen Verkehrslage, die logistische und infrastrukturelle Herausforderungen mit sich bringt, ist die Baustellenabwicklung als aufwändig und kostenintensiver zu betrachten.',
   };
 
   // Aussenanlagen

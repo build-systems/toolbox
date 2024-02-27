@@ -29,7 +29,10 @@
       </div>
     </div>
     <div title="KfW Zinssatz (Sollzins): {{ zinssatzKfw  | percent : '1.0-3' : 'de' }}" class="card">
-      <h3>KfW Zinssatz</h3>
+      <h3>KfW Zinssatz&nbsp;<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{
+        kfwZinssatzDescription
+      }}</span></sup
+    ></h3>
       <div>
         {{ zinssatzKfw | percent : '1.0-3' : 'de'  }}
       </div>

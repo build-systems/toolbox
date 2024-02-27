@@ -16,7 +16,7 @@ export class FormDarlehenNeubauService {
     max: 8,
     step: 0.1,
     title: 'Zinssatz Hausbank (Sollzins) ',
-    description: 'Zinssatz Hausbank (Sollzins) description',
+    description: 'Hier bestimmen Sie den Zinssatz, den Sie bei Ihrer Hausbank oder einem anderen Finanzierer erhalten und zu dem Sie die KfW Konditionen vergleichen möchten. Alle Zinsraten sind als Sollzins angegeben.',
     disabled: false,
   };
 
@@ -28,7 +28,7 @@ export class FormDarlehenNeubauService {
     max: 35,
     step: 1,
     title: 'Kreditlaufzeit [a] ',
-    description: 'Kreditlaufzeit description',
+    description: 'Die Kreditlaufzeit gibt an, wie viele Monate bzw. Jahre es dauert, bis ein Darlehen vollständig zurückgezahlt wird.',
     disabled: false,
   };
 
@@ -40,7 +40,7 @@ export class FormDarlehenNeubauService {
       // { id: 'kfwd3', value: 'kein', disabled: false },
     ],
     title: 'KfW-Darlehen ',
-    description: 'KfW-Darlehen description',
+    description: 'Bestimmen Sie hier, auf welche Art Ihr Kredit zurück gezahlt werden soll. Bei einem Annuitäten­darlehen zahlen Sie in den ersten Jahren (tilgungs­freie Anlauf­zeit) nur Zinsen – danach gleich hohe monat­liche Annuitäten. Diese stellen den Rückzahlungsbetrag dar, der sich aus Zins und Tilgung zusammen­setzt. Beim endfälligen Darlehen zahlen Sie während der gesamten Lauf­zeit nur die Zinsen und am Ende den kompletten Kredit­betrag in einer Summe zurück. Ein endfälliges Darlehen ist nur bei einer Laufzeit von bis zu 10 Jahren möglich.',
   };
 
   // Bank-Darlehen centralized form values
@@ -50,7 +50,7 @@ export class FormDarlehenNeubauService {
       { id: 'bankd2', value: 'Endfälliges', disabled: false },
     ],
     title: 'Bank-Darlehen ',
-    description: 'Bank-Darlehen description',
+    description: 'Bestimmen Sie hier, auf welche Art Ihr Kredit zurück gezahlt werden soll. Bei einem Annuitäten­darlehen zahlen Sie in den ersten Jahren (tilgungs­freie Anlauf­zeit) nur Zinsen – danach gleich hohe monat­liche Annuitäten. Diese stellen den Rückzahlungsbetrag dar, der sich aus Zins und Tilgung zusammen­setzt. Beim endfälligen Darlehen zahlen Sie während der gesamten Lauf­zeit nur die Zinsen und am Ende den kompletten Kredit­betrag in einer Summe zurück.',
   };
 
   // Define form controls

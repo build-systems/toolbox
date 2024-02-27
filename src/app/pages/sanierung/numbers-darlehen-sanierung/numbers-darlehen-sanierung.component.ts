@@ -22,6 +22,8 @@ export class NumbersDarlehenSanierungComponent implements OnInit {
   zinssatzKfw: number = 0;
   output!: SanierungProjekt;
 
+  kfwZinssatzDescription: string = 'Der Zinssatz, der durch die KfW angeboten wird, ist abhängig von der Laufzeit des Darlehens und der Art des Darlehens (Annuitäten oder Endfälliges Darlehen). Alle Zinsraten sind als Sollzins angegeben.';
+
   constructor(private sanierungService: SanierungService) {}
 
   ngOnInit(): void {

@@ -25,7 +25,7 @@
   --mobile-handle-diameter: 1.6rem;
   --mobile-padding: 0.5rem;
   --mobile-header: calc(40px + (2 * var(--mobile-padding)));
-  --tooltip-width: 200px;
+  --tooltip-width: 280px;
   --scrollbar-width: 0.1rem;
 }
 
@@ -367,6 +367,7 @@ legend {
   position: relative;
   display: inline-block;
   cursor: pointer;
+  font-weight: 300;
 }
 
 .tooltip .tooltiptext {

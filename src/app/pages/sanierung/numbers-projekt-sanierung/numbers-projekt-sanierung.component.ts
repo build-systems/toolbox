@@ -25,6 +25,10 @@ export class NumbersProjektSanierungComponent implements OnInit {
   kfwZuschussPercent: number = 0;
   KfwKreditschwelleProWe: number = 0;
 
+  investitionskostenDescription: string = 'Die Höhe des Kreditbetrags hängt von zwei Faktoren ab: Die Energie­effizienz ihrer sanierten oder neu gebauten Immo­bilie und der Höhe ihrer förderfähigen Kosten. In unserer Kalkulation wurden folgende Kostengruppen nach DIN276 berücksichtigt: KG 300 und 400. "Förder­fähige Kosten" sind jene Kosten, die für Ihre Förderung anrechen­bar sind. Beispiel: Wenn Sie Ihre bestehende Immo­bilie zum Effizienz­haus sanieren, sind die Kosten für den Einbau eines Öl­brenn­wert­kessels nicht förder­fähig. Details finden Sie in der Förderrichtlinie.';
+  
+  tilgungszuschussDescription: string = 'Die Auszahlungsmodalitäten, sehen vor, dass der Tilgungs­zuschuss nach Gebäudefertigstellung und Dokumentation den zurückzuz­ahlenden Kredit­betrag reduziert und somit die Lauf­zeit Ihres Darlehens verkürzt. Der Zuschuss wird entsprechend nicht als Einmalzahlung ausgezahlt, sondern gegen Ihre Kreditsumme gegengerechnet.';
+  
   constructor(private sanierungService: SanierungService) {}
 
   ngOnInit(): void {

@@ -4,7 +4,10 @@
   }} "
   class="card"
 >
-  <h3>Investitionskosten</h3>
+  <h3>Investitionskosten&nbsp;<sup class="tooltip">&#9432;<span class="tooltiptext tooltip-bottom">{{
+    investitionskostenDescription
+  }}</span></sup
+></h3>
   <div>
     {{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
   </div>
