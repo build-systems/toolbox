@@ -77,7 +77,7 @@ export class FormProjektSanierungService {
       { id: 'umfmod2', value: 'Größtenteils', disabled: false },
       { id: 'umfmod3', value: 'Umfassend', disabled: false },
     ],
-    title: 'Umfänglichkeit bisher durchgeführter Modernisierung ',
+    title: 'Umfänglichkeit bisher durchgeführter Modernisierung',
   };
 
   // Zertifizierung warning: if user try to select conflicting
