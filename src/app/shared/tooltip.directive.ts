@@ -5,22 +5,25 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
   standalone: true,
 })
 export class TooltipDirective {
+  // Tooltip built following:
+  // https://www.youtube.com/watch?v=YPOwsP9GV0w
+  // And modified to click using ChatGPT
+
   @Input('appTooltip') tooltipText?: string = '';
   @Input() placement?: string;
   delay: number = 3000;
   tooltip?: HTMLElement;
   offset = 10;
-  private hideTimeout: any;
 
   constructor(private el: ElementRef) {}
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent) {
     event.stopPropagation(); // Prevent click event from bubbling up
     if (!this.tooltip) {
-      this.show();
-      this.setupClickOutsideListener();
+      this.show(); // Creates and shows the tooltip
+      this.setupClickOutsideListener(); // Track clicks outiside of tooltip and hide the tooltip
     } else {
-      this.hide();
+      this.hide(); // Remove tooltip and eventlistener
     }
   }
 
@@ -29,6 +32,7 @@ export class TooltipDirective {
     this.setPosition();
     this.tooltip?.classList.add('ng-tooltip-show');
   }
+
   hide() {
     this.tooltip?.classList.remove('ng-tooltip-show');
     this.tooltip?.remove();
@@ -75,7 +79,7 @@ export class TooltipDirective {
       this.tooltip.style.left = `${left}px`;
     }
   }
-
+  
   private setupClickOutsideListener() {
     document.addEventListener('click', this.onClickOutside);
   }
