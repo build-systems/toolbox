@@ -698,14 +698,12 @@ input[type="radio"] {
 .radio-fieldset span input:active ~ label {
   color: var(--primary);
   background-color: var(--bg-tertiary);
-  /* border-color: var(--secondary); */
 }
 
 /* When the radio option is selected... */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
   background-color: var(--bg-primary);
-  /* border-color: var(--primary); */
 }
 
 input[type="checkbox"] {
@@ -815,7 +813,8 @@ input:disabled {
 }
 
 /* Legends when ALL its items are disabled */
-legend:not(:has(~ span input:enabled, ~ input:enabled) /* only select if the legend don't have a enabled child */ 
+/* only select if the legend don't have a enabled child */ 
+legend:not(:has(~ span input:enabled, ~ input:enabled) 
   ) {
   pointer-events: none;
   color: var(--primary30);
