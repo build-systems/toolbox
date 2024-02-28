@@ -11,7 +11,7 @@ import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-dar
   providedIn: 'root',
 })
 export class SanierungService {
-  // Neubau active form tab
+  // Active form tab
   public currentTab = signal(1);
 
   // Initial project parameters
@@ -255,7 +255,7 @@ export class SanierungService {
     return Math.min(maxKfwKredit, gesamtgestehungskosten);
   }
 
-  // Bank-Kredit [€]
+  // Bank-Kredit [€] 
   private _bankKredit = 0;
   updateBankKredit(
     maxKfwKredit: number,

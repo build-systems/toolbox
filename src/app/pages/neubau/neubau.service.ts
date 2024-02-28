@@ -201,6 +201,7 @@ export class NeubauService {
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
   updateGestehungskosten(
+    konstruktion: Konstruktion,
     eigeneKosten: number,
     eigeneKostenDisabled: boolean,
     kellergeschossOut: number,
@@ -214,24 +215,30 @@ export class NeubauService {
     aussenanlagenOut: number,
     grundstuecksbezogeneKosten: number
   ): number {
+    const baseCosts =
+      this.constants.gestehungskostenBase +
+      kellergeschossOut +
+      stellplaetzeOut +
+      redGarageOut +
+      aufzugsanlageOut +
+      barrierefreiheitOut +
+      dachbegruenungOut +
+      baustellenlogistikOut +
+      energetischerStandardOut +
+      aussenanlagenOut;
     if (eigeneKostenDisabled) {
-      return (
-        this.constants.gestehungskostenBase +
-        kellergeschossOut +
-        stellplaetzeOut +
-        redGarageOut +
-        aufzugsanlageOut +
-        barrierefreiheitOut +
-        dachbegruenungOut +
-        baustellenlogistikOut +
-        energetischerStandardOut +
-        aussenanlagenOut +
-        grundstuecksbezogeneKosten
-      );
+      if (konstruktion === 'Holzbau') {
+        return (
+          baseCosts * this.constants.holzbauBonus + grundstuecksbezogeneKosten
+        );
+      } else {
+        return baseCosts + grundstuecksbezogeneKosten;
+      }
     } else {
       return eigeneKosten;
     }
   }
+  //
 
   // NR-Kredit [%]
   private _nrKredit = this.constants.nrKredit.lessThan11;
@@ -340,17 +347,9 @@ export class NeubauService {
   // Bank-Kredit [€] (Daniel's Restsumme and Bank-Kredit were merged)
   // Also _investitionkosten = baukosten + baunebenkosten
   private _bankKredit = this._investitionskosten - this._kfwKredit;
-  updateBankKredit(
-    konstruktion: Konstruktion,
-    investitionkosten: number,
-    kfwKredit: number
-  ): number {
-    if (konstruktion === 'Holzbau') {
-      return investitionkosten * this.constants.holzbauBonus - kfwKredit;
-    } else {
-      var bankKredit = investitionkosten - kfwKredit;
-      return Math.max(bankKredit, 0); // Make sure it doesn't go negative
-    }
+  updateBankKredit(investitionkosten: number, kfwKredit: number): number {
+    var bankKredit = investitionkosten - kfwKredit;
+    return Math.max(bankKredit, 0); // Make sure it doesn't go negative
   }
 
   private _bankKreditM2 = 0;
@@ -555,6 +554,7 @@ export class NeubauService {
       this.energiestandard
     );
     this._gestehungskosten = this.updateGestehungskosten(
+      this.konstruktion,
       this.eigeneKosten,
       this.eigeneKostenDisabled,
       this._kellergeschossOut,
@@ -610,7 +610,6 @@ export class NeubauService {
       this.wohnflaeche
     );
     this._bankKredit = this.updateBankKredit(
-      this.konstruktion,
       this._investitionskosten,
       this._kfwKredit
     );
