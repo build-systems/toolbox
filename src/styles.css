@@ -712,7 +712,7 @@ input[type="radio"] {
   align-items: center;
   border-radius: var(--button-radius);
   & label {
-    color: var(--primary80);
+    color: var(--primary60);
     background-color: var(--bg-secondary);
     display: flex;
     margin: 0;
