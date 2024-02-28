@@ -5,22 +5,21 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
   standalone: true,
 })
 export class TooltipDirective {
-  @Input('appTooltip') tooltipTitle?: string = '';
+  @Input('appTooltip') tooltipText?: string = '';
   @Input() placement?: string;
-  delay: number = 300;
+  delay: number = 3000;
   tooltip?: HTMLElement;
   offset = 10;
+  private hideTimeout: any;
 
   constructor(private el: ElementRef) {}
 
-  @HostListener('mouseenter') onMouseEnter() {
+  @HostListener('click', ['$event']) onClick(event: MouseEvent) {
+    event.stopPropagation(); // Prevent click event from bubbling up
     if (!this.tooltip) {
       this.show();
-    }
-  }
-
-  @HostListener('mouseleave') onMouseLeave() {
-    if (this.tooltip) {
+      this.setupClickOutsideListener();
+    } else {
       this.hide();
     }
   }
@@ -31,18 +30,16 @@ export class TooltipDirective {
     this.tooltip?.classList.add('ng-tooltip-show');
   }
   hide() {
-    window.setTimeout(() => {
-      this.tooltip?.classList.remove('ng-tooltip-show');
-      this.tooltip?.remove();
-      this.tooltip = undefined;
-    }, this.delay);
+    this.tooltip?.classList.remove('ng-tooltip-show');
+    this.tooltip?.remove();
+    this.tooltip = undefined;
+    this.removeClickOutsideListener();
   }
 
   create() {
     this.tooltip = document.createElement('span');
     this.tooltip.classList.add('ng-tooltip');
-    this.tooltip.innerHTML = this.tooltipTitle!;
-    // this.tooltip.textContent = this.tooltipTitle!;
+    this.tooltip.innerHTML = this.tooltipText!;
     document.body.appendChild(this.tooltip);
   }
 
@@ -76,6 +73,20 @@ export class TooltipDirective {
     if (this.tooltip) {
       this.tooltip.style.top = `${top}px`;
       this.tooltip.style.left = `${left}px`;
-    } 
+    }
+  }
+
+  private setupClickOutsideListener() {
+    document.addEventListener('click', this.onClickOutside);
+  }
+
+  private removeClickOutsideListener() {
+    document.removeEventListener('click', this.onClickOutside);
+  }
+
+  private onClickOutside = (event: MouseEvent) => {
+    if (this.tooltip && !this.tooltip.contains(event.target as Node)) {
+      this.hide();
+    }
   }
 }
