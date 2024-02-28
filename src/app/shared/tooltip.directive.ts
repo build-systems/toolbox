@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, input } from '@angular/core';
 
 @Directive({
   selector: '[appTooltip]',
@@ -8,8 +8,8 @@ export class TooltipDirective {
   // Tooltip built following:
   // https://www.youtube.com/watch?v=YPOwsP9GV0w
   // And modified to click using ChatGPT
-  tooltipText? = input.required<string>();
-  placement? = input.required<string>();
+  @Input('appTooltip') tooltipText!: string;
+  placement = input.required<string>();
   delay: number = 3000;
   tooltip?: HTMLElement;
   offset = 10;
@@ -42,7 +42,7 @@ export class TooltipDirective {
   create() {
     this.tooltip = document.createElement('span');
     this.tooltip.classList.add('ng-tooltip');
-    this.tooltip.innerHTML = this.tooltipText!();
+    this.tooltip.innerHTML = this.tooltipText!;
     document.body.appendChild(this.tooltip);
   }
 

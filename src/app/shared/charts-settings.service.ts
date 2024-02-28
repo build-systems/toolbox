@@ -59,7 +59,7 @@ export class ChartsSettingsService {
     borderWidth: 1,
     // Original
     color01: {
-      backgroundColor: 'rgba(58, 149, 194, 0.6)',
+      backgroundColor: 'rgba(58, 149, 194, 0.3)',
       borderColor: 'rgb(58, 149, 194)',
       hoverBackgroundColor: 'rgb(58, 149, 194)',
     },
@@ -171,7 +171,7 @@ export class ChartsSettingsService {
     // },
     // Var 08 - Figma colors 02 with transparency
     color02: {
-      backgroundColor: 'rgba(253, 179, 153, 0.6)',
+      backgroundColor: 'rgba(253, 179, 153, 0.3)',
       borderColor: 'rgba(253, 179, 153)',
       hoverBackgroundColor: 'rgba(253, 179, 153)',
     },
@@ -236,7 +236,7 @@ export class ChartsSettingsService {
     //   hoverBackgroundColor: 'rgba(252, 237, 176)',
     // },
     color03: {
-      backgroundColor01: 'rgba(249, 220, 130, 0.6)',
+      backgroundColor01: 'rgba(249, 220, 130, 0.3)',
       backgroundColor02: 'rgba(249, 220, 97, 0.2)',
       borderColor: 'rgba(249, 220, 97)',
       hoverBackgroundColor: 'rgba(249, 220, 97)',
@@ -244,7 +244,7 @@ export class ChartsSettingsService {
 
     // Original
     color04: {
-      backgroundColor01: 'rgba(58, 194, 150, 0.6)',
+      backgroundColor01: 'rgba(58, 194, 150, 0.3)',
       backgroundColor02: 'rgba(58, 194, 150, 0.1)',
       borderColor: 'rgb(58, 194, 150)',
       hoverBackgroundColor: 'rgb(58, 194, 150)',

@@ -1,0 +1,111 @@
+[
+    {
+      "Energiestandard": "EH 115",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 660,
+      "Max": 1070
+    },
+    {
+      "Energiestandard": "EH 115",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 590,
+      "Max": 950
+    },
+    {
+      "Energiestandard": "EH 115",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 350,
+      "Max": 590
+    },
+    {
+      "Energiestandard": "EH 100",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 740,
+      "Max": 1140
+    },
+    {
+      "Energiestandard": "EH 100",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 630,
+      "Max": 1010
+    },
+    {
+      "Energiestandard": "EH 100",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 350,
+      "Max": 590
+    },
+    {
+      "Energiestandard": "EH 85",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 810,
+      "Max": 1210
+    },
+    {
+      "Energiestandard": "EH 85",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 700,
+      "Max": 1100
+    },
+    {
+      "Energiestandard": "EH 85",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 420,
+      "Max": 690
+    },
+    {
+      "Energiestandard": "EH 70",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 850,
+      "Max": 1260
+    },
+    {
+      "Energiestandard": "EH 70",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 780,
+      "Max": 1170
+    },
+    {
+      "Energiestandard": "EH 70",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 520,
+      "Max": 770
+    },
+    {
+      "Energiestandard": "EH 55",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 1060,
+      "Max": 1470
+    },
+    {
+      "Energiestandard": "EH 55",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 990,
+      "Max": 1400
+    },
+    {
+      "Energiestandard": "EH 55",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 900,
+      "Max": 1340
+    },
+    {
+      "Energiestandard": "EH 40",
+      "UmfangModernisierung": "Nicht/gering",
+      "Min": 1160,
+      "Max": 1590
+    },
+    {
+      "Energiestandard": "EH 40",
+      "UmfangModernisierung": "Größtenteils",
+      "Min": 1100,
+      "Max": 1530
+    },
+    {
+      "Energiestandard": "EH 40",
+      "UmfangModernisierung": "Umfassend",
+      "Min": 1000,
+      "Max": 1440
+    }
+  ]
+  

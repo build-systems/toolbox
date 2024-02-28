@@ -1,12 +1,21 @@
 // I added the optional text variable to be
 // able to change how it is displayed without affecting the formulas
 
-// General
-type ProjektTyp = 'Neubau' | 'Sanierung';
-
 // Projekt
+type sanierungProjektType = 'Einfamilienhäuser' | 'Mehrfamilienhäuser';
+type sanierungProjektTypeOptions = {
+  id: string;
+  value: sanierungProjektType;
+  text?: string;
+  disabled: boolean;
+};
+type sanierungProjektTypeObj = {
+  options: sanierungProjektTypeOptions[];
+  title: string;
+};
+
 // User price
-type userPriceObj = {
+type eigeneKostenObj = {
   value: number;
   min: number;
   max: number;

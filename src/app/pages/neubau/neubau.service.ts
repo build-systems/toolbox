@@ -13,8 +13,8 @@ export class NeubauService {
   public currentTab = signal(1);
 
   // Initial project parameters
-  userPriceDisabled: boolean = this.formProjektService.userPrice.disabled;
-  userPrice: number = this.formProjektService.userPrice.value;
+  eigeneKostenDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
+  eigeneKosten: number = this.formProjektService.eigeneKosten.value;
   wohnflaeche: number = this.formProjektService.wohnflaeche.value;
   anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardNeubau =
@@ -58,8 +58,8 @@ export class NeubauService {
     private formDarlehenService: FormDarlehenNeubauService
   ) {
     this.formProjektService.projektFormNeu.valueChanges.subscribe((value) => {
-      this.userPriceDisabled = !value.userPriceToggle!;
-      this.userPrice = value.userPrice!;
+      this.eigeneKostenDisabled = !value.eigeneKostenToggle!;
+      this.eigeneKosten = value.eigeneKosten!;
       this.wohnflaeche = value.wohnflaecheRange!;
       this.anzahlWohnungen = value.anzahlWohnungen!;
       this.energiestandard = value.energiestandard!;
@@ -201,8 +201,8 @@ export class NeubauService {
   // Gestehungskosten [€/m²]
   private _gestehungskosten = 0;
   updateGestehungskosten(
-    userPrice: number,
-    userPriceDisabled: boolean,
+    eigeneKosten: number,
+    eigeneKostenDisabled: boolean,
     kellergeschossOut: number,
     stellplaetzeOut: number,
     redGarageOut: number,
@@ -214,7 +214,7 @@ export class NeubauService {
     aussenanlagenOut: number,
     grundstuecksbezogeneKosten: number
   ): number {
-    if (userPriceDisabled) {
+    if (eigeneKostenDisabled) {
       return (
         this.constants.gestehungskostenBase +
         kellergeschossOut +
@@ -229,7 +229,7 @@ export class NeubauService {
         grundstuecksbezogeneKosten
       );
     } else {
-      return userPrice;
+      return eigeneKosten;
     }
   }
 
@@ -555,8 +555,8 @@ export class NeubauService {
       this.energiestandard
     );
     this._gestehungskosten = this.updateGestehungskosten(
-      this.userPrice,
-      this.userPriceDisabled,
+      this.eigeneKosten,
+      this.eigeneKostenDisabled,
       this._kellergeschossOut,
       this._stellplaetzeOut,
       this._redGarageOut,

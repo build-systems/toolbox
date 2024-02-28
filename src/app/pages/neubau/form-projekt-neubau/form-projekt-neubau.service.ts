@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class FormProjektNeubauService {
   // User price
   // Wohnfläche centralized form values
-  userPrice: userPriceObj = {
+  eigeneKosten: eigeneKostenObj = {
     value: 5000,
     min: 100,
     max: 20000,
@@ -190,17 +190,17 @@ export class FormProjektNeubauService {
   public noKellergeschoss: boolean = false;
 
   projektFormNeu = this.fb.group({
-    userPriceToggle: [!this.userPrice.disabled, Validators.required],
-    userPriceRange: [
-      this.userPrice.value, // init
-      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
+    eigeneKostenToggle: [!this.eigeneKosten.disabled, Validators.required],
+    eigeneKostenRange: [
+      this.eigeneKosten.value, // init
+      [Validators.min(this.eigeneKosten.min), Validators.max(this.eigeneKosten.max)],
     ],
-    userPrice: [
-      this.userPrice.value, // init
+    eigeneKosten: [
+      this.eigeneKosten.value, // init
       {
         Validators: [
-          Validators.min(this.userPrice.min),
-          Validators.max(this.userPrice.max),
+          Validators.min(this.eigeneKosten.min),
+          Validators.max(this.eigeneKosten.max),
         ],
         updateOn: 'blur',
       },
@@ -297,7 +297,7 @@ export class FormProjektNeubauService {
 
   constructor(private fb: FormBuilder) {
     this.projektFormNeu
-      .get('userPriceToggle')
+      .get('eigeneKostenToggle')
       ?.valueChanges.subscribe((value) => {
         this.kellergeschoss.options.forEach((obj) => (obj.disabled = value!));
         this.stellplaetze.options.forEach((obj) => (obj.disabled = value!));
@@ -314,30 +314,30 @@ export class FormProjektNeubauService {
 
      // User Price
      this.projektFormNeu
-     .get('userPriceRange')
+     .get('eigeneKostenRange')
      ?.valueChanges.subscribe((value) => {
        // Update number input when range changes
        this.projektFormNeu
-         .get('userPrice')
+         .get('eigeneKosten')
          ?.setValue(value, { emitEvent: false });
      });
 
    this.projektFormNeu
-     .get('userPrice')
+     .get('eigeneKosten')
      ?.valueChanges.subscribe((value) => {
        // Condition to avoid non-numeric or numbers unrealistically small
-       if (value && value >= this.userPrice.min) {
+       if (value && value >= this.eigeneKosten.min) {
          // Update range input when number changes
          this.projektFormNeu
-           .get('userPriceRange')
+           .get('eigeneKostenRange')
            ?.setValue(value, { emitEvent: false });
        } else {
          this.projektFormNeu
-           .get('userPriceRange')
-           ?.setValue(this.userPrice.min, { emitEvent: false });
+           .get('eigeneKostenRange')
+           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
          this.projektFormNeu
-           .get('userPrice')
-           ?.setValue(this.userPrice.min, { emitEvent: false });
+           .get('eigeneKosten')
+           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
        }
      });
 

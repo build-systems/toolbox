@@ -5,7 +5,16 @@ import { FormBuilder, Validators } from '@angular/forms';
   providedIn: 'root',
 })
 export class FormProjektSanierungService {
-  userPrice: userPriceObj = {
+
+  projektType: sanierungProjektTypeObj = {
+    options: [
+      { id: 'typ1', value: 'Einfamilienhäuser', disabled: false },
+      { id: 'typ2', value: 'Mehrfamilienhäuser', disabled: false },
+    ],
+    title: 'Projekt typ',
+  };
+
+  eigeneKosten: eigeneKostenObj = {
     min: 100,
     value: 3000,
     max: 10000,
@@ -84,21 +93,7 @@ export class FormProjektSanierungService {
   public noQNG: boolean = false;
 
   projektFormSanierung = this.fb.group({
-    userPriceToggle: false,
-    userPriceRange: [
-      this.userPrice.value,
-      [Validators.min(this.userPrice.min), Validators.max(this.userPrice.max)],
-    ],
-    userPrice: [
-      this.userPrice.value,
-      {
-        Validators: [
-          Validators.min(this.userPrice.min),
-          Validators.max(this.userPrice.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
+    projektType: this.projektType.options[0].value,
     wohnflaecheRange: [
       this.wohnflaeche.value,
       [
@@ -137,47 +132,62 @@ export class FormProjektSanierungService {
         updateOn: 'blur',
       },
     ],
+    umfangModernisierung: this.umfangModernisierung.options[0].value,
+    worstPerformingBuilding: this.worstPerformingBuilding.value,
+    eigeneKostenToggle: false,
+    eigeneKostenRange: [
+      this.eigeneKosten.value,
+      [Validators.min(this.eigeneKosten.min), Validators.max(this.eigeneKosten.max)],
+    ],
+    eigeneKosten: [
+      this.eigeneKosten.value,
+      {
+        Validators: [
+          Validators.min(this.eigeneKosten.min),
+          Validators.max(this.eigeneKosten.max),
+        ],
+        updateOn: 'blur',
+      },
+    ],
     energiestandard: this.energiestandard.options[0].value,
     foerderbonus: this.foerderbonus.options[0].value,
-    worstPerformingBuilding: this.worstPerformingBuilding.value,
     serielleSanierung: this.serielleSanierung.value,
-    umfangModernisierung: this.umfangModernisierung.options[0].value,
   });
 
   constructor(private fb: FormBuilder) {
     //User price
     this.projektFormSanierung
-      .get('userPriceToggle')
+      .get('eigeneKostenToggle')
       ?.valueChanges.subscribe((value) => {
         this.umfangModernisierung.options.forEach((obj) => (obj.disabled = value!));
       });
 
     // User Price
     this.projektFormSanierung
-      .get('userPriceRange')
+      .get('eigeneKostenRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range changes
         this.projektFormSanierung
-          .get('userPrice')
+          .get('eigeneKosten')
           ?.setValue(value, { emitEvent: false });
       });
 
     this.projektFormSanierung
-      .get('userPrice')
+      .get('eigeneKosten')
       ?.valueChanges.subscribe((value) => {
         // Condition to avoid non-numeric or numbers unrealistically small
-        if (value && value >= this.userPrice.min) {
+        if (value && value >= this.eigeneKosten.min) {
           // Update range input when number changes
           this.projektFormSanierung
-            .get('userPriceRange')
+            .get('eigeneKostenRange')
             ?.setValue(value, { emitEvent: false });
         } else {
           this.projektFormSanierung
-            .get('userPriceRange')
-            ?.setValue(this.userPrice.min, { emitEvent: false });
+            .get('eigeneKostenRange')
+            ?.setValue(this.eigeneKosten.min, { emitEvent: false });
           this.projektFormSanierung
-            .get('userPrice')
-            ?.setValue(this.userPrice.min, { emitEvent: false });
+            .get('eigeneKosten')
+            ?.setValue(this.eigeneKosten.min, { emitEvent: false });
         }
       });
 

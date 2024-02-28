@@ -14,8 +14,8 @@
   {
     "Energiestandard": "EH 115",
     "UmfangModernisierung": "Umfassend",
-    "Min": 0,
-    "Max": 0
+    "Min": 190,
+    "Max": 310
   },
   {
     "Energiestandard": "EH 100",

@@ -2,7 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SanierungProjekt } from '../../shared/sanierungprojekt';
 import { sanierung } from '../../shared/constants';
-import tableSanierung from './tableSanierung.json';
+import tableMehrfamilienhaeuser from './sanierung-mehrfamilienhaeuser.json';
+import tableEinfamilienhaeuser from './sanierung-einfamilienhaeuser.json';
 import { FormProjektSanierungService } from './form-projekt-sanierung/form-projekt-sanierung.service';
 import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-darlehen-sanierung.service';
 
@@ -14,8 +15,10 @@ export class SanierungService {
   public currentTab = signal(1);
 
   // Initial project parameters
-  userPriceDisabled: boolean = this.formProjektService.userPrice.disabled;
-  userPrice: number = this.formProjektService.userPrice.value;
+  proketType: sanierungProjektType =
+    this.formProjektService.projektType.options[0].value;
+  userPriceDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
+  userPrice: number = this.formProjektService.eigeneKosten.value;
   wohnflaeche: number = this.formProjektService.wohnflaeche.value;
   anzahlWohnungen: number = this.formProjektService.anzahlWohnungen.value;
   energiestandard: EnergiestandardSanierung =
@@ -43,15 +46,16 @@ export class SanierungService {
   ) {
     this.formProjektService.projektFormSanierung.valueChanges.subscribe(
       (value) => {
-        this.userPriceDisabled = !value.userPriceToggle!;
-        this.userPrice = value.userPriceRange!;
+        this.proketType = value.projektType!;
         this.wohnflaeche = value.wohnflaecheRange!;
         this.anzahlWohnungen = value.anzahlWohnungenRange!;
+        this.userPriceDisabled = !value.eigeneKostenToggle!;
+        this.userPrice = value.eigeneKostenRange!;
+        this.umfangModernisierung = value.umfangModernisierung!;
+        this.worstPerformingBuilding = value.worstPerformingBuilding!;
         this.energiestandard = value.energiestandard!;
         this._foerderbonus = value.foerderbonus!;
-        this.worstPerformingBuilding = value.worstPerformingBuilding!;
         this.serielleSanierung = value.serielleSanierung!;
-        this.umfangModernisierung = value.umfangModernisierung!;
         this.update();
       }
     );
@@ -165,9 +169,18 @@ export class SanierungService {
       }
       try {
         // Filter
-        const filteredData = tableSanierung.filter((item) =>
-          filterByProperties(item, desiredProperties)
-        );
+        var filteredData: any;
+        if (this.proketType === 'Einfamilienhäuser') {
+          var filteredTableEin = tableEinfamilienhaeuser.filter((item) =>
+            filterByProperties(item, desiredProperties)
+          );
+          filteredData = filteredTableEin;
+        } else if (this.proketType === 'Mehrfamilienhäuser') {
+          var filteredTableMehr = tableMehrfamilienhaeuser.filter((item) =>
+            filterByProperties(item, desiredProperties)
+          );
+          filteredData = filteredTableMehr;
+        }
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
         return tableResult;
       } catch (error) {
@@ -205,9 +218,7 @@ export class SanierungService {
 
   // KfW Kreditschwelle / WE
   private _kfwKreditschwelleProWe = 0;
-  updateKfwKreditschwelleProWe(
-    foerderbonus: Foerderbonus
-  ): number {
+  updateKfwKreditschwelleProWe(foerderbonus: Foerderbonus): number {
     if (foerderbonus !== 'Keine') {
       return this.constants.kfwKreditLimit.higher;
     } else {
@@ -226,18 +237,12 @@ export class SanierungService {
 
   // Baukosten / Investitionskosten [€]
   private _baukosten = this._gestehungskosten * this.wohnflaeche;
-  updateBaukosten(
-    gestehungskosten: number,
-    wohnflaeche: number
-  ): number {
+  updateBaukosten(gestehungskosten: number, wohnflaeche: number): number {
     return gestehungskosten * wohnflaeche;
   }
 
   private _baukostenProBau = 0;
-  updateBaukostenProBau(
-    baukosten: number,
-    anzahlWohnungen: number
-  ) {
+  updateBaukostenProBau(baukosten: number, anzahlWohnungen: number) {
     return baukosten / anzahlWohnungen;
   }
 
@@ -282,8 +287,7 @@ export class SanierungService {
       return 0;
     } else {
       return (
-        (sollzinsKfw *
-          Math.pow(1 + sollzinsKfw, kreditlaufzeit)) /
+        (sollzinsKfw * Math.pow(1 + sollzinsKfw, kreditlaufzeit)) /
         (Math.pow(1 + sollzinsKfw, kreditlaufzeit) - 1)
       );
     }
@@ -296,8 +300,7 @@ export class SanierungService {
       return 0;
     } else {
       return (
-        ((zinssatzBank) *
-          Math.pow(1 + zinssatzBank, kreditlaufzeit)) /
+        (zinssatzBank * Math.pow(1 + zinssatzBank, kreditlaufzeit)) /
         (Math.pow(1 + zinssatzBank, kreditlaufzeit) - 1)
       );
     }
@@ -375,7 +378,7 @@ export class SanierungService {
     sollzinsKfw: number,
     kreditlaufzeit: number
   ): number {
-    return (kfwKredit * sollzinsKfw) * kreditlaufzeit;
+    return kfwKredit * sollzinsKfw * kreditlaufzeit;
   }
 
   // EF B [€]
@@ -385,7 +388,7 @@ export class SanierungService {
     zinssatzBank: number,
     kreditlaufzeit: number
   ): number {
-    return (zinssatzBank * bankKredit) * kreditlaufzeit;
+    return zinssatzBank * bankKredit * kreditlaufzeit;
   }
 
   // Finanzierungskosten (KfW) [€]
@@ -463,9 +466,7 @@ export class SanierungService {
     bankKredit: number,
     kreditlaufzeit: number
   ): number {
-    return (
-      (zinssatzBank * (foerdersumme + bankKredit)) * kreditlaufzeit
-    );
+    return zinssatzBank * (foerdersumme + bankKredit) * kreditlaufzeit;
   }
 
   // Option 1: ohne KfW [€]
@@ -531,7 +532,9 @@ export class SanierungService {
       this.kfWDarlehen,
       this._nrKredit
     );
-    this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(this._foerderbonus);
+    this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(
+      this._foerderbonus
+    );
     this._maxKfwKredit = this.updateMaxKfwKredit(
       this._kfwKreditschwelleProWe,
       this.anzahlWohnungen

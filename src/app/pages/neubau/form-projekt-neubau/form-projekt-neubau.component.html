@@ -141,7 +141,7 @@
   </div>
   }
   <div class="toggle-wrapper">
-    <label for="userPriceToggle" class="label-toggle">
+    <label for="eigeneKostenToggle" class="label-toggle">
       Eigene Kostenberechnung&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
@@ -153,33 +153,33 @@
       <label class="toggle-box">
         <input
           type="checkbox"
-          id="userPriceToggle"
-          formControlName="userPriceToggle"
+          id="eigeneKostenToggle"
+          formControlName="eigeneKostenToggle"
         />
         <span class="toggle-round"></span>
       </label>
     </div>
   </div>
-  <fieldset class="userPrice">
+  <fieldset class="eigeneKosten">
     <legend>
-      {{ this.formService.userPrice.title }}
+      {{ this.formService.eigeneKosten.title }}
     </legend>
     <span class="slidernumber">
       <input
         type="range"
-        formControlName="userPriceRange"
-        name="userPriceRange"
-        [min]="this.formService.userPrice.min"
-        [max]="this.formService.userPrice.max"
-        [step]="this.formService.userPrice.step"
+        formControlName="eigeneKostenRange"
+        name="eigeneKostenRange"
+        [min]="this.formService.eigeneKosten.min"
+        [max]="this.formService.eigeneKosten.max"
+        [step]="this.formService.eigeneKosten.step"
         class="slider"
       />
       <input
         type="number"
-        formControlName="userPrice"
-        name="userPrice"
-        [min]="this.formService.userPrice.min"
-        [max]="this.formService.userPrice.max"
+        formControlName="eigeneKosten"
+        name="eigeneKosten"
+        [min]="this.formService.eigeneKosten.min"
+        [max]="this.formService.eigeneKosten.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>

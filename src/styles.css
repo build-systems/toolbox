@@ -365,9 +365,11 @@ label {
 }
 
 fieldset {
-  margin-top: 0.5rem;
-  padding-top: 0.25rem;
   border-style: none;
+}
+
+fieldset + fieldset {
+  margin-top: 1rem;
 }
 
 legend {
@@ -540,7 +542,7 @@ input:checked + .toggle-round:before {
   transform: translateX(28px);
 }
 
-.userPrice {
+.eigeneKosten {
   pointer-events: none;
   opacity: 0;
   margin-top: 0;
@@ -559,7 +561,7 @@ input:checked + .toggle-round:before {
 
 /* With :has() it is possible to select elements far from eachother */
 /* The + here is used to select the next sibling */
-.toggle-wrapper:has(input:checked) + .userPrice {
+.toggle-wrapper:has(input:checked) + .eigeneKosten {
   pointer-events: auto;
   opacity: 1;
   height: 4.5rem;
