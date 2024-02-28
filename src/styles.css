@@ -823,14 +823,6 @@ input:disabled {
     color: var(--primary30);
   }
 } */
-legend:has(~ span input:disabled, ~ input:disabled) {
-  pointer-events: none;
-  color: var(--primary30);
-  & sup {
-    pointer-events: none;
-    color: var(--primary30);
-  }
-}
 
 /* Input number when disabled */
 input[type="number"]:disabled,
