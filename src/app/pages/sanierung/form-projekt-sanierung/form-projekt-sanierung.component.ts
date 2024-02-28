@@ -4,11 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormProjektSanierungService } from './form-projekt-sanierung.service';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
 import { allgemein, sanierung } from '../../../shared/tooltips';
+import { RadioButtonsComponent } from '../../../radio-buttons/radio-buttons.component';
 
 @Component({
   selector: 'app-form-projekt-sanierung',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TooltipDirective],
+  imports: [CommonModule, ReactiveFormsModule, RadioButtonsComponent, TooltipDirective],
   templateUrl: './form-projekt-sanierung.component.html',
   styleUrl: './form-projekt-sanierung.component.css',
   host: {

@@ -1,13 +1,15 @@
 <form [formGroup]="this.formService.projektFormSanierung">
+  <app-radio-buttons></app-radio-buttons>
   <fieldset>
-    <legend>
-      {{ formService.wohnflaeche.title }}&nbsp;<sup
+    <div class="legend-info">
+      <legend>{{ formService.wohnflaeche.title }}&nbsp;</legend>
+      <sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.wohnflaeche"
         placement="right"
         >&#9432;</sup
       >
-    </legend>
+    </div>
     <span class="slidernumber">
       <input
         type="range"
@@ -58,8 +60,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.umfangModernisierung.title
-      }}&nbsp;<sup
+      {{ formService.umfangModernisierung.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="sanierungTooltips.umfaengModernisierung"
         placement="right"
@@ -83,8 +84,7 @@
   </fieldset>
   <fieldset>
     <legend>
-      {{ formService.worstPerformingBuilding.title
-      }}&nbsp;<sup
+      {{ formService.worstPerformingBuilding.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="sanierungTooltips.worstPerformingBuilding"
         placement="right"
@@ -150,8 +150,7 @@
   <br />
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.energiestandard.title
-      }}&nbsp;<sup
+      {{ formService.energiestandard.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="sanierungTooltips.energiestandard"
         placement="right"
@@ -175,8 +174,7 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.foerderbonus.title
-      }}&nbsp;<sup
+      {{ formService.foerderbonus.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="sanierungTooltips.foerderbonus"
         placement="right"
@@ -200,8 +198,7 @@
   </fieldset>
   <fieldset>
     <legend>
-      {{ formService.serielleSanierung.title
-      }}&nbsp;<sup
+      {{ formService.serielleSanierung.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="sanierungTooltips.serielleSanierung"
         placement="right"
