@@ -813,9 +813,17 @@ input:disabled {
 }
 
 /* Legends when ALL its items are disabled */
-/* only select if the legend don't have a enabled child */ 
-legend:not(:has(~ span input:enabled, ~ input:enabled) 
+/* only select if the legend don't have a enabled child */
+/* legend:not(:has(~ span input:enabled, ~ input:enabled) 
   ) {
+  pointer-events: none;
+  color: var(--primary30);
+  & sup {
+    pointer-events: none;
+    color: var(--primary30);
+  }
+} */
+legend:has(~ span input:disabled, ~ input:disabled) {
   pointer-events: none;
   color: var(--primary30);
   & sup {
