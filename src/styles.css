@@ -559,6 +559,43 @@ input:checked + .toggle-round:before {
   }
 }
 
+.hidden {
+  pointer-events: none;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  height: 0;
+  -webkit-transition: all 0.2s ease-out 0s;
+  transition: all 0.2s ease-out 0s;
+  & legend,
+  span {
+    -webkit-transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    transition: opacity 0.1s ease-out 0s, height 0.1s ease-out 0.05s;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+.visible {
+  pointer-events: auto;
+  opacity: 1;
+  height: 4.5rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  & legend {
+    -webkit-transition: height 0.1s ease-out 0s, opacity 0.1s ease-out 0.05s;
+    transition: height 0.1s ease-out 0s, opacity 0.1s ease-out 0.05s;
+    opacity: 1;
+    height: 1.5rem;
+  }
+  & span {
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+    opacity: 1;
+    height: var(--button-height);
+  }
+}
+
 /* With :has() it is possible to select elements far from eachother */
 /* The + here is used to select the next sibling */
 .toggle-wrapper:has(input:checked) + .eigeneKosten {

@@ -5,7 +5,6 @@ import { FormBuilder, Validators } from '@angular/forms';
   providedIn: 'root',
 })
 export class FormProjektSanierungService {
-
   projektType: sanierungProjektTypeObj = {
     options: [
       { id: 'typ1', value: 'Einfamilienhäuser', disabled: false },
@@ -26,7 +25,7 @@ export class FormProjektSanierungService {
   // Wohnfläche centralized form values
   wohnflaeche: wohnflaecheObj = {
     min: 20,
-    value: 1000,
+    value: 100,
     max: 10000,
     step: 1,
     title: 'Wohnfläche [m²]',
@@ -37,11 +36,11 @@ export class FormProjektSanierungService {
   // Anzahl Wohnungen centralized form values
   anzahlWohnungen: anzahlWohnungenObj = {
     min: 1,
-    value: 10,
+    value: 1,
     max: 100,
     step: 1,
     title: 'Anzahl Wohnungen',
-    disabled: false,
+    disabled: true,
   };
 
   energiestandard: EnergiestandardSanierungObj = {
@@ -54,7 +53,7 @@ export class FormProjektSanierungService {
     title: 'Stufe Energieeffizienzhaus',
   };
   // Effizienz­haus https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Das-Effizienzhaus/
-  
+
   // Zusätzliche Nachhaltigkeitskriterien
   foerderbonus: FoerderbonusObj = {
     options: [
@@ -137,7 +136,10 @@ export class FormProjektSanierungService {
     eigeneKostenToggle: false,
     eigeneKostenRange: [
       this.eigeneKosten.value,
-      [Validators.min(this.eigeneKosten.min), Validators.max(this.eigeneKosten.max)],
+      [
+        Validators.min(this.eigeneKosten.min),
+        Validators.max(this.eigeneKosten.max),
+      ],
     ],
     eigeneKosten: [
       this.eigeneKosten.value,
@@ -155,11 +157,30 @@ export class FormProjektSanierungService {
   });
 
   constructor(private fb: FormBuilder) {
+    //Projekt type
+    this.projektFormSanierung
+      .get('projektType')
+      ?.valueChanges.subscribe((value) => {
+        if (value === 'Einfamilienhäuser') {
+          this.anzahlWohnungen.disabled = true;
+          this.projektFormSanierung
+            .get('anzahlWohnungen')
+            ?.setValue(1, { emitEvent: false });
+          this.projektFormSanierung
+            .get('anzahlWohnungenRange')
+            ?.setValue(1, { emitEvent: false });
+        } else if (value === 'Mehrfamilienhäuser') {
+          this.anzahlWohnungen.disabled = false;
+        }
+      });
+
     //User price
     this.projektFormSanierung
       .get('eigeneKostenToggle')
       ?.valueChanges.subscribe((value) => {
-        this.umfangModernisierung.options.forEach((obj) => (obj.disabled = value!));
+        this.umfangModernisierung.options.forEach(
+          (obj) => (obj.disabled = value!)
+        );
       });
 
     // User Price
