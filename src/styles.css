@@ -445,7 +445,7 @@ legend {
   border: 1px solid var(--primary20);
   opacity: 0;
   transition: opacity 0.2s;
-  z-index: 2;
+  z-index: 6;
   max-width: 700px;
   & p {
     font-weight: 300;
@@ -1424,5 +1424,9 @@ span.nowrap {
     & div {
       font-size: 1.25rem;
     }
+  }
+
+  .ng-tooltip {
+    max-width: 300px;
   }
 }
