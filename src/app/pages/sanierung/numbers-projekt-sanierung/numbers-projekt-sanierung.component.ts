@@ -3,7 +3,7 @@ import { SanierungService } from '../sanierung.service';
 import { SanierungProjekt } from '../../../shared/sanierungprojekt';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
-import { allgemein } from '../../../shared/tooltips';
+import { allgemein, sanierung } from '../../../shared/tooltips';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
 registerLocaleData(localeDe, 'de');
 
@@ -27,7 +27,7 @@ export class NumbersProjektSanierungComponent implements OnInit {
   kfwZuschussPercent: number = 0;
   KfwKreditschwelleProWe: number = 0;
 
-  constructor(private sanierungService: SanierungService, public allgemeinTooltips: allgemein) {}
+  constructor(private sanierungService: SanierungService, public allgemeinTooltips: allgemein, public sanierungTooltips: sanierung) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {

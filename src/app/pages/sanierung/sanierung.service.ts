@@ -315,8 +315,9 @@ export class SanierungService {
     wpbBonus: number,
     serSanBonus: number
   ): number {
+    const floorWpbSerSanBonus = Math.min((wpbBonus + serSanBonus), 0.20); // If you combine the bonus for the Worst Performing Building with the bonus for the serial renovation, then the two bonuses will be limited to a total of 20%
     return Math.min(
-      tilgungszuschuss + eeBonus + nhBonus + wpbBonus + serSanBonus,
+      tilgungszuschuss + eeBonus + nhBonus + floorWpbSerSanBonus,
       this.constants.kfwZuschussMaxMultiplier
     );
   }

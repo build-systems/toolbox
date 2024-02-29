@@ -182,7 +182,8 @@ export class FormProjektNeubauService {
     min: 0,
     max: 100,
     step: 1,
-    title: 'Baunebenkosten ohne Finanzierungskosten [%]',
+    title: 'Baunebenkosten [%]',
+    // title: 'Baunebenkosten ohne Finanzierungskosten [%]',
     disabled: false,
   };
 

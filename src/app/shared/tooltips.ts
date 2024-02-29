@@ -38,7 +38,7 @@ export class allgemein {
   providedIn: 'root',
 })
 export class sanierung {
-  baukosten: string =
+  investitionskosten: string =
     '<p>Die Baukosten beziehen sich auf Vollkosten, die im Zusammenhang mit einer energetischen Sanierung stehen und beziehen Sowieso-Kosten und energetische Mehrkosten mit ein. Kosten die während der Baumaßnahme zum Beispiel für eine Badsanierung anfallen, sind nicht berücksichtigt und in diesem Fall nicht förderfähig. Weitere Informationen <a target="_blank" rel="noopener noreferrer" href="https://www.gebaeudeforum.de/realisieren/investitionen/wirtschaftlichkeit/">hier.</a></p>'
 
   energiestandard: string =
