@@ -1,57 +1,111 @@
 <header>
-    <a title="Home" routerLink="" class="homelink" tabIndex="-1" (click)="closeNavbar()">
-      <svg class="logomobile">
-        <use xlink:href="assets/icons.svg#bs-logo-round" />
-      </svg>
-    </a>
-    <nav [class.nav-active]="navbarVisible">
-      <ul>
-        <li title="Portfolio" class="shortcut" [class.active-nav]="isRouteActive('/portfolio')">
-          <a routerLink="portfolio" class="linkmobile" tabIndex="-1" (click)="onClick()">
-            <svg class="iconmobile">
-              <use xlink:href="assets/icons.svg#portfolio" />
-            </svg>
-            <span class="noselect">Portfolio</span>
-          </a>
-        </li>
-        <li title="Neubau" class="shortcut" [class.active-nav]="isRouteActive('/neubau')">
-          <a routerLink="neubau" class="linkmobile" tabIndex="-1" (click)="onClick()">
-            <svg class="iconmobile">
-              <use xlink:href="assets/icons.svg#neubau" />
-            </svg>
-            <span class="noselect">Neubau</span>
-          </a>
-        </li>
-        <li title="Sanierung" class="shortcut" [class.active-nav]="isRouteActive('/sanierung')">
-          <a routerLink="sanierung" class="linkmobile" tabIndex="-1" (click)="onClick()">
-            <svg class="iconmobile">
-              <use xlink:href="assets/icons.svg#sanierung" />
-            </svg>
-            <span class="noselect">Sanierung</span>
-          </a>
-        </li>
-        <li title="Profile" class="shortcut" [class.active-nav]="isRouteActive('/profile')">
-            <a routerLink="profile" class="linkmobile" tabIndex="-1" (click)="onClick()">
-              <svg class="iconmobile">
-                <use xlink:href="assets/icons.svg#profile" />
-              </svg>
-              <span class="noselect">Profile</span>
-            </a>
-          </li>
-        <li title="Settings" class="shortcut" [class.active-nav]="isRouteActive('/settings')">
-          <a routerLink="settings" class="linkmobile" tabIndex="-1" (click)="onClick()">
-            <svg class="iconmobile">
-              <use xlink:href="assets/icons.svg#settings" />
-            </svg>
-            <span class="noselect">Settings</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <a href="javascript:void(0);" class="hamburger" (click)="onClick()" [class.active-hamburger]="navbarVisible">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
-    </a>
-  </header>
-  
+  <a
+    title="Home"
+    routerLink=""
+    class="homelink"
+    tabIndex="-1"
+    (click)="closeNavbar()"
+  >
+    <svg class="logomobile">
+      <use xlink:href="assets/icons.svg#bs-logo-round" />
+    </svg>
+  </a>
+  <nav [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
+    <ul>
+      <li
+        title="Portfolio"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/portfolio')"
+      >
+        <a
+          routerLink="portfolio"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#portfolio" />
+          </svg>
+          <span class="noselect">Portfolio</span>
+        </a>
+      </li>
+      <li
+        title="Neubau"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/neubau')"
+      >
+        <a
+          routerLink="neubau"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#neubau" />
+          </svg>
+          <span class="noselect">Neubau</span>
+        </a>
+      </li>
+      <li
+        title="Sanierung"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/sanierung')"
+      >
+        <a
+          routerLink="sanierung"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#sanierung" />
+          </svg>
+          <span class="noselect">Sanierung</span>
+        </a>
+      </li>
+      <li
+        title="Profile"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/profile')"
+      >
+        <a
+          routerLink="profile"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#profile" />
+          </svg>
+          <span class="noselect">Profile</span>
+        </a>
+      </li>
+      <li
+        title="Settings"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/settings')"
+      >
+        <a
+          routerLink="settings"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#settings" />
+          </svg>
+          <span class="noselect">Settings</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <button
+    class="hamburger"
+    (click)="onClick()"
+    [class.active-hamburger]="isExpanded"
+  >
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </button>
+</header>

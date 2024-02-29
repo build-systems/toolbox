@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class FormProjektSanierungService {
   projektType: sanierungProjektTypeObj = {
     options: [
-      { id: 'typ1', value: 'Einfamilienhäuser', disabled: false },
+      { id: 'typ1', value: 'Einfamilienhaus', disabled: false },
       { id: 'typ2', value: 'Mehrfamilienhäuser', disabled: false },
     ],
     title: 'Projekt typ',
@@ -161,7 +161,7 @@ export class FormProjektSanierungService {
     this.projektFormSanierung
       .get('projektType')
       ?.valueChanges.subscribe((value) => {
-        if (value === 'Einfamilienhäuser') {
+        if (value === 'Einfamilienhaus') {
           this.anzahlWohnungen.disabled = true;
           this.projektFormSanierung
             .get('anzahlWohnungen')

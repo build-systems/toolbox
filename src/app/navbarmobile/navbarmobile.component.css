@@ -1,13 +1,5 @@
-header {
-    /* background-color: var(--bg-secondary); */
-  }
-  
   nav {
-    display: none;
-  }
-  
-  .nav-active {
-    display: block;
+    overflow: hidden;
   }
   
   ul {
@@ -66,6 +58,8 @@ header {
     align-items: center;
     height: var(--mobile-header);
     aspect-ratio: 1/1;
+    border: none;
+    background: none;
   }
   
   .hamburger .line {

@@ -170,7 +170,7 @@ export class SanierungService {
       try {
         // Filter
         var filteredData: any;
-        if (this.proketType === 'Einfamilienhäuser') {
+        if (this.proketType === 'Einfamilienhaus') {
           var filteredTableEin = tableEinfamilienhaeuser.filter((item) =>
             filterByProperties(item, desiredProperties)
           );
