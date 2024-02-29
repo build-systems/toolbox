@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SanierungService } from './sanierung.service';
 import { FormProjektSanierungComponent } from './form-projekt-sanierung/form-projekt-sanierung.component';
@@ -8,6 +8,7 @@ import { ChartsDarlehenSanierungComponent } from './charts-darlehen-sanierung/ch
 import { NumbersProjektSanierungComponent } from './numbers-projekt-sanierung/numbers-projekt-sanierung.component';
 import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/numbers-darlehen-sanierung.component';
 import { TitleComponent } from '../../title/title.component';
+import { fadeInAnimation } from '../../shared/animations';
 
 @Component({
   selector: 'app-sanierung',
@@ -27,8 +28,12 @@ import { TitleComponent } from '../../title/title.component';
   host: {
     class: 'host-tool',
   },
+  animations: [
+    fadeInAnimation
+  ]
 })
 export class SanierungComponent {
+  @HostBinding('@routeAnimations') routeAnimations = true;
   // ATTENTION: the page is composed of multiple components, each one has a service.
   // for example, FormProjektComponent.ts has the form-projekt.service.ts
   // This top component has types at sanierungprojekt.ts

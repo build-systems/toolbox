@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ChildrenOutletContexts, RouterModule, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NeubauComponent } from './pages/neubau/neubau.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
 
   session = this.supabase.session;
 
-  constructor(private readonly supabase: SupabaseService) {}
+  constructor(private readonly supabase: SupabaseService, private contexts: ChildrenOutletContexts) {}
 
   ngOnInit() {
     // Get screen width

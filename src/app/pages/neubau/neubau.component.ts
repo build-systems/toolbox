@@ -1,20 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NeubauService } from './neubau.service';
 import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-neubau.component';
 import { FormDarlehenNeubauComponent } from './form-darlehen-neubau/form-darlehen-neubau.component';
 import { ChartsProjektNeubauComponent } from './charts-projekt-neubau/charts-projekt-neubau.component';
 import { ChartsDarlehenNeubauComponent } from './charts-darlehen-neubau/charts-darlehen-neubau.component';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { NumbersProjektNeubauComponent } from './numbers-projekt-neubau/numbers-projekt-neubau.component';
 import { NumbersDarlehenNeubauComponent } from './numbers-darlehen-neubau/numbers-darlehen-neubau.component';
 import { TitleComponent } from '../../title/title.component';
+import { fadeInAnimation } from '../../shared/animations';
 
 @Component({
   selector: 'app-neubau',
@@ -35,36 +29,11 @@ import { TitleComponent } from '../../title/title.component';
     class: 'host-tool',
   },
   animations: [
-    trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0',
-        backgroundColor: "#222",
-        padding: '0 1rem',
-      })),
-      state('expanded', style({
-        height: '*',
-      })),
-      transition('collapsed => expanded', [
-        animate('300ms ease-out')
-      ]),
-      transition('expanded => collapsed', [
-        animate('300ms ease-in')
-      ]),
-    ]),
-    trigger('rotateArrow', [
-      state('collapsed', style({
-        transform: 'rotate(0deg)'
-      })),
-      state('expanded', style({
-        transform: 'rotate(90deg)'
-      })),
-      transition('collapsed <=> expanded', [
-        animate('300ms ease-out')
-      ]),
-    ])
-  ],
+    fadeInAnimation
+  ]
 })
 export class NeubauComponent {
+  @HostBinding('@routeAnimations') routeAnimations = true;
   // ATTENTION: the page is composed of multiple components, each one has a service.
   // for example, FormProjektComponent.ts has the form-projekt.service.ts
   // This top component has types at neubauprojekt.ts
@@ -80,12 +49,6 @@ export class NeubauComponent {
   // To scroll to element
   scroll(el: HTMLElement) {
     el.scrollIntoView();
-  }
-
-  isExpanded: boolean = false;
-
-  toggleExpand() {
-    this.isExpanded = !this.isExpanded;
   }
 
   constructor(public neubauService: NeubauService) {
