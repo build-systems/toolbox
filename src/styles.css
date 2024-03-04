@@ -372,6 +372,7 @@ fieldset + fieldset {
 
 legend {
   padding-bottom: 0.1rem;
+  pointer-events: none;
 }
 
 /* Tooltip styles for directive */
@@ -1372,8 +1373,4 @@ span.nowrap {
       font-size: 1.25rem;
     }
   }
-
-  /* .ng-tooltip {
-    max-width: 300px;
-  } */
 }
