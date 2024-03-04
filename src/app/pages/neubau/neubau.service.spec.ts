@@ -462,7 +462,7 @@ describe('NeubauService', () => {
   });
 
   it('should return Restsumme Holzbau constant = 1.05', () => {
-    expect(constants.holzbauBonus).toBe(1.05);
+    expect(constants.holzbauExtra).toBe(1.05);
   });
 
   it('should update Bank-Kredit = 4,050,000 when Konstruction is Holzbau; Wohnflaeche is 1,000; Gestehungskosten is 5,000 and KfW-Kredit is 1,200,000', () => {

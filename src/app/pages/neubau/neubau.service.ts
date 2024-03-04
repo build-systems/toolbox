@@ -229,7 +229,7 @@ export class NeubauService {
     if (eigeneKostenDisabled) {
       if (konstruktion === 'Holzbau') {
         return (
-          baseCosts * this.constants.holzbauBonus + grundstuecksbezogeneKosten
+          baseCosts * this.constants.holzbauExtra + grundstuecksbezogeneKosten
         );
       } else {
         return baseCosts + grundstuecksbezogeneKosten;
