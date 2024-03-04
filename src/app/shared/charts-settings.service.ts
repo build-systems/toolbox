@@ -61,7 +61,7 @@ export class ChartsSettingsService {
     color01: {
       backgroundColor: 'rgba(58, 149, 194, 0.3)',
       borderColor: 'rgb(58, 149, 194)',
-      hoverBackgroundColor: 'rgb(58, 149, 194)',
+      hoverBackgroundColor: 'rgb(58, 149, 194, 0.7)',
     },
     // 	0 106 255
     // Var 01 - Normal pallete
@@ -173,7 +173,7 @@ export class ChartsSettingsService {
     color02: {
       backgroundColor: 'rgba(253, 179, 153, 0.3)',
       borderColor: 'rgba(253, 179, 153)',
-      hoverBackgroundColor: 'rgba(253, 179, 153)',
+      hoverBackgroundColor: 'rgba(253, 179, 153, 0.7)',
     },
 
     // Original
@@ -239,7 +239,7 @@ export class ChartsSettingsService {
       backgroundColor01: 'rgba(249, 220, 130, 0.3)',
       backgroundColor02: 'rgba(249, 220, 97, 0.2)',
       borderColor: 'rgba(249, 220, 97)',
-      hoverBackgroundColor: 'rgba(249, 220, 97)',
+      hoverBackgroundColor: 'rgba(249, 220, 97, 0.7)',
     },
 
     // Original
@@ -247,7 +247,7 @@ export class ChartsSettingsService {
       backgroundColor01: 'rgba(58, 194, 150, 0.3)',
       backgroundColor02: 'rgba(58, 194, 150, 0.1)',
       borderColor: 'rgb(58, 194, 150)',
-      hoverBackgroundColor: 'rgb(58, 194, 150)',
+      hoverBackgroundColor: 'rgb(58, 194, 150, 0.7)',
     },
     // 0	180	30
     // Var 01 - Normal pallete
@@ -308,14 +308,14 @@ export class ChartsSettingsService {
     // },
 
     color05: {
-      backgroundColor: 'rgba(57, 190, 193, 0.6)',
+      backgroundColor: 'rgba(57, 190, 193, 0.3)',
       borderColor: 'rgb(57, 190, 193)',
-      hoverBackgroundColor: 'rgb(57, 190, 193)',
+      hoverBackgroundColor: 'rgb(57, 190, 193, 0.7)',
     },
     color06: {
-      backgroundColor: 'rgba(58, 194, 104, 0.6)',
+      backgroundColor: 'rgba(58, 194, 104, 0.3)',
       borderColor: 'rgb(58, 194, 104)',
-      hoverBackgroundColor: 'rgb(58, 194, 104)',
+      hoverBackgroundColor: 'rgb(58, 194, 104, 0.7)',
     },
   };
   

@@ -24,10 +24,7 @@
         <div>
           <h2>{{ kfwH2() }}</h2>
           <h3>{{ kfwH3() }}</h3>
-          <p>
-            {{ kfwDescription() }}
-            <a target="_blank" [href]="kfwLink()">KfW Seite ↗</a>
-          </p>
+          <p [innerHTML]="kfwDescription()"></p>
         </div>
       </div>
     </div>

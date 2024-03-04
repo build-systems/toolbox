@@ -4,8 +4,8 @@ import { NeubauProjekt } from '../../../shared/neubauprojekt';
 import { NeubauService } from '../neubau.service';
 import localeDe from '@angular/common/locales/de'
 import { TooltipDirective } from '../../../shared/tooltip.directive';
+import { neubau } from '../../../shared/tooltips';
 registerLocaleData(localeDe, 'de');
-import { allgemein } from '../../../shared/tooltips'
 
 @Component({
   selector: 'app-numbers-projekt-neubau',
@@ -26,7 +26,7 @@ export class NumbersProjektNeubauComponent  implements OnInit {
   kfwKredit: number = 0;
   KfwKreditschwelleProWe: number = 0;
 
-  constructor(private neubauService: NeubauService, public allgemeinTooltips: allgemein) {}
+  constructor(private neubauService: NeubauService, public neubauTooltips: neubau) {}
 
   ngOnInit(): void {
     this.neubauService.currentOutputNeubau$

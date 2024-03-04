@@ -125,12 +125,7 @@
   <br />
   <div class="toggle-wrapper">
     <label for="eigeneKostenToggle" class="label-toggle">
-      Eigene Kostenberechnung&nbsp;<sup
-        class="tooltip-icon"
-        [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
-        placement="right"
-        >&#9432;</sup
-      >
+      Eigene Kostenberechnung
     </label>
     <div class="checkbox-toggle-wrapper">
       <label class="toggle-box">
@@ -145,7 +140,12 @@
   </div>
   <fieldset class="eigeneKosten">
     <legend>
-      {{ this.formService.eigeneKosten.title }}
+      {{ this.formService.eigeneKosten.title }}&nbsp;<sup
+      class="tooltip-icon"
+      [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
+      placement="right"
+      >&#9432;</sup
+    >
     </legend>
     <span class="slidernumber">
       <input

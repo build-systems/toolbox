@@ -15,7 +15,6 @@ export class TitleComponent {
   kfwH2 = input.required<string>();
   kfwH3 = input.required<string>();
   kfwDescription = input.required<string>();
-  kfwLink = input.required<string>();
   
   isExpanded: boolean = false;
 

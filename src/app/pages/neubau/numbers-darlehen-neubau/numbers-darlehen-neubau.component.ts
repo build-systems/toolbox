@@ -4,8 +4,8 @@ import { NeubauService } from '../neubau.service';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
+import { allgemein, neubau } from '../../../shared/tooltips';
 registerLocaleData(localeDe, 'de');
-import { allgemein } from '../../../shared/tooltips'
 
 
 @Component({
@@ -24,7 +24,7 @@ export class NumbersDarlehenNeubauComponent implements OnInit {
   kfwKredit: number = 0;
   output!: NeubauProjekt;
 
-  constructor(private neubauService: NeubauService, public allgemeinTooltips: allgemein) {}
+  constructor(private neubauService: NeubauService, public neubauTooltips: neubau, public allgemeinTooltips: allgemein) {}
 
   // Here I made a copy of the subscription to both observables.
   // It is a lot of repetitive code, but I run out of time...

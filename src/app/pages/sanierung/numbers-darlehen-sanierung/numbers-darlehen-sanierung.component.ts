@@ -4,7 +4,7 @@ import { SanierungProjekt } from '../../../shared/sanierungprojekt';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de'
 import { TooltipDirective } from '../../../shared/tooltip.directive';
-import { allgemein } from '../../../shared/tooltips';
+import { allgemein, sanierung } from '../../../shared/tooltips';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -25,7 +25,7 @@ export class NumbersDarlehenSanierungComponent implements OnInit {
   output!: SanierungProjekt;
 
 
-  constructor(private sanierungService: SanierungService, public allgemeinTooltips: allgemein) {}
+  constructor(private sanierungService: SanierungService, public sanierungTooltips: sanierung, public allgemeinTooltips: allgemein) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {

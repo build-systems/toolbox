@@ -47,7 +47,7 @@ export class neubau {
   public holzbauExtra = 1.05; // Extra 5%
 }
 
-// KfW 261, Checked on 2024/02/21
+// KfW 261, Checked on 2024/03/04
 // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
 // https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 @Injectable({

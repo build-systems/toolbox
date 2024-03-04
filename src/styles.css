@@ -140,9 +140,7 @@ li {
 }
 
 .title {
-  padding-left: var(--layout-padding);
-  padding-top: var(--layout-padding);
-  padding-bottom: var(--layout-padding);
+  padding: var(--layout-padding);
   & .arrow-and-h1 {
     width: fit-content;
   }
@@ -376,60 +374,6 @@ legend {
   padding-bottom: 0.1rem;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  font-weight: 300;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol";
-  font-size: 1rem;
-  word-break: normal;
-  width: var(--tooltip-width);
-  background-color: var(--bg-secondary);
-  color: var(--primary);
-  border: 1px solid var(--primary50);
-  text-align: center;
-  padding: 0.8rem;
-  border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
-.tooltip-top {
-  bottom: 110%;
-  left: 50%;
-  margin-left: calc(-1 * var(--tooltip-width) / 2);
-}
-
-.tooltip-right {
-  top: -7px;
-  left: 125%;
-}
-
-.tooltip-bottom {
-  top: 110%;
-  left: 50%;
-  margin-left: calc(-1 * var(--tooltip-width) / 2);
-}
-
-.tooltip-left {
-  top: -28px;
-  bottom: auto;
-  right: 125%;
-}
-
 /* Tooltip styles for directive */
 .tooltip-icon {
   cursor: pointer;
@@ -453,6 +397,9 @@ legend {
   }
   & a {
     color: var(--secondary);
+    & sup {
+      color: var(--secondary);
+    }
   }
 }
 
