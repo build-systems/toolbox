@@ -371,8 +371,11 @@ fieldset + fieldset {
 }
 
 legend {
-  padding-bottom: 0.1rem;
+  padding-bottom: 0.5rem;
   pointer-events: none;
+  & sup {
+    pointer-events: auto;
+  }
 }
 
 /* Tooltip styles for directive */
@@ -1329,6 +1332,14 @@ span.nowrap {
     grid-column-start: 1;
     grid-column-end: 7;
   }
+
+  fieldset + fieldset {
+    margin-top: 1.5rem;
+  }
+
+  /* legend {
+    padding-bottom: 0.8rem;
+  } */
 }
 
 @media screen and (max-width: 600px) {

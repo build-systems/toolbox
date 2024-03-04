@@ -20,13 +20,14 @@
   </fieldset>
   <fieldset>
     <div class="legend-info">
-      <legend>{{ formService.wohnflaeche.title }}&nbsp;</legend>
-      <sup
-        class="tooltip-icon"
-        [appTooltip]="allgemeinTooltips.wohnflaeche"
-        placement="right"
-        >&#9432;</sup
-      >
+      <legend>
+        {{ formService.wohnflaeche.title }}&nbsp;<sup
+          class="tooltip-icon"
+          [appTooltip]="allgemeinTooltips.wohnflaeche"
+          placement="right"
+          >&#9432;</sup
+        >
+      </legend>
     </div>
     <span class="slidernumber">
       <input
@@ -47,7 +48,10 @@
       />
     </span>
   </fieldset>
-  <fieldset class="hidden" [class.visible]="!formService.anzahlWohnungen.disabled">
+  <fieldset
+    class="hidden"
+    [class.visible]="!formService.anzahlWohnungen.disabled"
+  >
     <legend>
       {{ formService.anzahlWohnungen.title }}&nbsp;<sup
         class="tooltip-icon"
@@ -141,11 +145,11 @@
   <fieldset class="eigeneKosten">
     <legend>
       {{ this.formService.eigeneKosten.title }}&nbsp;<sup
-      class="tooltip-icon"
-      [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
-      placement="right"
-      >&#9432;</sup
-    >
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.eigeneKostenkalkulation"
+        placement="right"
+        >&#9432;</sup
+      >
     </legend>
     <span class="slidernumber">
       <input
