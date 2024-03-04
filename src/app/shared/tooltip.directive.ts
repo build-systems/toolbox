@@ -1,4 +1,10 @@
-import { Directive, ElementRef, HostListener, Input, input } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  input,
+} from '@angular/core';
 
 @Directive({
   selector: '[appTooltip]',
@@ -47,30 +53,57 @@ export class TooltipDirective {
   }
 
   setPosition() {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
     const elemRect = this.el.nativeElement.getBoundingClientRect();
     const tooltipRect = this.tooltip?.getBoundingClientRect();
     if (!tooltipRect) return;
-    let left, top;
+    let left = tooltipRect.left;
+    let top = tooltipRect.top;
+    console.log("Tooltip height: " + tooltipRect.height);
+    console.log("Tooltip icon top: " + elemRect.top);
+    if (windowWidth < 900) {
+      // If mobile, then center tooltip horizontally to the page (left = 0)
+      // if (
+        //   tooltipRect.height >
+        //   windowHeight - (elemRect.top + elemRect.height)
+        // ) {
 
-    switch (this.placement!()) {
-      case 'top':
+      // If there's space under the tooltip icon, place it there
+      if (
+        tooltipRect.height <
+        windowHeight - (elemRect.top + elemRect.height)
+      ) {
+        top = elemRect.top + elemRect.height + this.offset;
+      } else if (elemRect.top > tooltipRect.height) {
         top = elemRect.top - tooltipRect.height - this.offset;
-        left = elemRect.left + (elemRect.width - tooltipRect.width) / 2;
-        break;
-      case 'bottom':
-        top = elemRect.bottom + this.offset;
-        left = elemRect.left + (elemRect.width - tooltipRect.width) / 2;
-        break;
-      case 'left':
-        top = elemRect.top + (elemRect.height - tooltipRect.height) / 2;
-        left = elemRect.left - tooltipRect.width - this.offset;
-        break;
-      case 'right':
-        top = elemRect.top + (elemRect.height - tooltipRect.height) / 2;
-        left = elemRect.right + this.offset;
-        break;
-      default:
-        throw new Error('Invalid placement value ' + this.placement);
+        // If there is space at the top place it there
+      } else {
+        // Otherwise leave at the bottom (UI sucks, but everything still readable)
+        top = elemRect.top + elemRect.height + this.offset;
+      }
+    } else {
+      // If not mobile, then also calculate the left in relation to tooltip icon
+      switch (this.placement!()) {
+        case 'top':
+          top = elemRect.top - tooltipRect.height - this.offset;
+          left = elemRect.left + (elemRect.width - tooltipRect.width) / 2;
+          break;
+        case 'bottom':
+          top = elemRect.bottom + this.offset;
+          left = elemRect.left + (elemRect.width - tooltipRect.width) / 2;
+          break;
+        case 'left':
+          top = elemRect.top + (elemRect.height - tooltipRect.height) / 2;
+          left = elemRect.left - tooltipRect.width - this.offset;
+          break;
+        case 'right':
+          top = elemRect.top + (elemRect.height - tooltipRect.height) / 2;
+          left = elemRect.right + this.offset;
+          break;
+        default:
+          throw new Error('Invalid placement value ' + this.placement);
+      }
     }
 
     if (this.tooltip) {
@@ -78,7 +111,7 @@ export class TooltipDirective {
       this.tooltip.style.left = `${left}px`;
     }
   }
-  
+
   private setupClickOutsideListener() {
     document.addEventListener('click', this.onClickOutside);
   }
@@ -91,5 +124,5 @@ export class TooltipDirective {
     if (this.tooltip && !this.tooltip.contains(event.target as Node)) {
       this.hide();
     }
-  }
+  };
 }

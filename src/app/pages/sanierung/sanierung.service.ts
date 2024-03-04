@@ -724,7 +724,6 @@ export class SanierungService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
-    console.log(this.outputSanierung);
   }
 
   public reset() {

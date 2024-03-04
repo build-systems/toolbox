@@ -759,7 +759,6 @@ export class NeubauService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
-    console.log(this.outputNeubau);
   }
 
   // Reset was created to make sure the outputs match the form values
