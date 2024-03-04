@@ -26,7 +26,7 @@ export class FormProjektSanierungService {
   wohnflaeche: wohnflaecheObj = {
     min: 20,
     value: 100,
-    max: 10000,
+    max: 1000,
     step: 1,
     title: 'Wohnfläche [m²]',
     disabled: false,
@@ -166,11 +166,13 @@ export class FormProjektSanierungService {
           this.projektFormSanierung
             .get('anzahlWohnungen')
             ?.setValue(1, { emitEvent: false });
-          this.projektFormSanierung
+            this.wohnflaeche.max = 1000;
+            this.projektFormSanierung
             .get('anzahlWohnungenRange')
             ?.setValue(1, { emitEvent: false });
-        } else if (value === 'Mehrfamilienhäuser') {
-          this.anzahlWohnungen.disabled = false;
+          } else if (value === 'Mehrfamilienhäuser') {
+            this.anzahlWohnungen.disabled = false;
+            this.wohnflaeche.max = 10000;
         }
       });
 
