@@ -3,20 +3,25 @@
     <legend>
       {{ formService.projektType.title }}
     </legend>
-    <span
-      class="radio-option"
-      *ngFor="let item of formService.projektType.options"
-    >
-      <input
-        type="radio"
-        [id]="item.id"
-        [value]="item.value"
-        name="projektType"
-        formControlName="projektType"
-        [attr.disabled]="item.disabled ? '' : null"
-      />
-      <label [for]="item.id">{{ item.value }}</label>
-    </span>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.projektType.title }}
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.projektType.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="projektType"
+          formControlName="projektType"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label [for]="item.id">{{ item.value }}</label>
+      </span>
+    </div>
   </fieldset>
   <fieldset>
     <div class="legend-info">
@@ -91,20 +96,30 @@
         >&#9432;</sup
       >
     </legend>
-    <span
-      class="radio-option"
-      *ngFor="let item of formService.umfangModernisierung.options"
-    >
-      <input
-        type="radio"
-        [id]="item.id"
-        [value]="item.value"
-        name="umfangModernisierung"
-        formControlName="umfangModernisierung"
-        [attr.disabled]="item.disabled ? '' : null"
-      />
-      <label [for]="item.id">{{ item.value }}</label>
-    </span>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.umfangModernisierung.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="sanierungTooltips.umfaengModernisierung"
+        placement="right"
+        >&#9432;</sup
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.umfangModernisierung.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="umfangModernisierung"
+          formControlName="umfangModernisierung"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label [for]="item.id">{{ item.value }}</label>
+      </span>
+    </div>
   </fieldset>
   <fieldset>
     <legend>
@@ -181,20 +196,30 @@
         >&#9432;</sup
       >
     </legend>
-    <span
-      class="radio-option"
-      *ngFor="let item of formService.energiestandard.options"
-    >
-      <input
-        type="radio"
-        [id]="item.id"
-        [value]="item.value"
-        name="energiestandard"
-        formControlName="energiestandard"
-        [attr.disabled]="item.disabled ? '' : null"
-      />
-      <label [for]="item.id">{{ item.value }}</label>
-    </span>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.energiestandard.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="sanierungTooltips.energiestandard"
+        placement="right"
+        >&#9432;</sup
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.energiestandard.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="energiestandard"
+          formControlName="energiestandard"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label [for]="item.id">{{ item.value }}</label>
+      </span>
+    </div>
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
@@ -205,20 +230,30 @@
         >&#9432;</sup
       >
     </legend>
-    <span
-      class="radio-option"
-      *ngFor="let item of formService.foerderbonus.options"
-    >
-      <input
-        type="radio"
-        [id]="item.id"
-        [value]="item.value"
-        name="foerderbonus"
-        formControlName="foerderbonus"
-        [attr.disabled]="item.disabled ? '' : null"
-      />
-      <label [for]="item.id">{{ item.text }}</label>
-    </span>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.foerderbonus.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="sanierungTooltips.foerderbonus"
+        placement="right"
+        >&#9432;</sup
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.foerderbonus.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="foerderbonus"
+          formControlName="foerderbonus"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label [for]="item.id">{{ item.text }}</label>
+      </span>
+    </div>
   </fieldset>
   <fieldset>
     <legend>

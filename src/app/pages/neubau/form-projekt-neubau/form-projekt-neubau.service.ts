@@ -172,7 +172,7 @@ export class FormProjektNeubauService {
     min: 0,
     max: 1000,
     step: 1,
-    title: 'Grundstücksbezogene Kosten (KG 100, 200) [€/m²]',
+    title: 'Grundstücksbezogene Kosten [€/m²]',
     disabled: false,
   };
 
@@ -182,7 +182,7 @@ export class FormProjektNeubauService {
     min: 0,
     max: 100,
     step: 1,
-    title: 'Baunebenkosten (KG 700) [%]',
+    title: 'Baunebenkosten [%]',
     // title: 'Baunebenkosten ohne Finanzierungskosten [%]',
     disabled: false,
   };

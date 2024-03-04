@@ -1,93 +1,125 @@
 <form [formGroup]="formService.darlehenForm">
-    <fieldset>
-      <legend>{{ formService.zinssatzBank.title }}&nbsp;<sup
+  <fieldset>
+    <legend>
+      {{ formService.zinssatzBank.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.bankZinssatz"
         placement="right"
         >&#9432;</sup
-      ></legend>
-      <span class="slidernumber">
-        <input
-          type="range"
-          formControlName="zinssatzBankRange"
-          [min]="formService.zinssatzBank.min"
-          [max]="formService.zinssatzBank.max"
-          [step]="formService.zinssatzBank.step"
-          class="slider"
-        />
-        <input
-          type="number"
-          formControlName="zinssatzBank"
-          name="zinssatzBank"
-          [min]="formService.zinssatzBank.min"
-          [max]="formService.zinssatzBank.max"
-          [step]="formService.zinssatzBank.step"
-          (keyup.enter)="onEnterKey($event)"
-        />
-      </span>
-    </fieldset>
-    <fieldset>
-      <legend>{{ formService.kreditlaufzeit.title
-      }}&nbsp;<sup
+      >
+    </legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="zinssatzBankRange"
+        [min]="formService.zinssatzBank.min"
+        [max]="formService.zinssatzBank.max"
+        [step]="formService.zinssatzBank.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="zinssatzBank"
+        name="zinssatzBank"
+        [min]="formService.zinssatzBank.min"
+        [max]="formService.zinssatzBank.max"
+        [step]="formService.zinssatzBank.step"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <legend>
+      {{ formService.kreditlaufzeit.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.kreditlaufzeit"
         placement="right"
         >&#9432;</sup
-      ></legend>
-      <span class="slidernumber">
-        <input
-          type="range"
-          formControlName="kreditlaufzeitRange"
-          [min]="formService.kreditlaufzeit.min"
-          [max]="formService.kreditlaufzeit.max"
-          [step]="formService.kreditlaufzeit.step"
-          class="slider"
-        />
-        <input
-          type="number"
-          formControlName="kreditlaufzeit"
-          name="kreditlaufzeit"
-          [min]="formService.kreditlaufzeit.min"
-          [max]="formService.kreditlaufzeit.max"
-          [step]="formService.kreditlaufzeit.step"
-          (keyup.enter)="onEnterKey($event)"
-        />
-      </span>
-    </fieldset>
-    <fieldset class="radio-fieldset">
-      <legend>{{ formService.kfWDarlehen.title
-      }}&nbsp;<sup
+      >
+    </legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="kreditlaufzeitRange"
+        [min]="formService.kreditlaufzeit.min"
+        [max]="formService.kreditlaufzeit.max"
+        [step]="formService.kreditlaufzeit.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="kreditlaufzeit"
+        name="kreditlaufzeit"
+        [min]="formService.kreditlaufzeit.min"
+        [max]="formService.kreditlaufzeit.max"
+        [step]="formService.kreditlaufzeit.step"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.kfWDarlehen.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.kfwDarlehen"
         placement="right"
         >&#9432;</sup
-      ></legend>
-      <span class="radio-option" *ngFor="let item of formService.kfWDarlehen.options">
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.kfWDarlehen.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.kfwDarlehen"
+        placement="right"
+        >&#9432;</sup
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.kfWDarlehen.options"
+      >
         <input
           type="radio"
           [id]="item.id"
           [value]="item.value"
           name="kfWDarlehen"
           formControlName="kfWDarlehen"
-          [attr.disabled]="(formService.noEndfaelliges && item.value === 'Endfälliges') ? '' : null"
+          [attr.disabled]="
+            formService.noEndfaelliges && item.value === 'Endfälliges' ? '' : null
+          "
         />
         <label [for]="item.id">{{ item.value }}</label>
       </span>
-    </fieldset>
-    @if (formService.noEndfaelliges) {
-      <div class="warning-block">
-        *Endfälliges ist nur zwischen 4 und 10 Jahren möglich
-      </div>
-      }
-    <fieldset class="radio-fieldset">
-      <legend>{{ formService.bankDarlehen.title
-      }}&nbsp;<sup
+    </div>
+  </fieldset>
+  @if (formService.noEndfaelliges) {
+  <div class="warning-block">
+    *Endfälliges ist nur zwischen 4 und 10 Jahren möglich
+  </div>
+  }
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.bankDarlehen.title }}&nbsp;<sup
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.bankDarlehen"
         placement="right"
         >&#9432;</sup
-      ></legend>
-      <span class="radio-option" *ngFor="let item of formService.bankDarlehen.options">
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.bankDarlehen.title }}&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.bankDarlehen"
+        placement="right"
+        >&#9432;</sup
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.bankDarlehen.options"
+      >
         <input
           type="radio"
           [id]="item.id"
@@ -97,6 +129,6 @@
         />
         <label [for]="item.id">{{ item.value }}</label>
       </span>
-    </fieldset>
-  </form>
-  
+    </div>
+  </fieldset>
+</form>
