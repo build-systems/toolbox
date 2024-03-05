@@ -118,8 +118,8 @@ input:checked ~ label div::before {
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 @media screen and (max-width: 1280px) {
