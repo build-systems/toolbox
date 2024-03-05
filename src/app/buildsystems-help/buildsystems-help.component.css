@@ -36,7 +36,7 @@
   height: calc(var(--button-radius) * 3);
   padding: calc(var(--button-radius) * 3);
   border-radius: calc(var(--button-radius) * 3);
-  font-size: 20px;
+  font-size: 1.25rem;
   z-index: 100;
   animation: rotation 7s linear infinite;
 }
@@ -79,21 +79,23 @@ input:checked ~ label div {
   }
   .final-content {
     display: flex;
-    a {
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
-      border-right: 1px solid var(--bg-tertiary);
-    }
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0 1rem;
-      display: flex;
-      align-items: center;
-    }
   }
+}
+
+a {
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--bg-tertiary);
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
 }
 
 svg {
@@ -134,6 +136,41 @@ input:checked ~ label div::before {
   .buildsystems-help-button {
     bottom: calc(var(--mobile-padding) * 2);
     right: calc(var(--mobile-padding) * 2);
-    font-size: 18px;
+    font-size: 1.15rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .buildsystems-help-button {
+    bottom: var(--mobile-padding);
+    right: var(--mobile-padding);
+  }
+  a {
+    padding: 0 0.5rem;
+  }
+  button {
+    padding: 0 0 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .buildsystems-help-button {
+    font-size: 1rem;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .buildsystems-help-button {
+    font-size: 0.9rem;
+  }
+
+  .icon {
+    width: 14px;
+    height: 14px;
   }
 }
