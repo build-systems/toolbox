@@ -19,7 +19,10 @@
           formControlName="projektType"
           [attr.disabled]="item.disabled ? '' : null"
         />
-        <label [for]="item.id">{{ item.value }}</label>
+        <label class="checkbox-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="checkmark"></span>
+        </label>
       </span>
     </div>
   </fieldset>
@@ -117,7 +120,10 @@
           formControlName="umfangModernisierung"
           [attr.disabled]="item.disabled ? '' : null"
         />
-        <label [for]="item.id">{{ item.value }}</label>
+        <label class="checkbox-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="checkmark"></span>
+        </label>
       </span>
     </div>
   </fieldset>
@@ -217,7 +223,10 @@
           formControlName="energiestandard"
           [attr.disabled]="item.disabled ? '' : null"
         />
-        <label [for]="item.id">{{ item.value }}</label>
+        <label class="checkbox-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="checkmark"></span>
+        </label>
       </span>
     </div>
   </fieldset>
@@ -251,7 +260,10 @@
           formControlName="foerderbonus"
           [attr.disabled]="item.disabled ? '' : null"
         />
-        <label [for]="item.id">{{ item.text }}</label>
+        <label class="checkbox-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="checkmark"></span>
+        </label>
       </span>
     </div>
   </fieldset>

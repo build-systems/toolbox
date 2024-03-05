@@ -7,7 +7,7 @@ nav {
   overflow: auto;
   justify-content: space-between;
   border-inline-end: 1px solid var(--bg-secondary);
-  padding-block-start: var(--layout-padding);
+  padding-block-start: calc(var(--layout-padding) * 1.25);
   padding-block-end: var(--layout-padding);
 }
 
@@ -43,7 +43,6 @@ ul {
 .link:hover {
   opacity: 1;
   color: var(--secondary);
-  
 }
 
 .active-nav {
@@ -56,9 +55,8 @@ ul {
 
 .icon {
   width: 40px;
-  aspect-ratio: 1/1
+  aspect-ratio: 1/1;
 }
-
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scroll-hide::-webkit-scrollbar {

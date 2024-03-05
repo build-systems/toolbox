@@ -8,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrl: './buildsystems-help.component.css'
 })
 export class BuildsystemsHelpComponent {
+  isCopied: boolean = false;
+
+  async copyContent(){
+    try{
+      await navigator.clipboard.writeText('mail@buildsystems.de');
+      this.isCopied = true
+      setTimeout(()=> {
+        this.isCopied = false}, 1500)} catch (e) {
+        console.error('e', e)
+      }
+  }
 
 }

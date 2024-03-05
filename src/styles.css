@@ -16,8 +16,8 @@
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
   --bg-primary97: rgba(34, 34, 34, 0.97);
-  --bg-secondary: #444;
-  --bg-tertiary: #111;
+  --bg-secondary: #333;
+  --bg-tertiary: #444;
   --bg-tertiary95: rgba(17, 17, 17, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
@@ -246,7 +246,7 @@ li {
   border-radius: 0 0 var(--button-radius) var(--button-radius);
 }
 
-.inputs::before {
+/* .inputs::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -261,12 +261,12 @@ li {
   user-select: none;
   pointer-events: none;
   z-index: 1;
-}
+} */
 
-.inputs::after {
+/* .inputs::after {
   content: "";
   position: absolute;
-  top: calc(var(--layout-padding) * 3);
+  top: 57px;
   height: 40px;
   width: 100%;
   background-image: linear-gradient(
@@ -277,7 +277,7 @@ li {
   user-select: none;
   pointer-events: none;
   z-index: 1;
-}
+} */
 
 .host-forms {
   width: 100%;
@@ -669,7 +669,7 @@ input[type="radio"] {
 
 .radio-option label {
   color: var(--primary60);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
   display: flex;
   margin: 0;
   height: var(--button-height);
@@ -677,7 +677,7 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: 1px solid var(--bg-primary);
+  border: 1px solid var(--bg-secondary);
   border-radius: var(--button-radius);
   cursor: pointer;
   word-break: normal;
@@ -688,7 +688,7 @@ input[type="radio"] {
 /* On mouse-over, add... */
 .radio-fieldset span input:hover ~ label {
   color: var(--primary);
-  background-color: var(--bg-secondary);
+  /* background-color: var(--bg-secondary); */
   border-color: var(--primary);
 }
 
@@ -700,8 +700,9 @@ input[type="radio"] {
 
 /* When the radio option is selected... */
 .radio-fieldset span input:checked ~ label {
+  border-color: var(--bg-primary);
   color: var(--primary);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
 }
 
 input[type="checkbox"] {
@@ -716,8 +717,8 @@ input[type="checkbox"] {
   position: relative;
   display: flex;
   height: var(--button-height);
-  padding-left: 5rem;
   align-items: center;
+  justify-content: center;
   border: 1px solid var(--bg-secondary);
   border-radius: var(--button-radius);
   background-color: var(--bg-secondary);
@@ -731,36 +732,33 @@ input[type="checkbox"] {
   left: 2rem;
   height: 24px;
   width: 24px;
-  /* border: 1px solid var(--primary); */
   border-radius: 0.25rem;
+  background-color: var(--bg-primary);
 }
 
 /* On mouse-over, add a grey background color */
-input ~ .checkbox-container .checkmark {
-  background-color: var(--bg-primary);
+input:hover ~ .checkbox-container .checkmark {
+  background-color: var(--primary70);
 }
 
 /* On mouse-over, add a grey background color */
 .checkbox-container:hover {
   color: var(--primary);
-  /* background-color: var(--bg-primary); */
   border-color: var(--primary);
 }
 
 /* On mouse-over, add a grey background color */
 input:checked ~ .checkbox-container:hover {
-  /* background-color: var(--bg-secondary); */
   border-color: var(--primary);
 }
 
 /* When the checkbox is checked, add a blue background */
-input[type="checkbox"]:checked ~ .checkbox-container .checkmark {
+input:checked ~ .checkbox-container .checkmark {
   background-color: var(--primary);
-  /* border-color: var(--primary); */
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+.checkmark::after {
   content: "";
   position: absolute;
   display: none;
@@ -768,7 +766,7 @@ input[type="checkbox"]:checked ~ .checkbox-container .checkmark {
 }
 
 /* Show the checkmark when checked */
-input:checked ~ .checkbox-container .checkmark:after {
+input:checked ~ .checkbox-container .checkmark::after {
   display: block;
 }
 
@@ -776,12 +774,11 @@ input:checked ~ .checkbox-container .checkmark:after {
 input:checked + .checkbox-container {
   color: var(--primary);
   background-color: var(--bg-primary);
-  /* border-color: var(--secondary); */
 }
 
 /* Checkmark symbol */
-.checkmark:after {
-  left: 9px;
+.checkmark::after {
+  left: 8px;
   width: 5px;
   height: 11px;
   border: solid var(--bg-primary);
@@ -800,9 +797,12 @@ input[type="checkbox"]:disabled ~ .checkbox-container,
 }
 
 /* Checkbox when input is disabled */
-input[type="checkbox"]:disabled ~ .checkbox-container .checkmark {
+input:disabled ~ .checkbox-container .checkmark {
   background-color: var(--bg-secondary);
-  /* border-color: var(--bg-primary); */
+}
+
+input:disabled ~ .checkbox-container .checkmark::after {
+  display: none;
 }
 
 /* Inputs when disabled */

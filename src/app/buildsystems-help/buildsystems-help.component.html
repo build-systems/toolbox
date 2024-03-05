@@ -1,1 +1,38 @@
-<div role="button" tabindex="0" class="buildsystems-help-button" aria-label="Contact us, Impressum and Datenschutzerklärung">Do you need help?</div>
+<input type="checkbox" id="help" class="hidden" />
+<label
+  aria-label="Click here to see the options to contact BuildSystems"
+  tabindex="0"
+  for="help"
+>
+  <div class="buildsystems-help-button">
+    <div aria-hidden="true" class="initial-content">Brauchen Sie Hilfe?</div>
+    <div class="final-content">
+      <span aria-hidden="true">Schreiben Sie uns eine Mail!</span>
+      <a
+        title="Send email to mail@buildsystems.de"
+        aria-label="Click to send an email to mail@buildsystems.de"
+        href="mailto:mail@buildsystems.de"
+        target="_top"
+      >
+        <svg class="icon">
+          <use xlink:href="assets/icons.svg#email" />
+        </svg>
+      </a>
+      <button
+        (click)="copyContent()"
+        title="Copy mail@buildsystems.de to clipboard"
+        aria-label="Click to copy mail@buildsystems.de to clipboard"
+      >
+        @if (!isCopied) {
+        <svg class="icon">
+          <use xlink:href="assets/icons.svg#clipboard" />
+        </svg>
+        } @else {
+        <svg class="icon">
+          <use xlink:href="assets/icons.svg#clipboard-checked" />
+        </svg>
+        }
+      </button>
+    </div>
+  </div>
+</label>

@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 @property --gradient-angle {
   syntax: "<angle>";
   initial-value: 0deg;
@@ -14,45 +18,122 @@
 }
 
 .buildsystems-help-button {
-  color: var(--primary);
   user-select: none;
   cursor: pointer;
-  opacity: 1;
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--bg-primary);
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--secondary),
+    var(--bg-secondary),
+    var(--secondary),
+    var(--bg-secondary),
+    var(--secondary)
+  );
   top: 16px;
   right: var(--layout-padding);
-  width: fit-content;
   height: calc(var(--button-radius) * 3);
   padding: calc(var(--button-radius) * 3);
   border-radius: calc(var(--button-radius) * 3);
   font-size: 20px;
+  z-index: 100;
+  animation: rotation 7s linear infinite;
 }
 
 .buildsystems-help-button::before,
 .buildsystems-help-button::after {
+  content: "Brauchen Sie Hilfe?";
   content: "";
   position: absolute;
-  inset: -1px;
   z-index: -1;
   background: conic-gradient(
     from var(--gradient-angle),
     var(--secondary),
-    var(--bg-tertiary),
     var(--bg-secondary),
-    var(--bg-primary),
+    var(--secondary),
+    var(--bg-secondary),
     var(--secondary)
-    );
+  );
   border-radius: inherit;
-  animation: rotation 5s linear infinite;
+  animation: rotation 7s linear infinite;
 }
 
 .buildsystems-help-button::before {
+  filter: blur(1px);
+  inset: 0;
 }
 
 .buildsystems-help-button::after {
-  filter: blur(2px);
+  background: var(--bg-secondary);
+  inset: 1px;
+}
+
+.final-content {
+  display: none;
+}
+
+input:checked ~ label div {
+  .initial-content {
+    display: none;
+  }
+  .final-content {
+    display: flex;
+    a {
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--bg-tertiary);
+    }
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+svg {
+  fill: var(--primary);
+}
+
+svg:hover {
+  fill: var(--secondary);
+}
+
+input:checked ~ label div::before {
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--primary),
+    var(--bg-secondary),
+    var(--bg-secondary),
+    var(--primary),
+    var(--bg-secondary),
+    var(--bg-secondary),
+    var(--primary)
+  );
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (max-width: 1280px) {
+  .buildsystems-help-button {
+    top: auto;
+    bottom: calc(var(--layout-padding) * 2);
+    right: calc(var(--layout-padding) * 2);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .buildsystems-help-button {
+    bottom: calc(var(--mobile-padding) * 2);
+    right: calc(var(--mobile-padding) * 2);
+    font-size: 18px;
+  }
 }

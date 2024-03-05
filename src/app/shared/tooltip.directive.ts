@@ -64,26 +64,21 @@ export class TooltipDirective {
     console.log("Tooltip icon top: " + elemRect.top);
     if (windowWidth < 850) {
       // If mobile, then center tooltip horizontally to the page (left = 0)
-      // if (
-        //   tooltipRect.height >
-        //   windowHeight - (elemRect.top + elemRect.height)
-        // ) {
-
-      // If there's space under the tooltip icon, place it there
       if (
+        // If there's space under the tooltip icon, place it there
         tooltipRect.height <
         windowHeight - (elemRect.top + elemRect.height)
       ) {
         top = elemRect.top + elemRect.height + this.offset;
       } else if (elemRect.top > tooltipRect.height) {
+        // otherwise, if there is space at the top place it there
         top = elemRect.top - tooltipRect.height - this.offset;
-        // If there is space at the top place it there
       } else {
-        // Otherwise leave at the bottom (UI sucks, but everything still readable)
+        // otherwise leave at the bottom (UI sucks, but everything still readable)
         top = elemRect.top + elemRect.height + this.offset;
       }
     } else {
-      // If not mobile, then also calculate the left in relation to tooltip icon
+      // If not mobile, then also calculate the 'left' in relation to tooltip icon
       switch (this.placement!()) {
         case 'top':
           top = elemRect.top - tooltipRect.height - this.offset;
