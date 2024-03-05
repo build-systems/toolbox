@@ -6,7 +6,7 @@ nav {
   height: 100dvh;
   overflow: auto;
   justify-content: space-between;
-  border-inline-end: 1px solid var(--bg-tertiary);
+  border-inline-end: 1px solid var(--bg-secondary);
   padding-block-start: var(--layout-padding);
   padding-block-end: var(--layout-padding);
 }

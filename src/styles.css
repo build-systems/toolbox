@@ -16,9 +16,9 @@
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
   --bg-primary97: rgba(34, 34, 34, 0.97);
-  --bg-secondary: #333;
-  --bg-tertiary: #444;
-  --bg-tertiary95: rgba(68, 68, 68, 0.95);
+  --bg-secondary: #444;
+  --bg-tertiary: #111;
+  --bg-tertiary95: rgba(17, 17, 17, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
   --font-tooltip: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI",
@@ -669,7 +669,7 @@ input[type="radio"] {
 
 .radio-option label {
   color: var(--primary60);
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   display: flex;
   margin: 0;
   height: var(--button-height);
@@ -677,7 +677,7 @@ input[type="radio"] {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: 1px solid var(--bg-secondary);
+  border: 1px solid var(--bg-primary);
   border-radius: var(--button-radius);
   cursor: pointer;
   word-break: normal;
@@ -701,7 +701,7 @@ input[type="radio"] {
 /* When the radio option is selected... */
 .radio-fieldset span input:checked ~ label {
   color: var(--primary);
-  background-color: var(--bg-primary);
+  background-color: var(--bg-secondary);
 }
 
 input[type="checkbox"] {
@@ -928,10 +928,8 @@ input[type="number"]:disabled:hover {
 
 .charts-container {
   width: 100%;
-  /* flex: 1; */
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  /* grid-template-rows: repeat(2, minmax(0, 1fr)); */
   gap: calc(var(--layout-padding) / 2);
 }
 
