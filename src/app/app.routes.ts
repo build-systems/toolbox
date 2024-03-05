@@ -12,16 +12,16 @@ export const routes: Routes = [
         component: HomeComponent,
         title: 'Homepage'
     },
-    {
-        path: 'profile',
-        component: ProfileComponent,
-        title: 'Profile'
-    },
-    {
-        path: 'portfolio',
-        component: PortfolioComponent,
-        title: 'Portfolio'
-    },
+    // {
+    //     path: 'profile',
+    //     component: ProfileComponent,
+    //     title: 'Profile'
+    // },
+    // {
+    //     path: 'portfolio',
+    //     component: PortfolioComponent,
+    //     title: 'Portfolio'
+    // },
     {
         path: 'neubau',
         component: NeubauComponent,
@@ -32,9 +32,9 @@ export const routes: Routes = [
         component: SanierungComponent,
         title: 'Sanierung'
     },
-    {
-        path: 'settings',
-        component: SettingsComponent,
-        title: 'BS | Settings'
-    },
+    // {
+    //     path: 'settings',
+    //     component: SettingsComponent,
+    //     title: 'Settings'
+    // },
 ];
