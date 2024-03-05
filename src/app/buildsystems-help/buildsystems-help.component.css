@@ -1,0 +1,58 @@
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotation {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
+
+.buildsystems-help-button {
+  color: var(--primary);
+  user-select: none;
+  cursor: pointer;
+  opacity: 1;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  top: 16px;
+  right: var(--layout-padding);
+  width: fit-content;
+  height: calc(var(--button-radius) * 3);
+  padding: calc(var(--button-radius) * 3);
+  border-radius: calc(var(--button-radius) * 3);
+  font-size: 20px;
+}
+
+.buildsystems-help-button::before,
+.buildsystems-help-button::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--secondary),
+    var(--bg-tertiary),
+    var(--bg-secondary),
+    var(--bg-primary),
+    var(--secondary)
+    );
+  border-radius: inherit;
+  animation: rotation 5s linear infinite;
+}
+
+.buildsystems-help-button::before {
+}
+
+.buildsystems-help-button::after {
+  filter: blur(2px);
+}
