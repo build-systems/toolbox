@@ -17,18 +17,22 @@
   }
 }
 
-label {
+.buildsystems-help-button {
   position: absolute;
   top: 16px;
   right: var(--layout-padding);
-}
-
-.buildsystems-help-button {
   user-select: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  background: var(--bg-secondary);
+  background: conic-gradient(
+    from var(--gradient-angle),
+    var(--secondary),
+    var(--bg-secondary),
+    var(--secondary),
+    var(--bg-secondary),
+    var(--secondary)
+  );
   height: calc(var(--button-radius) * 3);
   padding: calc(var(--button-radius) * 3);
   border-radius: calc(var(--button-radius) * 3);
@@ -42,7 +46,6 @@ label {
   content: "Brauchen Sie Hilfe?";
   content: "";
   position: absolute;
-  inset: -1px;
   z-index: -1;
   background: conic-gradient(
     from var(--gradient-angle),
@@ -58,6 +61,12 @@ label {
 
 .buildsystems-help-button::before {
   filter: blur(1px);
+  inset: 0;
+}
+
+.buildsystems-help-button::before {
+  background: var(--bg-secondary);
+  inset: 1px;
 }
 
 .initial-content {
