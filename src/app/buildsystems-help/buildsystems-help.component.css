@@ -17,22 +17,18 @@
   }
 }
 
+label {
+  position: absolute;
+  top: 16px;
+  right: var(--layout-padding);
+}
+
 .buildsystems-help-button {
   user-select: none;
   cursor: pointer;
-  position: absolute;
   display: flex;
   align-items: center;
-  background: conic-gradient(
-    from var(--gradient-angle),
-    var(--secondary),
-    var(--bg-secondary),
-    var(--secondary),
-    var(--bg-secondary),
-    var(--secondary)
-  );
-  top: 16px;
-  right: var(--layout-padding);
+  background: var(--bg-secondary);
   height: calc(var(--button-radius) * 3);
   padding: calc(var(--button-radius) * 3);
   border-radius: calc(var(--button-radius) * 3);
@@ -46,6 +42,7 @@
   content: "Brauchen Sie Hilfe?";
   content: "";
   position: absolute;
+  inset: -1px;
   z-index: -1;
   background: conic-gradient(
     from var(--gradient-angle),
@@ -61,24 +58,33 @@
 
 .buildsystems-help-button::before {
   filter: blur(1px);
-  inset: 0;
 }
 
-.buildsystems-help-button::after {
-  background: var(--bg-secondary);
-  inset: 1px;
+.initial-content {
+  overflow: hidden;
+  max-width: 500px;
+  opacity: 1;
+  transition: all 0.2s ease-in-out 0.4s;
 }
 
 .final-content {
-  display: none;
+  display: flex;
+  overflow: hidden;
+  max-width: 0;
+  opacity: 0;
+  transition: all 0.2s ease-in-out 0.2s;
 }
 
 input:checked ~ label div {
   .initial-content {
-    display: none;
+    max-width: 0;
+    opacity: 0;
+    transition: all 0.2s ease-in-out 0s;
   }
   .final-content {
-    display: flex;
+    max-width: 500px;
+    opacity: 1;
+    transition: all 0.2s ease-in-out 0.2s;
   }
 }
 
@@ -106,7 +112,8 @@ svg:hover {
   fill: var(--secondary);
 }
 
-input:checked ~ label div::before {
+input:checked ~ label .buildsystems-help-button::before,
+input:checked ~ label .buildsystems-help-button::after {
   background: conic-gradient(
     from var(--gradient-angle),
     var(--primary),
