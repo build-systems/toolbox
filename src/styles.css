@@ -28,6 +28,7 @@
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
+  --checkmark-size: calc(var(--button-height) / 2);
   --nav-sel-thickness: 2px;
   --mobile-handle-diameter: 1.6rem;
   --mobile-padding: 0.5rem;
@@ -246,6 +247,8 @@ li {
   border-radius: 0 0 var(--button-radius) var(--button-radius);
 }
 
+/* This was a gradient to explain that there are more items down and the inputs need to be scrolled*/
+/* It should be included later */
 /* .inputs::before {
   content: "";
   position: absolute;
@@ -668,7 +671,7 @@ input[type="radio"] {
 }
 
 .radio-option label {
-  color: var(--primary60);
+  color: var(--primary70);
   background-color: var(--bg-secondary);
   display: flex;
   margin: 0;
@@ -688,7 +691,6 @@ input[type="radio"] {
 /* On mouse-over, add... */
 .radio-fieldset span input:hover ~ label {
   color: var(--primary);
-  /* background-color: var(--bg-secondary); */
   border-color: var(--primary);
 }
 
@@ -713,7 +715,8 @@ input[type="checkbox"] {
   width: 0;
 }
 
-.checkbox-container {
+.checkbox-container,
+.radio-container {
   position: relative;
   display: flex;
   height: var(--button-height);
@@ -723,32 +726,45 @@ input[type="checkbox"] {
   border-radius: var(--button-radius);
   background-color: var(--bg-secondary);
   cursor: pointer;
-  color: var(--primary80);
+  color: var(--primary70);
   transition: 0.15s;
 }
 
 .checkmark {
   position: absolute;
   left: 2rem;
-  height: 24px;
-  width: 24px;
+  height: var(--checkmark-size);
+  width: var(--checkmark-size);
   border-radius: 0.25rem;
   background-color: var(--bg-primary);
 }
 
+.radiomark {
+  box-sizing: content-box;
+  position: absolute;
+  left: 2rem;
+  height: var(--checkmark-size);
+  width: var(--checkmark-size);
+  border: 2px solid var(--bg-tertiary);
+  border-radius: 50%;
+}
+
 /* On mouse-over, add a grey background color */
-input:hover ~ .checkbox-container .checkmark {
+input:hover ~ .checkbox-container .checkmark,
+input:hover ~ .radio-container .radiomark {
   background-color: var(--primary70);
 }
 
 /* On mouse-over, add a grey background color */
-.checkbox-container:hover {
+.checkbox-container:hover,
+.radio-container:hover {
   color: var(--primary);
   border-color: var(--primary);
 }
 
 /* On mouse-over, add a grey background color */
-input:checked ~ .checkbox-container:hover {
+input:checked ~ .checkbox-container:hover,
+input:checked ~ .radio-container:hover {
   border-color: var(--primary);
 }
 
@@ -756,29 +772,17 @@ input:checked ~ .checkbox-container:hover {
 input:checked ~ .checkbox-container .checkmark {
   background-color: var(--primary);
 }
+input:checked ~ .radio-container .radiomark {
+  border-color: var(--primary70);
+}
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark::after {
-  content: "";
   position: absolute;
   display: none;
-  top: 4px;
-}
-
-/* Show the checkmark when checked */
-input:checked ~ .checkbox-container .checkmark::after {
-  display: block;
-}
-
-/* Show the checkmark when checked */
-input:checked + .checkbox-container {
-  color: var(--primary);
-  background-color: var(--bg-primary);
-}
-
-/* Checkmark symbol */
-.checkmark::after {
-  left: 8px;
+  content: "";
+  top: 2px;
+  left: 7px;
   width: 5px;
   height: 11px;
   border: solid var(--bg-primary);
@@ -786,6 +790,30 @@ input:checked + .checkbox-container {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.radiomark::after {
+  height: var(--checkmark-size);
+  width: var(--checkmark-size);
+  display: inline-block;
+  content: "";
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 4px var(--bg-secondary);
+}
+
+
+/* Show the checkmark when checked */
+input:checked ~ .checkbox-container .checkmark::after {
+  display: inline-block;
+}
+
+input:checked ~ .radio-container .radiomark::after {
+  background-color: var(--primary);
+}
+
+input:checked + .checkbox-container {
+  color: var(--primary);
+  background-color: var(--bg-primary);
 }
 
 /* Container of inputs when checkbox or radio options are disabled... */

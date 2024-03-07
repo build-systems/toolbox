@@ -9,6 +9,7 @@ import { NumbersProjektSanierungComponent } from './numbers-projekt-sanierung/nu
 import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/numbers-darlehen-sanierung.component';
 import { TitleComponent } from '../../title/title.component';
 import { fadeInAnimation } from '../../shared/animations';
+import { BuildsystemsHelpComponent } from '../../buildsystems-help/buildsystems-help.component';
 
 @Component({
   selector: 'app-sanierung',
@@ -21,7 +22,8 @@ import { fadeInAnimation } from '../../shared/animations';
     ChartsProjektSanierungComponent,
     ChartsDarlehenSanierungComponent,
     NumbersProjektSanierungComponent,
-    NumbersDarlehenSanierungComponent
+    NumbersDarlehenSanierungComponent,
+    BuildsystemsHelpComponent
   ],
   templateUrl: './sanierung.component.html',
   styleUrl: './sanierung.component.css',

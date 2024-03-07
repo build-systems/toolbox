@@ -9,6 +9,7 @@ import { NumbersProjektNeubauComponent } from './numbers-projekt-neubau/numbers-
 import { NumbersDarlehenNeubauComponent } from './numbers-darlehen-neubau/numbers-darlehen-neubau.component';
 import { TitleComponent } from '../../title/title.component';
 import { fadeInAnimation } from '../../shared/animations';
+import { BuildsystemsHelpComponent } from '../../buildsystems-help/buildsystems-help.component';
 
 @Component({
   selector: 'app-neubau',
@@ -21,7 +22,8 @@ import { fadeInAnimation } from '../../shared/animations';
     ChartsProjektNeubauComponent,
     ChartsDarlehenNeubauComponent,
     NumbersProjektNeubauComponent,
-    NumbersDarlehenNeubauComponent
+    NumbersDarlehenNeubauComponent,
+    BuildsystemsHelpComponent
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',

@@ -73,7 +73,7 @@
   overflow: hidden;
   max-width: 500px;
   opacity: 1;
-  transition: all 0.2s ease-in-out 0.4s;
+  transition: all 0.2s ease-in-out 0.35s;
 }
 
 .final-content {
@@ -81,7 +81,7 @@
   overflow: hidden;
   max-width: 0;
   opacity: 0;
-  transition: all 0.2s ease-in-out 0.2s;
+  transition: all 0.2s ease-in-out 0.15s;
 }
 
 input:checked ~ label div {
