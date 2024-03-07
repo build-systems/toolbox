@@ -21,20 +21,22 @@
   --bg-tertiary95: rgba(17, 17, 17, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
-  --font-tooltip: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  --font-alt: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
   --layout-padding: 1rem;
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
   --button-radius: 0.5rem;
-  --checkmark-size: calc(var(--button-height) / 2);
+  --checkmark-size: 1.2rem;
   --nav-sel-thickness: 2px;
   --mobile-handle-diameter: 1.6rem;
   --mobile-padding: 0.5rem;
   --mobile-header: calc(40px + (2 * var(--mobile-padding)));
   --tooltip-width: 280px;
-  --scrollbar-width: 0.1rem;
+  --scrollbar-width: 0.2rem;
+  --footer-height: 2rem;
+  --footer-height-mobile: 1.4rem;
 }
 
 * {
@@ -58,7 +60,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-tertiary);
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -133,10 +135,9 @@ li {
 }
 
 .host-tool {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100svh;
+  max-height: calc(100svh - 1.5rem);
   padding-bottom: var(--layout-padding);
 }
 
@@ -229,7 +230,7 @@ li {
 .container-tool {
   position: relative;
   top: 0;
-  flex: 1;
+  /* flex: 1; */
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
   padding-right: var(--layout-padding);
@@ -249,7 +250,7 @@ li {
 
 /* This was a gradient to explain that there are more items down and the inputs need to be scrolled*/
 /* It should be included later */
-/* .inputs::before {
+.inputs::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -264,9 +265,9 @@ li {
   user-select: none;
   pointer-events: none;
   z-index: 1;
-} */
+}
 
-/* .inputs::after {
+.inputs::after {
   content: "";
   position: absolute;
   top: 57px;
@@ -280,12 +281,11 @@ li {
   user-select: none;
   pointer-events: none;
   z-index: 1;
-} */
+}
 
 .host-forms {
   width: 100%;
   overflow-y: auto;
-  flex: 1;
   height: fit-content;
   padding: var(--layout-padding);
   padding-top: calc(var(--layout-padding) * 2);
@@ -298,7 +298,6 @@ li {
 .wrapper-gradient {
   display: flex;
   position: relative;
-  max-height: 100%;
   top: 0;
   left: 0;
   overflow-y: auto;
@@ -382,7 +381,7 @@ legend {
 }
 
 .ng-tooltip {
-  font-family: var(--font-tooltip);
+  font-family: var(--font-alt);
   position: absolute;
   border-radius: 6px;
   padding: var(--layout-padding);
@@ -775,16 +774,15 @@ input:checked ~ .radio-container .radiomark {
   border-color: var(--primary70);
 }
 
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark::after {
   position: absolute;
   display: none;
   content: "";
-  top: 2px;
-  left: 7px;
-  width: 5px;
-  height: 11px;
+  top: calc(var(--checkmark-size) / 9);
+  left: calc(var(--checkmark-size) / 3.2);
+  width: calc(var(--checkmark-size) / 4);
+  height: calc(var(--checkmark-size) / 2);
   border: solid var(--bg-primary);
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
@@ -804,7 +802,6 @@ input:checked ~ .radio-container .radiomark {
 input:hover ~ .radio-container .radiomark::after {
   background-color: var(--bg-tertiary);
 }
-
 
 /* Show the checkmark when checked */
 input:checked ~ .checkbox-container .checkmark::after {
@@ -831,6 +828,14 @@ input[type="checkbox"]:disabled ~ .checkbox-container,
 /* Checkbox when input is disabled */
 input:disabled ~ .checkbox-container .checkmark {
   background-color: var(--bg-secondary);
+}
+
+input:disabled ~ .radio-container .radiomark::after {
+  background-color: var(--bg-secondary);
+}
+
+input:disabled ~ .radio-container .radiomark {
+  border: 2px solid var(--bg-tertiary);
 }
 
 input:disabled ~ .checkbox-container .checkmark::after {
@@ -950,8 +955,8 @@ input[type="number"]:disabled:hover {
     height: 100%;
   }
   & div {
-    font-size: 1.5rem;
-    font-weight: 500;
+    flex: 1;
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
     display: flex;
     justify-content: center;
     height: 100%;
@@ -1041,8 +1046,8 @@ input[type="number"]:disabled:hover {
 
 .host-charts-plural {
   display: flex;
-  /* height: 100%; */
-  flex: 1 0 300px;
+  height: 100%;
+  /* flex: 1 0 300px; */
 }
 
 .details {
@@ -1050,13 +1055,13 @@ input[type="number"]:disabled:hover {
   width: 100%;
 }
 
-.development {
+.homepage {
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100dvh;
+  /* height: 100dvh; */
   width: 100%;
   padding: var(--layout-padding);
   & h1 {
@@ -1328,11 +1333,12 @@ span.nowrap {
   }
 
   .arrow-container {
-    margin-top: 0;
+    margin-top: 5px;
   }
 
   .arrow {
-    margin: 1.05rem 0;
+    /* margin: 1.05rem 0; */
+    flex: 1;
     height: 1.5rem;
     width: 1.5rem;
   }
@@ -1376,10 +1382,17 @@ span.nowrap {
   } */
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
+  h1 {
+    margin: 0.4rem 0;
+    font-size: 1.5rem;
+    line-height: 100%;
+  }
+
   .host-tool {
     overflow-y: auto;
     padding-bottom: var(--mobile-padding);
+    max-height: 100%;
   }
 
   .title {
@@ -1398,6 +1411,7 @@ span.nowrap {
     overflow-y: visible;
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
+    gap: 0;
   }
 
   .values-container {
@@ -1417,5 +1431,14 @@ span.nowrap {
     & div {
       font-size: 1.25rem;
     }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .radiomark {
+    left: 1rem;
+  }
+  .checkmark {
+    left: 1rem;
   }
 }

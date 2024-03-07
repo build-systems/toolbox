@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   host: {
-    class: 'development'
+    class: 'homepage'
   }
 })
 export class HomeComponent {

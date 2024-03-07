@@ -7,7 +7,7 @@ import {
 } from '@angular/animations';
 
 export const fadeInAnimation = trigger('routeAnimations', [
-  transition(':enter', [style({ opacity: '0' }), animate(150)]),
+  transition(':enter', [style({ opacity: '0' }), animate(400)]),
 ]);
 
 export const expandCollapseTitle = [

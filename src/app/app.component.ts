@@ -8,6 +8,7 @@ import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';
 import { SupabaseService } from './shared/supabase.service';
 import { AuthComponent } from './auth/auth.component';
 import { AccountComponent } from './pages/profile/account/account.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { AccountComponent } from './pages/profile/account/account.component';
     RouterModule,
     AuthComponent,
     AccountComponent,
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -1,107 +1,107 @@
-  nav {
-    overflow: hidden;
-  }
-  
-  ul {
+nav {
+  overflow: hidden;
+}
+
+ul {
+  width: 100%;
+  background-color: var(--bg-secondary);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  height: var(--mobile-header);
+  & a {
+    display: flex;
     width: 100%;
-    background-color: var(--bg-secondary);
-  }
-   
-  li {
-    display: flex;
-    align-items: center;
-    height: var(--mobile-header);
-    & a {
+    height: 100%;
+    padding-left: var(--mobile-padding);
+    & span {
       display: flex;
-      width: 100%;
-      height: 100%;
+      align-items: center;
       padding-left: var(--mobile-padding);
-      & span {
-        display: flex;
-        align-items: center;
-        padding-left: var(--mobile-padding);
-      }
     }
   }
-  
-  li a:hover {
-    background-color: var(--bg-tertiary);
-  }
-   
-  .homelink {
-    display: flex;
-    height: fit-content;
-  }
+}
 
-  .linkmobile {
-    opacity: 0.7;
-  }
+li a:hover {
+  background-color: var(--bg-tertiary);
+}
 
-  .logomobile {
-    width: 40px;
-    margin: var(--mobile-padding);
-    aspect-ratio: 1/1;
-  }
-  
-  .iconmobile {
-    width: 40px;
-    aspect-ratio: 1/1;
-  }
-  
-  .hamburger {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 0;
-    right: 0;
-    justify-content: center;
-    align-items: center;
-    height: var(--mobile-header);
-    aspect-ratio: 1/1;
-    border: none;
-    background: none;
-  }
-  
-  .hamburger .line {
-    width: 50%;
-    height: 1px;
-    background-color: #ecf0f1;
-    display: block;
-    margin: 5px auto;
-    -webkit-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-  }
-  
-  .active-hamburger .line:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .active-hamburger .line:nth-child(1) {
-    -webkit-transform: translateY(11px) rotate(45deg);
-    -ms-transform: translateY(11px) rotate(45deg);
-    -o-transform: translateY(11px) rotate(45deg);
-    transform: translateY(11px) rotate(45deg);
-  }
-  
-  .active-hamburger .line:nth-child(3) {
-    -webkit-transform: translateY(-11px) rotate(-45deg);
-    -ms-transform: translateY(-11px) rotate(-45deg);
-    -o-transform: translateY(-11px) rotate(-45deg);
-    transform: translateY(-11px) rotate(-45deg);
-  }
-  
-  .active-nav {
-    font-weight: 400;
-    background-color: var(--bg-tertiary);
+.homelink {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+}
+
+.linkmobile {
+  opacity: 0.7;
+}
+
+.logomobile {
+  width: 40px;
+  margin: var(--mobile-padding);
+  aspect-ratio: 1/1;
+}
+
+.iconmobile {
+  width: 40px;
+  aspect-ratio: 1/1;
+}
+
+.hamburger {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  height: var(--mobile-header);
+  aspect-ratio: 1/1;
+  border: none;
+  background: none;
+}
+
+.hamburger .line {
+  width: 50%;
+  height: 1px;
+  background-color: #ecf0f1;
+  display: block;
+  margin: 5px auto;
+  -webkit-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+
+.active-hamburger .line:nth-child(2) {
+  opacity: 0;
+}
+
+.active-hamburger .line:nth-child(1) {
+  -webkit-transform: translateY(11px) rotate(45deg);
+  -ms-transform: translateY(11px) rotate(45deg);
+  -o-transform: translateY(11px) rotate(45deg);
+  transform: translateY(11px) rotate(45deg);
+}
+
+.active-hamburger .line:nth-child(3) {
+  -webkit-transform: translateY(-11px) rotate(-45deg);
+  -ms-transform: translateY(-11px) rotate(-45deg);
+  -o-transform: translateY(-11px) rotate(-45deg);
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+.active-nav {
+  font-weight: 400;
+  background-color: var(--bg-tertiary);
+  opacity: 1;
+  border-left: var(--nav-sel-thickness) solid var(--secondary);
+  padding-left: 0px;
+  & a {
     opacity: 1;
-    border-left: var(--nav-sel-thickness) solid var(--secondary);
-    padding-left: 0px;
-    & a {
-      opacity: 1;
-    }
-    & legend {
-      color: var(--secondary);
-    }
   }
-  
+  & legend {
+    color: var(--secondary);
+  }
+}

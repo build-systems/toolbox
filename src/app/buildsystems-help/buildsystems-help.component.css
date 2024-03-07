@@ -17,7 +17,7 @@
   }
 }
 
-.buildsystems-help-button {
+.help-button {
   user-select: none;
   cursor: pointer;
   position: absolute;
@@ -41,12 +41,18 @@
   animation: rotation 7s linear infinite;
 }
 
-.buildsystems-help-button::before,
-.buildsystems-help-button::after {
-  content: "Brauchen Sie Hilfe?";
+.help-button::before,
+.help-button::after {
   content: "";
   position: absolute;
   z-index: -1;
+  border-radius: inherit;
+  animation: rotation 7s linear infinite;
+}
+
+.help-button::before {
+  filter: blur(1px);
+  inset: 0;
   background: conic-gradient(
     from var(--gradient-angle),
     var(--secondary),
@@ -55,16 +61,9 @@
     var(--bg-secondary),
     var(--secondary)
   );
-  border-radius: inherit;
-  animation: rotation 7s linear infinite;
 }
 
-.buildsystems-help-button::before {
-  filter: blur(1px);
-  inset: 0;
-}
-
-.buildsystems-help-button::after {
+.help-button::after {
   background: var(--bg-secondary);
   inset: 1px;
 }
@@ -121,8 +120,8 @@ svg:hover {
   fill: var(--secondary);
 }
 
-input:checked ~ label .buildsystems-help-button::before,
-input:checked ~ label .buildsystems-help-button {
+input:checked ~ label .help-button::before,
+input:checked ~ label .help-button {
   background: conic-gradient(
     from var(--gradient-angle),
     var(--primary),
@@ -141,36 +140,49 @@ input:checked ~ label .buildsystems-help-button {
 }
 
 @media screen and (max-width: 1280px) {
-  .buildsystems-help-button {
+  .help-button {
     top: auto;
-    bottom: calc(var(--layout-padding) * 2);
-    right: calc(var(--layout-padding) * 2);
+    bottom: calc(var(--footer-height) + 4px);
+    right: calc(var(--layout-padding) + var(--scrollbar-width));
   }
 }
 
 @media screen and (max-width: 850px) {
-  .buildsystems-help-button {
-    bottom: calc(var(--mobile-padding) * 2);
-    right: calc(var(--mobile-padding) * 2);
+  .help-button {
+    right: calc(var(--mobile-padding) * 2 + var(--scrollbar-width));
     font-size: 1.15rem;
+    height: calc(var(--button-radius) * 2);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .help-button {
+    bottom: calc(var(--footer-height-mobile) + 4px);
+    padding: calc(var(--button-radius) * 2.75);
   }
 }
 
 @media screen and (max-width: 400px) {
-  .buildsystems-help-button {
-    bottom: var(--mobile-padding);
-    right: var(--mobile-padding);
+  .help-button {
+    right: calc(var(--mobile-padding) + var(--scrollbar-width));
   }
+
   a {
     padding: 0 0.5rem;
   }
+
   button {
     padding: 0 0 0 0.5rem;
+  }
+
+  .icon {
+    width: 16px;
+    height: 16px;
   }
 }
 
 @media screen and (max-width: 360px) {
-  .buildsystems-help-button {
+  .help-button {
     font-size: 1rem;
   }
 
@@ -181,8 +193,9 @@ input:checked ~ label .buildsystems-help-button {
 }
 
 @media screen and (max-width: 320px) {
-  .buildsystems-help-button {
+  .help-button {
     font-size: 0.9rem;
+    padding: calc(var(--button-radius) * 2.5);
   }
 
   .icon {

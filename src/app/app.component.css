@@ -1,8 +1,23 @@
 main {
-    display: flex;
-    height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.main__nav-and-router {
+  display: flex;
+  overflow-y: auto;
+  flex: 1;
+  min-height: calc(100dvh - var(--footer-height));
+  max-height: calc(100dvh - var(--footer-height));
 }
 
 .flexcolumn {
-    flex-direction: column;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 700px) {
+  .main__nav-and-router {
+    max-height: calc(100dvh - var(--footer-height-mobile));
+  }
 }
