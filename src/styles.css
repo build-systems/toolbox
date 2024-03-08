@@ -12,8 +12,8 @@
   --primary20: rgba(255, 255, 255, 0.2);
   --secondary: aquamarine;
   --bg-primary: #222;
-  --bg-primary50: rgba(34, 34, 34, 0.50);
-  --bg-primary60: rgba(34, 34, 34, 0.60);
+  --bg-primary50: rgba(34, 34, 34, 0.5);
+  --bg-primary60: rgba(34, 34, 34, 0.6);
   --bg-primary75: rgba(34, 34, 34, 0.75);
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
@@ -402,6 +402,9 @@ legend {
   }
   & a {
     color: var(--secondary);
+    &:hover {
+      text-decoration: underline;
+    }
     & sup {
       color: var(--secondary);
     }
@@ -1059,26 +1062,65 @@ input[type="number"]:disabled:hover {
   width: 100%;
 }
 
-.homepage {
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.home__image {
+  background-color: var(--bg-tertiary);
+}
+
+.home__text {
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
-  /* height: 100dvh; */
   width: 100%;
-  padding: var(--layout-padding);
+  padding: 0 8rem 0 3rem ;
   & h1 {
     font-size: 36px;
-    text-align: center;
+    text-align: start;
     padding-bottom: var(--mobile-padding);
   }
   & h2 {
-    text-align: center;
+    text-align: start;
     padding-bottom: var(--mobile-padding);
   }
   & p {
-    text-align: center;
+    text-align: start;
+  }
+}
+
+.home__text__buttons {
+  display: flex;
+  gap: var(--layout-padding);
+  margin-top: 1rem;
+  button {
+    display: flex;
+    align-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    background: var(--bg-secondary);
+    border: none;
+    border-radius: var(--button-radius);
+    &:hover {
+      background: var(--bg-tertiary);
+    }
+  }
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    .icon {
+      width: 2.5rem;
+      aspect-ratio: 1/1;
+      fill: var(--primary);
+    }
   }
 }
 
