@@ -3,14 +3,20 @@
   align-items: center;
   border-top: 1px solid var(--bg-tertiary);
   height: var(--footer-height);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 300;
   font-family: var(--font-alt);
   padding: 0 var(--footer-height);
   line-height: 120%;
 }
 
-a:hover {
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+a:hover, button:hover {
   color: var(--secondary);
 }
 
@@ -23,8 +29,8 @@ a:hover {
 }
 
 .links__date {
-    padding-left: 2rem;
-  }
+  padding-left: 2rem;
+}
 
 @media screen and (max-width: 700px) {
   .footer {

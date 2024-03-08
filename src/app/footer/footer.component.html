@@ -1,8 +1,11 @@
+@if (datengrundlageService.datengrundlageVisible()) {
+    <app-datengrundlage></app-datengrundlage>
+}
 <div class="footer">
     <div class="footer__links">
         <a href="https://buildsystems.de/impressum/" class="links__rechtstexte desktop" target="_blank" rel="noopener noreferrer" aria-label="Go to Impressum Datenschutzerklärung page">Impressum Datenschutz­erklärung</a>
         <a href="https://buildsystems.de/impressum/" class="links__rechtstexte mobile" target="_blank" rel="noopener noreferrer" aria-label="Go to Impressum Datenschutzerklärung page">Rechtstexte</a>
-        <a href="https://" class="links__date" target="_blank" rel="noopener noreferrer" aria-label="Go to Datengrundlage page">Datengrundlage</a>
+        <button (click)="datengrundlageService.clickDatengrundlage()" class="links__date" aria-label="Open Datengrundlage page">Datengrundlage</button>
     </div>
         <a href="https://buildsystems.de" class="desktop" target="_blank" rel="noopener noreferrer" aria-label="Copyright of BuildSystems GmbH: click to open BuildSystems website in a new tab">© 2024 BuildSystems GmbH</a>
         <a href="https://buildsystems.de" class="mobile" target="_blank" rel="noopener noreferrer" aria-label="Copyright of BuildSystems GmbH: click to open BuildSystems website in a new tab">© BuildSystems</a>
