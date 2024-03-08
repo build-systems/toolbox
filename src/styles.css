@@ -12,6 +12,8 @@
   --primary20: rgba(255, 255, 255, 0.2);
   --secondary: aquamarine;
   --bg-primary: #222;
+  --bg-primary50: rgba(34, 34, 34, 0.50);
+  --bg-primary60: rgba(34, 34, 34, 0.60);
   --bg-primary75: rgba(34, 34, 34, 0.75);
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
@@ -78,8 +80,9 @@ html {
 
 h1 {
   font-family: var(--font-family-primary), sans-serif;
-  font-size: 2.25rem;
+  font-size: 1.7rem;
   font-weight: 500;
+  line-height: 150%;
 }
 
 h2 {
@@ -158,7 +161,7 @@ li {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.7rem;
   padding: 0 1rem;
   background-color: var(--bg-secondary);
   border-radius: var(--button-radius);
@@ -180,8 +183,9 @@ li {
 
 .arrow {
   display: flex;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  font-size: 0.8rem;
   align-items: center;
   justify-content: center;
   border-radius: calc(var(--button-radius) / 2);

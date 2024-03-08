@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-// KfW 297/298, Checked on 2024/03/04
+// KfW 297/298, Checked on 2024/03/08
 // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)/
 // https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 @Injectable({
@@ -36,10 +36,10 @@ export class neubau {
   public gestehungskostenBase = 2436;
   public nrKredit = {
     lessThan11: 0.0213,
-    between11And25: 0.0265,
-    moreThan25: 0.0273,
+    between11And25: 0.0261,
+    moreThan25: 0.0268,
   };
-  public zinssatzKfw_Endfälliges = 0.0278;
+  public zinssatzKfw_Endfälliges = 0.0272;
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -47,7 +47,7 @@ export class neubau {
   public holzbauExtra = 1.05; // Extra 5%
 }
 
-// KfW 261, Checked on 2024/03/04
+// KfW 261, Checked on 2024/03/08
 // https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)/
 // https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 @Injectable({
@@ -67,10 +67,10 @@ export class sanierung {
   serSanBonusPossible = 0.15;
   public nrKredit = {
     lessThan11: 0.0200,
-    between11And20: 0.0251,
-    moreThan20: 0.0264,
+    between11And20: 0.0247,
+    moreThan20: 0.0258,
   };
-  sollzinsKfw_Endfälliges = 0.0270;
+  sollzinsKfw_Endfälliges = 0.0263;
   public kfwKreditLimit = {
     lower: 120_000,
     higher: 150_000,

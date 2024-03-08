@@ -5,13 +5,12 @@ header {
 nav {
   display: flex;
   flex-direction: column;
-  width: 100px;
-  /* max-height: 100vh; */
+  width: 80px;
   height: 100%;
   overflow: auto;
   justify-content: space-between;
   border-inline-end: 1px solid var(--bg-secondary);
-  padding-block-start: calc(var(--layout-padding) * 1.25);
+  padding-block-start: calc(var(--layout-padding) * 1.5);
   padding-block-end: var(--layout-padding);
 }
 
@@ -30,7 +29,7 @@ ul {
 }
 
 .link {
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   gap: 2px;
   padding-left: var(--nav-sel-thickness);
@@ -50,15 +49,13 @@ ul {
 }
 
 .active-nav {
-  font-weight: 400;
-  /* stroke-width: 2px; */
   opacity: 1;
   border-left: var(--nav-sel-thickness) solid var(--secondary);
   padding-left: 0px;
 }
 
 .icon {
-  width: 40px;
+  width: 32px;
   aspect-ratio: 1/1;
 }
 

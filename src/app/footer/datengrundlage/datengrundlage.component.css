@@ -1,7 +1,84 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  background-color: var(--bg-primary60);
+  z-index: 300;
+}
+
 .date {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100svw;
-    height: 100svh;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  z-index: 301;
+}
+
+.date_container {
+  position: relative;
+  pointer-events: auto;
+  background: var(--primary);
+  width: clamp(500px, 50svw, 800px);
+  height: fit-content;
+  padding: 5svh 5svw;
+  overflow-y: auto;
+  border-radius: var(--button-radius);
+  font-family: var(--font-alt);
+}
+
+h1,
+h2 {
+  font-weight: 600;
+}
+
+p,
+a {
+  color: var(--bg-tertiary);
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--secondary);
+}
+
+h1,
+h2 {
+  color: var(--bg-primary);
+}
+
+h1,
+h2 + p {
+  margin-bottom: 1rem;
+}
+
+button {
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+}
+
+.icon {
+  width: 1.5rem;
+  aspect-ratio: 1/1;
+  fill: var(--bg-primary);
+}
+
+@media screen and (max-width: 700px) {
+  .date_container {
+    width: clamp(300px, 80svw, 100svw);
+    padding: 5svh 5svw;
+  }
 }

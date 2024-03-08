@@ -1,12 +1,48 @@
-<div class="date" (click)="datengrundlageService.clickDatengrundlage()">
+<div
+  class="background"
+  (click)="datengrundlageService.clickDatengrundlage()"
+></div>
+<div class="date">
+  <div class="date_container">
     <h1>Verweis Datengrundlage</h1>
     <h2>Kostenschätzung</h2>
-    <div class="date_content">
-        <p>Die vom Tool generierten Daten und Kostenkennwerte basieren auf der Forschungsarbeit der Arge e.V. und stammen spezifisch aus den Untersuchungen zu Wohnungsbau // Die Zukunft des Bestandes, Bauforschungsbericht Nr. 82 und Status und Prognose: So baut Deutschland – so wohnt Deutschland, Der Chancen-Check für den Wohnungsbau, Bauforschungsbericht Nr. 86.</p>
-    </div>
+    <p>
+      Die vom Tool generierten Daten und Kostenkennwerte basieren auf der
+      Forschungsarbeit der
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://arge-ev.de/arge-ev/publikationen/studien/"
+        >Arge e.V. ↗</a
+      >
+      und stammen spezifisch aus den Untersuchungen zu Wohnungsbau // Die
+      Zukunft des Bestandes, Bauforschungsbericht Nr. 82 und Status und
+      Prognose: So baut Deutschland – so wohnt Deutschland, Der Chancen-Check
+      für den Wohnungsbau, Bauforschungsbericht Nr. 86.
+    </p>
     <h2>KfW Förderprodukte</h2>
-    <p>Die KfW-relevanten Datenkennwerte zu Zinsen und Zuschüssen stammen von der Webseite der KfW und werden in regelmäßigen Abständen aktualisiert. </p>
+    <p>
+      Die KfW-relevanten Datenkennwerte zu Zinsen und Zuschüssen stammen von der
+      Webseite der KfW und werden in regelmäßigen Abständen aktualisiert.
+      <br />
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)"
+        >Klimafreundlicher Neubau – Wohngebäude 297/298 ↗</a
+      >
+      <br />
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)"
+        >Wohngebäude – Kredit 261 ↗</a
+      >
+    </p>
+    <button (click)="datengrundlageService.clickDatengrundlage()" aria-label="Click to close Datengrundlage pop-up">
+      <svg class="icon">
+        <use xlink:href="/assets/icons.svg#close"></use>
+      </svg>
+    </button>
+  </div>
 </div>
-
-
-<!-- CONTINUE TO FORMAT HTML AND CSS -->
