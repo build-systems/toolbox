@@ -1429,6 +1429,11 @@ span.nowrap {
 }
 
 @media screen and (max-width: 700px) {
+  .home {
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 1fr;
+  }
+
   h1 {
     margin: 0.4rem 0;
     font-size: 1.5rem;
@@ -1458,6 +1463,10 @@ span.nowrap {
     padding-left: var(--mobile-padding);
     padding-right: var(--mobile-padding);
     gap: 0;
+  }
+
+  .inputs {
+    margin-bottom: var(--mobile-padding);
   }
 
   .values-container {
