@@ -31,11 +31,11 @@
     var(--bg-secondary),
     var(--secondary)
   );
-  top: 16px;
+  top: 11px;
   right: var(--layout-padding);
-  height: calc(var(--button-radius) * 3);
-  padding: calc(var(--button-radius) * 3);
-  border-radius: calc(var(--button-radius) * 3);
+  height: calc(var(--button-radius) * 2);
+  padding: calc(var(--button-radius) * 2);
+  border-radius: calc(var(--button-radius) * 2);
   font-size: 1.25rem;
   z-index: 100;
   animation: rotation 7s linear infinite;
@@ -151,14 +151,14 @@ input:checked ~ label .help-button {
   .help-button {
     right: calc(var(--mobile-padding) * 2 + var(--scrollbar-width));
     font-size: 1.15rem;
-    height: calc(var(--button-radius) * 2);
+    height: calc(var(--button-radius) * 1.5);
   }
 }
 
 @media screen and (max-width: 700px) {
   .help-button {
     bottom: calc(var(--footer-height-mobile) + 4px);
-    padding: calc(var(--button-radius) * 2.75);
+    padding: calc(var(--button-radius) * 1.5);
   }
 }
 
@@ -195,7 +195,7 @@ input:checked ~ label .help-button {
 @media screen and (max-width: 320px) {
   .help-button {
     font-size: 0.9rem;
-    padding: calc(var(--button-radius) * 2.5);
+    padding: var(--button-radius);
   }
 
   .icon {
