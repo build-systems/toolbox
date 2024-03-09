@@ -29,7 +29,7 @@
   --layout-padding: 1rem;
   --handle-diameter: 0.8rem;
   --button-height: 2.6rem;
-  --button-radius: 0.5rem;
+  --button-radius: 0.8rem;
   --checkmark-size: 1.2rem;
   --nav-sel-thickness: 2px;
   --mobile-handle-diameter: 1.6rem;
@@ -673,7 +673,7 @@ input[type="radio"] {
 .radio-options {
   display: flex;
   flex-direction: column;
-  gap: var(--button-radius);
+  gap: calc(var(--button-radius)/ 4);
 }
 
 .radio-option label {
@@ -687,11 +687,21 @@ input[type="radio"] {
   align-items: center;
   text-align: center;
   border: 1px solid var(--bg-secondary);
-  border-radius: var(--button-radius);
+  border-radius: calc(var(--button-radius) / 4);
   cursor: pointer;
   word-break: normal;
   padding: 0.25rem 0;
   transition: 0.15s;
+}
+
+.radio-options > :first-child label {
+  border-top-left-radius: var(--button-radius);
+  border-top-right-radius: var(--button-radius);
+}
+
+.radio-options > :last-child label {
+  border-bottom-left-radius: var(--button-radius);
+  border-bottom-right-radius: var(--button-radius);
 }
 
 /* On mouse-over, add... */
@@ -1078,7 +1088,7 @@ input[type="number"]:disabled:hover {
   align-items: start;
   justify-content: center;
   width: 100%;
-  padding: 0 8rem 0 3rem ;
+  padding: 0 8rem 0 3rem;
   & h1 {
     font-size: 36px;
     text-align: start;
@@ -1116,12 +1126,25 @@ input[type="number"]:disabled:hover {
     flex-direction: column;
     width: 100%;
     height: 100%;
+    color: inherit;
     .icon {
       width: 2.5rem;
       aspect-ratio: 1/1;
-      fill: var(--primary);
     }
   }
+  svg {
+    color: inherit;
+  }
+  use {
+    color: inherit;
+  }
+  span {
+    color: inherit;
+  }
+}
+
+button:hover {
+  color: var(--secondary);
 }
 
 .host-profile {
