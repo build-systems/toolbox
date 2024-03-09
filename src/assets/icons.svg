@@ -41,20 +41,18 @@
         <path d="M17.5 33.5H36.5" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
     </symbol>
     <symbol id="neubau" viewBox="0 0 40 40" fill="none">
-        <path
-            d="M20 15.011L21.5898 20.9157L27.4945 22.5055L21.5898 24.0953L20 30L18.4102 24.0953L12.5055 22.5055L18.4102 20.9157L20 15.011Z"
-            stroke="white" stroke-linejoin="round" />
-        <path d="M6.5 35.5V17.1703L20 4.5L33.5 17.1703V35.5" stroke="white" stroke-linecap="square"
-            stroke-linejoin="round" />
-        <path d="M0.5 35.5L39.5 35.5" stroke="white" stroke-linecap="round" />
+        <path stroke="white" stroke-linejoin="round" style="stroke: currentColor"
+            d="M20 15.011L21.5898 20.9157L27.4945 22.5055L21.5898 24.0953L20 30L18.4102 24.0953L12.5055 22.5055L18.4102 20.9157L20 15.011Z" />
+        <path stroke="white" stroke-linecap="square" stroke-linejoin="round" style="stroke: currentColor"
+            d="M6.5 35.5V17.1703L20 4.5L33.5 17.1703V35.5" />
+        <path stroke="white" stroke-linecap="round" style="stroke: currentColor" d="M0.5 35.5L39.5 35.5" />
     </symbol>
     <symbol id="sanierung" viewBox="0 0 40 40" fill="none">
-        <path d="M6.5 35.5V17.1703L20 4.5L33.5 17.1703V35.5" stroke="white" stroke-linecap="square"
-            stroke-linejoin="round" />
-        <path d="M0.5 35.5L39.5 35.5" stroke="white" stroke-linecap="round" />
-        <path
-            d="M17.2552 16.9883L20.8313 20.5644L13.7043 27.6914L15.7674 29.7545L22.8944 22.6275L25.8953 25.6283L28.521 23.0026C27.1456 21.6272 25.7702 20.2518 24.3948 18.8764C21.2064 15.688 18.018 15.5004 14.4545 19.064"
-            stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+        <path stroke="white" stroke-linecap="square" stroke-linejoin="round" style="stroke: currentColor"
+            d="M6.5 35.5V17.1703L20 4.5L33.5 17.1703V35.5" />
+        <path stroke="white" stroke-linecap="round" style="stroke: currentColor" d="M0.5 35.5L39.5 35.5" />
+        <path stroke="white" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor"
+            d="M17.2552 16.9883L20.8313 20.5644L13.7043 27.6914L15.7674 29.7545L22.8944 22.6275L25.8953 25.6283L28.521 23.0026C27.1456 21.6272 25.7702 20.2518 24.3948 18.8764C21.2064 15.688 18.018 15.5004 14.4545 19.064" />
     </symbol>
     <symbol id="settings" viewBox="0 0 40 40" fill="none">
         <path
