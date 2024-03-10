@@ -9,7 +9,7 @@ import { NumbersProjektNeubauComponent } from './numbers-projekt-neubau/numbers-
 import { NumbersDarlehenNeubauComponent } from './numbers-darlehen-neubau/numbers-darlehen-neubau.component';
 import { TitleComponent } from '../../title/title.component';
 import { fadeInAnimation } from '../../shared/animations';
-import { BuildsystemsHelpComponent } from '../../buildsystems-help/buildsystems-help.component';
+import { HelpComponent } from '../../help/help.component';
 
 @Component({
   selector: 'app-neubau',
@@ -23,7 +23,7 @@ import { BuildsystemsHelpComponent } from '../../buildsystems-help/buildsystems-
     ChartsDarlehenNeubauComponent,
     NumbersProjektNeubauComponent,
     NumbersDarlehenNeubauComponent,
-    BuildsystemsHelpComponent
+    HelpComponent
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',

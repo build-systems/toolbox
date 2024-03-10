@@ -1,20 +1,13 @@
 import { Component } from '@angular/core';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 
 @Component({
-  selector: 'app-buildsystems-help',
+  selector: 'app-help',
   standalone: true,
   imports: [],
-  templateUrl: './buildsystems-help.component.html',
-  styleUrl: './buildsystems-help.component.css',
+  templateUrl: './help.component.html',
+  styleUrl: './help.component.css',
 })
-export class BuildsystemsHelpComponent {
+export class HelpComponent {
   isCopied: boolean = false;
 
   async copyContent() {
