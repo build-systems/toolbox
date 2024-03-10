@@ -157,7 +157,7 @@ a:hover {
     margin: 0 0 1rem 0;
   }
 
-  .understand {
-    margin: 2rem 0;
+  .understand__button {
+    margin: 2rem 1rem;
   }
 }
