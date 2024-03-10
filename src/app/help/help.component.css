@@ -70,6 +70,7 @@
 
 .initial-content {
   overflow: hidden;
+  padding: 0 var(--button-radius);
   max-width: 500px;
   opacity: 1;
   transition: all 0.2s ease-in-out 0.35s;
@@ -78,6 +79,7 @@
 .final-content {
   display: flex;
   overflow: hidden;
+  padding: 0;
   max-width: 0;
   opacity: 0;
   transition: all 0.2s ease-in-out 0.15s;
@@ -85,11 +87,13 @@
 
 input:checked ~ label div {
   .initial-content {
+    padding: 0;
     max-width: 0;
     opacity: 0;
     transition: all 0.2s ease-in-out 0s;
   }
   .final-content {
+    padding: 0 var(--button-radius);
     max-width: 500px;
     opacity: 1;
     transition: all 0.2s ease-in-out 0.2s;
@@ -107,7 +111,7 @@ button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   display: flex;
   align-items: center;
 }
@@ -165,6 +169,11 @@ input:checked ~ label .help-button {
     right: calc(var(--mobile-padding) + var(--scrollbar-width));
   }
 
+  .initial-content,
+  input:checked ~ label div .final-content {
+    padding: 0 0.5rem;
+  }
+
   a {
     padding: 0 0.5rem;
   }
@@ -188,7 +197,11 @@ input:checked ~ label .help-button {
 @media screen and (max-width: 320px) {
   .help-button {
     font-size: 0.9rem;
-    /* padding: var(--button-radius); */
+  }
+
+  .initial-content,
+  input:checked ~ label div .final-content {
+    padding: 0 0.3rem;
   }
 
   .icon {

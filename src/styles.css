@@ -228,7 +228,7 @@ li {
   display: flex;
   gap: 1rem;
   background-color: var(--bg-tertiary);
-  width: clamp(300px, 100%, 50rem);
+  width: clamp(100px, 100%, 50rem);
   font-family: var(--font-family-primary);
   overflow: hidden;
   padding: var(--layout-padding);
@@ -1346,6 +1346,10 @@ span.nowrap {
 }
 
 @media screen and (max-width: 1280px) {
+  .host-tool {
+    padding-bottom: 0;
+  }
+
   .container-tool {
     display: flex;
     flex-direction: column;
@@ -1475,8 +1479,6 @@ span.nowrap {
   .host-tool {
     position: relative;
     overflow-y: auto;
-    /* padding-bottom: var(--mobile-padding); */
-    padding-bottom: 0;
     max-height: 100%;
   }
 
