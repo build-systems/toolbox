@@ -1,14 +1,20 @@
-<app-title [title]="title" [kfwId]="kfwId" [kfwH2]="kfwH2" [kfwH3]="kfwH3" [kfwDescription]="kfwDescription"></app-title>
-<div class="container-tool">
-  @if (this.neubauService.currentTab() === 1) {
+<div class="title-mob-numbers">
+  <app-title
+    [title]="title"
+    [kfwId]="kfwId"
+    [kfwH2]="kfwH2"
+    [kfwH3]="kfwH3"
+    [kfwDescription]="kfwDescription"
+  ></app-title>
   <div class="numbers-mover tablet">
+    @if(this.neubauService.currentTab() === 1) {
     <app-numbers-projekt-neubau></app-numbers-projekt-neubau>
-  </div>
-  } @else {
-  <div class="numbers-mover tablet">
+    } @else {
     <app-numbers-darlehen-neubau></app-numbers-darlehen-neubau>
+    }
   </div>
-  }
+</div>
+<div class="container-tool">
   <div class="inputs">
     <div class="tool-tab">
       <input

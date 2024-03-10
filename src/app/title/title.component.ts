@@ -7,7 +7,8 @@ import { expandCollapseTitle } from '../shared/animations';
   imports: [],
   templateUrl: './title.component.html',
   styleUrl: './title.component.css',
-  animations: expandCollapseTitle
+  animations: expandCollapseTitle,
+  host: {class: 'host-title'}
 })
 export class TitleComponent {
   title = input.required<string>();

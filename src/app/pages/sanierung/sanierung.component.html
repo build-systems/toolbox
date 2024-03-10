@@ -1,12 +1,20 @@
-<app-title [title]="title" [kfwId]="kfwId" [kfwH2]="kfwH2" [kfwH3]="kfwH3" [kfwDescription]="kfwDescription"></app-title>
-<div class="container-tool">
+<div class="title-mob-numbers">
+  <app-title
+    [title]="title"
+    [kfwId]="kfwId"
+    [kfwH2]="kfwH2"
+    [kfwH3]="kfwH3"
+    [kfwDescription]="kfwDescription"
+  ></app-title>
   <div class="numbers-mover tablet">
-  @if(this.sanierungService.currentTab() === 1) {
+    @if(this.sanierungService.currentTab() === 1) {
     <app-numbers-projekt-sanierung></app-numbers-projekt-sanierung>
-  } @else {
+    } @else {
     <app-numbers-darlehen-sanierung></app-numbers-darlehen-sanierung>
     }
   </div>
+</div>
+<div class="container-tool">
   <div class="inputs">
     <div class="tool-tab">
       <input
