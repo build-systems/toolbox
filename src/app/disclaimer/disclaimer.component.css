@@ -82,6 +82,9 @@ button {
   span {
     color: inherit;
   }
+  a {
+    display: flex;
+  }
 }
 
 a {
