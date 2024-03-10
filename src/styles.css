@@ -1475,7 +1475,8 @@ span.nowrap {
   .host-tool {
     position: relative;
     overflow-y: auto;
-    padding-bottom: var(--mobile-padding);
+    /* padding-bottom: var(--mobile-padding); */
+    padding-bottom: 0;
     max-height: 100%;
   }
 
