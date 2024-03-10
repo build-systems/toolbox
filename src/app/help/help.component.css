@@ -157,7 +157,7 @@ input:checked ~ label .help-button {
 
 @media screen and (max-width: 700px) {
   .help-button {
-    bottom: calc(var(--footer-height-mobile) + 4px);
+    bottom: 4px;
     padding: calc(var(--button-radius) * 1.5);
   }
 }
