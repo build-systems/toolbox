@@ -22,19 +22,21 @@
 }
 
 .disclaimer__content {
-  position: relative;
   pointer-events: auto;
   background: var(--bg-secondary);
   width: clamp(700px, 700px, 100svw);
-  height: fit-content;
   padding: 5svh 5svw;
-  overflow-y: auto;
   border-radius: var(--button-radius);
   font-family: var(--font-alt);
   font-size: 0.9rem;
 }
 
-.disclaimer__content__main {
+.disclaimer__text {
+  height: 95%;
+  overflow-y: auto;
+}
+
+.disclaimer__text__main {
   font-weight: 500;
 }
 
@@ -67,7 +69,8 @@ button {
   border: 1px solid var(--primary);
   border-radius: var(--button-height);
   padding: 0 var(--layout-padding);
-  height: calc(var(--button-height) / 1.5);
+  height: fit-content;
+  width: fit-content;
   font-family: inherit;
   font-weight: inherit;
   span {
@@ -132,7 +135,26 @@ a:hover {
 }
 
 @media screen and (max-width: 700px) {
+  .disclaimer__content {
+    width: 80svw;
+    height: 80svh;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    margin-bottom: 1rem;
+  }
+
+  .copy-mail {
+    flex-direction: column;
+  }
+
   h1 {
-    margin: 1rem 0 0.5rem 0;
+    text-align: start;
+    margin: 0 0 1rem 0;
+  }
+
+  .understand {
+    margin: 1rem 0;
   }
 }

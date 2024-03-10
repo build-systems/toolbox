@@ -7,96 +7,98 @@
         src="assets/bs-wortmarke-rgb-neg-RZ.svg"
         alt="BuildSystems logo"
       />
-      <h1>Bevor Sie fortfahren</h1>
-      <p>Wir sammeln keine Cookies oder Nutzungsdaten.</p>
-      <p class="disclaimer__content__main">
-        BuildSystems übernimmt für die vom Tool generierten Kostenpunkte oder
-        Förderhöhen keinen Anspruch auf Richtigkeit, da es sich hierbei nur um
-        reine Schätzwerte handelt, die auf generischen Datensätzen basieren. Haben
-        Sie Fragen oder wünschen eine genauere Betrachtung Ihrer Immobilie und die
-        Überprüfung im Bestand, kontaktieren Sie uns.
-      </p>
-      <div class="copy-mail">
-        <button aria-label="Click to send an email to mail@buildsystems.de">
-          <a
-            title="Send email to mail@buildsystems.de"
-            href="mailto:mail@buildsystems.de"
-            target="_top"
+      <div class="disclaimer__text disable-scrollbars">
+        <h1>Bevor Sie fortfahren</h1>
+        <p>Wir sammeln keine Cookies oder Nutzungsdaten.</p>
+        <p class="disclaimer__text__main">
+          BuildSystems übernimmt für die vom Tool generierten Kostenpunkte oder
+          Förderhöhen keinen Anspruch auf Richtigkeit, da es sich hierbei nur um
+          reine Schätzwerte handelt, die auf generischen Datensätzen basieren. Haben
+          Sie Fragen oder wünschen eine genauere Betrachtung Ihrer Immobilie und die
+          Überprüfung im Bestand, kontaktieren Sie uns.
+        </p>
+        <div class="copy-mail">
+          <button aria-label="Click to send an email to mail@buildsystems.de">
+            <a
+              title="Send email to mail@buildsystems.de"
+              href="mailto:mail@buildsystems.de"
+              target="_top"
+            >
+              <svg class="icon">
+                <use xlink:href="assets/icons.svg#email" />
+              </svg>
+              <span>E-Mail senden</span>
+            </a>
+          </button>
+          <button
+            (click)="copyContent()"
+            title="Copy mail@buildsystems.de to clipboard"
+            aria-label="Click to copy mail@buildsystems.de to clipboard"
           >
-            <svg class="icon">
-              <use xlink:href="assets/icons.svg#email" />
+            <svg class="icon" [style.display]="isCopied ? 'none' : 'block'">
+              <use xlink:href="assets/icons.svg#clipboard" />
             </svg>
-            <span>E-Mail senden</span>
-          </a>
-        </button>
-        <button
-          (click)="copyContent()"
-          title="Copy mail@buildsystems.de to clipboard"
-          aria-label="Click to copy mail@buildsystems.de to clipboard"
-        >
-          <svg class="icon" [style.display]="isCopied ? 'none' : 'block'">
-            <use xlink:href="assets/icons.svg#clipboard" />
-          </svg>
-          <svg class="icon" [style.display]="!isCopied ? 'none' : 'block'">
-            <use xlink:href="assets/icons.svg#clipboard-checked" />
-          </svg>
-          <span>E-Mail kopieren</span>
-        </button>
-      </div>
-      <p>
-        Die vom Tool generierten Daten und Kostenkennwerte basieren auf der
-        Forschungsarbeit der
-        <a
-          href="https://arge-ev.de/arge-ev/publikationen/studien/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Arge e.V.</a
-        >
-        und stammen spezifisch aus den Untersuchungen zu
-        <i
-          >Wohnungsbau // Die Zukunft des Bestandes, Bauforschungsbericht Nr.
-          82</i
-        >
-        und
-        <i
-          >Status und Prognose: So baut Deutschland – so wohnt Deutschland, Der
-          Chancen-Check für den Wohnungsbau, Bauforschungsbericht Nr. 86.</i
-        >
-      </p>
-      <p>
-        Die KfW-relevanten Datenkennwerte zu Zinsen und Zuschüssen stammen von der
-        Webseite der KfW und werden in regelmäßigen Abständen aktualisiert.
-        <br />
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)"
-          >Klimafreundlicher Neubau – Wohngebäude 297/298 ↗</a
-        >
-        <br />
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)"
-          >Wohngebäude – Kredit 261 ↗</a
-        >
-      </p>
-      <section class="tool-info">
-        <div>Web app version 1.0</div>
-        <div>© BuildSystems</div>
-      </section>
-      <div class="understand">
-        <button (click)="userAgree()" class="understand__button">Ich habe verstanden</button>
-      </div>
-      <div class="footer">
-        <a
-          href="https://buildsystems.de/impressum/"
-          class="footer__impressum"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Go to Impressum Datenschutzerklärung page"
-          >Impressum Datenschutz­erklärung</a
-        >
+            <svg class="icon" [style.display]="!isCopied ? 'none' : 'block'">
+              <use xlink:href="assets/icons.svg#clipboard-checked" />
+            </svg>
+            <span>E-Mail kopieren</span>
+          </button>
+        </div>
+        <p>
+          Die vom Tool generierten Daten und Kostenkennwerte basieren auf der
+          Forschungsarbeit der
+          <a
+            href="https://arge-ev.de/arge-ev/publikationen/studien/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Arge e.V.</a
+          >
+          und stammen spezifisch aus den Untersuchungen zu
+          <i
+            >Wohnungsbau // Die Zukunft des Bestandes, Bauforschungsbericht Nr.
+            82</i
+          >
+          und
+          <i
+            >Status und Prognose: So baut Deutschland – so wohnt Deutschland, Der
+            Chancen-Check für den Wohnungsbau, Bauforschungsbericht Nr. 86.</i
+          >
+        </p>
+        <p>
+          Die KfW-relevanten Datenkennwerte zu Zinsen und Zuschüssen stammen von der
+          Webseite der KfW und werden in regelmäßigen Abständen aktualisiert.
+          <br />
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)"
+            >Klimafreundlicher Neubau – Wohngebäude 297/298 ↗</a
+          >
+          <br />
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Wohngeb%C3%A4ude-Kredit-(261-262)"
+            >Wohngebäude – Kredit 261 ↗</a
+          >
+        </p>
+        <section class="tool-info">
+          <div>Version 1.0</div>
+          <div>© BuildSystems</div>
+        </section>
+        <div class="understand">
+          <button (click)="userAgree()" class="understand__button">Ich habe verstanden</button>
+        </div>
+        <div class="footer">
+          <a
+            href="https://buildsystems.de/impressum/"
+            class="footer__impressum"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Go to Impressum Datenschutzerklärung page"
+            >Impressum Datenschutz­erklärung</a
+          >
+        </div>
       </div>
     </div>
   </div>
