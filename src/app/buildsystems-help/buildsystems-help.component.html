@@ -23,15 +23,12 @@
         title="Copy mail@buildsystems.de to clipboard"
         aria-label="Click to copy mail@buildsystems.de to clipboard"
       >
-        @if (!isCopied) {
-        <svg class="icon">
+        <svg class="icon" [style.display]="isCopied? 'none': 'block'">
           <use xlink:href="assets/icons.svg#clipboard" />
         </svg>
-        } @else {
-        <svg class="icon">
+        <svg class="icon" [style.display]="!isCopied? 'none': 'block'">
           <use xlink:href="assets/icons.svg#clipboard-checked" />
         </svg>
-        }
       </button>
     </div>
   </div>

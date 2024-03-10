@@ -9,6 +9,7 @@ import { SupabaseService } from './shared/supabase.service';
 import { AuthComponent } from './auth/auth.component';
 import { AccountComponent } from './pages/profile/account/account.component';
 import { FooterComponent } from './footer/footer.component';
+import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { FooterComponent } from './footer/footer.component';
     AuthComponent,
     AccountComponent,
     FooterComponent,
+    DisclaimerComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

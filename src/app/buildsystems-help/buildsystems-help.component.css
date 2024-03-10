@@ -112,12 +112,12 @@ button {
   align-items: center;
 }
 
-svg {
-  fill: var(--primary);
+svg use {
+  color: var(--primary);
 }
 
-svg:hover {
-  fill: var(--secondary);
+svg:hover use {
+  color: var(--secondary);
 }
 
 input:checked ~ label .help-button::before,
@@ -184,11 +184,6 @@ input:checked ~ label .help-button {
 @media screen and (max-width: 360px) {
   .help-button {
     font-size: 1rem;
-  }
-
-  .icon {
-    width: 16px;
-    height: 16px;
   }
 }
 

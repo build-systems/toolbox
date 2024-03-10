@@ -1,0 +1,138 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  background-color: var(--bg-primary85);
+  z-index: 300;
+}
+
+.disclaimer {
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100svw;
+  height: 100svh;
+  z-index: 301;
+}
+
+.disclaimer__content {
+  position: relative;
+  pointer-events: auto;
+  background: var(--bg-secondary);
+  width: clamp(700px, 700px, 100svw);
+  height: fit-content;
+  padding: 5svh 5svw;
+  overflow-y: auto;
+  border-radius: var(--button-radius);
+  font-family: var(--font-alt);
+  font-size: 0.9rem;
+}
+
+.disclaimer__content__main {
+  font-weight: 500;
+}
+
+h1 {
+  font-family: var(--font-alt);
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+}
+
+.logo {
+  /* height: var(--button-height); */
+  width: 12rem;
+}
+
+address {
+  display: inline;
+}
+
+p {
+  font-weight: 300;
+  margin-bottom: 1rem;
+  font-size: inherit;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--primary);
+  border-radius: var(--button-height);
+  padding: 0 var(--layout-padding);
+  height: calc(var(--button-height) / 1.5);
+  font-family: inherit;
+  font-weight: inherit;
+  span {
+    line-height: 150%;
+  }
+  a,
+  svg,
+  use,
+  span {
+    color: inherit;
+  }
+}
+
+a {
+  color: var(--secondary);
+}
+
+button:hover,
+a:hover {
+  color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.icon {
+  width: 0.8rem;
+  aspect-ratio: 1/1;
+  fill: var(--primary);
+  margin-right: 0.5rem;
+}
+
+.copy-mail {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.understand {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
+
+.understand__button {
+  font-weight: 700;
+  color: var(--bg-primary);
+  background-color: var(--primary);
+  height: var(--button-height);
+  &:hover {
+    text-decoration: none;
+    color: var(--bg-primary);
+    border-color: var(--primary90);
+    background-color: var(--primary90);
+  }
+}
+
+.footer {
+  margin-top: 1rem;
+}
+
+.footer__impressum {
+  color: var(--primary);
+}
+
+@media screen and (max-width: 700px) {
+  h1 {
+    margin: 1rem 0 0.5rem 0;
+  }
+}

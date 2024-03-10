@@ -14,7 +14,9 @@
   --bg-primary: #222;
   --bg-primary50: rgba(34, 34, 34, 0.5);
   --bg-primary60: rgba(34, 34, 34, 0.6);
+  --bg-primary70: rgba(34, 34, 34, 0.70);
   --bg-primary75: rgba(34, 34, 34, 0.75);
+  --bg-primary80: rgba(34, 34, 34, 0.80);
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
   --bg-primary97: rgba(34, 34, 34, 0.97);
@@ -1398,7 +1400,7 @@ span.nowrap {
 @media screen and (max-width: 850px) {
   h1 {
     margin: 1rem 0;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     line-height: 100%;
   }
 

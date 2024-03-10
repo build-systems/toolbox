@@ -39,13 +39,7 @@ ul {
   justify-content: center;
   color: var(--primary50);
   transition: all 0.1s ease-in-out;
-  svg {
-    color: inherit;
-  }
-  use {
-    color: inherit;
-  }
-  span {
+  svg, use, span {
     color: inherit;
   }
 }
