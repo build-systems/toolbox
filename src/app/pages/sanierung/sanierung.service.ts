@@ -175,7 +175,7 @@ export class SanierungService {
             filterByProperties(item, desiredProperties)
           );
           filteredData = filteredTableEin;
-        } else if (this.proketType === 'Mehrfamilienhäuser') {
+        } else if (this.proketType === 'Mehrfamilienhaus') {
           var filteredTableMehr = tableMehrfamilienhaeuser.filter((item) =>
             filterByProperties(item, desiredProperties)
           );

@@ -8,7 +8,7 @@ export class FormProjektSanierungService {
   projektType: sanierungProjektTypeObj = {
     options: [
       { id: 'typ1', value: 'Einfamilienhaus', disabled: false },
-      { id: 'typ2', value: 'Mehrfamilienhäuser', disabled: false },
+      { id: 'typ2', value: 'Mehrfamilienhaus', disabled: false },
     ],
     title: 'Projekt typ',
   };
@@ -170,7 +170,7 @@ export class FormProjektSanierungService {
             this.projektFormSanierung
             .get('anzahlWohnungenRange')
             ?.setValue(1, { emitEvent: false });
-          } else if (value === 'Mehrfamilienhäuser') {
+          } else if (value === 'Mehrfamilienhaus') {
             this.anzahlWohnungen.disabled = false;
             this.wohnflaeche.max = 10000;
         }

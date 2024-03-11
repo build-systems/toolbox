@@ -4,7 +4,7 @@
   left: 0;
   width: 100svw;
   height: 100svh;
-  background-color: var(--bg-primary60);
+  background-color: var(--bg-primary85);
   z-index: 300;
 }
 
@@ -24,7 +24,7 @@
 .date_container {
   position: relative;
   pointer-events: auto;
-  background: var(--primary);
+  background: var(--bg-secondary);
   width: clamp(500px, 50svw, 800px);
   height: fit-content;
   padding: 5svh 5svw;
@@ -40,7 +40,7 @@ h2 {
 
 p,
 a {
-  color: var(--bg-tertiary);
+  color: var(--primary);
 }
 
 a {

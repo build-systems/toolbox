@@ -2,7 +2,7 @@
 // able to change how it is displayed without affecting the formulas
 
 // Projekt
-type sanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhäuser';
+type sanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
 type sanierungProjektTypeOptions = {
   id: string;
   value: sanierungProjektType;
