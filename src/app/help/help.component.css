@@ -35,7 +35,7 @@
   right: var(--layout-padding);
   height: fit-content;
   padding: var(--button-radius);
-  border-radius: calc(var(--button-radius) * 2);
+  border-radius: 500px;
   font-size: 1.25rem;
   z-index: 100;
   animation: rotation 7s linear infinite;
@@ -46,7 +46,7 @@
   content: "";
   position: absolute;
   z-index: -1;
-  border-radius: inherit;
+  border-radius: 500px;
   animation: rotation 7s linear infinite;
 }
 
