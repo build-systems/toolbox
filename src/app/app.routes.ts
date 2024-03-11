@@ -26,12 +26,12 @@ export const routes: Routes = [
     {
         path: 'neubau',
         component: NeubauComponent,
-        title: 'Neubau'
+        title: 'BuildSystems | Neubau'
     },
     {
         path: 'sanierung',
         component: SanierungComponent,
-        title: 'Sanierung'
+        title: 'BuildSystems | Sanierung'
     },
     // {
     //     path: 'settings',
