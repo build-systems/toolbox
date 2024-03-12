@@ -907,15 +907,12 @@ input[type="number"]:disabled:hover {
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
-  /* border-top-left-radius: 12px; */
-  /* border-top-right-radius: 12px; */
   border-radius: 12px 12px 0 0;
   -webkit-border-radius: 12px 12px 0 0;
-  border: 0;
   border: none;
   transition: all 0.2s;
 }
-
+/* 
 .pill:focus {
   outline-color: var(--secondary);
 }
@@ -940,7 +937,7 @@ input[type="number"]:disabled:hover {
 .full-pill {
   color: var(--secondary);
   border-top: 2px solid var(--secondary);
-}
+} */
 
 .dashboard-numbers {
   display: flex;
@@ -1405,7 +1402,6 @@ span.nowrap {
   }
 
   .arrow {
-    /* margin: 1.05rem 0; */
     flex: 1;
     height: 1.5rem;
     width: 1.5rem;
