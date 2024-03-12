@@ -899,11 +899,6 @@ input[type="number"]:disabled:hover {
 }
 
 .pill {
-  background-color: var(--bg-tertiary);
-  /* border-radius: 12px 12px 0 0; */
-
-}
-/* .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
   height: 3.5rem;
@@ -916,8 +911,8 @@ input[type="number"]:disabled:hover {
   -webkit-border-radius: 12px 12px 0 0;
   border: none;
   transition: all 0.2s;
-} */
-/* 
+}
+
 .pill:focus {
   outline-color: var(--secondary);
 }
@@ -942,7 +937,7 @@ input[type="number"]:disabled:hover {
 .full-pill {
   color: var(--secondary);
   border-top: 2px solid var(--secondary);
-} */
+}
 
 .dashboard-numbers {
   display: flex;

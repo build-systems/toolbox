@@ -17,9 +17,7 @@
 <div class="container-tool">
   <div class="inputs">
     <div class="tool-tab">
-      <input
-        type="button"
-        value="Projekt"
+      <button
         title="Projekt Formular"
         (click)="this.neubauService.currentTab.set(1)"
         [className]="
@@ -27,7 +25,9 @@
             ? 'full-pill left-pill pill'
             : 'grayed-pill left-pill pill'
         "
-      />
+      >
+        Projekt
+      </button>
       <input
         type="button"
         value="Darlehen"
