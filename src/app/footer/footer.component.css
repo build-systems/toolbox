@@ -48,6 +48,7 @@ a:hover, button:hover {
   }
 
   .links__date {
+    font-size: inherit;
     padding-left: 1rem;
   }
 

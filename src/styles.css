@@ -1522,12 +1522,24 @@ span.nowrap {
     padding-right: 0;
   }
 
+  .kfw-number {
+    font-size: 1.3rem;
+  }
+
   h1 {
     font-size: 1.2rem;
   }
+  
+  h2 {
+    font-size: 1rem;
+  }
 
-  .arrow-container {
-    /* margin-top: 3px; */
+  p {
+    font-size: 0.75rem;
+  }
+
+  h3 {
+    font-size: 0.8rem;
   }
 
   .arrow {
@@ -1537,9 +1549,7 @@ span.nowrap {
 
   .card {
     padding-bottom: calc(var(--mobile-padding) / 1.5);
-    & h3 {
-      font-size: 0.8rem;
-    }
+    & 
     & div {
       font-size: 1rem;
       transform: translateY(2px);
