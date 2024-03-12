@@ -901,14 +901,16 @@ input[type="number"]:disabled:hover {
 .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
-  padding: 1rem;
+  /* padding: 1rem; */
+  height: 3.5rem;
   cursor: pointer;
   width: 50%;
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
   /* border-radius: 0.8rem 0.8rem 0 0; */
-  border-radius: 12px 12px 0 0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   border: none;
   transition: all 0.2s;
 }
