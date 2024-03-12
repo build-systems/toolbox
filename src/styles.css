@@ -275,7 +275,7 @@ li {
 .inputs::after {
   content: "";
   position: absolute;
-  top: 57px;
+  top: 40px;
   height: 40px;
   width: 100%;
   background-image: linear-gradient(
