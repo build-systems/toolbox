@@ -17,9 +17,7 @@
 <div class="container-tool">
   <div class="inputs">
     <div class="tool-tab">
-      <input
-        type="button"
-        value="Projekt"
+      <button
         title="Projekt Formular"
         (click)="this.sanierungService.currentTab.set(1)"
         [className]="
@@ -27,10 +25,10 @@
             ? 'full-pill left-pill pill'
             : 'grayed-pill left-pill pill'
         "
-      />
-      <input
-        type="button"
-        value="Darlehen"
+      >
+        Projekt
+      </button>
+      <button
         title="Darlehen Formular"
         (click)="this.sanierungService.currentTab.set(2)"
         [className]="
@@ -38,7 +36,9 @@
             ? 'full-pill right-pill pill'
             : 'grayed-pill right-pill pill'
         "
-      />
+      >
+        Darlehen
+      </button>
     </div>
     <div class="wrapper-gradient">
       <app-form-projekt-sanierung

@@ -28,9 +28,7 @@
       >
         Projekt
       </button>
-      <input
-        type="button"
-        value="Darlehen"
+      <button
         title="Darlehen Formular"
         (click)="this.neubauService.currentTab.set(2)"
         [className]="
@@ -38,7 +36,9 @@
             ? 'full-pill right-pill pill'
             : 'grayed-pill right-pill pill'
         "
-      />
+      >
+        Darlehen
+      </button>
     </div>
     <div class="wrapper-gradient">
       <app-form-projekt-neubau
