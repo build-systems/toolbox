@@ -294,7 +294,7 @@ li {
   height: fit-content;
   padding: var(--layout-padding);
   /* padding-top: 2rem; */
-  padding-top: 30px;
+  padding-top: 40px;
   padding-bottom: 3rem;
   background-color: var(--bg-tertiary);
   border-radius: 0 0 var(--button-radius) var(--button-radius);
@@ -901,14 +901,14 @@ input[type="number"]:disabled:hover {
 .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
-  height: 3.5rem;
+  height: var(--button-height);
+  /* height: 3.5rem; */
   cursor: pointer;
   width: 50%;
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
-  border-radius: 12px 12px 0 0;
-  -webkit-border-radius: 12px 12px 0 0;
+  border-radius: var(--button-radius) var(--button-radius) 0 0;
   border: none;
   transition: all 0.2s;
 }
@@ -1516,8 +1516,30 @@ span.nowrap {
     }
   }
 }
+@media (max-width: 400px){
+  .title {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
-@media screen and (max-width: 350px) {
+  .card {
+    padding: calc(var(--mobile-padding) / 2);
+    & h3 {
+      font-size: 0.8rem;
+    }
+    & div {
+      font-size: 1rem;
+    }
+  }
+  .pill {
+    font-size: 1rem;
+  }
+  .radio-option label, .checkbox-container {
+    height: calc(var(--button-height) / 1.25);
+  }
+}
+
+@media (max-width: 350px) {
   .radiomark {
     left: 1rem;
   }
