@@ -708,7 +708,6 @@ input[type="radio"] {
 /* On mouse-over, add... */
 .radio-fieldset span input:hover ~ label {
   color: var(--primary);
-  border-color: var(--primary);
 }
 
 /* On click or touch, add... */
@@ -775,13 +774,7 @@ input:hover ~ .checkbox-container .checkmark::after {
 .checkbox-container:hover,
 .radio-container:hover {
   color: var(--primary);
-  border-color: var(--primary);
-}
-
-/* On mouse-over, add a grey background color */
-input:checked ~ .checkbox-container:hover,
-input:checked ~ .radio-container:hover {
-  border-color: var(--primary);
+  background-color: var(--bg-primary60);
 }
 
 /* When the checkbox is checked, add a blue background */
