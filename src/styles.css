@@ -14,9 +14,9 @@
   --bg-primary: #222;
   --bg-primary50: rgba(34, 34, 34, 0.5);
   --bg-primary60: rgba(34, 34, 34, 0.6);
-  --bg-primary70: rgba(34, 34, 34, 0.70);
+  --bg-primary70: rgba(34, 34, 34, 0.7);
   --bg-primary75: rgba(34, 34, 34, 0.75);
-  --bg-primary80: rgba(34, 34, 34, 0.80);
+  --bg-primary80: rgba(34, 34, 34, 0.8);
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
   --bg-primary97: rgba(34, 34, 34, 0.97);
@@ -1516,25 +1516,40 @@ span.nowrap {
     }
   }
 }
-@media (max-width: 400px){
+@media (max-width: 400px) {
   .title {
     padding-left: 0;
     padding-right: 0;
   }
 
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  .arrow-container {
+    /* margin-top: 3px; */
+  }
+
+  .arrow {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+
   .card {
-    padding: calc(var(--mobile-padding) / 2);
+    padding-bottom: calc(var(--mobile-padding) / 1.5);
     & h3 {
       font-size: 0.8rem;
     }
     & div {
       font-size: 1rem;
+      transform: translateY(2px);
     }
   }
   .pill {
     font-size: 1rem;
   }
-  .radio-option label, .checkbox-container {
+  .radio-option label,
+  .checkbox-container {
     height: calc(var(--button-height) / 1.25);
   }
 }
