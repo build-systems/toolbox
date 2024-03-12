@@ -1395,12 +1395,6 @@ span.nowrap {
 }
 
 @media screen and (max-width: 850px) {
-  h1 {
-    margin: 1rem 0;
-    font-size: 1.6rem;
-    line-height: 100%;
-  }
-
   .arrow-container {
     margin-top: 5px;
   }
