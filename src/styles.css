@@ -293,7 +293,8 @@ li {
   overflow-y: auto;
   height: fit-content;
   padding: var(--layout-padding);
-  padding-top: 2rem;
+  /* padding-top: 2rem; */
+  padding-top: 30px;
   padding-bottom: 3rem;
   background-color: var(--bg-tertiary);
   border-radius: 0 0 var(--button-radius) var(--button-radius);
@@ -906,7 +907,8 @@ input[type="number"]:disabled:hover {
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
-  border-radius: 0.8rem 0.8rem 0 0;
+  /* border-radius: 0.8rem 0.8rem 0 0; */
+  border-radius: 12px 12px 0 0;
   border: none;
   transition: all 0.2s;
 }
