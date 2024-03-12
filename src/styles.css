@@ -14,9 +14,9 @@
   --bg-primary: #222;
   --bg-primary50: rgba(34, 34, 34, 0.5);
   --bg-primary60: rgba(34, 34, 34, 0.6);
-  --bg-primary70: rgba(34, 34, 34, 0.7);
+  --bg-primary70: rgba(34, 34, 34, 0.70);
   --bg-primary75: rgba(34, 34, 34, 0.75);
-  --bg-primary80: rgba(34, 34, 34, 0.8);
+  --bg-primary80: rgba(34, 34, 34, 0.80);
   --bg-primary85: rgba(34, 34, 34, 0.85);
   --bg-primary95: rgba(34, 34, 34, 0.95);
   --bg-primary97: rgba(34, 34, 34, 0.97);
@@ -901,17 +901,17 @@ input[type="number"]:disabled:hover {
 .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
-  /* padding: 1rem; */
   height: 3.5rem;
   cursor: pointer;
   width: 50%;
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  /* border-top-left-radius: 12px; */
+  /* border-top-right-radius: 12px; */
+  border-radius: 12px 12px 0 0;
+  -webkit-border-radius: 12px 12px 0 0;
+  border: 0;
   border: none;
   transition: all 0.2s;
 }
