@@ -908,7 +908,7 @@ input[type="number"]:disabled:hover {
   align-items: center;
   justify-content: center;
   background-color: var(--bg-tertiary);
-  /* border-radius: 0.8rem 0.8rem 0 0; */
+  border-radius: 0;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   border: none;
