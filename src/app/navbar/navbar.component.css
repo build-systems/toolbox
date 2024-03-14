@@ -33,12 +33,13 @@ ul {
   font-size: 12px;
   display: flex;
   gap: 2px;
-  padding-left: var(--nav-sel-thickness);
+  /* padding-left: var(--nav-sel-thickness); */
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: var(--primary50);
   transition: all 0.1s ease-in-out;
+  border-left: var(--nav-sel-thickness) solid var(--bg-primary);
   svg, use, span {
     color: inherit;
   }
@@ -46,6 +47,7 @@ ul {
 
 .link:hover {
   color: var(--primary);
+  /* border-left: var(--nav-sel-thickness) solid var(--primary); */
 }
 
 .active-nav {
