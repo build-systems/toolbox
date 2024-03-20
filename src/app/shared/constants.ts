@@ -35,11 +35,11 @@ export class neubau {
   };
   public gestehungskostenBase = 2436;
   public nrKredit = {
-    lessThan11: 0.0213,
-    between11And25: 0.0261,
-    moreThan25: 0.0268,
+    lessThan11: 0.0244,
+    between11And25: 0.0285,
+    moreThan25: 0.0291,
   };
-  public zinssatzKfw_Endfälliges = 0.0272;
+  public zinssatzKfw_Endfälliges = 0.0294;
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -66,11 +66,11 @@ export class sanierung {
   // Seriellen Sanierung
   serSanBonusPossible = 0.15;
   public nrKredit = {
-    lessThan11: 0.0200,
-    between11And20: 0.0247,
-    moreThan20: 0.0258,
+    lessThan11: 0.0207,
+    between11And20: 0.0254,
+    moreThan20: 0.0265,
   };
-  sollzinsKfw_Endfälliges = 0.0263;
+  sollzinsKfw_Endfälliges = 0.0270;
   public kfwKreditLimit = {
     lower: 120_000,
     higher: 150_000,
