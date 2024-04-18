@@ -1,7 +1,5 @@
 # Foerdertool
 
-https://buildsystems.netlify.app/
+https://app.buildsystems/
 
-Web App developed in Angular and deployed in Netlify.
-
-It still has to merge with buildsystems.de 
+Web App developed with Angular and deployed in Netlify.
