@@ -1,6 +1,15 @@
 /* BuildSystems Official Font Family */
 /* ABC Diatype, ABC Diatype Mono */
 /* @import url("https://assets.buildsystems.de/font.css"); */
+@font-face {
+  font-family: "ABC Diatype";
+  src: local("ABC Diatype"),
+    url("/fonts/ABCDiatype-Medium.woff2") format("woff2"),
+    url("/fonts/ABCDiatype-Medium.woff") format("woff"),
+    url("/fonts/ABCDiatype-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
 
 :root {
   --primary: white;
