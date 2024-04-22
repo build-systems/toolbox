@@ -403,6 +403,7 @@ legend {
 /* Tooltip styles for directive */
 .tooltip-icon {
   cursor: pointer;
+  font-family: var(--font-alt);
 }
 
 .ng-tooltip {

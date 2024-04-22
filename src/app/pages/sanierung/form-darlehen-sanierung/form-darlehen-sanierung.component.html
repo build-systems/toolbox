@@ -1,11 +1,11 @@
 <form [formGroup]="formService.darlehenForm">
   <fieldset>
     <legend>
-      {{ formService.zinssatzBank.title }}&nbsp;<sup
+      {{ formService.zinssatzBank.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.bankZinssatz"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </legend>
     <span class="slidernumber">
@@ -30,11 +30,11 @@
   </fieldset>
   <fieldset>
     <legend>
-      {{ formService.kreditlaufzeit.title }}&nbsp;<sup
+      {{ formService.kreditlaufzeit.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.kreditlaufzeit"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </legend>
     <span class="slidernumber">
@@ -59,19 +59,19 @@
   </fieldset>
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.kfWDarlehen.title }}&nbsp;<sup
+      {{ formService.kfWDarlehen.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.kfwDarlehen"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </legend>
     <div class="as-legend" aria-hidden="true">
-      {{ formService.kfWDarlehen.title }}&nbsp;<sup
+      {{ formService.kfWDarlehen.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.kfwDarlehen"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </div>
     <div class="radio-options">
@@ -86,7 +86,9 @@
           name="kfWDarlehen"
           formControlName="kfWDarlehen"
           [attr.disabled]="
-            formService.noEndfaelliges && item.value === 'Endfälliges' ? '' : null
+            formService.noEndfaelliges && item.value === 'Endfälliges'
+              ? ''
+              : null
           "
         />
         <label class="radio-container" [for]="item.id"
@@ -103,19 +105,19 @@
   }
   <fieldset class="radio-fieldset">
     <legend>
-      {{ formService.bankDarlehen.title }}&nbsp;<sup
+      {{ formService.bankDarlehen.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.bankDarlehen"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </legend>
     <div class="as-legend" aria-hidden="true">
-      {{ formService.bankDarlehen.title }}&nbsp;<sup
+      {{ formService.bankDarlehen.title }}&nbsp;<span
         class="tooltip-icon"
         [appTooltip]="allgemeinTooltips.bankDarlehen"
         placement="right"
-        >&#9432;</sup
+        >&#9432;</span
       >
     </div>
     <div class="radio-options">
