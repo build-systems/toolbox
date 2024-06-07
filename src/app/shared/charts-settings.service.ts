@@ -90,8 +90,13 @@ export class ChartsSettingsService {
       hoverBackgroundColor: 'rgb(58, 194, 104, 0.7)',
     },
   };
-  
-  public applyLinearGradient(barBottom: number, barTop: number, color01: string, color02: string){
+
+  public applyLinearGradient(
+    barBottom: number,
+    barTop: number,
+    color01: string,
+    color02: string
+  ) {
     const ctx = document.createElement('canvas').getContext('2d');
     const gradient = ctx!.createLinearGradient(0, barBottom, 0, barTop);
     gradient.addColorStop(0, color01);

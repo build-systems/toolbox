@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChildrenOutletContexts, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ChildrenOutletContexts,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NeubauComponent } from './pages/neubau/neubau.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';
 import { SupabaseService } from './shared/supabase.service';
@@ -20,12 +23,11 @@ import { DisclaimerComponent } from './disclaimer/disclaimer.component';
     NavbarComponent,
     NavbarmobileComponent,
     HomeComponent,
-    NeubauComponent,
     RouterModule,
     AuthComponent,
     AccountComponent,
     FooterComponent,
-    DisclaimerComponent
+    DisclaimerComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -42,7 +44,10 @@ export class AppComponent implements OnInit {
 
   session = this.supabase.session;
 
-  constructor(private readonly supabase: SupabaseService, private contexts: ChildrenOutletContexts) {}
+  constructor(
+    private readonly supabase: SupabaseService,
+    private contexts: ChildrenOutletContexts
+  ) {}
 
   ngOnInit() {
     // Get screen width
