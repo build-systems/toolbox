@@ -5,14 +5,14 @@
 <h3 align="center">
     KfW Funding Calculators for Sustainable Houses in Germany
 </h3>
-<p align="center"><b>BuildSystems</b> is your partner to achieve profitable yet sustainable constructions and renovations in Germany.</p><br/>
+<p align="center"><b>BuildSystems</b> is your partner in achieving profitable yet sustainable constructions and renovations in Germany.</p><br/>
 
 <p align="center"><a href="https://app.buildsystems.de/"><img src="https://img.shields.io/badge/https://-app.buildsystems.de-white" alt="website"></a> <a href="https://www.linkedin.com/company/build-systems-de"><img src="https://img.shields.io/badge/Follow-BuildSystems-blue?logo=linkedin" alt="Twitter Follow"></a></p>
 <p align="center"></p>
 
 # About
 
-What we do at BuildSystems? We help AEC developers and Homeowners build sustainably and affordably.
+What do we do at BuildSystems? We help AEC developers and Homeowners build sustainably and affordably.
 
 ### Toolbox Features (EN)
 - **Sustainable construction of residential buildings:** Funding calculator to build houses and apartments in an energy-efficient and sustainable manner.
