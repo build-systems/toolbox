@@ -1149,6 +1149,9 @@ input[type="number"]:disabled:hover {
   svg {
     color: inherit;
   }
+  img {
+    color: inherit;
+  }
   use {
     color: inherit;
   }

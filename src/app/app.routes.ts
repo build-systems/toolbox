@@ -7,35 +7,35 @@ import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 export const routes: Routes = [
-    // {
-    //     path: '',
-    //     component: HomeComponent,
-    //     title: 'Homepage'
-    // },
-    // {
-    //     path: 'profile',
-    //     component: ProfileComponent,
-    //     title: 'Profile'
-    // },
-    // {
-    //     path: 'portfolio',
-    //     component: PortfolioComponent,
-    //     title: 'Portfolio'
-    // },
-    { path: '',   redirectTo: '/neubau', pathMatch: 'full' },
-    {
-        path: 'neubau',
-        component: NeubauComponent,
-        title: 'BuildSystems | Neubau'
-    },
-    {
-        path: 'sanierung',
-        component: SanierungComponent,
-        title: 'BuildSystems | Sanierung'
-    },
-    // {
-    //     path: 'settings',
-    //     component: SettingsComponent,
-    //     title: 'Settings'
-    // },
+  // {
+  //     path: '',
+  //     component: HomeComponent,
+  //     title: 'Homepage'
+  // },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'Profile',
+  },
+  {
+    path: 'portfolio',
+    component: PortfolioComponent,
+    title: 'Portfolio',
+  },
+  { path: '', redirectTo: '/neubau', pathMatch: 'full' },
+  {
+    path: 'neubau',
+    component: NeubauComponent,
+    title: 'BuildSystems | Neubau',
+  },
+  {
+    path: 'sanierung',
+    component: SanierungComponent,
+    title: 'BuildSystems | Sanierung',
+  },
+  // {
+  //     path: 'settings',
+  //     component: SettingsComponent,
+  //     title: 'Settings'
+  // },
 ];

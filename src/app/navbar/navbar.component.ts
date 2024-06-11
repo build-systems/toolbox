@@ -25,8 +25,8 @@ export class NavbarComponent {
     });
   }
 
-  // This method is used in the html together with [class.active-nav]
-  // If the current url matches the html element, then it applies the active-nav class
+  // This method is used in the html together with [class.active-item]
+  // If the current url matches the html element, then it applies the active-item class
   isRouteActive(linkRoute: string) {
     if (linkRoute === this.currentRoute) {
       return true;

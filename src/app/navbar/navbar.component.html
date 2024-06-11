@@ -1,73 +1,102 @@
 <header>
   <nav class="side-bar scroll-hide">
-    <ul>
-      <li title="BuildSystems Homepage" class="">
-        <a href="https://buildsystems.de" aria-label="Go to BuildSystems Homepage" target="_blank" class="logo">
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#bs-logo-round" />
-          </svg>
-        </a>
-      </li>
-      <!-- <li title="Portfolio" class="portfolio">
-        <a
-          routerLink="portfolio"
-          class="link"
-          [class.active-nav]="isRouteActive('/portfolio')"
-        >
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#portfolio" />
-          </svg>
-          <span class="noselect">Portfolio</span>
-        </a>
-      </li> -->
-      <li title="Neubau Fördertool" class="neubau">
-        <a
-          routerLink="neubau"
-          class="link"
-          [class.active-nav]="isRouteActive('/neubau')"
-        >
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#neubau" />
-          </svg>
-          <span class="noselect">Neubau</span>
-        </a>
-      </li>
-      <li title="Sanierung Fördertool" class="sanierung">
-        <a
-          routerLink="sanierung"
-          class="link"
-          [class.active-nav]="isRouteActive('/sanierung')"
-        >
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#sanierung" />
-          </svg>
-          <span class="noselect">Sanierung</span>
-        </a>
-      </li>
-      <!-- <li title="Profile" class="profile">
-        <a
-          routerLink="profile"
-          class="link"
-          [class.active-nav]="isRouteActive('/profile')"
-        >
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#profile" />
-          </svg>
-          <span class="noselect">Profile</span>
-        </a>
-      </li> -->
-      <!-- <li title="Settings" class="settings">
-        <a
-          routerLink="settings"
-          class="link"
-          [class.active-nav]="isRouteActive('/settings')"
-        >
-          <svg class="icon">
-            <use xlink:href="assets/icons.svg#settings" />
-          </svg>
-          <span class="noselect">Settings</span>
-        </a>
-      </li> -->
-    </ul>
+    <a
+      href="https://buildsystems.de"
+      title="BuildSystems Homepage"
+      aria-label="Go to BuildSystems Homepage"
+      target="_blank"
+      class="logo"
+    >
+      <img
+        src="assets/bs-logo-round.svg"
+        class="icon"
+        alt="BuildSystems round logo"
+      />
+    </a>
+    <div class="nav-category">
+      <h2>Konto</h2>
+      <ul class="konto">
+        <li title="Profile" class="profile">
+          <a
+            routerLink="profile"
+            class="link"
+            [class.active-item]="isRouteActive('/profile')"
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#profile" />
+            </svg>
+            <span class="noselect">Profile</span>
+          </a>
+        </li>
+        <li title="Portfolio" class="portfolio">
+          <a
+            routerLink="portfolio"
+            class="link"
+            [class.active-item]="isRouteActive('/portfolio')"
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#portfolio" />
+            </svg>
+            <span class="noselect">Portfolio</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="nav-category">
+      <h2>Neubau</h2>
+      <ul class="neubau">
+        <li title="Neubau Fördertool" class="neubau">
+          <a
+            routerLink="neubau"
+            class="link"
+            [class.active-item]="isRouteActive('/neubau')"
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#neubau" />
+            </svg>
+            <span class="noselect">Neubau</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="nav-category">
+      <h2>Sanierung</h2>
+      <ul class="sanierung">
+        <li title="Fördermittel Komplettsanierung" class="sanierung">
+          <a
+            routerLink="sanierung"
+            class="link"
+            [class.active-item]="isRouteActive('/sanierung')"
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#sanierung" />
+            </svg>
+            <span class="noselect">Fördermittel Komplettsanierung </span>
+          </a>
+        </li>
+        <li title="Sanierung Fördertool" class="sanierung">
+          <a
+            routerLink="einzelmassnahmen"
+            class="link"
+            [class.active-item]="isRouteActive('/einzelmassnahmen')"
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#sanierung" />
+            </svg>
+            <span class="noselect">Fördermittel Einzelmaßnahmen</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <a
+      routerLink="settings"
+      class="link"
+      [class.active-item]="isRouteActive('/settings')"
+    >
+      <svg class="icon">
+        <use xlink:href="assets/icons.svg#settings" />
+      </svg>
+      <span class="noselect">Settings</span>
+    </a>
   </nav>
 </header>
