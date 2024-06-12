@@ -1,0 +1,32 @@
+<div class="title-mob-numbers">
+  <app-title
+    [title]="title"
+    [kfwId]="kfwId"
+    [kfwH2]="kfwH2"
+    [kfwH3]="kfwH3"
+    [kfwDescription]="kfwDescription"
+  ></app-title>
+  <div class="numbers-mover tablet">
+    <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
+  </div>
+</div>
+<div class="container-tool">
+  <div class="inputs">
+    <div class="tool-tab">
+      <button title="Projekt Formular" class="pill-single">Bauteil</button>
+    </div>
+    <div class="wrapper-gradient">
+      <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
+    </div>
+  </div>
+  <div class="output">
+    <div>
+      <div class="numbers-mover">
+        <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
+      </div>
+      <app-chart-einzelmassnahmen></app-chart-einzelmassnahmen>
+    </div>
+    <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
+  </div>
+</div>
+<app-help></app-help>

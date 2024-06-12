@@ -1,0 +1,99 @@
+<div class="house-container">
+  <img
+    src="assets/house-section-isometric.svg"
+    class="house"
+    alt="BuildSystems round logo"
+  />
+</div>
+<form [formGroup]="formService.formEinzelmassnahmen">
+  <fieldset>
+    <legend>
+      <!-- {{ formService.wohnflaeche.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="allgemeinTooltips.wohnflaeche"
+        placement="right"
+        >&#9432;</span
+      > -->
+      Placeholder 01
+    </legend>
+    <span class="slidernumber">
+      <!-- <input
+        type="range"
+        formControlName="wohnflaecheRange"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
+        [step]="formService.wohnflaeche.step"
+        class="slider"
+      /> -->
+      <input
+        type="range"
+        formControlName="wohnflaecheRange"
+        [min]="1"
+        [max]="10"
+        [step]="1"
+        class="slider"
+      />
+      <!-- <input
+        type="number"
+        formControlName="wohnflaeche"
+        name="wohnflaeche"
+        [min]="formService.wohnflaeche.min"
+        [max]="formService.wohnflaeche.max"
+        (keyup.enter)="onEnterKey($event)"
+      /> -->
+      <input
+        type="number"
+        formControlName="wohnflaeche"
+        name="wohnflaeche"
+        [min]="1"
+        [max]="10"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <!-- <legend>
+      {{ formService.energiestandard.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.energiestandard"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend> -->
+    <legend>
+      {{ formService.energiestandard.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.energiestandard"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.energiestandard.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="neubauTooltips.energiestandard"
+        placement="right"
+        >&#9432;</span
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.energiestandard.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="energiestandard"
+          formControlName="energiestandard"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+</form>

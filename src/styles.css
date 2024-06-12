@@ -918,11 +918,24 @@ input[type="number"]:disabled:hover {
   align-items: center;
 }
 
+.pill-single {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 1.1rem;
+  height: var(--button-height);
+  cursor: pointer;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--button-radius) var(--button-radius) 0 0;
+  border: none;
+  transition: all 0.2s;
+}
+
 .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
   height: var(--button-height);
-  /* height: 3.5rem; */
   cursor: pointer;
   width: 50%;
   align-items: center;

@@ -8,13 +8,32 @@
     tabIndex="-1"
     (click)="closeNavbar()"
   >
-    <svg class="logomobile">
-      <use xlink:href="assets/icons.svg#bs-logo-round" />
-    </svg>
+    <img
+      src="assets/bs-logo-round.svg"
+      class="logomobile"
+      alt="BuildSystems round logo"
+    />
   </a>
   <nav [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'">
     <ul>
-      <!-- <li
+      <li
+        title="Profile"
+        class="shortcut"
+        [class.active-nav]="isRouteActive('/profile')"
+      >
+        <a
+          routerLink="profile"
+          class="linkmobile"
+          tabIndex="-1"
+          (click)="onClick()"
+        >
+          <svg class="iconmobile">
+            <use xlink:href="assets/icons.svg#profile" />
+          </svg>
+          <span class="noselect">Profile</span>
+        </a>
+      </li>
+      <li
         title="Portfolio"
         class="shortcut"
         [class.active-nav]="isRouteActive('/portfolio')"
@@ -30,7 +49,7 @@
           </svg>
           <span class="noselect">Portfolio</span>
         </a>
-      </li> -->
+      </li>
       <li
         title="Neubau Fördertool"
         class="shortcut"
@@ -45,7 +64,7 @@
           <svg class="iconmobile">
             <use xlink:href="assets/icons.svg#neubau" />
           </svg>
-          <span class="noselect">Neubau</span>
+          <span class="noselect">Fördermittel Neubau</span>
         </a>
       </li>
       <li
@@ -62,27 +81,27 @@
           <svg class="iconmobile">
             <use xlink:href="assets/icons.svg#sanierung" />
           </svg>
-          <span class="noselect">Sanierung</span>
+          <span class="noselect">Fördermittel Komplettsanierung</span>
         </a>
       </li>
-      <!-- <li
-        title="Profile"
+      <li
+        title="Sanierung Fördertool"
         class="shortcut"
-        [class.active-nav]="isRouteActive('/profile')"
+        [class.active-nav]="isRouteActive('/einzelmassnahmen')"
       >
         <a
-          routerLink="profile"
+          routerLink="einzelmassnahmen"
           class="linkmobile"
           tabIndex="-1"
           (click)="onClick()"
         >
           <svg class="iconmobile">
-            <use xlink:href="assets/icons.svg#profile" />
+            <use xlink:href="assets/icons.svg#einzelmassnahmen" />
           </svg>
-          <span class="noselect">Profile</span>
+          <span class="noselect">Fördermittel Einzelmaßnahmen</span>
         </a>
-      </li> -->
-      <!-- <li
+      </li>
+      <li
         title="Settings"
         class="shortcut"
         [class.active-nav]="isRouteActive('/settings')"
@@ -98,7 +117,7 @@
           </svg>
           <span class="noselect">Settings</span>
         </a>
-      </li> -->
+      </li>
     </ul>
   </nav>
   <button

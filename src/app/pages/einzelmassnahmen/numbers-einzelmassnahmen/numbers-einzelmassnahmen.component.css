@@ -1,0 +1,5 @@
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--layout-padding) / 2);
+}

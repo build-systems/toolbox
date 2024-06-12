@@ -5,6 +5,7 @@ import { SanierungComponent } from './pages/sanierung/sanierung.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { EinzelmassnahmenComponent } from './pages/einzelmassnahmen/einzelmassnahmen.component';
 
 export const routes: Routes = [
   // {
@@ -32,6 +33,11 @@ export const routes: Routes = [
     path: 'sanierung',
     component: SanierungComponent,
     title: 'BuildSystems | Sanierung',
+  },
+  {
+    path: 'einzelmassnahmen',
+    component: EinzelmassnahmenComponent,
+    title: 'BuildSystems | Einzelmaßnahmen',
   },
   // {
   //     path: 'settings',
