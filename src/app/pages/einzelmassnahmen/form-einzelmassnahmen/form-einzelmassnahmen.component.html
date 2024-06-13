@@ -7,7 +7,23 @@
 </div>
 <form [formGroup]="formService.formEinzelmassnahmen">
   <!-- Batuteil as a dropdown > To be done -->
-  <fieldset>
+  <fieldset class="dropdown-fieldset">
+    <legend>{{ formService.bauteil.title }}</legend>
+    <select
+      class="dropdown"
+      [(ngModel)]="bauteil"
+      name="bauteil"
+      formControlName="bauteil"
+    >
+      <option
+        *ngFor="let item of formService.bauteil.options"
+        [value]="item.value"
+      >
+        {{ item.value }}
+      </option>
+    </select>
+  </fieldset>
+  <fieldset [hidden]="!(bauteil === 'Fenster')">
     <div class="legend-info">
       <legend>
         {{ formService.fensterflaeche.title }}&nbsp;<span
@@ -37,7 +53,7 @@
       />
     </span>
   </fieldset>
-  <fieldset>
+  <fieldset [hidden]="!(bauteil === 'Fenster')">
     <div class="legend-info">
       <legend>
         {{ formService.gesamtFensterflaeche.title }}&nbsp;<span
@@ -67,7 +83,7 @@
       />
     </span>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset class="radio-fieldset" [hidden]="!(bauteil === 'Fenster')">
     <legend>
       {{ formService.fensterTyp.title }}
     </legend>
@@ -94,7 +110,10 @@
       </span>
     </div>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset
+    class="radio-fieldset"
+    [hidden]="!(bauteil === 'Dachflächenfenster')"
+  >
     <legend>
       {{ formService.dachflaechenfensterTyp.title }}
     </legend>
@@ -121,7 +140,7 @@
       </span>
     </div>
   </fieldset>
-  <fieldset>
+  <fieldset [hidden]="!(bauteil === 'Türen')">
     <div class="legend-info">
       <legend>
         {{ formService.tuerflaeche.title }}&nbsp;<span
@@ -151,7 +170,7 @@
       />
     </span>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset class="radio-fieldset" [hidden]="!(bauteil === 'Türen')">
     <legend>
       {{ formService.tuerTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -188,7 +207,19 @@
       </span>
     </div>
   </fieldset>
-  <fieldset>
+  <fieldset
+    [hidden]="
+      !(
+        bauteil === 'Außenwand' ||
+        'Bodenplatte' ||
+        'Flachdach' ||
+        'Innenwand' ||
+        'Keller' ||
+        'Oberste Geschossdecke' ||
+        'WDVS'
+      )
+    "
+  >
     <div class="legend-info">
       <legend>
         {{ formService.gedaemmteflaeche.title }}&nbsp;<span
@@ -218,7 +249,19 @@
       />
     </span>
   </fieldset>
-  <fieldset>
+  <fieldset
+    [hidden]="
+      !(
+        bauteil === 'Außenwand' ||
+        'Bodenplatte' ||
+        'Flachdach' ||
+        'Innenwand' ||
+        'Keller' ||
+        'Oberste Geschossdecke' ||
+        'WDVS'
+      )
+    "
+  >
     <div class="legend-info">
       <legend>
         {{ formService.daemmstoffdicke.title }}&nbsp;<span
@@ -248,7 +291,7 @@
       />
     </span>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset [hidden]="!(bauteil === 'Keller')" class="radio-fieldset">
     <legend>
       {{ formService.kellerTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -285,7 +328,10 @@
       </span>
     </div>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset
+    [hidden]="!(bauteil === 'Oberste Geschossdecke')"
+    class="radio-fieldset"
+  >
     <legend>
       {{ formService.obersteGeschossdeckeTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -322,7 +368,7 @@
       </span>
     </div>
   </fieldset>
-  <fieldset class="radio-fieldset">
+  <fieldset [hidden]="!(bauteil === 'Flachdach')" class="radio-fieldset">
     <legend>
       {{ formService.flachdachTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -359,7 +405,7 @@
       </span>
     </div>
   </fieldset>
-  <fieldset>
+  <fieldset [hidden]="!(bauteil === 'Steildach')">
     <legend>
       {{ formService.gaubeflaeche.title }}&nbsp;<span
         class="tooltip-icon"
@@ -390,7 +436,7 @@
       />
     </span>
   </fieldset>
-  <fieldset>
+  <fieldset [hidden]="!(bauteil === 'Vorbaurollladen')">
     <div class="legend-info">
       <legend>
         {{ formService.rollladenflaeche.title }}&nbsp;<span

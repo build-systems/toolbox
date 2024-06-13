@@ -7,7 +7,7 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzel
 export class EinzelmassnahmenService {
   // Active form tab
   // public currentTab = signal(1);
-
+  bauteil: Bauteil = this.formEinzelmassnahmenService.bauteil.options[0].value;
   fensterflaeche: number =
     this.formEinzelmassnahmenService.fensterflaeche.value;
   gesamtFensterflaeche: number =
@@ -37,6 +37,7 @@ export class EinzelmassnahmenService {
   ) {
     this.formEinzelmassnahmenService.formEinzelmassnahmen.valueChanges.subscribe(
       (value) => {
+        this.bauteil = value.bauteil!;
         this.fensterflaeche = value.fensterflaecheRange!;
         this.gesamtFensterflaeche = value.gesamtFensterflaecheRange!;
         this.fensterTyp = value.fensterTyp!;

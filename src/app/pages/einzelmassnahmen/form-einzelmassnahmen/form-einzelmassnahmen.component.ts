@@ -16,6 +16,8 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen.service';
   },
 })
 export class FormEinzelmassnahmenComponent {
+  bauteil: Bauteil = 'Außenwand';
+
   constructor(
     public formService: FormEinzelmassnahmenService,
     public allgemeinTooltips: allgemein,
