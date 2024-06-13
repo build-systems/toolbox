@@ -6,25 +6,25 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class FormDarlehenSanierungService {
   // Zinssatz Hausbank (Sollzins) old Kalkulationszinssatz (Realzins)
-  zinssatzBank: zinssatzBankObj = {
+  zinssatzBank: SliderNumberObj = {
     value: 4,
     min: 0.1,
     max: 8,
     step: 0.1,
     title: 'Zinssatz Hausbank (Sollzins) [%]',
-    disabled: false
+    disabled: false,
   };
 
   // Kreditlaufzeit centralized form values
   // KfW 261, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
 
-  kreditlaufzeit: KreditlaufzeitObj = {
+  kreditlaufzeit: SliderNumberObj = {
     value: 10,
     min: 4,
     max: 30,
     step: 1,
     title: 'Kreditlaufzeit [a]',
-    disabled: false
+    disabled: false,
   };
 
   // KfW-Darlehen centralized form values

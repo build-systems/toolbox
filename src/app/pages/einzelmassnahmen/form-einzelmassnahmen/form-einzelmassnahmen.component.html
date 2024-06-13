@@ -6,87 +6,85 @@
   />
 </div>
 <form [formGroup]="formService.formEinzelmassnahmen">
+  <!-- Batuteil as a dropdown > To be done -->
   <fieldset>
-    <legend>
-      <!-- {{ formService.wohnflaeche.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="allgemeinTooltips.wohnflaeche"
-        placement="right"
-        >&#9432;</span
-      > -->
-      Placeholder 01
-    </legend>
+    <div class="legend-info">
+      <legend>
+        {{ formService.fensterflaeche.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
     <span class="slidernumber">
-      <!-- <input
-        type="range"
-        formControlName="wohnflaecheRange"
-        [min]="formService.wohnflaeche.min"
-        [max]="formService.wohnflaeche.max"
-        [step]="formService.wohnflaeche.step"
-        class="slider"
-      /> -->
       <input
         type="range"
-        formControlName="wohnflaecheRange"
-        [min]="1"
-        [max]="10"
-        [step]="1"
+        formControlName="fensterflaecheRange"
+        [min]="formService.fensterflaeche.min"
+        [max]="formService.fensterflaeche.max"
+        [step]="formService.fensterflaeche.step"
         class="slider"
       />
-      <!-- <input
-        type="number"
-        formControlName="wohnflaeche"
-        name="wohnflaeche"
-        [min]="formService.wohnflaeche.min"
-        [max]="formService.wohnflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      /> -->
       <input
         type="number"
-        formControlName="wohnflaeche"
-        name="wohnflaeche"
-        [min]="1"
-        [max]="10"
+        formControlName="fensterflaeche"
+        name="fensterflaeche"
+        [min]="formService.fensterflaeche.min"
+        [max]="formService.fensterflaeche.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <div class="legend-info">
+      <legend>
+        {{ formService.gesamtFensterflaeche.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="gesamtFensterflaecheRange"
+        [min]="formService.gesamtFensterflaeche.min"
+        [max]="formService.gesamtFensterflaeche.max"
+        [step]="formService.gesamtFensterflaeche.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="gesamtFensterflaeche"
+        name="gesamtFensterflaeche"
+        [min]="formService.gesamtFensterflaeche.min"
+        [max]="formService.gesamtFensterflaeche.max"
         (keyup.enter)="onEnterKey($event)"
       />
     </span>
   </fieldset>
   <fieldset class="radio-fieldset">
-    <!-- <legend>
-      {{ formService.energiestandard.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="neubauTooltips.energiestandard"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend> -->
     <legend>
-      {{ formService.energiestandard.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="neubauTooltips.energiestandard"
-        placement="right"
-        >&#9432;</span
-      >
+      {{ formService.fensterTyp.title }}
     </legend>
     <div class="as-legend" aria-hidden="true">
-      {{ formService.energiestandard.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="neubauTooltips.energiestandard"
-        placement="right"
-        >&#9432;</span
-      >
+      {{ formService.fensterTyp.title }}
     </div>
     <div class="radio-options">
       <span
         class="radio-option"
-        *ngFor="let item of formService.energiestandard.options"
+        *ngFor="let item of formService.fensterTyp.options"
       >
         <input
           type="radio"
           [id]="item.id"
           [value]="item.value"
-          name="energiestandard"
-          formControlName="energiestandard"
+          name="fensterTyp"
+          formControlName="fensterTyp"
           [attr.disabled]="item.disabled ? '' : null"
         />
         <label class="radio-container" [for]="item.id"
@@ -95,5 +93,331 @@
         </label>
       </span>
     </div>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.dachflaechenfensterTyp.title }}
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.dachflaechenfensterTyp.title }}
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.dachflaechenfensterTyp.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="dachflaechenfensterTyp"
+          formControlName="dachflaechenfensterTyp"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="legend-info">
+      <legend>
+        {{ formService.tuerflaeche.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="tuerflaecheRange"
+        [min]="formService.tuerflaeche.min"
+        [max]="formService.tuerflaeche.max"
+        [step]="formService.tuerflaeche.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="tuerflaeche"
+        name="tuerflaeche"
+        [min]="formService.tuerflaeche.min"
+        [max]="formService.tuerflaeche.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.tuerTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.tuerTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.tuerTyp.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="tuerTyp"
+          formControlName="tuerTyp"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="legend-info">
+      <legend>
+        {{ formService.gedaemmteflaeche.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="gedaemmteflaecheRange"
+        [min]="formService.gedaemmteflaeche.min"
+        [max]="formService.gedaemmteflaeche.max"
+        [step]="formService.gedaemmteflaeche.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="gedaemmteflaeche"
+        name="gedaemmteflaeche"
+        [min]="formService.gedaemmteflaeche.min"
+        [max]="formService.gedaemmteflaeche.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <div class="legend-info">
+      <legend>
+        {{ formService.daemmstoffdicke.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="daemmstoffdickeRange"
+        [min]="formService.daemmstoffdicke.min"
+        [max]="formService.daemmstoffdicke.max"
+        [step]="formService.daemmstoffdicke.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="daemmstoffdicke"
+        name="daemmstoffdicke"
+        [min]="formService.daemmstoffdicke.min"
+        [max]="formService.daemmstoffdicke.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.kellerTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.kellerTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.kellerTyp.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="kellerTyp"
+          formControlName="kellerTyp"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.obersteGeschossdeckeTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.obersteGeschossdeckeTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.obersteGeschossdeckeTyp.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="obersteGeschossdeckeTyp"
+          formControlName="obersteGeschossdeckeTyp"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+  <fieldset class="radio-fieldset">
+    <legend>
+      {{ formService.flachdachTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <div class="as-legend" aria-hidden="true">
+      {{ formService.flachdachTyp.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </div>
+    <div class="radio-options">
+      <span
+        class="radio-option"
+        *ngFor="let item of formService.flachdachTyp.options"
+      >
+        <input
+          type="radio"
+          [id]="item.id"
+          [value]="item.value"
+          name="flachdachTyp"
+          formControlName="flachdachTyp"
+          [attr.disabled]="item.disabled ? '' : null"
+        />
+        <label class="radio-container" [for]="item.id"
+          >{{ item.value }}
+          <span class="radiomark"></span>
+        </label>
+      </span>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>
+      {{ formService.gaubeflaeche.title }}&nbsp;<span
+        class="tooltip-icon"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        placement="right"
+        >&#9432;</span
+      >
+    </legend>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="gaubeflaecheRange"
+        [min]="formService.gaubeflaeche.min"
+        [max]="formService.gaubeflaeche.max"
+        [step]="formService.gaubeflaeche.step"
+        class="slider"
+        [attr.disabled]="formService.gaubeflaeche.disabled ? '' : null"
+      />
+      <input
+        type="number"
+        formControlName="gaubeflaeche"
+        name="gaubeflaeche"
+        [min]="formService.gaubeflaeche.min"
+        [max]="formService.gaubeflaeche.max"
+        [step]="formService.gaubeflaeche.step"
+        [attr.disabled]="formService.gaubeflaeche.disabled ? '' : null"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
+  </fieldset>
+  <fieldset>
+    <div class="legend-info">
+      <legend>
+        {{ formService.rollladenflaeche.title }}&nbsp;<span
+          class="tooltip-icon"
+          [appTooltip]="einzelmassnahmenTooltips.placeholder"
+          placement="right"
+          >&#9432;</span
+        >
+      </legend>
+    </div>
+    <span class="slidernumber">
+      <input
+        type="range"
+        formControlName="rollladenflaecheRange"
+        [min]="formService.rollladenflaeche.min"
+        [max]="formService.rollladenflaeche.max"
+        [step]="formService.rollladenflaeche.step"
+        class="slider"
+      />
+      <input
+        type="number"
+        formControlName="rollladenflaeche"
+        name="rollladenflaeche"
+        [min]="formService.rollladenflaeche.min"
+        [max]="formService.rollladenflaeche.max"
+        (keyup.enter)="onEnterKey($event)"
+      />
+    </span>
   </fieldset>
 </form>

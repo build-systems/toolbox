@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class FormProjektNeubauService {
   // User price
   // Wohnfläche centralized form values
-  eigeneKosten: eigeneKostenObj = {
+  eigeneKosten: SliderNumberObj = {
     value: 5000,
     min: 100,
     max: 20000,
@@ -17,7 +17,7 @@ export class FormProjektNeubauService {
   };
 
   // Wohnfläche centralized form values
-  wohnflaeche: wohnflaecheObj = {
+  wohnflaeche: SliderNumberObj = {
     min: 20,
     value: 1000,
     max: 10000,
@@ -27,7 +27,7 @@ export class FormProjektNeubauService {
   };
 
   // Anzahl Wohnungen centralized form values
-  anzahlWohnungen: anzahlWohnungenObj = {
+  anzahlWohnungen: SliderNumberObj = {
     min: 1,
     value: 10,
     max: 100,
@@ -167,7 +167,7 @@ export class FormProjektNeubauService {
   };
 
   // Grundstücksbezogene Kosten
-  grundstKosten: grundstKostenObj = {
+  grundstKosten: SliderNumberObj = {
     value: 0,
     min: 0,
     max: 1000,
@@ -177,7 +177,7 @@ export class FormProjektNeubauService {
   };
 
   // Baunebenkosten (excl. Finanzierung)
-  baunebenkostenOhneFin: BaunebenkostenOhneFinObj = {
+  baunebenkostenOhneFin: SliderNumberObj = {
     value: 20,
     min: 0,
     max: 100,
@@ -194,7 +194,10 @@ export class FormProjektNeubauService {
     eigeneKostenToggle: [!this.eigeneKosten.disabled, Validators.required],
     eigeneKostenRange: [
       this.eigeneKosten.value, // init
-      [Validators.min(this.eigeneKosten.min), Validators.max(this.eigeneKosten.max)],
+      [
+        Validators.min(this.eigeneKosten.min),
+        Validators.max(this.eigeneKosten.max),
+      ],
     ],
     eigeneKosten: [
       this.eigeneKosten.value, // init
@@ -311,36 +314,34 @@ export class FormProjektNeubauService {
         this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
         this.grundstKosten.disabled = value!;
         this.baunebenkostenOhneFin.disabled = value!;
+      });
+
+    // User Price
+    this.projektFormNeu
+      .get('eigeneKostenRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range changes
+        this.projektFormNeu
+          .get('eigeneKosten')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormNeu.get('eigeneKosten')?.valueChanges.subscribe((value) => {
+      // Condition to avoid non-numeric or numbers unrealistically small
+      if (value && value >= this.eigeneKosten.min) {
+        // Update range input when number changes
+        this.projektFormNeu
+          .get('eigeneKostenRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        this.projektFormNeu
+          .get('eigeneKostenRange')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+        this.projektFormNeu
+          .get('eigeneKosten')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+      }
     });
-
-     // User Price
-     this.projektFormNeu
-     .get('eigeneKostenRange')
-     ?.valueChanges.subscribe((value) => {
-       // Update number input when range changes
-       this.projektFormNeu
-         .get('eigeneKosten')
-         ?.setValue(value, { emitEvent: false });
-     });
-
-   this.projektFormNeu
-     .get('eigeneKosten')
-     ?.valueChanges.subscribe((value) => {
-       // Condition to avoid non-numeric or numbers unrealistically small
-       if (value && value >= this.eigeneKosten.min) {
-         // Update range input when number changes
-         this.projektFormNeu
-           .get('eigeneKostenRange')
-           ?.setValue(value, { emitEvent: false });
-       } else {
-         this.projektFormNeu
-           .get('eigeneKostenRange')
-           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-         this.projektFormNeu
-           .get('eigeneKosten')
-           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-       }
-     });
 
     // Wohnflaeche
     this.projektFormNeu

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
-import { allgemein, neubau } from '../../../shared/tooltips';
+import { allgemein, einzelmassnahmen, neubau } from '../../../shared/tooltips';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class FormEinzelmassnahmenComponent {
   constructor(
     public formService: FormEinzelmassnahmenService,
     public allgemeinTooltips: allgemein,
-    public neubauTooltips: neubau
+    public einzelmassnahmenTooltips: einzelmassnahmen
   ) {}
 
   // Remove focus on enter

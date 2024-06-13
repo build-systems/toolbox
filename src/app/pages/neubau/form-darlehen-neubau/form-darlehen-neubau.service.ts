@@ -10,7 +10,7 @@ export class FormDarlehenNeubauService {
   // It is a source for Neubau Service.
 
   // Kalkulationszinssatz (Realzins) centralized form values
-  zinssatzBank: zinssatzBankObj = {
+  zinssatzBank: SliderNumberObj = {
     value: 4,
     min: 0.1,
     max: 8,
@@ -21,7 +21,7 @@ export class FormDarlehenNeubauService {
 
   // Kreditlaufzeit centralized form values
   // KfW 298, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
-  kreditlaufzeit: KreditlaufzeitObj = {
+  kreditlaufzeit: SliderNumberObj = {
     value: 10,
     min: 4,
     max: 35,

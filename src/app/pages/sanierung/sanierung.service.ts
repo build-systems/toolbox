@@ -15,7 +15,7 @@ export class SanierungService {
   public currentTab = signal(1);
 
   // Initial project parameters
-  proketType: sanierungProjektType =
+  proketType: SanierungProjektType =
     this.formProjektService.projektType.options[0].value;
   userPriceDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
   userPrice: number = this.formProjektService.eigeneKosten.value;
@@ -44,21 +44,19 @@ export class SanierungService {
     private formProjektService: FormProjektSanierungService,
     private formDarlehenService: FormDarlehenSanierungService
   ) {
-    this.formProjektService.projektFormSanierung.valueChanges.subscribe(
-      (value) => {
-        this.proketType = value.projektType!;
-        this.wohnflaeche = value.wohnflaecheRange!;
-        this.anzahlWohnungen = value.anzahlWohnungenRange!;
-        this.userPriceDisabled = !value.eigeneKostenToggle!;
-        this.userPrice = value.eigeneKostenRange!;
-        this.umfangModernisierung = value.umfangModernisierung!;
-        this.worstPerformingBuilding = value.worstPerformingBuilding!;
-        this.energiestandard = value.energiestandard!;
-        this._foerderbonus = value.foerderbonus!;
-        this.serielleSanierung = value.serielleSanierung!;
-        this.update();
-      }
-    );
+    this.formProjektService.projektForm.valueChanges.subscribe((value) => {
+      this.proketType = value.projektType!;
+      this.wohnflaeche = value.wohnflaecheRange!;
+      this.anzahlWohnungen = value.anzahlWohnungenRange!;
+      this.userPriceDisabled = !value.eigeneKostenToggle!;
+      this.userPrice = value.eigeneKostenRange!;
+      this.umfangModernisierung = value.umfangModernisierung!;
+      this.worstPerformingBuilding = value.worstPerformingBuilding!;
+      this.energiestandard = value.energiestandard!;
+      this._foerderbonus = value.foerderbonus!;
+      this.serielleSanierung = value.serielleSanierung!;
+      this.update();
+    });
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
       this.zinssatzBank = value.zinssatzBankRange! / 100; // Conersion from percentage to fraction multiplier
       this.kreditlaufzeit = value.kreditlaufzeitRange!;
@@ -255,7 +253,7 @@ export class SanierungService {
     return Math.min(maxKfwKredit, gesamtgestehungskosten);
   }
 
-  // Bank-Kredit [€] 
+  // Bank-Kredit [€]
   private _bankKredit = 0;
   updateBankKredit(
     maxKfwKredit: number,
@@ -315,7 +313,7 @@ export class SanierungService {
     wpbBonus: number,
     serSanBonus: number
   ): number {
-    const floorWpbSerSanBonus = Math.min((wpbBonus + serSanBonus), 0.20); // If you combine the bonus for the Worst Performing Building with the bonus for the serial renovation, then the two bonuses will be limited to a total of 20%
+    const floorWpbSerSanBonus = Math.min(wpbBonus + serSanBonus, 0.2); // If you combine the bonus for the Worst Performing Building with the bonus for the serial renovation, then the two bonuses will be limited to a total of 20%
     return Math.min(
       tilgungszuschuss + eeBonus + nhBonus + floorWpbSerSanBonus,
       this.constants.kfwZuschussMaxMultiplier

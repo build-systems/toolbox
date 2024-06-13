@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   providedIn: 'root',
 })
 export class FormProjektSanierungService {
-  projektType: sanierungProjektTypeObj = {
+  projektType: SanierungProjektTypeObj = {
     options: [
       { id: 'typ1', value: 'Einfamilienhaus', disabled: false },
       { id: 'typ2', value: 'Mehrfamilienhaus', disabled: false },
@@ -13,7 +13,7 @@ export class FormProjektSanierungService {
     title: 'Projekt typ',
   };
 
-  eigeneKosten: eigeneKostenObj = {
+  eigeneKosten: SliderNumberObj = {
     min: 100,
     value: 3000,
     max: 10000,
@@ -23,7 +23,7 @@ export class FormProjektSanierungService {
   };
 
   // Wohnfläche centralized form values
-  wohnflaeche: wohnflaecheObj = {
+  wohnflaeche: SliderNumberObj = {
     min: 20,
     value: 100,
     max: 1000,
@@ -34,7 +34,7 @@ export class FormProjektSanierungService {
   // Wohnflächenverordnung - WoFlV https://www.gesetze-im-internet.de/woflv/
 
   // Anzahl Wohnungen centralized form values
-  anzahlWohnungen: anzahlWohnungenObj = {
+  anzahlWohnungen: SliderNumberObj = {
     min: 1,
     value: 1,
     max: 100,
@@ -91,7 +91,7 @@ export class FormProjektSanierungService {
   // Zertifizierung warning: if user try to select conflicting
   public noQNG: boolean = false;
 
-  projektFormSanierung = this.fb.group({
+  projektForm = this.fb.group({
     projektType: this.projektType.options[0].value,
     wohnflaecheRange: [
       this.wohnflaeche.value,
@@ -158,26 +158,24 @@ export class FormProjektSanierungService {
 
   constructor(private fb: FormBuilder) {
     //Projekt type
-    this.projektFormSanierung
-      .get('projektType')
-      ?.valueChanges.subscribe((value) => {
-        if (value === 'Einfamilienhaus') {
-          this.anzahlWohnungen.disabled = true;
-          this.projektFormSanierung
-            .get('anzahlWohnungen')
-            ?.setValue(1, { emitEvent: false });
-            this.wohnflaeche.max = 1000;
-            this.projektFormSanierung
-            .get('anzahlWohnungenRange')
-            ?.setValue(1, { emitEvent: false });
-          } else if (value === 'Mehrfamilienhaus') {
-            this.anzahlWohnungen.disabled = false;
-            this.wohnflaeche.max = 10000;
-        }
-      });
+    this.projektForm.get('projektType')?.valueChanges.subscribe((value) => {
+      if (value === 'Einfamilienhaus') {
+        this.anzahlWohnungen.disabled = true;
+        this.projektForm
+          .get('anzahlWohnungen')
+          ?.setValue(1, { emitEvent: false });
+        this.wohnflaeche.max = 1000;
+        this.projektForm
+          .get('anzahlWohnungenRange')
+          ?.setValue(1, { emitEvent: false });
+      } else if (value === 'Mehrfamilienhaus') {
+        this.anzahlWohnungen.disabled = false;
+        this.wohnflaeche.max = 10000;
+      }
+    });
 
     //User price
-    this.projektFormSanierung
+    this.projektForm
       .get('eigeneKostenToggle')
       ?.valueChanges.subscribe((value) => {
         this.umfangModernisierung.options.forEach(
@@ -186,105 +184,97 @@ export class FormProjektSanierungService {
       });
 
     // User Price
-    this.projektFormSanierung
+    this.projektForm
       .get('eigeneKostenRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range changes
-        this.projektFormSanierung
+        this.projektForm
           .get('eigeneKosten')
           ?.setValue(value, { emitEvent: false });
       });
 
-    this.projektFormSanierung
-      .get('eigeneKosten')
-      ?.valueChanges.subscribe((value) => {
-        // Condition to avoid non-numeric or numbers unrealistically small
-        if (value && value >= this.eigeneKosten.min) {
-          // Update range input when number changes
-          this.projektFormSanierung
-            .get('eigeneKostenRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.projektFormSanierung
-            .get('eigeneKostenRange')
-            ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-          this.projektFormSanierung
-            .get('eigeneKosten')
-            ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-        }
-      });
+    this.projektForm.get('eigeneKosten')?.valueChanges.subscribe((value) => {
+      // Condition to avoid non-numeric or numbers unrealistically small
+      if (value && value >= this.eigeneKosten.min) {
+        // Update range input when number changes
+        this.projektForm
+          .get('eigeneKostenRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        this.projektForm
+          .get('eigeneKostenRange')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+        this.projektForm
+          .get('eigeneKosten')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+      }
+    });
 
     // Wohnflaeche
-    this.projektFormSanierung
+    this.projektForm
       .get('wohnflaecheRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.projektFormSanierung
+        this.projektForm
           .get('wohnflaeche')
           ?.setValue(value, { emitEvent: false });
       });
 
-    this.projektFormSanierung
-      .get('wohnflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.wohnflaeche.min) {
-          // Update range input when number input changes
-          this.projektFormSanierung
-            .get('wohnflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.projektFormSanierung
-            .get('wohnflaecheRange')
-            ?.setValue(this.wohnflaeche.min, { emitEvent: false });
-          this.projektFormSanierung
-            .get('wohnflaeche')
-            ?.setValue(this.wohnflaeche.min, { emitEvent: false });
-        }
-      });
+    this.projektForm.get('wohnflaeche')?.valueChanges.subscribe((value) => {
+      if (value && value >= this.wohnflaeche.min) {
+        // Update range input when number input changes
+        this.projektForm
+          .get('wohnflaecheRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        this.projektForm
+          .get('wohnflaecheRange')
+          ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+        this.projektForm
+          .get('wohnflaeche')
+          ?.setValue(this.wohnflaeche.min, { emitEvent: false });
+      }
+    });
 
     // Anzahl WohnungenRange
-    this.projektFormSanierung
+    this.projektForm
       .get('anzahlWohnungenRange')
       ?.valueChanges.subscribe((value) => {
         // Update number input when range input changes
-        this.projektFormSanierung
+        this.projektForm
           .get('anzahlWohnungen')
           ?.setValue(value, { emitEvent: false });
       });
 
-    this.projektFormSanierung
-      .get('anzahlWohnungen')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.anzahlWohnungen.min) {
-          // Update range input when number input changes
-          this.projektFormSanierung
-            .get('anzahlWohnungenRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.projektFormSanierung
-            .get('anzahlWohnungenRange')
-            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
-          this.projektFormSanierung
-            .get('anzahlWohnungen')
-            ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
-        }
-      });
+    this.projektForm.get('anzahlWohnungen')?.valueChanges.subscribe((value) => {
+      if (value && value >= this.anzahlWohnungen.min) {
+        // Update range input when number input changes
+        this.projektForm
+          .get('anzahlWohnungenRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        this.projektForm
+          .get('anzahlWohnungenRange')
+          ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+        this.projektForm
+          .get('anzahlWohnungen')
+          ?.setValue(this.anzahlWohnungen.min, { emitEvent: false });
+      }
+    });
 
     // Energiestandard
-    this.projektFormSanierung
-      .get('energiestandard')
-      ?.valueChanges.subscribe((value) => {
-        // Relationship with Zertifizierung
-        const zertifizierung = this.projektFormSanierung.get('zertifizierung');
-        if (value != 'EH 40') {
-          // Disable mit QNG Siegel
-          // this.zertifizierung.options[0].disabled = true;
-          this.noQNG = true;
-        } else {
-          // Enable mit QNG Siegel
-          // this.zertifizierung.options[0].disabled = false;
-          this.noQNG = false;
-        }
-      });
+    this.projektForm.get('energiestandard')?.valueChanges.subscribe((value) => {
+      // Relationship with Zertifizierung
+      const zertifizierung = this.projektForm.get('zertifizierung');
+      if (value != 'EH 40') {
+        // Disable mit QNG Siegel
+        // this.zertifizierung.options[0].disabled = true;
+        this.noQNG = true;
+      } else {
+        // Enable mit QNG Siegel
+        // this.zertifizierung.options[0].disabled = false;
+        this.noQNG = false;
+      }
+    });
   }
 }

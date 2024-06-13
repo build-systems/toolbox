@@ -2,40 +2,20 @@
 // able to change how it is displayed without affecting the formulas
 
 // Projekt
-type sanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
-type sanierungProjektTypeOptions = {
+type SanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type SanierungProjektTypeOptions = {
   id: string;
-  value: sanierungProjektType;
+  value: SanierungProjektType;
   text?: string;
   disabled: boolean;
 };
-type sanierungProjektTypeObj = {
-  options: sanierungProjektTypeOptions[];
+type SanierungProjektTypeObj = {
+  options: SanierungProjektTypeOptions[];
   title: string;
-};
-
-// User price
-type eigeneKostenObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
 };
 
 // Wohnflaeche
-type wohnflaecheObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Anzahl Wohnungen
-type anzahlWohnungenObj = {
+type SliderNumberObj = {
   value: number;
   min: number;
   max: number;
@@ -103,11 +83,11 @@ type FoerderbonusOptions = {
   value: Foerderbonus;
   text?: string;
   disabled: boolean;
-}
+};
 type FoerderbonusObj = {
   options: FoerderbonusOptions[];
   title: string;
-}
+};
 
 // Zustand Bestand
 type UmfangModernisierung = 'Nicht/gering' | 'Größtenteils' | 'Umfassend';
@@ -217,47 +197,7 @@ type AussenanlagenObj = {
   title: string;
 };
 
-// Grundstuecksbezogene Kosten
-type grundstKostenObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Baunebenkosten Kein Fin
-type BaunebenkostenOhneFinObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
 // Darlehen
-// Zinssatz Hausbank (Sollzins) old Kalkulationszinssatz (Realzins)
-type zinssatzBankObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Kreditlaufzeit
-type KreditlaufzeitObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
 // KfW Darlehen
 type KfWDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
 type KfWDarlehenOptions = {
@@ -296,4 +236,127 @@ type SerielleSanierungObj = {
   value: boolean;
   title: string;
   disabled: boolean;
+};
+
+type WaermeerzeugerEinzelmassnahmenOptions = {
+  id: string;
+  value: string;
+  disabled: boolean;
+};
+
+// Einzelmaßnahmen
+// Bauteil
+type Bauteil =
+  | 'Flachdach'
+  | 'Steildach'
+  | 'Dachflächenfenster'
+  | 'Oberste Geschossdecke'
+  | 'Außenwand'
+  | 'Bodenplatte'
+  | 'Fenster'
+  | 'Türen'
+  | 'WDVS'
+  | 'Innenwand'
+  | 'Vorbaurollladen'
+  | 'Keller';
+type BauteilOptions = {
+  id: string;
+  value: Bauteil;
+  disabled: boolean;
+};
+type BauteilObj = {
+  options: BauteilOptions[];
+  title: string;
+};
+
+// Wärmeerzeuger (Bestand)
+type WaermeerzeugerEinzelmassnahmenObj = {
+  options: WaermeerzeugerEinzelmassnahmenOptions[];
+  title: string;
+};
+
+type Fenster = '3WSV Passivhaus' | '3WSV konv.' | '2WSV konv.';
+type FensterOptions = {
+  id: string;
+  value: Fenster;
+  disabled: boolean;
+};
+type FensterObj = {
+  options: FensterOptions[];
+  title: string;
+};
+type Dachflaechenfenster = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type DachflaechenfensterOptions = {
+  id: string;
+  value: Dachflaechenfenster;
+  disabled: boolean;
+};
+type DachflaechenfensterObj = {
+  options: DachflaechenfensterOptions[];
+  title: string;
+};
+
+type Tuer = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type TuerOptions = {
+  id: string;
+  value: Tuer;
+  disabled: boolean;
+};
+type TuerObj = {
+  options: TuerOptions[];
+  title: string;
+};
+
+type Keller =
+  | 'unterseitig ohne Bekleidung'
+  | 'unterseitig mit Bekleidung'
+  | 'oberseitig';
+type KellerOptions = {
+  id: string;
+  value: Keller;
+  disabled: boolean;
+};
+type KellerObj = {
+  options: KellerOptions[];
+  title: string;
+};
+
+type ObersteGeschossdecke = 'begehbar' | 'nicht begehbar';
+type ObersteGeschossdeckeOptions = {
+  id: string;
+  value: ObersteGeschossdecke;
+  disabled: boolean;
+};
+type ObersteGeschossdeckeObj = {
+  options: ObersteGeschossdeckeOptions[];
+  title: string;
+};
+
+type Flachdach =
+  | 'ohne Lichtkuppeln'
+  | 'mit Lichtkuppeln Einfamilienhaus'
+  | 'mit Lichtkuppeln Mehrfamilienhaus';
+type FlachdachOptions = {
+  id: string;
+  value: Flachdach;
+  disabled: boolean;
+};
+type FlachdachObj = {
+  options: FlachdachOptions[];
+  title: string;
+};
+
+type Vorbaurollladen =
+  | 'Kunststoff, Gurt'
+  | 'Kunststoff, Elektro'
+  | 'Alu, Gurt'
+  | 'Alu, Elektro';
+type VorbaurollladenOptions = {
+  id: string;
+  value: Vorbaurollladen;
+  disabled: boolean;
+};
+type VorbaurollladenObj = {
+  options: VorbaurollladenOptions[];
+  title: string;
 };

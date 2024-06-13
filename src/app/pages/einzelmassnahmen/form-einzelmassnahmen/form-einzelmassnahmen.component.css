@@ -4,3 +4,25 @@
   align-items: center;
   justify-content: center;
 }
+
+.house {
+  width: 320px;
+}
+
+@media screen and (max-width: 1280px) {
+  .house {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .house {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .house {
+    width: 250px;
+  }
+}
