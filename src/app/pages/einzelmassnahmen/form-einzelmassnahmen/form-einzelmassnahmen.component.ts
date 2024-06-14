@@ -2,13 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
-import { allgemein, einzelmassnahmen, neubau } from '../../../shared/tooltips';
+import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen.service';
+import { SliderInputComponent } from '../../../slider-input/slider-input.component';
 
 @Component({
   selector: 'app-form-einzelmassnahmen',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TooltipDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TooltipDirective,
+    SliderInputComponent,
+  ],
   templateUrl: './form-einzelmassnahmen.component.html',
   styleUrl: './form-einzelmassnahmen.component.css',
   host: {
@@ -16,8 +22,6 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen.service';
   },
 })
 export class FormEinzelmassnahmenComponent {
-  bauteil: Bauteil = 'Außenwand';
-
   constructor(
     public formService: FormEinzelmassnahmenService,
     public allgemeinTooltips: allgemein,

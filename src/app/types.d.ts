@@ -21,6 +21,7 @@ type SliderNumberObj = {
   max: number;
   step: number;
   title: string;
+  tooltip?: string;
   disabled: boolean;
 };
 

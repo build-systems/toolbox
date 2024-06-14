@@ -7,13 +7,14 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzel
 export class EinzelmassnahmenService {
   // Active form tab
   // public currentTab = signal(1);
-  bauteil: Bauteil = this.formEinzelmassnahmenService.bauteil.options[0].value;
-  fensterflaeche: number =
-    this.formEinzelmassnahmenService.fensterflaeche.value;
-  gesamtFensterflaeche: number =
-    this.formEinzelmassnahmenService.gesamtFensterflaeche.value;
-  fensterTyp: Fenster =
-    this.formEinzelmassnahmenService.fensterTyp.options[0].value;
+  bauteil: Bauteil =
+    this.formEinzelmassnahmenService.bauteilObj.options[0].value;
+  // fensterflaeche: number =
+  //   this.formEinzelmassnahmenService.fensterflaeche.value;
+  // gesamtFensterflaeche: number =
+  //   this.formEinzelmassnahmenService.gesamtFensterflaeche.value;
+  // fensterTyp: Fenster =
+  //   this.formEinzelmassnahmenService.fensterObj.options[0].value;
   dachflaechenfensterTyp: Dachflaechenfenster =
     this.formEinzelmassnahmenService.dachflaechenfensterTyp.options[0].value;
   tuerflaeche: number = this.formEinzelmassnahmenService.tuerflaeche.value;
@@ -38,9 +39,9 @@ export class EinzelmassnahmenService {
     this.formEinzelmassnahmenService.formEinzelmassnahmen.valueChanges.subscribe(
       (value) => {
         this.bauteil = value.bauteil!;
-        this.fensterflaeche = value.fensterflaecheRange!;
-        this.gesamtFensterflaeche = value.gesamtFensterflaecheRange!;
-        this.fensterTyp = value.fensterTyp!;
+        // this.fensterflaeche = value.fensterflaeche!;
+        // this.gesamtFensterflaeche = value.gesamtFensterflaecheRange!;
+        // this.fensterTyp = value.fensterTyp!;
         this.dachflaechenfensterTyp = value.dachflaechenfensterTyp!;
         this.tuerflaeche = value.tuerflaeche!;
         this.tuerTyp = value.tuerTyp!;

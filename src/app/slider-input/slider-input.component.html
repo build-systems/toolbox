@@ -1,0 +1,36 @@
+<fieldset>
+  <div class="legend-info">
+    <legend>
+      {{ object().title }}
+      @if (object().tooltip) {&nbsp;
+      <span
+        class="tooltip-icon"
+        [appTooltip]="object().tooltip!"
+        placement="right"
+        >&#9432;</span
+      >
+      }
+    </legend>
+  </div>
+  <span class="slidernumber">
+    <input
+      #inputField
+      (input)="value.set(inputField.valueAsNumber)"
+      type="range"
+      [value]="value()"
+      [min]="object().min"
+      [max]="object().max"
+      [step]="object().step"
+      class="slider"
+    />
+    <input
+      #sliderField
+      (input)="value.set(sliderField.valueAsNumber)"
+      type="number"
+      [value]="value()"
+      [min]="object().min"
+      [max]="object().max"
+      (keyup.enter)="onEnterKey($event)"
+    />
+  </span>
+</fieldset>

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormEinzelmassnahmenService {
   // Bauteil
-  bauteil: BauteilObj = {
+  bauteilObj: BauteilObj = {
     options: [
       { id: 'bauteil01', value: 'Außenwand', disabled: false },
       { id: 'bauteil02', value: 'Bodenplatte', disabled: false },
@@ -23,6 +24,7 @@ export class FormEinzelmassnahmenService {
     ],
     title: 'Bauteil',
   };
+  bauteil = signal<string>(this.bauteilObj.options[0].value);
 
   // C3 → Wohnfläche [m²]
   // Wohnfläche centralized form values
@@ -33,6 +35,7 @@ export class FormEinzelmassnahmenService {
     max: 10000,
     step: 1,
     title: 'Wohnfläche [m²]',
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   };
 
@@ -81,33 +84,36 @@ export class FormEinzelmassnahmenService {
   };
 
   // C19 → Eingabe Fläche Einzelfenster [m²]
-  fensterflaeche: SliderNumberObj = {
+  fensterflaeche = signal<SliderNumberObj>({
     min: 0.1,
     value: 1,
     max: 100,
     step: 0.1,
     title: 'Einzelfensterfläche [m²]',
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
-  };
+  });
 
   // C20 → Eingabe Fensterfläche gesamt [m²]
-  gesamtFensterflaeche: SliderNumberObj = {
+  gesamtFensterflaeche = signal<SliderNumberObj>({
     min: 1,
     value: 1,
     max: 1000,
     step: 1,
     title: 'Gesamt Fensterfläche [m²]',
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
-  };
+  });
 
-  fensterTyp: FensterObj = {
+  fensterObj = signal<FensterObj>({
     options: [
       { id: 'fenst1', value: '3WSV Passivhaus', disabled: false },
       { id: 'fenst2', value: '3WSV konv.', disabled: false },
       { id: 'fenst3', value: '2WSV konv.', disabled: false },
     ],
     title: 'Fenster Typ',
-  };
+  });
+  fenster = signal<string>(this.fensterObj().options[0].value);
 
   dachflaechenfensterTyp: DachflaechenfensterObj = {
     options: [
@@ -226,7 +232,7 @@ export class FormEinzelmassnahmenService {
   };
 
   formEinzelmassnahmen = this.fb.group({
-    bauteil: this.bauteil.options[0].value,
+    bauteil: this.bauteilObj.options[0].value,
     // This one is not necessary for the first version
     wohnflaecheRange: [
       this.wohnflaeche.value,
@@ -267,45 +273,37 @@ export class FormEinzelmassnahmenService {
       },
     ],
     waermeerzeuger: this.waermeerzeuger.options[0].value,
-    fensterflaecheRange: [
-      this.fensterflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.fensterflaeche.min),
-        Validators.max(this.fensterflaeche.max),
-      ],
-    ],
-    fensterflaeche: [
-      this.fensterflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.fensterflaeche.min),
-          Validators.max(this.fensterflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    gesamtFensterflaecheRange: [
-      this.gesamtFensterflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.gesamtFensterflaeche.min),
-        Validators.max(this.gesamtFensterflaeche.max),
-      ],
-    ],
-    gesamtFensterflaeche: [
-      this.gesamtFensterflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.gesamtFensterflaeche.min),
-          Validators.max(this.gesamtFensterflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    fensterTyp: this.fensterTyp.options[0].value,
+    // fensterflaeche: [
+    //   this.fensterflaeche.value,
+    //   {
+    //     validators: [
+    //       Validators.required,
+    //       Validators.min(this.fensterflaeche.min),
+    //       Validators.max(this.fensterflaeche.max),
+    //     ],
+    //     updateOn: 'blur',
+    //   },
+    // ],
+    // gesamtFensterflaecheRange: [
+    //   this.gesamtFensterflaeche.value,
+    //   [
+    //     Validators.required,
+    //     Validators.min(this.gesamtFensterflaeche.min),
+    //     Validators.max(this.gesamtFensterflaeche.max),
+    //   ],
+    // ],
+    // gesamtFensterflaeche: [
+    //   this.gesamtFensterflaeche.value,
+    //   {
+    //     validators: [
+    //       Validators.required,
+    //       Validators.min(this.gesamtFensterflaeche.min),
+    //       Validators.max(this.gesamtFensterflaeche.max),
+    //     ],
+    //     updateOn: 'blur',
+    //   },
+    // ],
+    // fensterTyp: this.fensterObj.options[0].value,
     dachflaechenfensterTyp: this.dachflaechenfensterTyp.options[0].value,
     tuerflaecheRange: [
       this.tuerflaeche.value,
@@ -408,62 +406,48 @@ export class FormEinzelmassnahmenService {
     ],
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    public einzelmassnahmenTooltips: einzelmassnahmen
+  ) {
     // Fensterflaeche
-    this.formEinzelmassnahmen
-      .get('fensterflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('fensterflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('fensterflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.fensterflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('fensterflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('fensterflaecheRange')
-            ?.setValue(this.fensterflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('fensterflaeche')
-            ?.setValue(this.fensterflaeche.min, { emitEvent: false });
-        }
-      });
+    // this.formEinzelmassnahmen
+    //   .get('fensterflaeche')
+    //   ?.valueChanges.subscribe((value) => {
+    //     if (value && value < this.fensterflaeche.min) {
+    //       this.formEinzelmassnahmen
+    //         .get('fensterflaeche')
+    //         ?.setValue(this.fensterflaeche.min, { emitEvent: false });
+    //     }
+    //   });
 
     // Fensterflaeche
-    this.formEinzelmassnahmen
-      .get('gesamtFensterflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('gesamtFensterflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
+    // this.formEinzelmassnahmen
+    //   .get('gesamtFensterflaecheRange')
+    //   ?.valueChanges.subscribe((value) => {
+    //     // Update number input when range input changes
+    //     this.formEinzelmassnahmen
+    //       .get('gesamtFensterflaeche')
+    //       ?.setValue(value, { emitEvent: false });
+    //   });
 
-    this.formEinzelmassnahmen
-      .get('gesamtFensterflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.gesamtFensterflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('gesamtFensterflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('gesamtFensterflaecheRange')
-            ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('gesamtFensterflaeche')
-            ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
-        }
-      });
+    // this.formEinzelmassnahmen
+    //   .get('gesamtFensterflaeche')
+    //   ?.valueChanges.subscribe((value) => {
+    //     if (value && value >= this.gesamtFensterflaeche.min) {
+    //       // Update range input when number input changes
+    //       this.formEinzelmassnahmen
+    //         .get('gesamtFensterflaecheRange')
+    //         ?.setValue(value, { emitEvent: false });
+    //     } else {
+    //       this.formEinzelmassnahmen
+    //         .get('gesamtFensterflaecheRange')
+    //         ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
+    //       this.formEinzelmassnahmen
+    //         .get('gesamtFensterflaeche')
+    //         ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
+    //     }
+    //   });
 
     // Tuerflaeche
     this.formEinzelmassnahmen

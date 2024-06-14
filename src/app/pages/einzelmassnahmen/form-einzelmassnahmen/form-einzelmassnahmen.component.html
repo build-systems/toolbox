@@ -8,99 +8,52 @@
 <form [formGroup]="formService.formEinzelmassnahmen">
   <!-- Batuteil as a dropdown > To be done -->
   <fieldset class="dropdown-fieldset">
-    <legend>{{ formService.bauteil.title }}</legend>
+    <legend>{{ formService.bauteilObj.title }}</legend>
     <select
       class="dropdown"
-      [(ngModel)]="bauteil"
-      name="bauteil"
-      formControlName="bauteil"
+      #bauteilField
+      (input)="formService.bauteil.set(bauteilField.value)"
     >
       <option
-        *ngFor="let item of formService.bauteil.options"
+        *ngFor="let item of formService.bauteilObj.options"
         [value]="item.value"
       >
         {{ item.value }}
       </option>
     </select>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Fenster')">
-    <div class="legend-info">
-      <legend>
-        {{ formService.fensterflaeche.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="fensterflaecheRange"
-        [min]="formService.fensterflaeche.min"
-        [max]="formService.fensterflaeche.max"
-        [step]="formService.fensterflaeche.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="fensterflaeche"
-        name="fensterflaeche"
-        [min]="formService.fensterflaeche.min"
-        [max]="formService.fensterflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Fenster')">
-    <div class="legend-info">
-      <legend>
-        {{ formService.gesamtFensterflaeche.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="gesamtFensterflaecheRange"
-        [min]="formService.gesamtFensterflaeche.min"
-        [max]="formService.gesamtFensterflaeche.max"
-        [step]="formService.gesamtFensterflaeche.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="gesamtFensterflaeche"
-        name="gesamtFensterflaeche"
-        [min]="formService.gesamtFensterflaeche.min"
-        [max]="formService.gesamtFensterflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset class="radio-fieldset" [hidden]="!(bauteil === 'Fenster')">
+  <app-slider-input
+    [hidden]="!(formService.bauteil() === 'Fenster')"
+    [(value)]="formService.fensterflaeche().value"
+    [object]="formService.fensterflaeche()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteil() === 'Fenster')"
+    [(value)]="formService.gesamtFensterflaeche().value"
+    [object]="formService.gesamtFensterflaeche()"
+  />
+  <fieldset
+    class="radio-fieldset"
+    [hidden]="!(formService.bauteil() === 'Fenster')"
+  >
     <legend>
-      {{ formService.fensterTyp.title }}
+      {{ formService.fensterObj().title }}
     </legend>
     <div class="as-legend" aria-hidden="true">
-      {{ formService.fensterTyp.title }}
+      {{ formService.fensterObj().title }}
     </div>
     <div class="radio-options">
       <span
         class="radio-option"
-        *ngFor="let item of formService.fensterTyp.options"
+        *ngFor="let item of formService.fensterObj().options"
       >
         <input
+          #fensterField
           type="radio"
           [id]="item.id"
           [value]="item.value"
-          name="fensterTyp"
-          formControlName="fensterTyp"
+          [checked]="formService.fenster() === item.value"
+          (input)="formService.fenster.set(fensterField.value)"
           [attr.disabled]="item.disabled ? '' : null"
         />
         <label class="radio-container" [for]="item.id"
@@ -112,7 +65,7 @@
   </fieldset>
   <fieldset
     class="radio-fieldset"
-    [hidden]="!(bauteil === 'Dachflächenfenster')"
+    [hidden]="!(formService.bauteil() === 'Dachflächenfenster')"
   >
     <legend>
       {{ formService.dachflaechenfensterTyp.title }}
@@ -140,7 +93,12 @@
       </span>
     </div>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Türen')">
+  <app-slider-input
+    [hidden]="!(formService.bauteil() === 'Türen')"
+    [(value)]="formService.gesamtFensterflaeche().value"
+    [object]="formService.gesamtFensterflaeche()"
+  />
+  <fieldset [hidden]="!(formService.bauteil() === 'Türen')">
     <div class="legend-info">
       <legend>
         {{ formService.tuerflaeche.title }}&nbsp;<span
@@ -170,7 +128,10 @@
       />
     </span>
   </fieldset>
-  <fieldset class="radio-fieldset" [hidden]="!(bauteil === 'Türen')">
+  <fieldset
+    class="radio-fieldset"
+    [hidden]="!(formService.bauteil() === 'Türen')"
+  >
     <legend>
       {{ formService.tuerTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -210,7 +171,7 @@
   <fieldset
     [hidden]="
       !(
-        bauteil === 'Außenwand' ||
+        formService.bauteil() === 'Außenwand' ||
         'Bodenplatte' ||
         'Flachdach' ||
         'Innenwand' ||
@@ -252,7 +213,7 @@
   <fieldset
     [hidden]="
       !(
-        bauteil === 'Außenwand' ||
+        formService.bauteil() === 'Außenwand' ||
         'Bodenplatte' ||
         'Flachdach' ||
         'Innenwand' ||
@@ -291,7 +252,10 @@
       />
     </span>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Keller')" class="radio-fieldset">
+  <fieldset
+    [hidden]="!(formService.bauteil() === 'Keller')"
+    class="radio-fieldset"
+  >
     <legend>
       {{ formService.kellerTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -329,7 +293,7 @@
     </div>
   </fieldset>
   <fieldset
-    [hidden]="!(bauteil === 'Oberste Geschossdecke')"
+    [hidden]="!(formService.bauteil() === 'Oberste Geschossdecke')"
     class="radio-fieldset"
   >
     <legend>
@@ -368,7 +332,10 @@
       </span>
     </div>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Flachdach')" class="radio-fieldset">
+  <fieldset
+    [hidden]="!(formService.bauteil() === 'Flachdach')"
+    class="radio-fieldset"
+  >
     <legend>
       {{ formService.flachdachTyp.title }}&nbsp;<span
         class="tooltip-icon"
@@ -405,7 +372,7 @@
       </span>
     </div>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Steildach')">
+  <fieldset [hidden]="!(formService.bauteil() === 'Steildach')">
     <legend>
       {{ formService.gaubeflaeche.title }}&nbsp;<span
         class="tooltip-icon"
@@ -436,7 +403,7 @@
       />
     </span>
   </fieldset>
-  <fieldset [hidden]="!(bauteil === 'Vorbaurollladen')">
+  <fieldset [hidden]="!(formService.bauteil() === 'Vorbaurollladen')">
     <div class="legend-info">
       <legend>
         {{ formService.rollladenflaeche.title }}&nbsp;<span
