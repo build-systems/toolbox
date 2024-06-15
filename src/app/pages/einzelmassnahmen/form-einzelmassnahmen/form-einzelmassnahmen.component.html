@@ -1,436 +1,84 @@
 <div class="house-container">
-  <img
-    src="assets/house-section-isometric.svg"
-    class="house"
-    alt="BuildSystems round logo"
-  />
+  <app-haus-section class="house"></app-haus-section>
 </div>
-<form [formGroup]="formService.formEinzelmassnahmen">
-  <!-- Batuteil as a dropdown > To be done -->
-  <fieldset class="dropdown-fieldset">
-    <legend>{{ formService.bauteilObj.title }}</legend>
-    <select
-      class="dropdown"
-      #bauteilField
-      (input)="formService.bauteil.set(bauteilField.value)"
+<fieldset class="dropdown-fieldset">
+  <legend>{{ formService.bauteilObj().title }}</legend>
+  <select
+    class="dropdown"
+    [(ngModel)]="formService.bauteilSelected"
+    [name]="formService.bauteilObj().title"
+    #bauteilField
+  >
+    <option
+      *ngFor="let item of formService.bauteilObj().options"
+      [ngValue]="item.value"
     >
-      <option
-        *ngFor="let item of formService.bauteilObj.options"
-        [value]="item.value"
-      >
-        {{ item.value }}
-      </option>
-    </select>
-  </fieldset>
-  <app-slider-input
-    [hidden]="!(formService.bauteil() === 'Fenster')"
-    [(value)]="formService.fensterflaeche().value"
-    [object]="formService.fensterflaeche()"
-  />
-  <app-slider-input
-    [hidden]="!(formService.bauteil() === 'Fenster')"
-    [(value)]="formService.gesamtFensterflaeche().value"
-    [object]="formService.gesamtFensterflaeche()"
-  />
-  <fieldset
-    class="radio-fieldset"
-    [hidden]="!(formService.bauteil() === 'Fenster')"
-  >
-    <legend>
-      {{ formService.fensterObj().title }}
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.fensterObj().title }}
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.fensterObj().options"
-      >
-        <input
-          #fensterField
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          [checked]="formService.fenster() === item.value"
-          (input)="formService.fenster.set(fensterField.value)"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <fieldset
-    class="radio-fieldset"
-    [hidden]="!(formService.bauteil() === 'Dachflächenfenster')"
-  >
-    <legend>
-      {{ formService.dachflaechenfensterTyp.title }}
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.dachflaechenfensterTyp.title }}
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.dachflaechenfensterTyp.options"
-      >
-        <input
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          name="dachflaechenfensterTyp"
-          formControlName="dachflaechenfensterTyp"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <app-slider-input
-    [hidden]="!(formService.bauteil() === 'Türen')"
-    [(value)]="formService.gesamtFensterflaeche().value"
-    [object]="formService.gesamtFensterflaeche()"
-  />
-  <fieldset [hidden]="!(formService.bauteil() === 'Türen')">
-    <div class="legend-info">
-      <legend>
-        {{ formService.tuerflaeche.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="tuerflaecheRange"
-        [min]="formService.tuerflaeche.min"
-        [max]="formService.tuerflaeche.max"
-        [step]="formService.tuerflaeche.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="tuerflaeche"
-        name="tuerflaeche"
-        [min]="formService.tuerflaeche.min"
-        [max]="formService.tuerflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset
-    class="radio-fieldset"
-    [hidden]="!(formService.bauteil() === 'Türen')"
-  >
-    <legend>
-      {{ formService.tuerTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.tuerTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.tuerTyp.options"
-      >
-        <input
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          name="tuerTyp"
-          formControlName="tuerTyp"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <fieldset
-    [hidden]="
-      !(
-        formService.bauteil() === 'Außenwand' ||
-        'Bodenplatte' ||
-        'Flachdach' ||
-        'Innenwand' ||
-        'Keller' ||
-        'Oberste Geschossdecke' ||
-        'WDVS'
-      )
-    "
-  >
-    <div class="legend-info">
-      <legend>
-        {{ formService.gedaemmteflaeche.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="gedaemmteflaecheRange"
-        [min]="formService.gedaemmteflaeche.min"
-        [max]="formService.gedaemmteflaeche.max"
-        [step]="formService.gedaemmteflaeche.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="gedaemmteflaeche"
-        name="gedaemmteflaeche"
-        [min]="formService.gedaemmteflaeche.min"
-        [max]="formService.gedaemmteflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset
-    [hidden]="
-      !(
-        formService.bauteil() === 'Außenwand' ||
-        'Bodenplatte' ||
-        'Flachdach' ||
-        'Innenwand' ||
-        'Keller' ||
-        'Oberste Geschossdecke' ||
-        'WDVS'
-      )
-    "
-  >
-    <div class="legend-info">
-      <legend>
-        {{ formService.daemmstoffdicke.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="daemmstoffdickeRange"
-        [min]="formService.daemmstoffdicke.min"
-        [max]="formService.daemmstoffdicke.max"
-        [step]="formService.daemmstoffdicke.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="daemmstoffdicke"
-        name="daemmstoffdicke"
-        [min]="formService.daemmstoffdicke.min"
-        [max]="formService.daemmstoffdicke.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset
-    [hidden]="!(formService.bauteil() === 'Keller')"
-    class="radio-fieldset"
-  >
-    <legend>
-      {{ formService.kellerTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.kellerTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.kellerTyp.options"
-      >
-        <input
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          name="kellerTyp"
-          formControlName="kellerTyp"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <fieldset
-    [hidden]="!(formService.bauteil() === 'Oberste Geschossdecke')"
-    class="radio-fieldset"
-  >
-    <legend>
-      {{ formService.obersteGeschossdeckeTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.obersteGeschossdeckeTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.obersteGeschossdeckeTyp.options"
-      >
-        <input
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          name="obersteGeschossdeckeTyp"
-          formControlName="obersteGeschossdeckeTyp"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <fieldset
-    [hidden]="!(formService.bauteil() === 'Flachdach')"
-    class="radio-fieldset"
-  >
-    <legend>
-      {{ formService.flachdachTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend>
-    <div class="as-legend" aria-hidden="true">
-      {{ formService.flachdachTyp.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </div>
-    <div class="radio-options">
-      <span
-        class="radio-option"
-        *ngFor="let item of formService.flachdachTyp.options"
-      >
-        <input
-          type="radio"
-          [id]="item.id"
-          [value]="item.value"
-          name="flachdachTyp"
-          formControlName="flachdachTyp"
-          [attr.disabled]="item.disabled ? '' : null"
-        />
-        <label class="radio-container" [for]="item.id"
-          >{{ item.value }}
-          <span class="radiomark"></span>
-        </label>
-      </span>
-    </div>
-  </fieldset>
-  <fieldset [hidden]="!(formService.bauteil() === 'Steildach')">
-    <legend>
-      {{ formService.gaubeflaeche.title }}&nbsp;<span
-        class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
-        placement="right"
-        >&#9432;</span
-      >
-    </legend>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="gaubeflaecheRange"
-        [min]="formService.gaubeflaeche.min"
-        [max]="formService.gaubeflaeche.max"
-        [step]="formService.gaubeflaeche.step"
-        class="slider"
-        [attr.disabled]="formService.gaubeflaeche.disabled ? '' : null"
-      />
-      <input
-        type="number"
-        formControlName="gaubeflaeche"
-        name="gaubeflaeche"
-        [min]="formService.gaubeflaeche.min"
-        [max]="formService.gaubeflaeche.max"
-        [step]="formService.gaubeflaeche.step"
-        [attr.disabled]="formService.gaubeflaeche.disabled ? '' : null"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-  <fieldset [hidden]="!(formService.bauteil() === 'Vorbaurollladen')">
-    <div class="legend-info">
-      <legend>
-        {{ formService.rollladenflaeche.title }}&nbsp;<span
-          class="tooltip-icon"
-          [appTooltip]="einzelmassnahmenTooltips.placeholder"
-          placement="right"
-          >&#9432;</span
-        >
-      </legend>
-    </div>
-    <span class="slidernumber">
-      <input
-        type="range"
-        formControlName="rollladenflaecheRange"
-        [min]="formService.rollladenflaeche.min"
-        [max]="formService.rollladenflaeche.max"
-        [step]="formService.rollladenflaeche.step"
-        class="slider"
-      />
-      <input
-        type="number"
-        formControlName="rollladenflaeche"
-        name="rollladenflaeche"
-        [min]="formService.rollladenflaeche.min"
-        [max]="formService.rollladenflaeche.max"
-        (keyup.enter)="onEnterKey($event)"
-      />
-    </span>
-  </fieldset>
-</form>
+      {{ item.text ? item.text : item.value }}
+    </option>
+  </select>
+</fieldset>
+<app-slider-input
+  [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+  [(value)]="formService.fensterflaecheValue"
+  [data]="formService.fensterflaeche()"
+/>
+<app-slider-input
+  [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+  [(value)]="formService.gesamtFensterflaecheValue"
+  [data]="formService.gesamtFensterflaeche()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+  [(selected)]="formService.fensterSelected"
+  [data]="formService.fensterObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Dachflächenfenster')"
+  [(selected)]="formService.dachflaechenfenster"
+  [data]="formService.dachflaechenfensterObj()"
+/>
+<app-slider-input
+  [hidden]="!(formService.bauteilSelected() === 'Türen')"
+  [(value)]="formService.tuerflaecheValue"
+  [data]="formService.tuerflaecheObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Türen')"
+  [(selected)]="formService.tuerSelected"
+  [data]="formService.tuerObj()"
+/>
+<app-slider-input
+  *ngIf="formService.isOpakeVisible()"
+  [(value)]="formService.gedaemmteflaecheValue"
+  [data]="formService.gedaemmteflaecheObj()"
+/>
+<app-slider-input
+  *ngIf="formService.isOpakeVisible()"
+  [(value)]="formService.daemmstoffdickeValue"
+  [data]="formService.daemmstoffdickeObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Keller')"
+  [(selected)]="formService.kellerSelected"
+  [data]="formService.kellerObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Oberste Geschossdecke')"
+  [(selected)]="formService.obersteGeschossdeckeSelected"
+  [data]="formService.obersteGeschossdeckeObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Flachdach')"
+  [(selected)]="formService.flachdachSelected"
+  [data]="formService.flachdachObj()"
+/>
+<app-slider-input
+  [hidden]="!(formService.bauteilSelected() === 'Steildachgauben')"
+  [(value)]="formService.gaubeflaecheValue"
+  [data]="formService.gaubeflaecheObj()"
+/>
+<app-slider-input
+  [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
+  [(value)]="formService.rollladenflaecheValue"
+  [data]="formService.rollladenflaecheObj()"
+/>

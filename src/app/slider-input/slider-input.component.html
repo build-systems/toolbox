@@ -1,11 +1,11 @@
 <fieldset>
   <div class="legend-info">
     <legend>
-      {{ object().title }}
-      @if (object().tooltip) {&nbsp;
+      {{ data().title }}
+      @if (data().tooltip) {&nbsp;
       <span
         class="tooltip-icon"
-        [appTooltip]="object().tooltip!"
+        [appTooltip]="data().tooltip!"
         placement="right"
         >&#9432;</span
       >
@@ -14,23 +14,26 @@
   </div>
   <span class="slidernumber">
     <input
-      #inputField
-      (input)="value.set(inputField.valueAsNumber)"
       type="range"
-      [value]="value()"
-      [min]="object().min"
-      [max]="object().max"
-      [step]="object().step"
       class="slider"
+      [name]="data().title"
+      [ngModel]="value()"
+      (ngModelChange)="value.set($event)"
+      [min]="data().min"
+      [max]="data().max"
+      [step]="data().step"
+      required
     />
     <input
-      #sliderField
-      (input)="value.set(sliderField.valueAsNumber)"
       type="number"
-      [value]="value()"
-      [min]="object().min"
-      [max]="object().max"
+      [id]="data().title"
+      [ngModel]="value().toFixed(2)"
+      (ngModelChange)="onValueChange($event)"
+      [ngModelOptions]="{ updateOn: 'blur' }"
+      [min]="data().min"
+      [max]="data().max"
       (keyup.enter)="onEnterKey($event)"
+      required
     />
   </span>
 </fieldset>

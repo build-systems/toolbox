@@ -1,0 +1,21 @@
+.selected path,
+.selected polygon {
+  fill: aquamarine;
+  filter: drop-shadow(0 0 5px #fff) drop-shadow(0 0 10px aquamarine)
+    drop-shadow(0 0 10px aquamarine);
+}
+
+.selected line,
+.selected polyline {
+  stroke: white;
+}
+
+.selectable:hover path,
+.selectable:hover polygon {
+  fill: aquamarine;
+}
+
+.selectable:hover line,
+.selectable:hover polyline {
+  stroke: teal;
+}

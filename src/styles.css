@@ -313,7 +313,7 @@ li {
   height: fit-content;
   padding: var(--layout-padding);
   /* padding-top: 2rem; */
-  padding-top: 40px;
+  /* padding-top: 40px; */
   padding-bottom: 3rem;
   background-color: var(--bg-tertiary);
   border-radius: 0 0 var(--button-radius) var(--button-radius);
@@ -375,7 +375,8 @@ li {
 input {
   background-color: var(--bg-primary);
   border: 1px solid var(--bg-primary);
-  font-family: var(--font-family-primary), sans-serif;
+  /* The main font family make the input numbers jump when changin decimal places */
+  /* font-family: var(--font-family-primary), sans-serif; */
   font-size: 1rem;
 }
 
@@ -386,9 +387,6 @@ label {
 
 fieldset {
   border-style: none;
-}
-
-fieldset + fieldset {
   margin-top: 1rem;
 }
 

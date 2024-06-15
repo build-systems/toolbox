@@ -32,21 +32,21 @@ export class FormDarlehenNeubauService {
 
   // KfW-Darlehen centralized form values
   kfWDarlehen: KfWDarlehenObj = {
+    title: 'KfW-Darlehen',
     options: [
       { id: 'kfwd1', value: 'Annuitäten', disabled: false },
       { id: 'kfwd2', value: 'Endfälliges', disabled: false },
       // { id: 'kfwd3', value: 'kein', disabled: false },
     ],
-    title: 'KfW-Darlehen',
   };
 
   // Bank-Darlehen centralized form values
   bankDarlehen: BankDarlehenObj = {
+    title: 'Bank-Darlehen',
     options: [
       { id: 'bankd1', value: 'Annuitäten', disabled: false },
       { id: 'bankd2', value: 'Endfälliges', disabled: false },
     ],
-    title: 'Bank-Darlehen',
   };
 
   // Define form controls

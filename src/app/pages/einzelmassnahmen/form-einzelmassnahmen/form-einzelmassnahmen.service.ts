@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 
 @Injectable({
@@ -7,7 +6,7 @@ import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 })
 export class FormEinzelmassnahmenService {
   // Bauteil
-  bauteilObj: BauteilObj = {
+  bauteilObj = signal<BauteilObj>({
     options: [
       { id: 'bauteil01', value: 'Außenwand', disabled: false },
       { id: 'bauteil02', value: 'Bodenplatte', disabled: false },
@@ -16,15 +15,21 @@ export class FormEinzelmassnahmenService {
       { id: 'bauteil05', value: 'Flachdach', disabled: false },
       { id: 'bauteil06', value: 'Innenwand', disabled: false },
       { id: 'bauteil07', value: 'Keller', disabled: false },
-      { id: 'bauteil08', value: 'Oberste Geschossdecke', disabled: false },
+      {
+        id: 'bauteil08',
+        value: 'ObersteGeschossdecke',
+        text: 'Oberste Geschossdecke',
+        disabled: false,
+      },
       { id: 'bauteil09', value: 'Steildach', disabled: false },
-      { id: 'bauteil10', value: 'Türen', disabled: false },
-      { id: 'bauteil11', value: 'Vorbaurollladen', disabled: false },
-      { id: 'bauteil12', value: 'WDVS', disabled: false },
+      { id: 'bauteil10', value: 'Steildachgauben', disabled: false },
+      { id: 'bauteil11', value: 'Türen', disabled: false },
+      { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
+      { id: 'bauteil13', value: 'WDVS', disabled: false },
     ],
     title: 'Bauteil',
-  };
-  bauteil = signal<string>(this.bauteilObj.options[0].value);
+  });
+  bauteilSelected = signal<string>('');
 
   // C3 → Wohnfläche [m²]
   // Wohnfläche centralized form values
@@ -53,7 +58,9 @@ export class FormEinzelmassnahmenService {
 
   // C6 → Wärmeerzeuger (Bestand)
   // This one is not necessary for the first version
-  waermeerzeuger: WaermeerzeugerEinzelmassnahmenObj = {
+  waermeerzeuger: WaermeerzeugerObj = {
+    title: 'Wärmeerzeuger (Bestand)',
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
     options: [
       { id: 'w1', value: 'Bestandskessel', disabled: false },
       { id: 'w2', value: 'Gas-BW-Kessel', disabled: false },
@@ -71,7 +78,7 @@ export class FormEinzelmassnahmenService {
       { id: 'w14', value: 'Solar für WW mit Gaskessel', disabled: false },
       { id: 'w15', value: 'Solar für WW mit Ölkessel', disabled: false },
       { id: 'w16', value: 'Solar für WW mit Pelletkessel', disabled: false },
-      { id: 'w17', value: 'olar für WW&H mit Gaskessel', disabled: false },
+      { id: 'w17', value: 'Solar für WW&H mit Gaskessel', disabled: false },
       { id: 'w18', value: 'Solar für WW&H mit Ölkessel', disabled: false },
       { id: 'w19', value: 'Solar für WW&H mit Pelletkessel', disabled: false },
       {
@@ -80,7 +87,6 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    title: 'Wärmeerzeuger (Bestand)',
   };
 
   // C19 → Eingabe Fläche Einzelfenster [m²]
@@ -93,6 +99,7 @@ export class FormEinzelmassnahmenService {
     tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   });
+  fensterflaecheValue = signal<number>(1);
 
   // C20 → Eingabe Fensterfläche gesamt [m²]
   gesamtFensterflaeche = signal<SliderNumberObj>({
@@ -104,64 +111,92 @@ export class FormEinzelmassnahmenService {
     tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   });
+  gesamtFensterflaecheValue = signal<number>(1);
 
+  // Fenster
   fensterObj = signal<FensterObj>({
+    title: 'Fenster Typ',
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
     options: [
       { id: 'fenst1', value: '3WSV Passivhaus', disabled: false },
       { id: 'fenst2', value: '3WSV konv.', disabled: false },
       { id: 'fenst3', value: '2WSV konv.', disabled: false },
     ],
-    title: 'Fenster Typ',
   });
-  fenster = signal<string>(this.fensterObj().options[0].value);
+  fensterSelected = signal<Fenster>(this.fensterObj().options[0].value);
 
-  dachflaechenfensterTyp: DachflaechenfensterObj = {
+  // Dachflaechenfenster
+  dachflaechenfensterObj = signal<DachflaechenfensterObj>({
+    title: 'Dachflächenfenster Typ',
     options: [
       { id: 'dachfenst1', value: 'Einfamilienhaus', disabled: false },
       { id: 'dachfenst2', value: 'Mehrfamilienhaus', disabled: false },
     ],
-    title: 'Dachflächenfenster Typ',
-  };
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  dachflaechenfenster = signal<Dachflaechenfenster>(
+    this.dachflaechenfensterObj().options[0].value
+  );
 
   // C20 → Eingabe Fensterfläche gesamt [m²]
-  tuerflaeche: SliderNumberObj = {
+  tuerflaecheObj = signal<SliderNumberObj>({
     min: 0.1,
     value: 2,
     max: 100,
     step: 0.1,
     title: 'Fläche Haustür [m²]',
     disabled: false,
-  };
+  });
+  tuerflaecheValue = signal<number>(1);
 
-  tuerTyp: TuerObj = {
+  tuerObj = signal<TuerObj>({
+    title: 'Tür Typ',
     options: [
       { id: 'tuer1', value: 'Einfamilienhaus', disabled: false },
       { id: 'tuer2', value: 'Mehrfamilienhaus', disabled: false },
     ],
-    title: 'Tür Typ',
-  };
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  tuerSelected = signal<Tuer>('Einfamilienhaus');
+
+  isOpakeVisible(): boolean {
+    const allowedBauteile: Bauteil[] = [
+      'Außenwand',
+      'Bodenplatte',
+      'Flachdach',
+      'Innenwand',
+      'Keller',
+      'ObersteGeschossdecke',
+      'Steildach',
+      'WDVS',
+    ];
+    return allowedBauteile.includes(this.bauteilSelected() as Bauteil);
+  }
 
   // C29 → Eingabe gedämmte Fläche [m²]
-  gedaemmteflaeche: SliderNumberObj = {
+  gedaemmteflaecheObj = signal<SliderNumberObj>({
     min: 1,
     value: 180,
     max: 1000,
     step: 1,
     title: 'Gedämmte Fläche [m²]',
     disabled: false,
-  };
+  });
+  gedaemmteflaecheValue = signal<number>(180);
 
   // C30 → Dämmstoffdicke [cm]
-  daemmstoffdicke: SliderNumberObj = {
+  daemmstoffdickeObj = signal<SliderNumberObj>({
     min: 1,
     value: 10,
     max: 100,
     step: 0.1,
     title: 'Dämmstoffdicke [cm]',
     disabled: false,
-  };
+  });
+  daemmstoffdickeValue = signal<number>(10);
 
-  kellerTyp: KellerObj = {
+  kellerObj = signal<KellerObj>({
+    title: 'Keller Typ',
     options: [
       { id: 'keller1', value: 'unterseitig ohne Bekleidung', disabled: false },
       { id: 'keller2', value: 'unterseitig mit Bekleidung', disabled: false },
@@ -171,10 +206,12 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    title: 'Keller Typ',
-  };
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  kellerSelected = signal<Keller>('unterseitig ohne Bekleidung');
 
-  obersteGeschossdeckeTyp: ObersteGeschossdeckeObj = {
+  obersteGeschossdeckeObj = signal<ObersteGeschossdeckeObj>({
+    title: 'Oberste Geschossdecke',
     options: [
       {
         id: 'oberstegesch1',
@@ -187,10 +224,12 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    title: 'Oberste Geschossdecke',
-  };
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  obersteGeschossdeckeSelected = signal<ObersteGeschossdecke>('begehbar');
 
-  flachdachTyp: FlachdachObj = {
+  flachdachObj = signal<FlachdachObj>({
+    title: 'Flachdach Typ',
     options: [
       {
         id: 'flachdach1',
@@ -208,385 +247,31 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    title: 'Flachdach Typ',
-  };
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  flachdachSelected = signal<Flachdach>('ohne Lichtkuppeln');
 
   // C42 → Fläche der Gaube(n) [m²]
-  gaubeflaeche: SliderNumberObj = {
+  gaubeflaecheObj = signal<SliderNumberObj>({
     min: 1,
     value: 100,
     max: 1000,
     step: 1,
     title: 'Fläche der Gaube(n) [m²]',
     disabled: false,
-  };
+  });
+  gaubeflaecheValue = signal<number>(100);
 
   // C44 → Fläche Rollladen [m²]
-  rollladenflaeche: SliderNumberObj = {
+  rollladenflaecheObj = signal<SliderNumberObj>({
     min: 1,
     value: 100,
     max: 1000,
     step: 1,
     title: 'Fläche Rollladen [m²]',
     disabled: false,
-  };
-
-  formEinzelmassnahmen = this.fb.group({
-    bauteil: this.bauteilObj.options[0].value,
-    // This one is not necessary for the first version
-    wohnflaecheRange: [
-      this.wohnflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.wohnflaeche.min),
-        Validators.max(this.wohnflaeche.max),
-      ],
-    ],
-    wohnflaeche: [
-      this.wohnflaeche.value,
-      {
-        Validators: [
-          Validators.required,
-          Validators.min(this.wohnflaeche.min),
-          Validators.max(this.wohnflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    anzahlWohnungenRange: [
-      this.anzahlWohnungen.value,
-      [
-        Validators.required,
-        Validators.min(this.anzahlWohnungen.min),
-        Validators.max(this.anzahlWohnungen.max),
-      ],
-    ],
-    anzahlWohnungen: [
-      this.anzahlWohnungen.value,
-      {
-        Validators: [
-          Validators.required,
-          Validators.min(this.anzahlWohnungen.min),
-          Validators.max(this.anzahlWohnungen.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    waermeerzeuger: this.waermeerzeuger.options[0].value,
-    // fensterflaeche: [
-    //   this.fensterflaeche.value,
-    //   {
-    //     validators: [
-    //       Validators.required,
-    //       Validators.min(this.fensterflaeche.min),
-    //       Validators.max(this.fensterflaeche.max),
-    //     ],
-    //     updateOn: 'blur',
-    //   },
-    // ],
-    // gesamtFensterflaecheRange: [
-    //   this.gesamtFensterflaeche.value,
-    //   [
-    //     Validators.required,
-    //     Validators.min(this.gesamtFensterflaeche.min),
-    //     Validators.max(this.gesamtFensterflaeche.max),
-    //   ],
-    // ],
-    // gesamtFensterflaeche: [
-    //   this.gesamtFensterflaeche.value,
-    //   {
-    //     validators: [
-    //       Validators.required,
-    //       Validators.min(this.gesamtFensterflaeche.min),
-    //       Validators.max(this.gesamtFensterflaeche.max),
-    //     ],
-    //     updateOn: 'blur',
-    //   },
-    // ],
-    // fensterTyp: this.fensterObj.options[0].value,
-    dachflaechenfensterTyp: this.dachflaechenfensterTyp.options[0].value,
-    tuerflaecheRange: [
-      this.tuerflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.tuerflaeche.min),
-        Validators.max(this.tuerflaeche.max),
-      ],
-    ],
-    tuerflaeche: [
-      this.tuerflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.tuerflaeche.min),
-          Validators.max(this.tuerflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    tuerTyp: this.tuerTyp.options[0].value,
-    gedaemmteflaecheRange: [
-      this.gedaemmteflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.gedaemmteflaeche.min),
-        Validators.max(this.gedaemmteflaeche.max),
-      ],
-    ],
-    gedaemmteflaeche: [
-      this.gedaemmteflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.gedaemmteflaeche.min),
-          Validators.max(this.gedaemmteflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    daemmstoffdickeRange: [
-      this.daemmstoffdicke.value,
-      [
-        Validators.required,
-        Validators.min(this.daemmstoffdicke.min),
-        Validators.max(this.daemmstoffdicke.max),
-      ],
-    ],
-    daemmstoffdicke: [
-      this.daemmstoffdicke.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.daemmstoffdicke.min),
-          Validators.max(this.daemmstoffdicke.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    kellerTyp: this.kellerTyp.options[0].value,
-    obersteGeschossdeckeTyp: this.obersteGeschossdeckeTyp.options[0].value,
-    flachdachTyp: this.flachdachTyp.options[0].value,
-    gaubeflaecheRange: [
-      this.gaubeflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.gaubeflaeche.min),
-        Validators.max(this.gaubeflaeche.max),
-      ],
-    ],
-    gaubeflaeche: [
-      this.gaubeflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.gaubeflaeche.min),
-          Validators.max(this.gaubeflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
-    rollladenflaecheRange: [
-      this.rollladenflaeche.value,
-      [
-        Validators.required,
-        Validators.min(this.rollladenflaeche.min),
-        Validators.max(this.rollladenflaeche.max),
-      ],
-    ],
-    rollladenflaeche: [
-      this.rollladenflaeche.value,
-      {
-        validators: [
-          Validators.required,
-          Validators.min(this.rollladenflaeche.min),
-          Validators.max(this.rollladenflaeche.max),
-        ],
-        updateOn: 'blur',
-      },
-    ],
   });
+  rollladenflaecheValue = signal<number>(100);
 
-  constructor(
-    private fb: FormBuilder,
-    public einzelmassnahmenTooltips: einzelmassnahmen
-  ) {
-    // Fensterflaeche
-    // this.formEinzelmassnahmen
-    //   .get('fensterflaeche')
-    //   ?.valueChanges.subscribe((value) => {
-    //     if (value && value < this.fensterflaeche.min) {
-    //       this.formEinzelmassnahmen
-    //         .get('fensterflaeche')
-    //         ?.setValue(this.fensterflaeche.min, { emitEvent: false });
-    //     }
-    //   });
-
-    // Fensterflaeche
-    // this.formEinzelmassnahmen
-    //   .get('gesamtFensterflaecheRange')
-    //   ?.valueChanges.subscribe((value) => {
-    //     // Update number input when range input changes
-    //     this.formEinzelmassnahmen
-    //       .get('gesamtFensterflaeche')
-    //       ?.setValue(value, { emitEvent: false });
-    //   });
-
-    // this.formEinzelmassnahmen
-    //   .get('gesamtFensterflaeche')
-    //   ?.valueChanges.subscribe((value) => {
-    //     if (value && value >= this.gesamtFensterflaeche.min) {
-    //       // Update range input when number input changes
-    //       this.formEinzelmassnahmen
-    //         .get('gesamtFensterflaecheRange')
-    //         ?.setValue(value, { emitEvent: false });
-    //     } else {
-    //       this.formEinzelmassnahmen
-    //         .get('gesamtFensterflaecheRange')
-    //         ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
-    //       this.formEinzelmassnahmen
-    //         .get('gesamtFensterflaeche')
-    //         ?.setValue(this.gesamtFensterflaeche.min, { emitEvent: false });
-    //     }
-    //   });
-
-    // Tuerflaeche
-    this.formEinzelmassnahmen
-      .get('tuerflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('tuerflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('tuerflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.tuerflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('tuerflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('tuerflaecheRange')
-            ?.setValue(this.tuerflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('tuerflaeche')
-            ?.setValue(this.tuerflaeche.min, { emitEvent: false });
-        }
-      });
-
-    // Gedaemmteflaeche
-    this.formEinzelmassnahmen
-      .get('gedaemmteflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('gedaemmteflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('gedaemmteflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.gedaemmteflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('gedaemmteflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('gedaemmteflaecheRange')
-            ?.setValue(this.gedaemmteflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('gedaemmteflaeche')
-            ?.setValue(this.gedaemmteflaeche.min, { emitEvent: false });
-        }
-      });
-
-    // Gedaemmteflaeche
-    this.formEinzelmassnahmen
-      .get('daemmstoffdickeRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('daemmstoffdicke')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('daemmstoffdicke')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.daemmstoffdicke.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('daemmstoffdickeRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('daemmstoffdickeRange')
-            ?.setValue(this.daemmstoffdicke.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('daemmstoffdicke')
-            ?.setValue(this.daemmstoffdicke.min, { emitEvent: false });
-        }
-      });
-
-    // Gedaemmteflaeche
-    this.formEinzelmassnahmen
-      .get('gaubeflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('gaubeflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('gaubeflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.gaubeflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('gaubeflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('gaubeflaecheRange')
-            ?.setValue(this.gaubeflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('gaubeflaeche')
-            ?.setValue(this.gaubeflaeche.min, { emitEvent: false });
-        }
-      });
-
-    // Gedaemmteflaeche
-    this.formEinzelmassnahmen
-      .get('rollladenflaecheRange')
-      ?.valueChanges.subscribe((value) => {
-        // Update number input when range input changes
-        this.formEinzelmassnahmen
-          .get('rollladenflaeche')
-          ?.setValue(value, { emitEvent: false });
-      });
-
-    this.formEinzelmassnahmen
-      .get('rollladenflaeche')
-      ?.valueChanges.subscribe((value) => {
-        if (value && value >= this.rollladenflaeche.min) {
-          // Update range input when number input changes
-          this.formEinzelmassnahmen
-            .get('rollladenflaecheRange')
-            ?.setValue(value, { emitEvent: false });
-        } else {
-          this.formEinzelmassnahmen
-            .get('rollladenflaecheRange')
-            ?.setValue(this.rollladenflaeche.min, { emitEvent: false });
-          this.formEinzelmassnahmen
-            .get('rollladenflaeche')
-            ?.setValue(this.rollladenflaeche.min, { emitEvent: false });
-        }
-      });
-  }
+  constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {}
 }

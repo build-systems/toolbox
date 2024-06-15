@@ -6,11 +6,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class FormProjektSanierungService {
   projektType: SanierungProjektTypeObj = {
+    title: 'Projekt typ',
     options: [
       { id: 'typ1', value: 'Einfamilienhaus', disabled: false },
       { id: 'typ2', value: 'Mehrfamilienhaus', disabled: false },
     ],
-    title: 'Projekt typ',
   };
 
   eigeneKosten: SliderNumberObj = {
@@ -44,27 +44,27 @@ export class FormProjektSanierungService {
   };
 
   energiestandard: EnergiestandardSanierungObj = {
+    title: 'Stufe Energieeffizienzhaus',
     options: [
       { id: 'enstd1', value: 'EH 40', disabled: false },
       { id: 'enstd2', value: 'EH 55', disabled: false },
       { id: 'enstd3', value: 'EH 70', disabled: false },
       { id: 'enstd4', value: 'EH 85', disabled: false },
     ],
-    title: 'Stufe Energieeffizienzhaus',
   };
   // Effizienz­haus https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Das-Effizienzhaus/
 
   // Zusätzliche Nachhaltigkeitskriterien
   foerderbonus: FoerderbonusObj = {
+    title: 'Förderbonus',
     options: [
       { id: 'kn', value: 'Keine', text: 'Keine', disabled: false },
       { id: 'ee', value: 'EE', text: 'EE-Klasse', disabled: false },
       { id: 'nh', value: 'NH', text: 'NH-Klasse', disabled: false },
     ],
-    title: 'Förderbonus',
   };
 
-  worstPerformingBuilding: WorstPerformingBuildingObj = {
+  worstPerformingBuilding: CheckboxObj = {
     value: false,
     title: 'Worst Performing Building',
     disabled: false,
@@ -72,7 +72,7 @@ export class FormProjektSanierungService {
 
   // Martin metioned this is more for big enterprises?
   // Should it be activated after a certain square meters?
-  serielleSanierung: SerielleSanierungObj = {
+  serielleSanierung: CheckboxObj = {
     value: false,
     title: 'Serielle Sanierung',
     disabled: false,
@@ -80,12 +80,12 @@ export class FormProjektSanierungService {
 
   // Umfänglichkeit bisher durchgeführter Modernisierung (old Zustand Bestand)
   umfangModernisierung: UmfangModernisierungObj = {
+    title: 'Umfänglichkeit bisher durchgeführter Modernisierung',
     options: [
       { id: 'umfmod1', value: 'Nicht/gering', disabled: false },
       { id: 'umfmod2', value: 'Größtenteils', disabled: false },
       { id: 'umfmod3', value: 'Umfassend', disabled: false },
     ],
-    title: 'Umfänglichkeit bisher durchgeführter Modernisierung',
   };
 
   // Zertifizierung warning: if user try to select conflicting

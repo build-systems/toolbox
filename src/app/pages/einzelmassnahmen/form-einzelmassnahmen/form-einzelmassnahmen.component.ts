@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
 import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen.service';
 import { SliderInputComponent } from '../../../slider-input/slider-input.component';
+import { RadioComponent } from '../../../radio/radio.component';
+import { HausSectionComponent } from '../haus-section/haus-section.component';
 
 @Component({
   selector: 'app-form-einzelmassnahmen',
@@ -14,6 +16,9 @@ import { SliderInputComponent } from '../../../slider-input/slider-input.compone
     ReactiveFormsModule,
     TooltipDirective,
     SliderInputComponent,
+    RadioComponent,
+    HausSectionComponent,
+    FormsModule,
   ],
   templateUrl: './form-einzelmassnahmen.component.html',
   styleUrl: './form-einzelmassnahmen.component.css',
