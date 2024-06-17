@@ -116,7 +116,8 @@ export class SanierungService {
   ): number {
     if (
       worstPerformingBuilding === true &&
-      (energiestandard === 'EH 70' ||
+       (energiestandard === 'EH 85' ||
+energiestandard === 'EH 70' ||
         energiestandard === 'EH 55' ||
         energiestandard === 'EH 40')
     ) {
