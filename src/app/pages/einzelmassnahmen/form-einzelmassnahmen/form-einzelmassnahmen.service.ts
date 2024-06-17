@@ -119,8 +119,8 @@ export class FormEinzelmassnahmenService {
     tooltip: this.einzelmassnahmenTooltips.placeholder,
     options: [
       { id: 'fenst1', value: '3WSV Passivhaus', disabled: false },
-      { id: 'fenst2', value: '3WSV konv.', disabled: false },
-      { id: 'fenst3', value: '2WSV konv.', disabled: false },
+      { id: 'fenst2', value: '3WSV konventionell', disabled: false },
+      { id: 'fenst3', value: '2WSV konventionell', disabled: false },
     ],
   });
   fensterSelected = signal<Fenster>(this.fensterObj().options[0].value);

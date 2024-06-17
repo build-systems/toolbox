@@ -160,7 +160,7 @@ type Waermeerzeuger =
 type WaermeerzeugerOption = Option<Waermeerzeuger>;
 type WaermeerzeugerObj = OptionObj<Waermeerzeuger>;
 
-type Fenster = '3WSV Passivhaus' | '3WSV konv.' | '2WSV konv.';
+type Fenster = '3WSV Passivhaus' | '3WSV konventionell' | '2WSV konventionell';
 type FensterOption = Option<Fenster>;
 type FensterObj = OptionObj<Fenster>;
 
