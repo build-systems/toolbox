@@ -1,48 +1,46 @@
 <div class="card-container">
   <div class="card">
     <h3>
-      Investitionskosten&nbsp;<sup
+      Kosten [€/m² Bauteil]&nbsp;<sup
         class="tooltip-icon"
-        [appTooltip]="neubauTooltips.investitionskosten"
+        [appTooltip]="einzelmassnahmenTooltips.placeholder"
         placement="right"
         >&#9432;</sup
       >
     </h3>
     <div>
-      {{ investitionskosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+      {{ kostenM2 | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
     </div>
   </div>
   <div
-    title="Bank Kredit: {{
-      bankKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-    }}"
+    title="Kosten: {{ kosten | currency : 'EUR' : 'symbol' : '1.0-0' : 'de' }}"
     class="card"
   >
-    <h3>Bank Kredit</h3>
-    <div>{{ bankKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
+    <h3>Vollkosten Kosten [€]</h3>
+    <div>{{ kosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
   </div>
 </div>
 <div class="card-container">
   <div
-    title="KfW Kredit: {{
-      kfwKredit | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
+    title="Sowieso-Kosten: {{
+      sowiesoKosten | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
     }}"
     class="card"
   >
-    <h3>KfW Kredit</h3>
-    <div>{{ kfwKredit | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</div>
+    <h3>Sowieso-Kosten [€]</h3>
+    <div>
+      {{ sowiesoKosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+    </div>
   </div>
   <div
-    title="KfW Kredit/WE: {{
-      KfwKreditschwelleProWe | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
+    title="Energetisch Mehrkosten: {{
+      energetischMehrkosten | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
     }}"
     class="card"
   >
-    <h3>KfW Kredit/WE</h3>
+    <h3>Energetisch Mehrkosten [€]</h3>
     <div>
-      {{
-        KfwKreditschwelleProWe | currency : "EUR" : "symbol" : "1.0-0" : "de"
-      }}
+      {{ energetischMehrkosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
     </div>
   </div>
 </div>

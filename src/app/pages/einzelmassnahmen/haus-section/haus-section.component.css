@@ -1,8 +1,8 @@
 .selected path,
 .selected polygon {
   fill: aquamarine;
-  filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 6px aquamarine)
-    drop-shadow(0 0 8px aquamarine);
+  filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px aquamarine)
+    drop-shadow(0 0 4px aquamarine);
 }
 
 .selected line,

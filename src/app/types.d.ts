@@ -118,10 +118,16 @@ type BankDarlehenOption = Option<BankDarlehen>;
 type BankDarlehenObj = OptionObj<BankDarlehen>;
 
 // Einzelmaßnahmen
+// Haus
+type Haus = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type HausOption = Option<Haus>;
+type HausObj = OptionObj<Haus>;
+
 // Bauteil
 type Bauteil =
   | 'Außenwand'
   | 'Bodenplatte'
+  | 'Dach'
   | 'Dachflächenfenster'
   | 'Fenster'
   | 'Flachdach'
@@ -164,14 +170,6 @@ type Fenster = '3WSV Passivhaus' | '3WSV konventionell' | '2WSV konventionell';
 type FensterOption = Option<Fenster>;
 type FensterObj = OptionObj<Fenster>;
 
-type Dachflaechenfenster = 'Einfamilienhaus' | 'Mehrfamilienhaus';
-type DachflaechenfensterOption = Option<Dachflaechenfenster>;
-type DachflaechenfensterObj = OptionObj<Dachflaechenfenster>;
-
-type Tuer = 'Einfamilienhaus' | 'Mehrfamilienhaus';
-type TuerOption = Option<Tuer>;
-type TuerObj = OptionObj<Tuer>;
-
 type Keller =
   | 'unterseitig ohne Bekleidung'
   | 'unterseitig mit Bekleidung'
@@ -183,17 +181,18 @@ type ObersteGeschossdecke = 'begehbar' | 'nicht begehbar';
 type ObersteGeschossdeckeOption = Option<ObersteGeschossdecke>;
 type ObersteGeschossdeckeObj = OptionObj<ObersteGeschossdecke>;
 
-type Flachdach =
-  | 'ohne Lichtkuppeln'
-  | 'mit Lichtkuppeln Einfamilienhaus'
-  | 'mit Lichtkuppeln Mehrfamilienhaus';
+type Dach = 'Flachdach' | 'Steildach';
+type DachOption = Option<Dach>;
+type DachObj = OptionObj<Dach>;
+
+type Flachdach = 'ohne Lichtkuppeln' | 'mit Lichtkuppeln';
 type FlachdachOption = Option<Flachdach>;
 type FlachdachObj = OptionObj<Flachdach>;
 
 type Vorbaurollladen =
-  | 'Kunststoff, Gurt'
-  | 'Kunststoff, Elektro'
-  | 'Alu, Gurt'
-  | 'Alu, Elektro';
+  | 'Kunststoff Gurt'
+  | 'Kunststoff Elektro'
+  | 'Alu Gurt'
+  | 'Alu Elektro';
 type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;

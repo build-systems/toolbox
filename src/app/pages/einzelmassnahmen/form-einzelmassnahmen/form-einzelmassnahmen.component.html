@@ -32,20 +32,10 @@
   [(selected)]="formService.fensterSelected"
   [data]="formService.fensterObj()"
 />
-<app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Dachflächenfenster')"
-  [(selected)]="formService.dachflaechenfenster"
-  [data]="formService.dachflaechenfensterObj()"
-/>
 <app-slider-input
   [hidden]="!(formService.bauteilSelected() === 'Türen')"
   [(value)]="formService.tuerflaecheValue"
   [data]="formService.tuerflaecheObj()"
-/>
-<app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Türen')"
-  [(selected)]="formService.tuerSelected"
-  [data]="formService.tuerObj()"
 />
 <app-slider-input
   *ngIf="formService.isOpakeVisible()"
@@ -68,7 +58,17 @@
   [data]="formService.obersteGeschossdeckeObj()"
 />
 <app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Flachdach')"
+  [hidden]="!(formService.bauteilSelected() === 'Dach')"
+  [(selected)]="formService.dachSelected"
+  [data]="formService.dachObj()"
+/>
+<app-radio
+  [hidden]="
+    !(
+      formService.bauteilSelected() === 'Dach' &&
+      formService.dachSelected() === 'Flachdach'
+    )
+  "
   [(selected)]="formService.flachdachSelected"
   [data]="formService.flachdachObj()"
 />
@@ -81,4 +81,9 @@
   [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
   [(value)]="formService.rollladenflaecheValue"
   [data]="formService.rollladenflaecheObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
+  [(selected)]="formService.vorbaurollladenSelected"
+  [data]="formService.vorbaurollladenObj()"
 />

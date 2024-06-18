@@ -10,9 +10,11 @@ export class FormEinzelmassnahmenService {
     options: [
       { id: 'bauteil01', value: 'Außenwand', disabled: false },
       { id: 'bauteil02', value: 'Bodenplatte', disabled: false },
-      { id: 'bauteil03', value: 'Dachflächenfenster', disabled: false },
-      { id: 'bauteil04', value: 'Fenster', disabled: false },
-      { id: 'bauteil05', value: 'Flachdach', disabled: false },
+      { id: 'bauteil03', value: 'Dach', disabled: false },
+      { id: 'bauteil04', value: 'Dachflächenfenster', disabled: false },
+      { id: 'bauteil05', value: 'Fenster', disabled: false },
+      // Removing temporarily
+      // { id: 'bauteil05', value: 'Flachdach', disabled: false },
       { id: 'bauteil06', value: 'Innenwand', disabled: false },
       { id: 'bauteil07', value: 'Keller', disabled: false },
       {
@@ -21,7 +23,8 @@ export class FormEinzelmassnahmenService {
         text: 'Oberste Geschossdecke',
         disabled: false,
       },
-      { id: 'bauteil09', value: 'Steildach', disabled: false },
+      // Removing temporarily
+      // { id: 'bauteil09', value: 'Steildach', disabled: false },
       { id: 'bauteil10', value: 'Steildachgauben', disabled: false },
       { id: 'bauteil11', value: 'Türen', disabled: false },
       { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
@@ -125,19 +128,6 @@ export class FormEinzelmassnahmenService {
   });
   fensterSelected = signal<Fenster>(this.fensterObj().options[0].value);
 
-  // Dachflaechenfenster
-  dachflaechenfensterObj = signal<DachflaechenfensterObj>({
-    title: 'Dachflächenfenster Typ',
-    options: [
-      { id: 'dachfenst1', value: 'Einfamilienhaus', disabled: false },
-      { id: 'dachfenst2', value: 'Mehrfamilienhaus', disabled: false },
-    ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
-  });
-  dachflaechenfenster = signal<Dachflaechenfenster>(
-    this.dachflaechenfensterObj().options[0].value
-  );
-
   // C20 → Eingabe Fensterfläche gesamt [m²]
   tuerflaecheObj = signal<SliderNumberObj>({
     min: 0.1,
@@ -149,20 +139,11 @@ export class FormEinzelmassnahmenService {
   });
   tuerflaecheValue = signal<number>(1);
 
-  tuerObj = signal<TuerObj>({
-    title: 'Tür Typ',
-    options: [
-      { id: 'tuer1', value: 'Einfamilienhaus', disabled: false },
-      { id: 'tuer2', value: 'Mehrfamilienhaus', disabled: false },
-    ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
-  });
-  tuerSelected = signal<Tuer>('Einfamilienhaus');
-
   isOpakeVisible(): boolean {
     const allowedBauteile: Bauteil[] = [
       'Außenwand',
       'Bodenplatte',
+      'Dach',
       'Flachdach',
       'Innenwand',
       'Keller',
@@ -228,6 +209,15 @@ export class FormEinzelmassnahmenService {
   });
   obersteGeschossdeckeSelected = signal<ObersteGeschossdecke>('begehbar');
 
+  dachObj = signal<DachObj>({
+    title: 'Dach Typ',
+    options: [
+      { id: 'dach1', value: 'Steildach', disabled: false },
+      { id: 'dach2', value: 'Flachdach', disabled: false },
+    ],
+  });
+  dachSelected = signal<Dach>('Steildach');
+
   flachdachObj = signal<FlachdachObj>({
     title: 'Flachdach Typ',
     options: [
@@ -238,12 +228,7 @@ export class FormEinzelmassnahmenService {
       },
       {
         id: 'flachdach2',
-        value: 'mit Lichtkuppeln Einfamilienhaus',
-        disabled: false,
-      },
-      {
-        id: 'flachdach3',
-        value: 'mit Lichtkuppeln Mehrfamilienhaus',
+        value: 'mit Lichtkuppeln',
         disabled: false,
       },
     ],
@@ -272,6 +257,20 @@ export class FormEinzelmassnahmenService {
     disabled: false,
   });
   rollladenflaecheValue = signal<number>(100);
+
+  // Rollladen Typ
+  // To be implemented
+  vorbaurollladenObj = signal<VorbaurollladenObj>({
+    title: 'Vorbaurollladen Typ',
+    options: [
+      { id: 'vorbaurollladen1', value: 'Kunststoff Gurt', disabled: false },
+      { id: 'vorbaurollladen2', value: 'Kunststoff Elektro', disabled: false },
+      { id: 'vorbaurollladen3', value: 'Alu Gurt', disabled: false },
+      { id: 'vorbaurollladen4', value: 'Alu Elektro', disabled: false },
+    ],
+    tooltip: this.einzelmassnahmenTooltips.placeholder,
+  });
+  vorbaurollladenSelected = signal<Vorbaurollladen>('Kunststoff Gurt');
 
   constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {}
 }

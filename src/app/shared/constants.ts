@@ -100,7 +100,7 @@ export class einzelmassnahmen {
   // Daten!E10 → 3WSV, Dreh/Kipp, Passivhaus EFH&MFH für F&Ft = 0,257
   // Daten!E11 → 3WSV, Dreh/Kipp, H/K konv. EFH&MFH für F&Ft = 0,222
   // Daten!E12 → 2WSV, Dreh/Kipp, H/K konv. EFH&MFH für F&Ft = 0,231
-  public fensterProperties = {
+  public fenster = {
     '3WSV Passivhaus': {
       SchaetzwertA: 658.86,
       SchaetzwertB: 0.257,
@@ -129,7 +129,7 @@ export class einzelmassnahmen {
   // Schätzwert [€/ m² Bauteil]
   // Daten!C15 → Dachflächenfenster EFH pro Fenster = 1430
   // Daten!C16 → Dachflächenfenster MFH pro Fenster = 1435
-  public dachflaechenfensterProperties = {
+  public dachflaechenfenster = {
     Einfamilienhaus: {
       SchaetzwertA: 1430,
       Lebensjahre: 40,
@@ -142,7 +142,7 @@ export class einzelmassnahmen {
   // Schätzwert [€/ m² Bauteil]
   // Daten!C19 → Haustür EFH = 1433
   // Daten!C20 → Haustür MFH = 1222
-  public tuerProperties = {
+  public tuer = {
     Einfamilienhaus: {
       SchaetzwertA: 1433,
       Lebensjahre: 50,
@@ -159,7 +159,7 @@ export class einzelmassnahmen {
   // Daten!C23 → Schätzwert
   // Daten!B24 → Schätzwert [€/ m² Bauteil]
   // Daten!C24 → Schätzwert
-  public wdvsProperties = {
+  public wdvs = {
     Geruestkosten: {
       SchaetzwertA: 2.81,
       SchaetzwertB: 96.88,
@@ -175,7 +175,7 @@ export class einzelmassnahmen {
   };
   // Daten!B25 → Schätzwert [€/ m² Bauteil]
   // Daten!C25 → Schätzwert
-  public aussenwandProperties = {
+  public aussenwand = {
     SchaetzwertA: 1.65,
     SchaetzwertB: 10.37,
     GeltungsbereichVon: 4,
@@ -183,7 +183,7 @@ export class einzelmassnahmen {
     GeltungsbereichEinheit: 'cm Dämmstoffstärke',
     Lebensjahre: 30,
   };
-  public kellerProperties = {
+  public keller = {
     'unterseitig ohne Bekleidung': {
       SchaetzwertA: 1.25,
       SchaetzwertB: 30.75,
@@ -207,6 +207,96 @@ export class einzelmassnahmen {
       GeltungsbereichBis: 10,
       GeltungsbereichEinheit: 'cm Dämmstoffstärke',
       Lebensjahre: 50,
+    },
+  };
+  public obersteGeschossdecke = {
+    begehbar: {
+      SchaetzwertA: 1.78,
+      SchaetzwertB: 28.03,
+      GeltungsbereichVon: 8,
+      GeltungsbereichBis: 30,
+      GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+      Lebensjahre: 50,
+    },
+    'nicht begehbar': {
+      SchaetzwertA: 1.06,
+      SchaetzwertB: 3.72,
+      GeltungsbereichVon: 8,
+      GeltungsbereichBis: 30,
+      GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+      Lebensjahre: 50,
+    },
+  };
+  public flachdach = {
+    'energiebedingte Mehrkosten': {
+      SchaetzwertA: 2.9,
+      SchaetzwertB: 21.66,
+    },
+    'ohne Lichtkuppeln': {
+      SchaetzwertA: 4.11,
+      SchaetzwertB: 104.14,
+      GeltungsbereichVon: 6,
+      GeltungsbereichBis: 34,
+      GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+      Lebensjahre: 30,
+    },
+    'mit Lichtkuppeln Einfamilienhaus': {
+      SchaetzwertA: 4.11,
+      SchaetzwertB: 118.16,
+      GeltungsbereichVon: 6,
+      GeltungsbereichBis: 34,
+      GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+      Lebensjahre: 30,
+    },
+    'mit Lichtkuppeln Mehrfamilienhaus': {
+      SchaetzwertA: 4.11,
+      SchaetzwertB: 113.16,
+      GeltungsbereichVon: 6,
+      GeltungsbereichBis: 34,
+      GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+      Lebensjahre: 30,
+    },
+  };
+  public steildach = {
+    Steildach: {
+      SchaetzwertA: 2.77,
+      SchaetzwertB: 151.01,
+    },
+    'energiebedingte Mehrkosten': {
+      SchaetzwertA: 2.37,
+      SchaetzwertB: 11.31,
+    },
+    GeltungsbereichVon: 9,
+    GeltungsbereichBis: 29,
+    GeltungsbereichEinheit: 'cm Dämmstoffstärke',
+    Lebensjahre: 30,
+  };
+  public steildachgauben = {
+    Einfamilienhaus: {
+      SchaetzwertB: 473,
+      Lebensjahre: 30,
+    },
+    Mehrfamilienhaus: {
+      SchaetzwertB: 350,
+      Lebensjahre: 30,
+    },
+  };
+  public vorbaurollladen = {
+    'Kunststoff Gurt': {
+      SchaetzwertB: 141,
+      Lebensjahre: 30,
+    },
+    'Kunststoff Elektro': {
+      SchaetzwertB: 197,
+      Lebensjahre: 30,
+    },
+    'Alu Gurt': {
+      SchaetzwertB: 182,
+      Lebensjahre: 30,
+    },
+    'Alu Elektro': {
+      SchaetzwertB: 271,
+      Lebensjahre: 30,
     },
   };
 }

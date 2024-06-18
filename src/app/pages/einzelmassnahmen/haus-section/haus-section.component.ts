@@ -1,4 +1,12 @@
-import { Component, effect } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  effect,
+} from '@angular/core';
 import { FormEinzelmassnahmenService } from '../form-einzelmassnahmen/form-einzelmassnahmen.service';
 
 @Component({
@@ -8,13 +16,39 @@ import { FormEinzelmassnahmenService } from '../form-einzelmassnahmen/form-einze
   templateUrl: './haus-section.component.svg',
   styleUrl: './haus-section.component.css',
 })
-export class HausSectionComponent {
+export class HausSectionComponent implements AfterViewInit {
   selectedGroup: SVGElement | null = null;
 
+  matchingIds: string[] = [
+    'Bodenplatte',
+    'Außenwand',
+    'ObersteGeschossdecke',
+    'Dach',
+    'Steildachgauben',
+    'Innenwand',
+    'Keller',
+    'Türen',
+    'Türen',
+    'Fenster',
+    'Dachflächenfenster',
+    'Vorbaurollladen',
+    'WDVS',
+  ];
+
+  ngAfterViewInit(): void {
+    const svg = this.el.nativeElement.querySelector('svg');
+    if (svg) {
+      this.addClassToMatchingGroups();
+      this.renderer.listen(svg, 'click', this.onSvgClick.bind(this));
+    } else {
+      console.error('SVG element not found');
+    }
+  }
+
   onSvgClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
+    const target = event.target as SVGElement;
     const group = target.closest('g');
-    if (group && group.classList.contains('selectable')) {
+    if (target && group && group.classList.contains('selectable')) {
       if (this.selectedGroup) {
         this.selectedGroup.classList.remove('selected');
       }
@@ -25,12 +59,25 @@ export class HausSectionComponent {
 
       this.formService.bauteilSelected.set(group.id);
 
-      console.log('Clicked group id:', group.id);
+      // console.log('Clicked group id:', group.id);
       // Perform further processing with the group id here
     }
   }
 
-  constructor(public formService: FormEinzelmassnahmenService) {
+  addClassToMatchingGroups(): void {
+    const svgGroups = this.el.nativeElement.querySelectorAll('g');
+    svgGroups.forEach((group: SVGGElement) => {
+      if (this.matchingIds.includes(group.id)) {
+        this.renderer.addClass(group, 'selectable');
+      }
+    });
+  }
+
+  constructor(
+    protected formService: FormEinzelmassnahmenService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
     effect(() => {
       const group = document.getElementById(
         formService.bauteilSelected()
@@ -51,6 +98,6 @@ export class HausSectionComponent {
     // Update the selected group
     this.selectedGroup = group;
 
-    console.log('Selected group id:', group.id);
+    // console.log('Selected group id:', group.id);
   }
 }
