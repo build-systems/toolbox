@@ -116,8 +116,7 @@ export class SanierungService {
   ): number {
     if (
       worstPerformingBuilding === true &&
-       (energiestandard === 'EH 85' ||
-energiestandard === 'EH 70' ||
+      (energiestandard === 'EH 70' ||
         energiestandard === 'EH 55' ||
         energiestandard === 'EH 40')
     ) {
@@ -256,7 +255,7 @@ energiestandard === 'EH 70' ||
     return Math.min(maxKfwKredit, gesamtgestehungskosten);
   }
 
-  // Bank-Kredit [€] 
+  // Bank-Kredit [€]
   private _bankKredit = 0;
   updateBankKredit(
     maxKfwKredit: number,
@@ -316,7 +315,7 @@ energiestandard === 'EH 70' ||
     wpbBonus: number,
     serSanBonus: number
   ): number {
-    const floorWpbSerSanBonus = Math.min((wpbBonus + serSanBonus), 0.20); // If you combine the bonus for the Worst Performing Building with the bonus for the serial renovation, then the two bonuses will be limited to a total of 20%
+    const floorWpbSerSanBonus = Math.min(wpbBonus + serSanBonus, 0.2); // If you combine the bonus for the Worst Performing Building with the bonus for the serial renovation, then the two bonuses will be limited to a total of 20%
     return Math.min(
       tilgungszuschuss + eeBonus + nhBonus + floorWpbSerSanBonus,
       this.constants.kfwZuschussMaxMultiplier
