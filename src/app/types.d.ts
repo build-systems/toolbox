@@ -138,7 +138,7 @@ type Bauteil =
   | 'Steildachgauben'
   | 'Türen'
   | 'Vorbaurollladen'
-  | 'WDVS';
+  | 'Wärmedämmverbundsystem';
 type BauteilOption = Option<Bauteil>;
 type BauteilObj = OptionObj<Bauteil>;
 

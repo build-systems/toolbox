@@ -28,11 +28,39 @@ export class FormEinzelmassnahmenService {
       { id: 'bauteil10', value: 'Steildachgauben', disabled: false },
       { id: 'bauteil11', value: 'Türen', disabled: false },
       { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
-      { id: 'bauteil13', value: 'WDVS', disabled: false },
+      { id: 'bauteil13', value: 'Wärmedämmverbundsystem', disabled: false },
     ],
     title: 'Bauteil',
   });
   bauteilSelected = signal<string>('');
+
+  // Haus
+  hausObj = signal<HausObj>({
+    title: 'Haus typ',
+    options: [
+      {
+        id: 'haus1',
+        value: 'Einfamilienhaus',
+        disabled: false,
+      },
+      {
+        id: 'haus2',
+        value: 'Mehrfamilienhaus',
+        disabled: false,
+      },
+    ],
+  });
+  hausSelected = signal<Haus>('Einfamilienhaus');
+
+  hausTypVisible(): boolean {
+    const allowedBauteile: Bauteil[] = [
+      'Dachflächenfenster',
+      'Türen',
+      'Dach',
+      'Steildachgauben',
+    ];
+    return allowedBauteile.includes(this.bauteilSelected() as Bauteil);
+  }
 
   // C3 → Wohnfläche [m²]
   // Wohnfläche centralized form values
@@ -149,7 +177,7 @@ export class FormEinzelmassnahmenService {
       'Keller',
       'ObersteGeschossdecke',
       'Steildach',
-      'WDVS',
+      'Wärmedämmverbundsystem',
     ];
     return allowedBauteile.includes(this.bauteilSelected() as Bauteil);
   }

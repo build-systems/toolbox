@@ -32,7 +32,7 @@ export class HausSectionComponent implements AfterViewInit {
     'Fenster',
     'Dachflächenfenster',
     'Vorbaurollladen',
-    'WDVS',
+    'Wärmedämmverbundsystem',
   ];
 
   ngAfterViewInit(): void {

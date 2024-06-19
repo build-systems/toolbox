@@ -17,6 +17,16 @@
     </option>
   </select>
 </fieldset>
+<app-radio
+  [hidden]="!formService.hausTypVisible()"
+  [(selected)]="formService.hausSelected"
+  [data]="formService.hausObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Dach')"
+  [(selected)]="formService.dachSelected"
+  [data]="formService.dachObj()"
+/>
 <app-slider-input
   [hidden]="!(formService.bauteilSelected() === 'Fenster')"
   [(value)]="formService.fensterflaecheValue"
@@ -56,11 +66,6 @@
   [hidden]="!(formService.bauteilSelected() === 'Oberste Geschossdecke')"
   [(selected)]="formService.obersteGeschossdeckeSelected"
   [data]="formService.obersteGeschossdeckeObj()"
-/>
-<app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Dach')"
-  [(selected)]="formService.dachSelected"
-  [data]="formService.dachObj()"
 />
 <app-radio
   [hidden]="

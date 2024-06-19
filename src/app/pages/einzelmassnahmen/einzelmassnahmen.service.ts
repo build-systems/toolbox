@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, effect, signal } from '@angular/core';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { einzelmassnahmen } from '../../shared/constants';
 
@@ -6,6 +6,7 @@ import { einzelmassnahmen } from '../../shared/constants';
   providedIn: 'root',
 })
 export class EinzelmassnahmenService {
+  // baupreisindexErrechnet: number;
   // C11 → Baupreisindex errechnet
   // C11 = ((C10 / C9) * 100)
   calculateBaupreisindexErrechnet(
@@ -15,6 +16,7 @@ export class EinzelmassnahmenService {
     return (baupreisindexAktuell / baupreisindex2015) * 100;
   }
 
+  // gesamtPreisindex: number;
   // Preisindex C13 → Gesamt
   // C13 = ((C11 / 100) * C12 * 100)
   calculateGesamtPreisindex(
@@ -32,9 +34,9 @@ export class EinzelmassnahmenService {
   // DatenD11 & DatenE11
   // G21 → 2WSV, Dreh/Kipp, H/K konv. EFH&MFH für F&Ft
   // DatenD12 & DatenE12
+  fensterKostenM2: number = 0;
   calculateFensterKostenM2(
     fensterTyp: Fenster,
-    baunebenkosten: number,
     fensterflaeche: number,
     gesamtPreisindex: number
   ) {
@@ -42,7 +44,7 @@ export class EinzelmassnahmenService {
     const schaetzwertA = SchaetzwertA;
     const schaetzwertB = SchaetzwertB;
     const value =
-      (1 + baunebenkosten) *
+      (1 + this.constants.baunebenkosten) *
       ((schaetzwertA *
         Math.pow(fensterflaeche, schaetzwertB) *
         gesamtPreisindex) /
@@ -50,12 +52,13 @@ export class EinzelmassnahmenService {
     return value;
   }
 
+  // fensterKosten: number;
   // Vollkosten | Kosten [€]
-  calculateFensterKosten(
-    fensterKosten: number,
+  private calculateFensterKosten(
+    fensterKostenM2: number,
     gesamtFensterflaeche: number
   ): number {
-    return fensterKosten * gesamtFensterflaeche;
+    return fensterKostenM2 * gesamtFensterflaeche;
   }
   // Sowieso-Kosten | Kosten [€/m² Bauteil]
   // I19 → 3WSV, Dreh/Kipp, Passivhaus EFH&MFH für F&Ft
@@ -63,21 +66,22 @@ export class EinzelmassnahmenService {
   // I21 → 2WSV, Dreh/Kipp, H/K konv. EFH&MFH für F&Ft
   // I19 = I20 = I21 =G21
   // fensterSowiesoKosten = fensterKostenM('2WSV konventionell',baunebenkosten,fensterflaeche,gesamtPreisindex);
-  calculateSowiesoKosten(
-    baunebenkosten: number,
+
+  // fensterSowiesoKosten: number;
+  private calculateFensterSowiesoKosten(
     fensterflaeche: number,
     gesamtPreisindex: number
   ): number {
     return this.calculateFensterKostenM2(
       '2WSV konventionell',
-      baunebenkosten,
       fensterflaeche,
       gesamtPreisindex
     );
   }
 
   // Energetisch bedingte Mehrkosten | Kosten [€/m² Bauteil]
-  calculateFensterEnergetischBedingteMehrkosten(
+  // fensterEnergetischBedingteMehrkosten: number;
+  private calculateFensterEnergetischBedingteMehrkosten(
     fensterKostenM2: number,
     fensterSowiesoKosten: number
   ): number {
@@ -90,39 +94,55 @@ export class EinzelmassnahmenService {
   // H22 → Dachflächenfenster EFH pro Fenster
   // H23 → Dachflächenfenster MFH pro Fenster
   // H22 = (1 + C15) * DatenC15 * C13 / 100
-  calculateDachflaechenfensterKosten(
-    HausTyp: Haus,
-    C15: number,
-    C13: number
+  // dachflaechenfensterKosten: number;
+  private calculateDachflaechenfensterKosten(
+    hausTyp: Haus,
+    gesamtPreisindex: number
   ): number {
-    const { SchaetzwertA } = this.constants.dachflaechenfenster[HausTyp];
+    const { SchaetzwertA } = this.constants.dachflaechenfenster[hausTyp];
     const schaetzwertA = SchaetzwertA;
-    return ((1 + C15) * schaetzwertA * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) * schaetzwertA * gesamtPreisindex) /
+      100
+    );
   }
 
   // Vollkosten | Kosten [€/m² Bauteil]
   // G24 → Haustür EFH
   // G25 → Haustür MFH
-  calculateTuerKostenM2(hausTyp: Haus, C15: number, C13: number): number {
+  tuerKostenM2 = signal<number>(0);
+  private calculateTuerKostenM2(
+    hausTyp: Haus,
+    gesamtPreisindex: number
+  ): number {
     const { SchaetzwertA } = this.constants.tuer[hausTyp];
     const schaetzwertA = SchaetzwertA;
     // G24 = (1 + C15) * DatenC19 * C13 / 100
-    return ((1 + C15) * schaetzwertA * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) * schaetzwertA * gesamtPreisindex) /
+      100
+    );
   }
 
   // Vollkosten | Kosten [€]
   // H24 → Haustür EFH
   // H25 → Haustür MFH
-  calculateTuerKosten(C24: number, tuerKostenM2: number): number {
+  // tuerKosten: number;
+  private calculateTuerKosten(
+    tuerflaeche: number,
+    tuerKostenM2: number
+  ): number {
     // H24 = C24 * G24
-    return C24 * tuerKostenM2;
+    return tuerflaeche * tuerKostenM2;
   }
 
-  calculateTuerEnergetischBedingteMehrkosten(tuerKostenM2: number) {
+  // tuerEnergetischBedingteMehrkosten: number;
+  private calculateTuerEnergetischBedingteMehrkosten(tuerKostenM2: number) {
     return 0.33 * tuerKostenM2;
   }
 
-  calculateTuerSowiesoKosten(
+  // tuerSowiesoKosten: number;
+  private calculateTuerSowiesoKosten(
     tuerKostenM2: number,
     tuerEnergetischBedingteMehrkosten: number
   ): number {
@@ -132,93 +152,131 @@ export class EinzelmassnahmenService {
   // C32 → Äqu. Dämmstoffdicke WLG 035 [cm]
   // Äquivalente Dämmstoffdicke
   // C32 = C30 / C31 * 0.035
-  calculateAequDaemmstoffdicke(daemmstoffdicke: number): number {
+  // aequDaemmstoffdicke: number;
+  private calculateAequDaemmstoffdicke(daemmstoffdicke: number): number {
     return (daemmstoffdicke / this.constants.warrmeleitfaehigkeit) * 0.035;
   }
 
   // G29 → Vollkosten | Kosten [€/m² Bauteil]
-  calculateWdvsKostenM2(C15: number, C32: number, C13: number): number {
+  // wdvsKostenM2: number;
+  private calculateWdvsKostenM2(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
+  ): number {
     // G29 = (1 + C15) * (((Daten!B23 * $C$32) + Daten!C23)) * $C$13 / 100
     return (
-      ((1 + C15) *
-        (this.constants.wdvs.Geruestkosten.SchaetzwertA * C32 +
+      ((1 + this.constants.baunebenkosten) *
+        (this.constants.wdvs.Geruestkosten.SchaetzwertA * aequDaemmstoffdicke +
           this.constants.wdvs.Geruestkosten.SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
       100
     );
   }
 
   // H29 = G29 * $C$29
-  calculateWdvsKosten(wdvsKostenM2: number, C29: number): number {
-    return wdvsKostenM2 * C29;
+  // wdvsKosten: number;
+  private calculateWdvsKosten(
+    wdvsKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
+    return wdvsKostenM2 * gedaemmteflaeche;
   }
 
   // I29 = H29 - J29
-  calculateWdvsSowiesoKosten(wdvsKosten: number, J29: number): number {
-    return wdvsKosten - J29;
+  // wdvsSowiesoKosten: number;
+  private calculateWdvsSowiesoKosten(
+    wdvsKosten: number,
+    wdvsEnergetischBedingteMehrkosten: number
+  ): number {
+    return wdvsKosten - wdvsEnergetischBedingteMehrkosten;
   }
 
-  calculateWdvsEnergetischBedingteMehrkosten(
-    C32: number,
-    C13: number,
-    C29: number
+  // wdvsEnergetischBedingteMehrkosten: number;
+  private calculateWdvsEnergetischBedingteMehrkosten(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number,
+    gedaemmteflaeche: number
   ): number {
     // J29 = ((((Daten!B24 * $C$32) + Daten!C24)) * $C$13 / 100) * C29
     return (
-      (((this.constants.wdvs.EnergiebedingteMehrkosten.SchaetzwertA * C32 +
+      (((this.constants.wdvs.EnergiebedingteMehrkosten.SchaetzwertA *
+        aequDaemmstoffdicke +
         this.constants.wdvs.EnergiebedingteMehrkosten.SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
         100) *
-      C29
+      gedaemmteflaeche
     );
   }
 
   // G30 = (1 + C15) * ((Daten!B25 * $C$32) + Daten!C25) * $C$13 / 100
-  calculateAussenwandKostenM2(C15: number, C32: number, C13: number): number {
+  // aussenwandKostenM2: number;
+  private calculateAussenwandKostenM2(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
+  ): number {
     return (
-      ((1 + C15) *
-        (this.constants.aussenwand.SchaetzwertA * C32 +
+      ((1 + this.constants.baunebenkosten) *
+        (this.constants.aussenwand.SchaetzwertA * aequDaemmstoffdicke +
           this.constants.aussenwand.SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
       100
     );
   }
 
   // H30 = G30 * $C$29
-  calculateAussenwandKosten(aussenwandKostenM2: number, C29: number): number {
-    return aussenwandKostenM2 * C29;
+  // aussenwandKosten: number;
+  private calculateAussenwandKosten(
+    aussenwandKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
+    return aussenwandKostenM2 * gedaemmteflaeche;
   }
 
   // Keller
   // Vollkosten | Kosten [€/m² Bauteil]
   // G31 → Keller, unterseitig, ohne Bekleidung
-  calculateKellerKostenM2(
+  // kellerKostenM2: number;
+  private calculateKellerKostenM2(
     kellerTyp: Keller,
-    C15: number,
-    C32: number,
-    C13: number
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
   ): number {
     const { SchaetzwertA, SchaetzwertB } = this.constants.keller[kellerTyp];
     const schaetzwertA = SchaetzwertA;
     const schaetzwertB = SchaetzwertB;
     // G31 = (1 + C15) * (((Daten!B26 * $C$32) + Daten!C26)) * $C$13 / 100
-    return ((1 + C15) * (schaetzwertA * C32 + schaetzwertB) * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) *
+        (schaetzwertA * aequDaemmstoffdicke + schaetzwertB) *
+        gesamtPreisindex) /
+      100
+    );
   }
 
-  calculateKellerKosten(kellerKostenM2: number, C29: number): number {
-    return kellerKostenM2 * C29;
+  // kellerKosten: number;
+  private calculateKellerKosten(
+    kellerKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
+    return kellerKostenM2 * gedaemmteflaeche;
   }
 
-  calculateKellerSowiesoKosten(kellerKosten: number, J31: number): number {
+  // kellerSowiesoKosten: number;
+  private calculateKellerSowiesoKosten(
+    kellerKosten: number,
+    kellerEnergetischBedingteMehrkosten: number
+  ): number {
     // I31 = H31 - J31
-    return kellerKosten - J31;
+    return kellerKosten - kellerEnergetischBedingteMehrkosten;
   }
 
-  calculateKellerEnergetischBedingteMehrkosten(
+  // J31
+  // kellerEnergetischBedingteMehrkosten: number;
+  private calculateKellerEnergetischBedingteMehrkosten(
     kellerTyp: Keller,
     kellerKosten: number,
-    C29: number,
-    C32: number
+    gedaemmteflaeche: number,
+    aequDaemmstoffdicke: number
   ) {
     if (
       kellerTyp === 'unterseitig ohne Bekleidung' ||
@@ -226,113 +284,164 @@ export class EinzelmassnahmenService {
     ) {
       return kellerKosten;
     } else {
-      return 8.96 * C29 + 1.62 * C32 * C29;
+      return (
+        8.96 * gedaemmteflaeche + 1.62 * aequDaemmstoffdicke * gedaemmteflaeche
+      );
     }
   }
 
   // Bodenplatte
   // G34 → Vollkosten | Kosten [€/m² Bauteil]
   // G34 = (1 + C15) * ((18 + 17 + 10) * 110.6 / (99.2 + 1.04 * C32)) * $C$13 / 100
-  calculateBodenplatteKostenM2(C15: number, C32: number, C13: number): number {
+  // bodenplatteKostenM2: number;
+  private calculateBodenplatteKostenM2(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
+  ): number {
     return (
-      ((((1 + C15) * (18 + 17 + 10) * 110.6) / (99.2 + 1.04 * C32)) * C13) / 100
+      ((((1 + this.constants.baunebenkosten) * (18 + 17 + 10) * 110.6) /
+        (99.2 + 1.04 * aequDaemmstoffdicke)) *
+        gesamtPreisindex) /
+      100
     );
   }
   // H34 → Vollkosten | Kosten [€]
-  calculateBodenplatteKosten(bodenplatteKostenM2: number, C29: number): number {
+  // bodenplatteKosten: number;
+  private calculateBodenplatteKosten(
+    bodenplatteKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
     // H34 = G34 * $C$29
-    return bodenplatteKostenM2 * C29;
+    return bodenplatteKostenM2 * gedaemmteflaeche;
   }
   // I34 → Sowieso-Kosten | Kosten [€]
-  calculateBodenplatteSowiesoKosten(
+  // bodenplatteSowiesoKosten: number;
+  private calculateBodenplatteSowiesoKosten(
     bodenplatteKosten: number,
-    J34: number
+    bodenplatteEnergetischBedingteMehrkosten: number
   ): number {
     // I34 = H34 - J34
-    return bodenplatteKosten - J34;
+    return bodenplatteKosten - bodenplatteEnergetischBedingteMehrkosten;
   }
   // J34 → Energetisch bedingte Mehrkosten | Kosten [€]
   // =H34
+  // bodenplatteEnergetischBedingteMehrkosten: number;
+  private calculateBodenplatteEnergetischBedingteMehrkosten(
+    bodenplatteKosten: number
+  ) {
+    return bodenplatteKosten;
+  }
 
   // Innenwand
   // G35 → Vollkosten | Kosten [€/m² Bauteil]
   // G35 = (1 + C15) * (((Daten!B26 * $C$32) + Daten!C26)) * $C$13 / 100
-  calculateInnenwandKostenM2(C15: number, C32: number, C13: number): number {
+  // innenwandKostenM2: number;
+  private calculateInnenwandKostenM2(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
+  ): number {
     return (
-      ((1 + C15) *
+      ((1 + this.constants.baunebenkosten) *
         (this.constants.keller['unterseitig ohne Bekleidung'].SchaetzwertA *
-          C32 +
+          aequDaemmstoffdicke +
           this.constants.keller['unterseitig ohne Bekleidung'].SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
       100
     );
   }
   // H35 → Vollkosten | Kosten [€]
   // H35 = G35 * $C$29
-  calculateInnenwandKosten(innenwandKostenM2: number, C29: number): number {
-    return innenwandKostenM2 * C29;
+  // innenwandKosten: number;
+  private calculateInnenwandKosten(
+    innenwandKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
+    return innenwandKostenM2 * gedaemmteflaeche;
   }
   // I35 → Sowieso-Kosten | Kosten [€]
-  calculateInnenwandSowiesoKosten(
+  // innenwandSowiesoKosten: number;
+  private calculateInnenwandSowiesoKosten(
     innenwandKosten: number,
-    J35: number
+    innenwandEnergetischBedingteMehrkosten: number
   ): number {
     // I35 = H35 - J35
-    return innenwandKosten - J35;
+    return innenwandKosten - innenwandEnergetischBedingteMehrkosten;
   }
-  // 35 → Energetisch bedingte Mehrkosten | Kosten [€]
+  // J35 → Energetisch bedingte Mehrkosten | Kosten [€]
   // =H35
+  // innenwandEnergetischBedingteMehrkosten: number;
+  private calculateInnenwandEnergetischBedingteMehrkosten(
+    innenwandKosten: number
+  ) {
+    return innenwandKosten;
+  }
 
   // Oberste Geschossdecke
   // Vollkosten | Kosten [€/m² Bauteil]
   // G36 → Oberste Geschossdecke, begehbar
-  calculateObersteGeschossdeckeKostenM2(
+  // obersteGeschossdeckeKostenM2: number;
+  private calculateObersteGeschossdeckeKostenM2(
     obersteGeschossdeckeTyp: ObersteGeschossdecke,
-    C15: number,
-    C32: number,
-    C13: number
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
   ): number {
     const { SchaetzwertA, SchaetzwertB } =
       this.constants.obersteGeschossdecke[obersteGeschossdeckeTyp];
     const schaetzwertA = SchaetzwertA;
     const schaetzwertB = SchaetzwertB;
     // G36 = (1 + C15) * (((Daten!B29 * $C$32) + Daten!C29)) * $C$13 / 100
-    return ((1 + C15) * (schaetzwertA * C32 + schaetzwertB) * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) *
+        (schaetzwertA * aequDaemmstoffdicke + schaetzwertB) *
+        gesamtPreisindex) /
+      100
+    );
   }
   // Vollkosten | Kosten [€]
   // H36 → Oberste Geschossdecke, begehbar
   // H36 = G36 * $C$29
-  calculateObersteGeschossdeckeKosten(
+  // obersteGeschossdeckeKosten: number;
+  private calculateObersteGeschossdeckeKosten(
     obersteGeschossdeckeKostenM2: number,
-    C29: number
+    gedaemmteflaeche: number
   ): number {
-    return obersteGeschossdeckeKostenM2 * C29;
+    return obersteGeschossdeckeKostenM2 * gedaemmteflaeche;
   }
   // Sowieso-Kosten | Kosten [€]
   // I36 → Oberste Geschossdecke, begehbar
   // I36 = H36 - J36
-  calculateObersteGeschossdeckeSowiesoKosten(
+  // obersteGeschossdeckeSowiesoKosten: number;
+  private calculateObersteGeschossdeckeSowiesoKosten(
     obersteGeschossdeckeKosten: number,
-    J36: number
+    obersteGeschossdeckeEnergetischBedingteMehrkosten: number
   ): number {
-    return obersteGeschossdeckeKosten - J36;
+    return (
+      obersteGeschossdeckeKosten -
+      obersteGeschossdeckeEnergetischBedingteMehrkosten
+    );
   }
   // Energetisch bedingte Mehrkosten | Kosten [€]
   // J36 → Oberste Geschossdecke, begehbar
   // =H36
   // J37 → Oberste Geschossdecke, nicht begehbar
   // =H37
+  // obersteGeschossdeckeEnergetischBedingteMehrkosten: number;
+  private calculateObersteGeschossdeckeEnergetischBedingteMehrkosten(
+    obersteGeschossdeckeKosten: number
+  ) {
+    return obersteGeschossdeckeKosten;
+  }
 
   // Flachdach
   // Vollkosten | Kosten [€/m² Bauteil]
   // G38 → Flachdach ohne Lichtkuppeln
   // G38 = (1 + C15) * (((Daten!B31 * $C$32) + Daten!C31)) * $C$13 / 100
-  calculateFlachdachKostenM2(
+  // flachdachKostenM2: number;
+  private calculateFlachdachKostenM2(
     hausTyp: Haus,
     flachdachTyp: Flachdach,
-    C15: number,
-    C32: number,
-    C13: number
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
   ): number {
     let schaetzwertA: number;
     let schaetzwertB: number;
@@ -347,77 +456,101 @@ export class EinzelmassnahmenService {
       schaetzwertA = SchaetzwertA;
       schaetzwertB = SchaetzwertB;
     }
-    return ((1 + C15) * (schaetzwertA * C32 + schaetzwertB) * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) *
+        (schaetzwertA * aequDaemmstoffdicke + schaetzwertB) *
+        gesamtPreisindex) /
+      100
+    );
   }
   // Vollkosten | Kosten [€]
   // H38 → Flachdach ohne Lichtkuppeln
   // H38 = G38 * $C$29
-  calculateFlachdachKosten(flachdachKostenM2: number, C29: number): number {
-    return flachdachKostenM2 * C29;
+  // flachdachKosten: number;
+  private calculateFlachdachKosten(
+    flachdachKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
+    return flachdachKostenM2 * gedaemmteflaeche;
   }
   // Sowieso-Kosten | Kosten [€]
   // I38 → Flachdach ohne Lichtkuppeln
   // I38 = H38 - J38
-  calculateFlachdachSowiesoKosten(flachdachKosten: number, J38: number) {
-    return flachdachKosten - J38;
+  // flachdachSowiesoKosten: number;
+  private calculateFlachdachSowiesoKosten(
+    flachdachKosten: number,
+    flachdachEnergetischBedingteMehrkosten: number
+  ) {
+    return flachdachKosten - flachdachEnergetischBedingteMehrkosten;
   }
   // Energetisch bedingte Mehrkosten | Kosten [€]
   // J38 → Flachdach ohne Lichtkuppeln
   // J38 = ((((Daten!B34 * $C$32) + Daten!C34)) * $C$13 / 100) * C29
-  calculateFlachdachEnergetischBedingteMehrkosten(
-    C32: number,
-    C13: number,
-    C29: number
+  // flachdachEnergetischBedingteMehrkosten: number;
+  private calculateFlachdachEnergetischBedingteMehrkosten(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number,
+    gedaemmteflaeche: number
   ): number {
     return (
       (((this.constants.flachdach['energiebedingte Mehrkosten'].SchaetzwertA *
-        C32 +
+        aequDaemmstoffdicke +
         this.constants.flachdach['energiebedingte Mehrkosten'].SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
         100) *
-      C29
+      gedaemmteflaeche
     );
   }
 
   // Steildach
   // G41 → Vollkosten | Kosten [€/m² Bauteil]
-  calculateSteildachKostenM2(C15: number, C32: number, C13: number): number {
+  // steildachKostenM2: number;
+  private calculateSteildachKostenM2(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number
+  ): number {
     // G41 = (1 + C15) * (((Daten!B35 * $C$32) + Daten!C35)) * $C$13 / 100
     return (
-      ((1 + C15) *
-        (this.constants.steildach.Steildach.SchaetzwertA * C32 +
+      ((1 + this.constants.baunebenkosten) *
+        (this.constants.steildach.Steildach.SchaetzwertA * aequDaemmstoffdicke +
           this.constants.steildach.Steildach.SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
       100
     );
   }
   // H41 → Vollkosten | Kosten [€]
-  calculateSteildachKosten(steildachKostenM2: number, C29: number): number {
+  // steildachKosten: number;
+  private calculateSteildachKosten(
+    steildachKostenM2: number,
+    gedaemmteflaeche: number
+  ): number {
     // H41 = G41 * $C$29
-    return steildachKostenM2 * C29;
+    return steildachKostenM2 * gedaemmteflaeche;
   }
   // I41 → Sowieso-Kosten | Kosten [€]
   // I41 = H41 - J41
-  calculateSteildachSowiesoKosten(
+  // steildachSowiesoKosten: number;
+  private calculateSteildachSowiesoKosten(
     steildachKosten: number,
-    J41: number
+    steildachEnergetischBedingteMehrkosten: number
   ): number {
-    return steildachKosten - J41;
+    return steildachKosten - steildachEnergetischBedingteMehrkosten;
   }
   // J41 → Energetisch bedingte Mehrkosten | Kosten [€]
   // J41 = ((((Daten!B36 * $C$32) + Daten!C36)) * $C$13 / 100) * C29
-  calculateSteildachEnergetischBedingteMehrkosten(
-    C32: number,
-    C13: number,
-    C29: number
+  // steildachEnergetischBedingteMehrkosten: number;
+  private calculateSteildachEnergetischBedingteMehrkosten(
+    aequDaemmstoffdicke: number,
+    gesamtPreisindex: number,
+    gedaemmteflaeche: number
   ): number {
     return (
       (((this.constants.steildach['energiebedingte Mehrkosten'].SchaetzwertA *
-        C32 +
+        aequDaemmstoffdicke +
         this.constants.steildach['energiebedingte Mehrkosten'].SchaetzwertB) *
-        C13) /
+        gesamtPreisindex) /
         100) *
-      C29
+      gedaemmteflaeche
     );
   }
 
@@ -425,43 +558,55 @@ export class EinzelmassnahmenService {
   // Vollkosten | Kosten [€/m² Bauteil]
   // G42 Steildachgauben im EFH ohne Fenster
   // G42 = Daten!C37 * $C$13 / 100
-  calculateSteildachgaubenKostenM2(hausTyp: Haus, C13: number): number {
+  // steildachgaubenKostenM2: number;
+  private calculateSteildachgaubenKostenM2(
+    hausTyp: Haus,
+    gesamtPreisindex: number
+  ): number {
     const { SchaetzwertB } = this.constants.steildachgauben[hausTyp];
     const schaetzwertB = SchaetzwertB;
-    return (schaetzwertB * C13) / 100;
+    return (schaetzwertB * gesamtPreisindex) / 100;
   }
   // Vollkosten | Kosten [€]
   // H42 Steildachgauben im EFH ohne Fenster
-  calculateSteildachgaubenKosten(
+  // steildachgaubenKosten: number;
+  private calculateSteildachgaubenKosten(
     steildachgaubenKostenM2: number,
-    C15: number,
-    C42: number
+    gaubeflaeche: number
   ): number {
     // H42 = (1 + C15) * $C$42 * G42
-    return (1 + C15) * C42 * steildachgaubenKostenM2;
+    return (
+      (1 + this.constants.baunebenkosten) *
+      gaubeflaeche *
+      steildachgaubenKostenM2
+    );
   }
 
   // Vorbaurollladen
   // Vollkosten | Kosten [€/m² Bauteil]
   // G44 → Vorbaurollladen, Kunststoff, Gurt
   // G44 = (1 + C15) * Daten!C39 * $C$13 / 100
-  calculateVorbaurollladenKostenM2(
+  // vorbaurollladenKostenM2: number;
+  private calculateVorbaurollladenKostenM2(
     vorbaurollladenTyp: Vorbaurollladen,
-    C15: number,
-    C13: number
+    gesamtPreisindex: number
   ): number {
     const { SchaetzwertB } = this.constants.vorbaurollladen[vorbaurollladenTyp];
     const schaetzwertB = SchaetzwertB;
-    return ((1 + C15) * schaetzwertB * C13) / 100;
+    return (
+      ((1 + this.constants.baunebenkosten) * schaetzwertB * gesamtPreisindex) /
+      100
+    );
   }
   // Vollkosten | Kosten [€]
   // H44 → Vorbaurollladen, Kunststoff, Gurt
   // H44 = $C$44 * G44
-  calculateVorbaurollladenKosten(
+  // vorbaurollladenKosten: number;
+  private calculateVorbaurollladenKosten(
     vorbaurollladenKostenM2: number,
-    C44: number
+    rollladenflaeche: number
   ): number {
-    return C44 * vorbaurollladenKostenM2;
+    return rollladenflaeche * vorbaurollladenKostenM2;
   }
   // Sowieso-Kosten | Kosten [€]
   // I44 → Vorbaurollladen, Kunststoff, Gurt
@@ -472,21 +617,272 @@ export class EinzelmassnahmenService {
   // =H46
   // I47 → Vorbaurollladen, Alu, Elektro
   // =H47
-  calculateVorbaurollladenSowiesoKosten(vorbaurollladenKosten: number): number {
+  // vorbaurollladenSowiesoKosten: number;
+  private calculateVorbaurollladenSowiesoKosten(
+    vorbaurollladenKosten: number
+  ): number {
     return vorbaurollladenKosten;
   }
 
   // nergetisch bedingte Mehrkosten | Kosten [€]
   // J44 → Vorbaurollladen, Kunststoff, Gurt
   // J44 = H44 - I44
-  calculateVorbaurollladenEnergetischBedingteMehrkosten(
+  // vorbaurollladenEnergetischBedingteMehrkosten: number;
+  private calculateVorbaurollladenEnergetischBedingteMehrkosten(
     vorbaurollladenKosten: number,
     vorbaurollladenSowiesoKosten: number
   ): number {
     return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
   }
 
-  // Calculations
+  test: number = 0;
 
-  constructor(private constants: einzelmassnahmen) {}
+  // Calculations
+  constructor(
+    private constants: einzelmassnahmen,
+    private formService: FormEinzelmassnahmenService
+  ) {
+    effect(() => {
+      this.test = formService.fensterflaecheValue();
+    });
+
+    // this.fensterKosten = this.calculateFensterKosten(
+    //   this.fensterKostenM2,
+    //   this.formService.gesamtFensterflaecheValue()
+    // );
+
+    // this.fensterSowiesoKosten = this.calculateFensterSowiesoKosten(
+    //   this.formService.fensterflaecheValue(),
+    //   this.gesamtPreisindex
+    // );
+
+    // this.fensterEnergetischBedingteMehrkosten =
+    //   this.calculateFensterEnergetischBedingteMehrkosten(
+    //     this.fensterKostenM2,
+    //     this.fensterSowiesoKosten
+    //   );
+
+    // this.dachflaechenfensterKosten = this.calculateDachflaechenfensterKosten(
+    //   this.formService.hausSelected(),
+    //   this.gesamtPreisindex
+    // );
+
+    // this.tuerKostenM2.set(
+    //   this.calculateTuerKostenM2(
+    //     this.formService.hausSelected(),
+    //     this.gesamtPreisindex
+    //   )
+    // );
+
+    // this.tuerKosten = this.calculateTuerKosten(
+    //   this.formService.tuerflaecheValue(),
+    //   this.tuerKostenM2()
+    // );
+
+    // this.tuerEnergetischBedingteMehrkosten =
+    //   this.calculateTuerEnergetischBedingteMehrkosten(this.tuerKostenM2());
+
+    // this.tuerSowiesoKosten = this.calculateTuerSowiesoKosten(
+    //   this.tuerKostenM2(),
+    //   this.tuerEnergetischBedingteMehrkosten
+    // );
+
+    // this.aequDaemmstoffdicke = this.calculateAequDaemmstoffdicke(
+    //   this.formService.daemmstoffdickeValue()
+    // );
+
+    // this.wdvsKostenM2 = this.calculateWdvsKostenM2(
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.wdvsKosten = this.calculateWdvsKosten(
+    //   this.wdvsKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.wdvsEnergetischBedingteMehrkosten =
+    //   this.calculateWdvsEnergetischBedingteMehrkosten(
+    //     this.aequDaemmstoffdicke,
+    //     this.gesamtPreisindex,
+    //     this.formService.gedaemmteflaecheValue()
+    //   );
+
+    // this.wdvsSowiesoKosten = this.calculateWdvsSowiesoKosten(
+    //   this.wdvsKosten,
+    //   this.wdvsEnergetischBedingteMehrkosten
+    // );
+
+    // this.aussenwandKostenM2 = this.calculateAussenwandKostenM2(
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.aussenwandKosten = this.calculateAussenwandKosten(
+    //   this.aussenwandKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.kellerKostenM2 = this.calculateKellerKostenM2(
+    //   this.formService.kellerSelected(),
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.kellerKosten = this.calculateKellerKosten(
+    //   this.kellerKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.kellerEnergetischBedingteMehrkosten =
+    //   this.calculateKellerEnergetischBedingteMehrkosten(
+    //     this.formService.kellerSelected(),
+    //     this.kellerKosten,
+    //     this.formService.gedaemmteflaecheValue(),
+    //     this.aequDaemmstoffdicke
+    //   );
+
+    // this.kellerSowiesoKosten = this.calculateKellerSowiesoKosten(
+    //   this.kellerKosten,
+    //   this.kellerEnergetischBedingteMehrkosten
+    // );
+
+    // this.bodenplatteKostenM2 = this.calculateBodenplatteKostenM2(
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.bodenplatteKosten = this.calculateBodenplatteKosten(
+    //   this.bodenplatteKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.bodenplatteEnergetischBedingteMehrkosten =
+    //   this.calculateBodenplatteEnergetischBedingteMehrkosten(
+    //     this.bodenplatteKosten
+    //   );
+
+    // this.bodenplatteSowiesoKosten = this.calculateBodenplatteSowiesoKosten(
+    //   this.bodenplatteKosten,
+    //   this.bodenplatteEnergetischBedingteMehrkosten
+    // );
+
+    // this.innenwandKostenM2 = this.calculateInnenwandKostenM2(
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.innenwandKosten = this.calculateInnenwandKosten(
+    //   this.innenwandKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.innenwandEnergetischBedingteMehrkosten =
+    //   this.calculateInnenwandEnergetischBedingteMehrkosten(
+    //     this.innenwandKosten
+    //   );
+
+    // this.innenwandSowiesoKosten = this.calculateInnenwandSowiesoKosten(
+    //   this.innenwandKosten,
+    //   this.innenwandEnergetischBedingteMehrkosten
+    // );
+
+    // this.obersteGeschossdeckeKostenM2 =
+    //   this.calculateObersteGeschossdeckeKostenM2(
+    //     this.formService.obersteGeschossdeckeSelected(),
+    //     this.aequDaemmstoffdicke,
+    //     this.gesamtPreisindex
+    //   );
+
+    // this.obersteGeschossdeckeKosten = this.calculateObersteGeschossdeckeKosten(
+    //   this.obersteGeschossdeckeKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.obersteGeschossdeckeEnergetischBedingteMehrkosten =
+    //   this.calculateObersteGeschossdeckeEnergetischBedingteMehrkosten(
+    //     this.obersteGeschossdeckeKosten
+    //   );
+
+    // this.obersteGeschossdeckeSowiesoKosten =
+    //   this.calculateObersteGeschossdeckeSowiesoKosten(
+    //     this.obersteGeschossdeckeKosten,
+    //     this.obersteGeschossdeckeEnergetischBedingteMehrkosten
+    //   );
+
+    // this.flachdachKostenM2 = this.calculateFlachdachKostenM2(
+    //   this.formService.hausSelected(),
+    //   this.formService.flachdachSelected(),
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.flachdachKosten = this.calculateFlachdachKosten(
+    //   this.flachdachKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.flachdachEnergetischBedingteMehrkosten =
+    //   this.calculateFlachdachEnergetischBedingteMehrkosten(
+    //     this.aequDaemmstoffdicke,
+    //     this.gesamtPreisindex,
+    //     this.formService.gedaemmteflaecheValue()
+    //   );
+
+    // this.flachdachSowiesoKosten = this.calculateFlachdachSowiesoKosten(
+    //   this.flachdachKosten,
+    //   this.flachdachEnergetischBedingteMehrkosten
+    // );
+
+    // this.steildachKostenM2 = this.calculateSteildachKostenM2(
+    //   this.aequDaemmstoffdicke,
+    //   this.gesamtPreisindex
+    // );
+
+    // this.steildachKosten = this.calculateSteildachKosten(
+    //   this.steildachKostenM2,
+    //   this.formService.gedaemmteflaecheValue()
+    // );
+
+    // this.steildachEnergetischBedingteMehrkosten =
+    //   this.calculateSteildachEnergetischBedingteMehrkosten(
+    //     this.aequDaemmstoffdicke,
+    //     this.gesamtPreisindex,
+    //     this.formService.gedaemmteflaecheValue()
+    //   );
+
+    // this.steildachSowiesoKosten = this.calculateSteildachSowiesoKosten(
+    //   this.steildachKosten,
+    //   this.steildachEnergetischBedingteMehrkosten
+    // );
+
+    // this.steildachgaubenKostenM2 = this.calculateSteildachgaubenKostenM2(
+    //   this.formService.hausSelected(),
+    //   this.gesamtPreisindex
+    // );
+
+    // this.steildachgaubenKosten = this.calculateSteildachKosten(
+    //   this.steildachgaubenKostenM2,
+    //   this.formService.gaubeflaecheValue()
+    // );
+
+    // this.vorbaurollladenKostenM2 = this.calculateVorbaurollladenKostenM2(
+    //   this.formService.vorbaurollladenSelected(),
+    //   this.gesamtPreisindex
+    // );
+
+    // this.vorbaurollladenKosten = this.calculateVorbaurollladenKosten(
+    //   this.vorbaurollladenKostenM2,
+    //   this.formService.rollladenflaecheValue()
+    // );
+
+    // this.vorbaurollladenSowiesoKosten =
+    //   this.calculateVorbaurollladenSowiesoKosten(this.vorbaurollladenKosten);
+
+    // this.vorbaurollladenEnergetischBedingteMehrkosten =
+    //   this.calculateVorbaurollladenEnergetischBedingteMehrkosten(
+    //     this.vorbaurollladenKosten,
+    //     this.vorbaurollladenSowiesoKosten
+    //   );
+  }
 }
