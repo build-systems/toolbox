@@ -19,41 +19,11 @@ import { einzelmassnahmen } from '../../../shared/constants';
   },
 })
 export class NumbersEinzelmassnahmenComponent {
-  kostenM2 = 1000;
-  kosten = 1000;
-  sowiesoKosten = 1000;
-  energetischMehrkosten = 1000;
-
   baupreisindexErrechnet: number = 0;
   gesamtPreisindex: number = 0;
 
   constructor(
     public einzelmassnahmenService: EinzelmassnahmenService,
-    private formService: FormEinzelmassnahmenService,
-    private constants: einzelmassnahmen,
     public einzelmassnahmenTooltips: einzelmassnahmenTooltips
-  ) {
-    effect(() => {
-      this.baupreisindexErrechnet =
-        this.einzelmassnahmenService.calculateBaupreisindexErrechnet(
-          this.constants.baupreisindexAktuell,
-          this.constants.baupreisindex2015
-        );
-    });
-    effect(() => {
-      this.gesamtPreisindex =
-        this.einzelmassnahmenService.calculateGesamtPreisindex(
-          this.baupreisindexErrechnet,
-          this.constants.ortsfaktor
-        );
-    });
-    effect(() => {
-      if (this.formService.bauteilSelected() === 'Fenster')
-        this.kostenM2 = einzelmassnahmenService.calculateFensterKostenM2(
-          this.formService.fensterSelected(),
-          this.formService.fensterflaecheValue(),
-          this.gesamtPreisindex
-        );
-    });
-  }
+  ) {}
 }

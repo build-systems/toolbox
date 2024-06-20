@@ -196,3 +196,10 @@ type Vorbaurollladen =
   | 'Alu Elektro';
 type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
+
+type OutputEinzelmassnahmen = {
+  kostenM2: number;
+  kosten: number;
+  sowiesoKosten: number;
+  energetischMehrkosten: number;
+};

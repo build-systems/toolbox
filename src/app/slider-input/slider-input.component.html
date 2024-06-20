@@ -17,8 +17,7 @@
       type="range"
       class="slider"
       [name]="data().title"
-      [ngModel]="value()"
-      (ngModelChange)="value.set($event)"
+      [(ngModel)]="value"
       [min]="data().min"
       [max]="data().max"
       [step]="data().step"
@@ -27,7 +26,7 @@
     <input
       type="number"
       [id]="data().title"
-      [ngModel]="value().toFixed(2)"
+      [ngModel]="value().toFixed(round())"
       (ngModelChange)="onValueChange($event)"
       [ngModelOptions]="{ updateOn: 'blur' }"
       [min]="data().min"

@@ -92,7 +92,7 @@ export class einzelmassnahmen {
   // C12 → Ortsfaktor 1,001
   public ortsfaktor = 1.001;
   // C15 → Baunebenkosten [%]
-  public baunebenkosten = 15;
+  public baunebenkosten = 0.15;
   //Schätzwert [€/m²]
   // Daten!D10 → 3WSV, Dreh/Kipp, Passivhaus EFH&MFH für F&Ft = 658,86
   // Daten!D11 → 3WSV, Dreh/Kipp, H/K konv. EFH&MFH für F&Ft = 472,33
@@ -103,7 +103,7 @@ export class einzelmassnahmen {
   public fenster = {
     '3WSV Passivhaus': {
       SchaetzwertA: 658.86,
-      SchaetzwertB: 0.257,
+      SchaetzwertB: -0.257,
       GeltungsbereichVon: 0.8,
       GeltungsbereichBis: 8.5,
       GeltungsbereichEinheit: 'sqm',
@@ -111,7 +111,7 @@ export class einzelmassnahmen {
     },
     '3WSV konventionell': {
       SchaetzwertA: 472.33,
-      SchaetzwertB: 0.222,
+      SchaetzwertB: -0.222,
       GeltungsbereichVon: 0.8,
       GeltungsbereichBis: 8.6,
       GeltungsbereichEinheit: 'sqm',
@@ -119,7 +119,7 @@ export class einzelmassnahmen {
     },
     '2WSV konventionell': {
       SchaetzwertA: 413.45,
-      SchaetzwertB: 0.231,
+      SchaetzwertB: -0.231,
       GeltungsbereichVon: 0.8,
       GeltungsbereichBis: 8.7,
       GeltungsbereichEinheit: 'sqm',

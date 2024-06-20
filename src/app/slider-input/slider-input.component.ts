@@ -16,6 +16,7 @@ export class SliderInputComponent {
 
   data = input.required<SliderNumberObj>();
   value = model.required<number>();
+  round = input<number>(2);
 
   constructor() {}
 

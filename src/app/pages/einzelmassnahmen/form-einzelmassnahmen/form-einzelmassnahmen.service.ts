@@ -56,10 +56,15 @@ export class FormEinzelmassnahmenService {
     const allowedBauteile: Bauteil[] = [
       'Dachflächenfenster',
       'Türen',
-      'Dach',
       'Steildachgauben',
     ];
-    return allowedBauteile.includes(this.bauteilSelected() as Bauteil);
+    const allowedDach: Dach = 'Flachdach';
+    const allowedFlachdach: Flachdach = 'mit Lichtkuppeln';
+    return (
+      allowedBauteile.includes(this.bauteilSelected() as Bauteil) ||
+      (allowedDach === this.dachSelected() &&
+        allowedFlachdach === this.flachdachSelected())
+    );
   }
 
   // C3 → Wohnfläche [m²]
@@ -133,16 +138,16 @@ export class FormEinzelmassnahmenService {
   fensterflaecheValue = signal<number>(1);
 
   // C20 → Eingabe Fensterfläche gesamt [m²]
-  gesamtFensterflaeche = signal<SliderNumberObj>({
+  anzahlFenster = signal<SliderNumberObj>({
     min: 1,
     value: 1,
-    max: 1000,
+    max: 100,
     step: 1,
-    title: 'Gesamt Fensterfläche [m²]',
+    title: 'Anzahl der Fenster',
     tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   });
-  gesamtFensterflaecheValue = signal<number>(1);
+  anzahlFensterValue = signal<number>(1);
 
   // Fenster
   fensterObj = signal<FensterObj>({
@@ -266,25 +271,25 @@ export class FormEinzelmassnahmenService {
 
   // C42 → Fläche der Gaube(n) [m²]
   gaubeflaecheObj = signal<SliderNumberObj>({
-    min: 1,
-    value: 100,
-    max: 1000,
-    step: 1,
+    min: 0.1,
+    value: 11,
+    max: 100,
+    step: 0.1,
     title: 'Fläche der Gaube(n) [m²]',
     disabled: false,
   });
-  gaubeflaecheValue = signal<number>(100);
+  gaubeflaecheValue = signal<number>(11);
 
   // C44 → Fläche Rollladen [m²]
   rollladenflaecheObj = signal<SliderNumberObj>({
     min: 1,
-    value: 100,
-    max: 1000,
-    step: 1,
+    value: 3,
+    max: 100,
+    step: 0.1,
     title: 'Fläche Rollladen [m²]',
     disabled: false,
   });
-  rollladenflaecheValue = signal<number>(100);
+  rollladenflaecheValue = signal<number>(this.rollladenflaecheObj().value);
 
   // Rollladen Typ
   // To be implemented

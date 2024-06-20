@@ -18,14 +18,24 @@
   </select>
 </fieldset>
 <app-radio
-  [hidden]="!formService.hausTypVisible()"
-  [(selected)]="formService.hausSelected"
-  [data]="formService.hausObj()"
-/>
-<app-radio
   [hidden]="!(formService.bauteilSelected() === 'Dach')"
   [(selected)]="formService.dachSelected"
   [data]="formService.dachObj()"
+/>
+<app-radio
+  [hidden]="
+    !(
+      formService.bauteilSelected() === 'Dach' &&
+      formService.dachSelected() === 'Flachdach'
+    )
+  "
+  [(selected)]="formService.flachdachSelected"
+  [data]="formService.flachdachObj()"
+/>
+<app-radio
+  [hidden]="!formService.hausTypVisible()"
+  [(selected)]="formService.hausSelected"
+  [data]="formService.hausObj()"
 />
 <app-slider-input
   [hidden]="!(formService.bauteilSelected() === 'Fenster')"
@@ -34,8 +44,9 @@
 />
 <app-slider-input
   [hidden]="!(formService.bauteilSelected() === 'Fenster')"
-  [(value)]="formService.gesamtFensterflaecheValue"
-  [data]="formService.gesamtFensterflaeche()"
+  [(value)]="formService.anzahlFensterValue"
+  [data]="formService.anzahlFenster()"
+  [round]="0"
 />
 <app-radio
   [hidden]="!(formService.bauteilSelected() === 'Fenster')"
@@ -47,6 +58,16 @@
   [(value)]="formService.tuerflaecheValue"
   [data]="formService.tuerflaecheObj()"
 />
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'Keller')"
+  [(selected)]="formService.kellerSelected"
+  [data]="formService.kellerObj()"
+/>
+<app-radio
+  [hidden]="!(formService.bauteilSelected() === 'ObersteGeschossdecke')"
+  [(selected)]="formService.obersteGeschossdeckeSelected"
+  [data]="formService.obersteGeschossdeckeObj()"
+/>
 <app-slider-input
   *ngIf="formService.isOpakeVisible()"
   [(value)]="formService.gedaemmteflaecheValue"
@@ -56,26 +77,6 @@
   *ngIf="formService.isOpakeVisible()"
   [(value)]="formService.daemmstoffdickeValue"
   [data]="formService.daemmstoffdickeObj()"
-/>
-<app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Keller')"
-  [(selected)]="formService.kellerSelected"
-  [data]="formService.kellerObj()"
-/>
-<app-radio
-  [hidden]="!(formService.bauteilSelected() === 'Oberste Geschossdecke')"
-  [(selected)]="formService.obersteGeschossdeckeSelected"
-  [data]="formService.obersteGeschossdeckeObj()"
-/>
-<app-radio
-  [hidden]="
-    !(
-      formService.bauteilSelected() === 'Dach' &&
-      formService.dachSelected() === 'Flachdach'
-    )
-  "
-  [(selected)]="formService.flachdachSelected"
-  [data]="formService.flachdachObj()"
 />
 <app-slider-input
   [hidden]="!(formService.bauteilSelected() === 'Steildachgauben')"
