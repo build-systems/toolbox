@@ -11,13 +11,27 @@
   </div>
 </div>
 <div class="container-tool">
-  <div class="inputs">
-    <div class="tool-tab">
-      <button title="Projekt Formular" class="pill-single">Bauteil</button>
+  <div class="wrapper-input">
+    <div class="inputs">
+      <div class="tool-tab">
+        <button title="Projekt Formular" class="pill-single">Bauteil</button>
+      </div>
+      <div class="wrapper-gradient">
+        <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
+      </div>
     </div>
-    <div class="wrapper-gradient">
-      <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
-    </div>
+    <button
+      class="button"
+      [disabled]="einzelmassnahmenService.outputEinzelmassnahmen.bauteil === ''"
+      (click)="
+        einzelmassnahmenService.addOutputToList(
+          einzelmassnahmenService.outputEinzelmassnahmen,
+          einzelmassnahmenService.listEinzelmassnahmen
+        )
+      "
+    >
+      Add to list
+    </button>
   </div>
   <div class="output">
     <div>

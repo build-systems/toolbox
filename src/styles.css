@@ -263,7 +263,8 @@ li {
   overflow-y: auto;
 }
 
-.inputs {
+.inputs,
+.wrapper-input {
   position: relative;
   top: 0;
   display: flex;

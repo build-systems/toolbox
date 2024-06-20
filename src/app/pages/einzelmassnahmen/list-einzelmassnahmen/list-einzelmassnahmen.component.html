@@ -1,1 +1,18 @@
-<p>list-einzelmassnahmen works!</p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Kosten [€/m²]</th>
+      <th>Kosten [€]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of einzelmassnahmenService.listEinzelmassnahmen()">
+      <td>{{ item.bauteil }}</td>
+      <td>
+        {{ item.kostenM2 | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+      </td>
+      <td>{{ item.kosten | currency : "EUR" : "symbol" : "1.0-0" : "de" }}</td>
+    </tr>
+  </tbody>
+</table>

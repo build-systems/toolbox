@@ -1,4 +1,10 @@
-import { Injectable, computed, effect, signal } from '@angular/core';
+import {
+  Injectable,
+  WritableSignal,
+  computed,
+  effect,
+  signal,
+} from '@angular/core';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { einzelmassnahmen } from '../../shared/constants';
 
@@ -643,11 +649,23 @@ export class EinzelmassnahmenService {
   energetischMehrkosten: number = 0;
 
   outputEinzelmassnahmen: OutputEinzelmassnahmen = {
+    bauteil: '',
     kostenM2: 0,
     kosten: 0,
     sowiesoKosten: 0,
     energetischMehrkosten: 0,
   };
+
+  listEinzelmassnahmen = signal<OutputEinzelmassnahmen[]>([]);
+
+  addOutputToList(
+    output: OutputEinzelmassnahmen,
+    list: WritableSignal<Array<OutputEinzelmassnahmen>>
+  ) {
+    if (output.bauteil != '') {
+      list.update((old) => [...old, output]);
+    }
+  }
 
   switchBauteil(
     bauteilSelected: string,
@@ -656,6 +674,7 @@ export class EinzelmassnahmenService {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {
+          bauteil: 'Außenwand',
           kostenM2: this.aussenwandKostenM2(),
           kosten: this.aussenwandKosten(),
           sowiesoKosten: 0,
@@ -663,6 +682,7 @@ export class EinzelmassnahmenService {
         };
       case 'Bodenplatte':
         return {
+          bauteil: 'Bodenplatte',
           kostenM2: this.bodenplatteKostenM2(),
           kosten: this.bodenplatteKosten(),
           sowiesoKosten: this.bodenplatteSowiesoKosten(),
@@ -672,6 +692,7 @@ export class EinzelmassnahmenService {
       case 'Dach':
         if (dachSelected === 'Flachdach') {
           return {
+            bauteil: 'Flachdach',
             kostenM2: this.flachdachKostenM2(),
             kosten: this.flachdachKosten(),
             sowiesoKosten: this.flachdachSowiesoKosten(),
@@ -680,6 +701,7 @@ export class EinzelmassnahmenService {
           };
         } else {
           return {
+            bauteil: 'Steildach',
             kostenM2: this.steildachKostenM2(),
             kosten: this.steildachKosten(),
             sowiesoKosten: this.steildachSowiesoKosten(),
@@ -689,6 +711,7 @@ export class EinzelmassnahmenService {
         }
       case 'Dachflächenfenster':
         return {
+          bauteil: 'Dachflächenfenster',
           kostenM2: 0,
           kosten: this.dachflaechenfensterKosten(),
           sowiesoKosten: 0,
@@ -696,6 +719,7 @@ export class EinzelmassnahmenService {
         };
       case 'Fenster':
         return {
+          bauteil: 'Fenster',
           kostenM2: this.fensterKostenM2(),
           kosten: this.fensterKosten(),
           sowiesoKosten: this.fensterSowiesoKosten(),
@@ -703,6 +727,7 @@ export class EinzelmassnahmenService {
         };
       case 'Innenwand':
         return {
+          bauteil: 'Innenwand',
           kostenM2: this.innenwandKostenM2(),
           kosten: this.innenwandKosten(),
           sowiesoKosten: this.innenwandSowiesoKosten(),
@@ -710,6 +735,7 @@ export class EinzelmassnahmenService {
         };
       case 'Keller':
         return {
+          bauteil: 'Keller',
           kostenM2: this.kellerKostenM2(),
           kosten: this.kellerKosten(),
           sowiesoKosten: this.kellerSowiesoKosten(),
@@ -717,6 +743,7 @@ export class EinzelmassnahmenService {
         };
       case 'ObersteGeschossdecke':
         return {
+          bauteil: 'Oberste Geschossdecke',
           kostenM2: this.obersteGeschossdeckeKostenM2(),
           kosten: this.obersteGeschossdeckeKosten(),
           sowiesoKosten: this.obersteGeschossdeckeSowiesoKosten(),
@@ -725,6 +752,7 @@ export class EinzelmassnahmenService {
         };
       case 'Steildachgauben':
         return {
+          bauteil: 'Steildachgauben',
           kostenM2: this.steildachgaubenKostenM2(),
           kosten: this.steildachgaubenKosten(),
           sowiesoKosten: 0,
@@ -732,6 +760,7 @@ export class EinzelmassnahmenService {
         };
       case 'Türen':
         return {
+          bauteil: 'Tür',
           kostenM2: this.tuerKostenM2(),
           kosten: this.tuerKosten(),
           sowiesoKosten: this.tuerSowiesoKosten(),
@@ -739,6 +768,7 @@ export class EinzelmassnahmenService {
         };
       case 'Vorbaurollladen':
         return {
+          bauteil: 'Vorbaurollladen',
           kostenM2: this.vorbaurollladenKostenM2(),
           kosten: this.vorbaurollladenKosten(),
           sowiesoKosten: this.vorbaurollladenSowiesoKosten(),
@@ -747,6 +777,7 @@ export class EinzelmassnahmenService {
         };
       case 'Wärmedämmverbundsystem':
         return {
+          bauteil: 'Wärmedämmverbundsystem',
           kostenM2: this.wdvsKostenM2(),
           kosten: this.wdvsKosten(),
           sowiesoKosten: this.wdvsSowiesoKosten(),
@@ -754,6 +785,7 @@ export class EinzelmassnahmenService {
         };
       default:
         return {
+          bauteil: '',
           kostenM2: 0,
           kosten: 0,
           sowiesoKosten: 0,

@@ -198,6 +198,7 @@ type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
 
 type OutputEinzelmassnahmen = {
+  bauteil: string;
   kostenM2: number;
   kosten: number;
   sowiesoKosten: number;
