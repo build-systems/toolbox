@@ -256,6 +256,8 @@ li {
   position: relative;
   top: 0;
   display: grid;
+  height: 100%;
+
   grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
   padding-right: var(--layout-padding);
   padding-left: var(--layout-padding);
@@ -321,6 +323,10 @@ li {
   border: none;
 }
 
+.host-list {
+  overflow-y: auto;
+}
+
 .wrapper-gradient {
   display: flex;
   position: relative;
@@ -334,6 +340,7 @@ li {
   display: flex;
   flex-direction: column;
   gap: calc(var(--layout-padding) / 2);
+  overflow-y: auto;
 }
 
 .button {
@@ -345,6 +352,7 @@ li {
   background-color: var(--bg-secondary);
   font-family: var(--font-family-primary), sans-serif;
   height: var(--button-height);
+  min-height: var(--button-height);
   text-align: center;
   border-radius: var(--button-radius);
   border: 1px solid var(--primary);

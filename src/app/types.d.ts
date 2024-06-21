@@ -26,11 +26,16 @@ type Option<T> = {
   text?: string;
   disabled: boolean;
 };
+
 type OptionObj<T> = {
   title: string;
   tooltip?: string;
   options: Option<T>[];
 };
+
+//Number option (for the output)
+type NumberOption = Option<number>;
+type NumberOptionsObj = OptionObj<number>;
 
 // Projekt
 type SanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
@@ -127,7 +132,7 @@ type HausObj = OptionObj<Haus>;
 type Bauteil =
   | 'Außenwand'
   | 'Bodenplatte'
-  | 'Dach'
+  | 'Dach' // This is temporary. We need a typology selection step: MFH/EFH, Flach-/Steildach, mit/ohne keller
   | 'Dachflächenfenster'
   | 'Fenster'
   | 'Flachdach'
@@ -141,6 +146,21 @@ type Bauteil =
   | 'Wärmedämmverbundsystem';
 type BauteilOption = Option<Bauteil>;
 type BauteilObj = OptionObj<Bauteil>;
+
+type BauteilText =
+  | 'Außenwand'
+  | 'Bodenplatte'
+  | 'Dachflächenfenster'
+  | 'Fenster'
+  | 'Flachdach'
+  | 'Innenwand'
+  | 'Keller'
+  | 'Oberste Geschossdecke'
+  | 'Steildach'
+  | 'Steildachgauben'
+  | 'Tür'
+  | 'Vorbaurollladen'
+  | 'Wärmedämm­verbundsystem';
 
 type Waermeerzeuger =
   | 'Bestandskessel'
@@ -197,10 +217,30 @@ type Vorbaurollladen =
 type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
 
+// Will be discontinued
 type OutputEinzelmassnahmen = {
   bauteil: string;
   kostenM2: number;
   kosten: number;
   sowiesoKosten: number;
   energetischMehrkosten: number;
+};
+
+type OutputTitle =
+  | 'Kosten'
+  | 'Vollkosten'
+  | 'Sowieso-Kosten'
+  | 'Energetisch Mehrkosten';
+
+type einzelmassnahmenOutputItem = {
+  title: OutputTitle;
+  description?: string;
+  unit: string;
+  value: number;
+};
+
+type einzelmassnahmenOutputObj = {
+  title: BauteilText | undefined;
+  description?: string;
+  items: einzelmassnahmenOutputItem[];
 };

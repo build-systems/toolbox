@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  WritableSignal,
-  computed,
-  effect,
-  signal,
-} from '@angular/core';
+import { Injectable, WritableSignal, effect, signal } from '@angular/core';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { einzelmassnahmen } from '../../shared/constants';
 
@@ -656,7 +650,15 @@ export class EinzelmassnahmenService {
     energetischMehrkosten: 0,
   };
 
+  newOutputEinzelmassnahmen: einzelmassnahmenOutputObj = {
+    title: undefined,
+    items: [],
+  };
+
+  newListEinzelmassnahmen = signal<einzelmassnahmenOutputObj[]>([]);
+
   listEinzelmassnahmen = signal<OutputEinzelmassnahmen[]>([]);
+  totalKosten = signal<number>(0);
 
   addOutputToList(
     output: OutputEinzelmassnahmen,
@@ -667,129 +669,348 @@ export class EinzelmassnahmenService {
     }
   }
 
+  newAddOutputToList(
+    output: einzelmassnahmenOutputObj,
+    list: WritableSignal<einzelmassnahmenOutputObj[]>
+  ) {
+    if (output.title != undefined) {
+      list.update((old) => [...old, output]);
+    }
+  }
+
+  // Function to find the value by title
+  findValueByTitle(obj: einzelmassnahmenOutputObj, title: OutputTitle): any {
+    if (obj.items && Array.isArray(obj.items)) {
+      for (const item of obj.items) {
+        if (item.title === title) {
+          return item.value;
+        }
+      }
+    }
+    return null; // Return null if the title is not found
+  }
+
   switchBauteil(
     bauteilSelected: string,
     dachSelected: Dach
-  ): OutputEinzelmassnahmen {
+  ): einzelmassnahmenOutputObj {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {
-          bauteil: 'Außenwand',
-          kostenM2: this.aussenwandKostenM2(),
-          kosten: this.aussenwandKosten(),
-          sowiesoKosten: 0,
-          energetischMehrkosten: 0,
+          title: 'Außenwand',
+          items: [
+            {
+              title: 'Kosten',
+              description: 'Placeholder',
+              value: this.aussenwandKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.aussenwandKosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Bodenplatte':
         return {
-          bauteil: 'Bodenplatte',
-          kostenM2: this.bodenplatteKostenM2(),
-          kosten: this.bodenplatteKosten(),
-          sowiesoKosten: this.bodenplatteSowiesoKosten(),
-          energetischMehrkosten:
-            this.bodenplatteEnergetischBedingteMehrkosten(),
+          title: 'Bodenplatte',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.bodenplatteKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.bodenplatteKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.bodenplatteSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.bodenplatteEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Dach':
         if (dachSelected === 'Flachdach') {
           return {
-            bauteil: 'Flachdach',
-            kostenM2: this.flachdachKostenM2(),
-            kosten: this.flachdachKosten(),
-            sowiesoKosten: this.flachdachSowiesoKosten(),
-            energetischMehrkosten:
-              this.flachdachEnergetischBedingteMehrkosten(),
+            title: 'Flachdach',
+            items: [
+              {
+                title: 'Kosten',
+                value: this.flachdachKostenM2(),
+                unit: '€/m² Bauteil',
+              },
+              {
+                title: 'Vollkosten',
+                value: this.flachdachKosten(),
+                unit: '€',
+              },
+              {
+                title: 'Sowieso-Kosten',
+                value: this.flachdachSowiesoKosten(),
+                unit: '€',
+              },
+              {
+                title: 'Energetisch Mehrkosten',
+                value: this.flachdachEnergetischBedingteMehrkosten(),
+                unit: '€',
+              },
+            ],
           };
         } else {
           return {
-            bauteil: 'Steildach',
-            kostenM2: this.steildachKostenM2(),
-            kosten: this.steildachKosten(),
-            sowiesoKosten: this.steildachSowiesoKosten(),
-            energetischMehrkosten:
-              this.steildachEnergetischBedingteMehrkosten(),
+            title: 'Steildach',
+            items: [
+              {
+                title: 'Kosten',
+                value: this.steildachKostenM2(),
+                unit: '€/m² Bauteil',
+              },
+              {
+                title: 'Vollkosten',
+                value: this.steildachKosten(),
+                unit: '€',
+              },
+              {
+                title: 'Sowieso-Kosten',
+                value: this.steildachSowiesoKosten(),
+                unit: '€',
+              },
+              {
+                title: 'Energetisch Mehrkosten',
+                value: this.steildachEnergetischBedingteMehrkosten(),
+                unit: '€',
+              },
+            ],
           };
         }
       case 'Dachflächenfenster':
         return {
-          bauteil: 'Dachflächenfenster',
-          kostenM2: 0,
-          kosten: this.dachflaechenfensterKosten(),
-          sowiesoKosten: 0,
-          energetischMehrkosten: 0,
+          title: 'Dachflächenfenster',
+          items: [
+            {
+              title: 'Vollkosten',
+              value: this.dachflaechenfensterKosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Fenster':
         return {
-          bauteil: 'Fenster',
-          kostenM2: this.fensterKostenM2(),
-          kosten: this.fensterKosten(),
-          sowiesoKosten: this.fensterSowiesoKosten(),
-          energetischMehrkosten: this.fensterEnergetischBedingteMehrkosten(),
+          title: 'Fenster',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.fensterKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.fensterKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.fensterSowiesoKosten(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.fensterEnergetischBedingteMehrkosten(),
+              unit: '€/m² Bauteil',
+            },
+          ],
         };
       case 'Innenwand':
         return {
-          bauteil: 'Innenwand',
-          kostenM2: this.innenwandKostenM2(),
-          kosten: this.innenwandKosten(),
-          sowiesoKosten: this.innenwandSowiesoKosten(),
-          energetischMehrkosten: this.innenwandEnergetischBedingteMehrkosten(),
+          title: 'Innenwand',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.innenwandKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.innenwandKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.innenwandSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.innenwandEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Keller':
         return {
-          bauteil: 'Keller',
-          kostenM2: this.kellerKostenM2(),
-          kosten: this.kellerKosten(),
-          sowiesoKosten: this.kellerSowiesoKosten(),
-          energetischMehrkosten: this.kellerEnergetischBedingteMehrkosten(),
+          title: 'Keller',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.kellerKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.kellerKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.kellerSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.kellerEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'ObersteGeschossdecke':
         return {
-          bauteil: 'Oberste Geschossdecke',
-          kostenM2: this.obersteGeschossdeckeKostenM2(),
-          kosten: this.obersteGeschossdeckeKosten(),
-          sowiesoKosten: this.obersteGeschossdeckeSowiesoKosten(),
-          energetischMehrkosten:
-            this.obersteGeschossdeckeEnergetischBedingteMehrkosten(),
+          title: 'Oberste Geschossdecke',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.obersteGeschossdeckeKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.obersteGeschossdeckeKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.obersteGeschossdeckeSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.obersteGeschossdeckeEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Steildachgauben':
         return {
-          bauteil: 'Steildachgauben',
-          kostenM2: this.steildachgaubenKostenM2(),
-          kosten: this.steildachgaubenKosten(),
-          sowiesoKosten: 0,
-          energetischMehrkosten: 0,
+          title: 'Steildachgauben',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.steildachgaubenKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.steildachgaubenKosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Türen':
         return {
-          bauteil: 'Tür',
-          kostenM2: this.tuerKostenM2(),
-          kosten: this.tuerKosten(),
-          sowiesoKosten: this.tuerSowiesoKosten(),
-          energetischMehrkosten: this.tuerEnergetischBedingteMehrkosten(),
+          title: 'Tür',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.tuerKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.tuerKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.tuerSowiesoKosten(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.tuerEnergetischBedingteMehrkosten(),
+              unit: '€/m² Bauteil',
+            },
+          ],
         };
       case 'Vorbaurollladen':
         return {
-          bauteil: 'Vorbaurollladen',
-          kostenM2: this.vorbaurollladenKostenM2(),
-          kosten: this.vorbaurollladenKosten(),
-          sowiesoKosten: this.vorbaurollladenSowiesoKosten(),
-          energetischMehrkosten:
-            this.vorbaurollladenEnergetischBedingteMehrkosten(),
+          title: 'Vorbaurollladen',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.vorbaurollladenKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.vorbaurollladenKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.vorbaurollladenSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.vorbaurollladenEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       case 'Wärmedämmverbundsystem':
         return {
-          bauteil: 'Wärmedämmverbundsystem',
-          kostenM2: this.wdvsKostenM2(),
-          kosten: this.wdvsKosten(),
-          sowiesoKosten: this.wdvsSowiesoKosten(),
-          energetischMehrkosten: this.wdvsEnergetischBedingteMehrkosten(),
+          title: 'Wärmedämm­verbundsystem',
+          items: [
+            {
+              title: 'Kosten',
+              value: this.wdvsKostenM2(),
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: 'Vollkosten',
+              value: this.wdvsKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Sowieso-Kosten',
+              value: this.wdvsSowiesoKosten(),
+              unit: '€',
+            },
+            {
+              title: 'Energetisch Mehrkosten',
+              value: this.wdvsEnergetischBedingteMehrkosten(),
+              unit: '€',
+            },
+          ],
         };
       default:
         return {
-          bauteil: '',
-          kostenM2: 0,
-          kosten: 0,
-          sowiesoKosten: 0,
-          energetischMehrkosten: 0,
+          title: undefined,
+          items: [
+            {
+              title: 'Kosten',
+              value: 0,
+              unit: '€',
+            },
+          ],
         };
     }
   }
@@ -799,8 +1020,20 @@ export class EinzelmassnahmenService {
     private constants: einzelmassnahmen,
     private formService: FormEinzelmassnahmenService
   ) {
+    effect(
+      () => {
+        this.totalKosten.set(
+          this.newListEinzelmassnahmen().reduce(
+            (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
+            0
+          )
+        );
+      },
+      { allowSignalWrites: true }
+    );
+
     effect(() => {
-      this.outputEinzelmassnahmen = this.switchBauteil(
+      this.newOutputEinzelmassnahmen = this.switchBauteil(
         this.formService.bauteilSelected(),
         this.formService.dachSelected()
       );

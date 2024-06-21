@@ -22,11 +22,13 @@
     </div>
     <button
       class="button"
-      [disabled]="einzelmassnahmenService.outputEinzelmassnahmen.bauteil === ''"
+      [disabled]="
+        einzelmassnahmenService.newOutputEinzelmassnahmen.title === undefined
+      "
       (click)="
-        einzelmassnahmenService.addOutputToList(
-          einzelmassnahmenService.outputEinzelmassnahmen,
-          einzelmassnahmenService.listEinzelmassnahmen
+        einzelmassnahmenService.newAddOutputToList(
+          einzelmassnahmenService.newOutputEinzelmassnahmen,
+          einzelmassnahmenService.newListEinzelmassnahmen
         )
       "
     >
@@ -40,7 +42,16 @@
       </div>
       <app-chart-einzelmassnahmen></app-chart-einzelmassnahmen>
     </div>
-    <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
+    <div class="wrapper-list-button">
+      <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
+      <button
+        class="button"
+        [disabled]="einzelmassnahmenService.listEinzelmassnahmen().length === 0"
+      >
+        <!-- (click)="" -->
+        Save
+      </button>
+    </div>
   </div>
 </div>
 <app-help></app-help>

@@ -8,6 +8,9 @@ import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
   imports: [CommonModule],
   templateUrl: './list-einzelmassnahmen.component.html',
   styleUrl: './list-einzelmassnahmen.component.css',
+  host: {
+    class: 'host-list',
+  },
 })
 export class ListEinzelmassnahmenComponent {
   constructor(public einzelmassnahmenService: EinzelmassnahmenService) {}

@@ -7,11 +7,13 @@
     class="dropdown"
     [(ngModel)]="formService.bauteilSelected"
     [name]="formService.bauteilObj().title"
+    [id]="formService.bauteilObj().title"
     #bauteilField
   >
     <option
       *ngFor="let item of formService.bauteilObj().options"
       [ngValue]="item.value"
+      [id]="item.id"
     >
       {{ item.text ? item.text : item.value }}
     </option>

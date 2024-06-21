@@ -1,65 +1,19 @@
 <div class="card-container">
-  <div class="card">
+  <div
+    class="card"
+    *ngFor="let item of einzelmassnahmenService.newOutputEinzelmassnahmen.items"
+    [title]="item.title"
+  >
     <h3>
-      Kosten [€/m² Bauteil]&nbsp;<sup
+      {{ item.title }} [{{ item.unit }}]@if (item.description) {&nbsp;<sup
         class="tooltip-icon"
-        [appTooltip]="einzelmassnahmenTooltips.placeholder"
+        [appTooltip]="item.description"
         placement="right"
         >&#9432;</sup
-      >
+      >}
     </h3>
     <div>
-      {{
-        this.einzelmassnahmenService.outputEinzelmassnahmen.kostenM2
-          | currency : "EUR" : "symbol" : "1.0-0" : "de"
-      }}
-    </div>
-  </div>
-  <div
-    title="Kosten: {{
-      this.einzelmassnahmenService.outputEinzelmassnahmen.kosten
-        | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-    }}"
-    class="card"
-  >
-    <h3>Vollkosten [€]</h3>
-    <div>
-      {{
-        this.einzelmassnahmenService.outputEinzelmassnahmen.kosten
-          | currency : "EUR" : "symbol" : "1.0-0" : "de"
-      }}
-    </div>
-  </div>
-</div>
-<div class="card-container">
-  <div
-    title="Sowieso-Kosten: {{
-      this.einzelmassnahmenService.outputEinzelmassnahmen.sowiesoKosten
-        | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-    }}"
-    class="card"
-  >
-    <h3>Sowieso-Kosten [€]</h3>
-    <div>
-      {{
-        this.einzelmassnahmenService.outputEinzelmassnahmen.sowiesoKosten
-          | currency : "EUR" : "symbol" : "1.0-0" : "de"
-      }}
-    </div>
-  </div>
-  <div
-    title="Energetisch Mehrkosten: {{
-      this.einzelmassnahmenService.outputEinzelmassnahmen.energetischMehrkosten
-        | currency : 'EUR' : 'symbol' : '1.0-0' : 'de'
-    }}"
-    class="card"
-  >
-    <h3>Energetisch Mehrkosten [€]</h3>
-    <div>
-      {{
-        this.einzelmassnahmenService.outputEinzelmassnahmen
-          .energetischMehrkosten | currency : "EUR" : "symbol" : "1.0-0" : "de"
-      }}
+      {{ item.value | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
     </div>
   </div>
 </div>

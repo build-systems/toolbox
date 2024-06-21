@@ -1,4 +1,13 @@
 .output {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.wrapper-list-button {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.wrapper-list-button button {
+  width: 100%;
 }
