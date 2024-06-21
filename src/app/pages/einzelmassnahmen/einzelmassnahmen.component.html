@@ -23,12 +23,12 @@
     <button
       class="button"
       [disabled]="
-        einzelmassnahmenService.newOutputEinzelmassnahmen.title === undefined
+        einzelmassnahmenService.outputEinzelmassnahmen.title === undefined
       "
       (click)="
         einzelmassnahmenService.newAddOutputToList(
-          einzelmassnahmenService.newOutputEinzelmassnahmen,
-          einzelmassnahmenService.newListEinzelmassnahmen
+          einzelmassnahmenService.outputEinzelmassnahmen,
+          einzelmassnahmenService.listEinzelmassnahmen
         )
       "
     >

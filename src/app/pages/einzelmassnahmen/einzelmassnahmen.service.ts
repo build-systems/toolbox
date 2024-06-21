@@ -637,37 +637,14 @@ export class EinzelmassnahmenService {
     return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
   }
 
-  kostenM2: number = 0;
-  kosten: number = 0;
-  sowiesoKosten: number = 0;
-  energetischMehrkosten: number = 0;
-
-  outputEinzelmassnahmen: OutputEinzelmassnahmen = {
-    bauteil: '',
-    kostenM2: 0,
-    kosten: 0,
-    sowiesoKosten: 0,
-    energetischMehrkosten: 0,
-  };
-
-  newOutputEinzelmassnahmen: einzelmassnahmenOutputObj = {
+  outputEinzelmassnahmen: einzelmassnahmenOutputObj = {
     title: undefined,
     items: [],
   };
 
-  newListEinzelmassnahmen = signal<einzelmassnahmenOutputObj[]>([]);
+  listEinzelmassnahmen = signal<einzelmassnahmenOutputObj[]>([]);
 
-  listEinzelmassnahmen = signal<OutputEinzelmassnahmen[]>([]);
   totalKosten = signal<number>(0);
-
-  addOutputToList(
-    output: OutputEinzelmassnahmen,
-    list: WritableSignal<Array<OutputEinzelmassnahmen>>
-  ) {
-    if (output.bauteil != '') {
-      list.update((old) => [...old, output]);
-    }
-  }
 
   newAddOutputToList(
     output: einzelmassnahmenOutputObj,
@@ -1023,7 +1000,7 @@ export class EinzelmassnahmenService {
     effect(
       () => {
         this.totalKosten.set(
-          this.newListEinzelmassnahmen().reduce(
+          this.listEinzelmassnahmen().reduce(
             (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
             0
           )
@@ -1033,7 +1010,7 @@ export class EinzelmassnahmenService {
     );
 
     effect(() => {
-      this.newOutputEinzelmassnahmen = this.switchBauteil(
+      this.outputEinzelmassnahmen = this.switchBauteil(
         this.formService.bauteilSelected(),
         this.formService.dachSelected()
       );

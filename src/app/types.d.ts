@@ -217,15 +217,6 @@ type Vorbaurollladen =
 type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
 
-// Will be discontinued
-type OutputEinzelmassnahmen = {
-  bauteil: string;
-  kostenM2: number;
-  kosten: number;
-  sowiesoKosten: number;
-  energetischMehrkosten: number;
-};
-
 type OutputTitle =
   | 'Kosten'
   | 'Vollkosten'

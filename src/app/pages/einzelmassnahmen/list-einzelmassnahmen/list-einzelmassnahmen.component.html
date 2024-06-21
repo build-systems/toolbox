@@ -8,7 +8,9 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let item of einzelmassnahmenService.newListEinzelmassnahmen()"
+        *ngFor="
+          let item of einzelmassnahmenService.listEinzelmassnahmen() | reverse
+        "
       >
         <td>{{ item.title }}</td>
         <td class="shrink">
