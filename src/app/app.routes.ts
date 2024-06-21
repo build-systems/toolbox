@@ -16,27 +16,34 @@ export const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    title: 'Profile',
+    title: 'BuildSystems | Profile',
   },
   {
     path: 'portfolio',
     component: PortfolioComponent,
-    title: 'Portfolio',
+    title: 'BuildSystems | Portfolio',
   },
   { path: '', redirectTo: '/neubau', pathMatch: 'full' },
   {
     path: 'neubau',
-    component: NeubauComponent,
+    loadComponent: () =>
+      import('./pages/neubau/neubau.component').then((c) => c.NeubauComponent),
     title: 'BuildSystems | Neubau',
   },
   {
     path: 'sanierung',
-    component: SanierungComponent,
+    loadComponent: () =>
+      import('./pages/sanierung/sanierung.component').then(
+        (c) => c.SanierungComponent
+      ),
     title: 'BuildSystems | Sanierung',
   },
   {
     path: 'einzelmassnahmen',
-    component: EinzelmassnahmenComponent,
+    loadComponent: () =>
+      import('./pages/einzelmassnahmen/einzelmassnahmen.component').then(
+        (c) => c.EinzelmassnahmenComponent
+      ),
     title: 'BuildSystems | Einzelmaßnahmen',
   },
   // {
