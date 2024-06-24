@@ -1,4 +1,4 @@
-<div class="title" #top (click)="toggleExpand()">
+<div class="title" #top>
   <div class="arrow-and-h1">
     <div class="arrow-container">
       <div class="arrow">
@@ -7,10 +7,23 @@
         >
       </div>
     </div>
-    <h1>{{ title() }}</h1>
+    <h1>
+      <span (click)="toggleExpand()" class="tool-title">{{ title() }}</span>
+      <span> / </span>
+      <input
+        type="text"
+        name="projektRename"
+        id="projektRename"
+        autocomplete="off"
+        [(ngModel)]="projektName"
+        #projektRename
+        (click)="projektRename.select()"
+        (keyup.enter)="projektRename.blur()"
+      />
+    </h1>
   </div>
   <div class="kfw-info">
-    <div class="kfw-text">
+    <div>
       <div
         class="kfw-description"
         [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"

@@ -1,13 +1,14 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
+    [(projektName)]="neubauService.projektName"
     [kfwId]="kfwId"
     [kfwH2]="kfwH2"
     [kfwH3]="kfwH3"
     [kfwDescription]="kfwDescription"
   ></app-title>
   <div class="numbers-mover tablet">
-    @if(this.neubauService.currentTab() === 1) {
+    @if(neubauService.currentTab() === 1) {
     <app-numbers-projekt-neubau></app-numbers-projekt-neubau>
     } @else {
     <app-numbers-darlehen-neubau></app-numbers-darlehen-neubau>
@@ -15,13 +16,13 @@
   </div>
 </div>
 <div class="container-tool">
-  <div class="inputs">
+  <div class="inputs inputs-shadow">
     <div class="tool-tab">
       <button
         title="Projekt Formular"
-        (click)="this.neubauService.currentTab.set(1)"
+        (click)="neubauService.currentTab.set(1)"
         [className]="
-          this.neubauService.currentTab() === 1
+          neubauService.currentTab() === 1
             ? 'full-pill left-pill pill'
             : 'grayed-pill left-pill pill'
         "
@@ -30,9 +31,9 @@
       </button>
       <button
         title="Darlehen Formular"
-        (click)="this.neubauService.currentTab.set(2)"
+        (click)="neubauService.currentTab.set(2)"
         [className]="
-          this.neubauService.currentTab() === 2
+          neubauService.currentTab() === 2
             ? 'full-pill right-pill pill'
             : 'grayed-pill right-pill pill'
         "
@@ -42,14 +43,14 @@
     </div>
     <div class="wrapper-gradient">
       <app-form-projekt-neubau
-        [hidden]="!(this.neubauService.currentTab() === 1)"
+        [hidden]="!(neubauService.currentTab() === 1)"
       ></app-form-projekt-neubau>
       <app-form-darlehen-neubau
-        [hidden]="!(this.neubauService.currentTab() === 2)"
+        [hidden]="!(neubauService.currentTab() === 2)"
       ></app-form-darlehen-neubau>
     </div>
   </div>
-  @if (this.neubauService.currentTab() === 1) {
+  @if (neubauService.currentTab() === 1) {
   <div class="output">
     <div class="numbers-mover">
       <app-numbers-projekt-neubau></app-numbers-projekt-neubau>

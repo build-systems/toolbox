@@ -11,6 +11,8 @@ import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-dar
   providedIn: 'root',
 })
 export class SanierungService {
+  public projektName = signal('Untitled');
+
   // Active form tab
   public currentTab = signal(1);
 

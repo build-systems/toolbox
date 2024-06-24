@@ -1,6 +1,6 @@
 .wrapper-table {
   width: 100%;
-  height: calc(100% - var(--button-height));
+  height: calc(100% - var(--button-height) - calc(var(--layout-padding) / 2));
   background-color: var(--bg-secondary);
   border-radius: var(--button-radius);
   overflow-y: auto;

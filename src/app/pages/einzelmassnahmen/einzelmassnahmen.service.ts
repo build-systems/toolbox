@@ -6,6 +6,8 @@ import { einzelmassnahmen } from '../../shared/constants';
   providedIn: 'root',
 })
 export class EinzelmassnahmenService {
+  projektName = signal('Untitled');
+
   // baupreisindexErrechnet: number;
   // C11 → Baupreisindex errechnet
   // C11 = ((C10 / C9) * 100)

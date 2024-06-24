@@ -1,6 +1,7 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
+    [(projektName)]="einzelmassnahmenService.projektName"
     [kfwId]="kfwId"
     [kfwH2]="kfwH2"
     [kfwH3]="kfwH3"
@@ -11,7 +12,7 @@
   </div>
 </div>
 <div class="container-tool">
-  <div class="wrapper-input">
+  <div class="wrapper-inputs">
     <div class="inputs">
       <div class="tool-tab">
         <button title="Projekt Formular" class="pill-single">Bauteil</button>

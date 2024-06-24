@@ -11,6 +11,7 @@ import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-
 export class NeubauService {
   // Neubau active form tab
   public currentTab = signal(1);
+  public projektName = signal('Untitled');
 
   // Initial project parameters
   eigeneKostenDisabled: boolean = this.formProjektService.eigeneKosten.disabled;

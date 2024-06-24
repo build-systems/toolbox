@@ -11,3 +11,12 @@
 .wrapper-list-button button {
   width: 100%;
 }
+
+.button {
+  border-color: var(--bg-secondary);
+  margin-top: calc(var(--layout-padding) / 2);
+}
+
+.wrapper-gradient {
+  scrollbar-gutter: stable;
+}

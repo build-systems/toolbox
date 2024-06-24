@@ -23,16 +23,14 @@ import { HelpComponent } from '../../help/help.component';
     ChartsDarlehenNeubauComponent,
     NumbersProjektNeubauComponent,
     NumbersDarlehenNeubauComponent,
-    HelpComponent
+    HelpComponent,
   ],
   templateUrl: './neubau.component.html',
   styleUrl: './neubau.component.css',
   host: {
     class: 'host-tool',
   },
-  animations: [
-    fadeInAnimation
-  ]
+  animations: [fadeInAnimation],
 })
 export class NeubauComponent {
   @HostBinding('@routeAnimations') routeAnimations = true;
@@ -41,11 +39,12 @@ export class NeubauComponent {
   // This top component has types at neubauprojekt.ts
 
   // Information for the title section
-  title = 'Klimafreundlicher Neubau von Wohngebäuden';
+  title = 'Fördermittel Neubau';
   kfwId = '297/298';
   kfwH2 = 'Bundesförderung für Effiziente Gebäude';
   kfwH3 = 'Haus und Wohnung energieeffizient und nachhaltig bauen';
-  kfwDescription = 'Gefördert wird der Neubau von energieeffizienten und nachhaltigen Wohngebäuden. Erreichen Sie die Effizienz­haus-Stufe 40 mit der Zertifizierung klimafreundlicher Neubau, wird Ihr Vorhaben mit einem Kreditbetrag von bis zu 100.000 Euro je Wohneinheit gefördert. Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich ein Qualitätssiegel Nachhaltiges Gebäude vorweisen kann. <a target="_blank" rel="noopener noreferrer" href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)">kfw.de ↗</a> <br /><br /><p><u>Datengrundlage:</u> Die vom Tool generierten Daten und Kosten­kennwerte basieren auf der Forschungs­arbeit der <a target="_blank" rel="noopener noreferrer" href="https://arge-ev.de/arge-ev/publikationen/studien/">Arge e.V. ↗</a> und stammen spezifisch aus den Untersuchungen zu Wohnungsbau // Die Zukunft des Bestandes, Bauforschungs­bericht Nr. 82 und Status und Prognose: So baut Deutschland – so wohnt Deutschland, Der Chancen-Check für den Wohnungsbau, Bauforschungs­bericht Nr. 86. Die Kosten von Holz­bauten werden in der Kostens­chätzung gemäß [TAB-Kurzstudie Nr 3 “Urbaner Holzbau”; S. Kind, C. Bogenstahl, T. Jetzke, S. Richter; Juni 2022; Büro für Technikfolgen-Abschätzung beim Deutschen Bundestag] im Vergleich zu Massivbauten ca. 5% höher angesetzt.</p>';
+  kfwDescription =
+    'Gefördert wird der Neubau von energieeffizienten und nachhaltigen Wohngebäuden. Erreichen Sie die Effizienz­haus-Stufe 40 mit der Zertifizierung klimafreundlicher Neubau, wird Ihr Vorhaben mit einem Kreditbetrag von bis zu 100.000 Euro je Wohneinheit gefördert. Der maximale Kredit­betrag steigt auf 150.000 Euro je Wohn­einheit, wenn Ihre Immobilie zusätzlich ein Qualitätssiegel Nachhaltiges Gebäude vorweisen kann. <a target="_blank" rel="noopener noreferrer" href="https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/F%C3%B6rderprodukte/Klimafreundlicher-Neubau-Wohngeb%C3%A4ude-(297-298)">kfw.de ↗</a> <br /><br /><p><u>Datengrundlage:</u> Die vom Tool generierten Daten und Kosten­kennwerte basieren auf der Forschungs­arbeit der <a target="_blank" rel="noopener noreferrer" href="https://arge-ev.de/arge-ev/publikationen/studien/">Arge e.V. ↗</a> und stammen spezifisch aus den Untersuchungen zu Wohnungsbau // Die Zukunft des Bestandes, Bauforschungs­bericht Nr. 82 und Status und Prognose: So baut Deutschland – so wohnt Deutschland, Der Chancen-Check für den Wohnungsbau, Bauforschungs­bericht Nr. 86. Die Kosten von Holz­bauten werden in der Kostens­chätzung gemäß [TAB-Kurzstudie Nr 3 “Urbaner Holzbau”; S. Kind, C. Bogenstahl, T. Jetzke, S. Richter; Juni 2022; Büro für Technikfolgen-Abschätzung beim Deutschen Bundestag] im Vergleich zu Massivbauten ca. 5% höher angesetzt.</p>';
 
   // To scroll to element
   scroll(el: HTMLElement) {
