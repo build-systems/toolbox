@@ -190,7 +190,7 @@ li {
 
 /* This was a gradient to explain that there are more items down and the inputs need to be scrolled*/
 /* It should be included later */
-.inputs::before {
+.inputs-gradient::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -207,7 +207,7 @@ li {
   z-index: 1;
 }
 
-.inputs-shadow::after {
+.inputs-gradient::after {
   content: "";
   position: absolute;
   top: 40px;
