@@ -13,9 +13,11 @@
 .selectable:hover path,
 .selectable:hover polygon {
   fill: aquamarine;
+  cursor: pointer;
 }
 
 .selectable:hover line,
 .selectable:hover polyline {
   stroke: teal;
+  cursor: pointer;
 }

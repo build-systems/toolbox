@@ -165,93 +165,6 @@ li {
   padding-bottom: var(--layout-padding);
 }
 
-.title {
-  padding: var(--layout-padding);
-  & .arrow-and-h1 {
-    width: fit-content;
-  }
-}
-
-.kfw-number-container {
-  width: fit-content;
-  justify-content: center;
-}
-
-.kfw-number {
-  font-family: var(--font-family-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 1.7rem;
-  padding: 0 1rem;
-  background-color: var(--bg-secondary);
-  border-radius: var(--button-radius);
-  & .kfw-id {
-    width: 100%;
-    text-align: center;
-    font-size: 0.8rem;
-    padding-top: 0.5rem;
-    margin-bottom: -0.25rem;
-    color: var(--primary30);
-  }
-}
-
-.arrow-container {
-  cursor: pointer;
-  margin-right: 0.25rem;
-  margin-top: 0.5rem;
-}
-
-.arrow {
-  display: flex;
-  width: 1.4rem;
-  height: 1.4rem;
-  font-size: 0.8rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: calc(var(--button-radius) / 2);
-}
-
-.arrow-and-h1 {
-  display: flex;
-  cursor: pointer;
-  align-items: start;
-}
-
-.arrow-and-h1:hover .arrow {
-  background-color: var(--bg-secondary);
-}
-
-.kfw-info {
-  display: flex;
-  flex-direction: column;
-  & h2 {
-    padding-bottom: 0.4rem;
-  }
-  & h3 {
-    padding-bottom: 0.2rem;
-  }
-}
-
-.kfw-description {
-  display: flex;
-  gap: 1rem;
-  background-color: var(--bg-tertiary);
-  width: clamp(100px, 100%, 50rem);
-  font-family: var(--font-family-primary);
-  overflow: hidden;
-  padding: var(--layout-padding);
-  border-radius: var(--button-radius);
-}
-
-.kfw-description a {
-  text-decoration: underline;
-  color: var(--secondary);
-}
-.kfw-description a:hover {
-  color: var(--primary50);
-}
-
 .container-tool {
   position: relative;
   top: 0;
@@ -266,7 +179,7 @@ li {
 }
 
 .inputs,
-.wrapper-input {
+.wrapper-inputs {
   position: relative;
   top: 0;
   display: flex;
@@ -294,7 +207,7 @@ li {
   z-index: 1;
 }
 
-.inputs::after {
+.inputs-shadow::after {
   content: "";
   position: absolute;
   top: 40px;
@@ -332,7 +245,7 @@ li {
   position: relative;
   top: 0;
   left: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
   scrollbar-gutter: stable;
 }
 
@@ -695,6 +608,8 @@ input[type="radio"] {
 }
 
 .dropdown {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 1rem;
   background-color: var(--bg-primary);
   display: flex;
   margin: 0;
@@ -1397,6 +1312,10 @@ span.nowrap {
 }
 
 @media screen and (max-width: 1280px) {
+  .wrapper-gradient {
+    scrollbar-gutter: auto;
+  }
+
   .host-tool {
     padding-bottom: 0;
   }
@@ -1463,16 +1382,6 @@ span.nowrap {
 }
 
 @media screen and (max-width: 850px) {
-  .arrow-container {
-    margin-top: 5px;
-  }
-
-  .arrow {
-    flex: 1;
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
   .card {
     padding: var(--mobile-padding);
     flex-basis: 40%;
@@ -1530,18 +1439,6 @@ span.nowrap {
     padding: 0 var(--mobile-padding);
   }
 
-  .title {
-    padding-left: var(--mobile-padding);
-    padding-right: var(--mobile-padding);
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .kfw-description {
-    flex-direction: column;
-    margin-bottom: var(--mobile-padding);
-  }
-
   .container-tool {
     overflow-y: auto;
     padding-left: var(--mobile-padding);
@@ -1583,15 +1480,6 @@ span.nowrap {
   }
 }
 @media (max-width: 400px) {
-  .title {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .kfw-number {
-    font-size: 1.3rem;
-  }
-
   h1 {
     font-size: 1.2rem;
   }
@@ -1606,11 +1494,6 @@ span.nowrap {
 
   h3 {
     font-size: 0.8rem;
-  }
-
-  .arrow {
-    height: 1.2rem;
-    width: 1.2rem;
   }
 
   .card {

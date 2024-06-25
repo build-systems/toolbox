@@ -2,46 +2,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
-import { NeubauService } from '../../neubau.service';
-import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { ChartsSettingsService } from '../../../shared/charts-settings.service';
 
 @Component({
-  selector: 'app-chart-gkosten-neubau',
+  selector: 'app-chart-gkosten-einzelmassnahmen',
   standalone: true,
   imports: [CommonModule, NgChartsModule],
-  templateUrl: './chart-gkosten-neubau.component.html',
-  styleUrl: './chart-gkosten-neubau.component.css',
-  host: {
-    class: 'host-chart host-chart1',
-  },
+  templateUrl: './chart-gkosten-einzelmassnahmen.component.html',
+  styleUrl: './chart-gkosten-einzelmassnahmen.component.css',
 })
-export class ChartGkostenNeubauComponent implements OnInit {
+export class ChartGkostenEinzelmassnahmenComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   constructor(
-    private neubauService: NeubauService,
+    // private neubauService: NeubauService,
     private styleService: ChartsSettingsService
   ) {}
-
-  // Here I made a copy of the subscription to both observables.
-  // It is a lot of repetitive code, but I run out of time
-  ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$.subscribe(
-      (projekt: NeubauProjekt) => {
-        this.barChartData.datasets[0].data = [
-          Math.round(projekt.investitionkosten),
-          0,
-        ];
-        this.barChartData.datasets[1].data = [
-          0,
-          Math.round(projekt.bankKredit),
-        ];
-        this.barChartData.datasets[2].data = [0, Math.round(projekt.kfwKredit)];
-        this.chart?.update();
-      }
-    );
-  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,

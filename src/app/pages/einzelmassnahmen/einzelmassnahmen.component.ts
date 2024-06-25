@@ -6,8 +6,8 @@ import { TitleComponent } from '../../title/title.component';
 import { NumbersEinzelmassnahmenComponent } from './numbers-einzelmassnahmen/numbers-einzelmassnahmen.component';
 import { HelpComponent } from '../../help/help.component';
 import { FormEinzelmassnahmenComponent } from './form-einzelmassnahmen/form-einzelmassnahmen.component';
-import { ChartEinzelmassnahmenComponent } from './chart-einzelmassnahmen/chart-einzelmassnahmen.component';
 import { ListEinzelmassnahmenComponent } from './list-einzelmassnahmen/list-einzelmassnahmen.component';
+import { ChartGkostenEinzelmassnahmenComponent } from './chart-gkosten-einzelmassnahmen/chart-gkosten-einzelmassnahmen.component';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -24,8 +24,8 @@ import { ListEinzelmassnahmenComponent } from './list-einzelmassnahmen/list-einz
     NumbersEinzelmassnahmenComponent,
     HelpComponent,
     FormEinzelmassnahmenComponent,
-    ChartEinzelmassnahmenComponent,
     ListEinzelmassnahmenComponent,
+    ChartGkostenEinzelmassnahmenComponent,
   ],
 })
 export class EinzelmassnahmenComponent {
