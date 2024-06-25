@@ -236,10 +236,6 @@ li {
   border: none;
 }
 
-.host-list {
-  overflow-y: auto;
-}
-
 .wrapper-gradient {
   display: flex;
   position: relative;
@@ -624,6 +620,10 @@ input[type="radio"] {
   word-break: normal;
   padding: 0.25rem 0;
   transition: 0.15s;
+}
+
+.dropdown:focus {
+  outline: var(--bg-secondary);
 }
 
 .radio-fieldset legend {
