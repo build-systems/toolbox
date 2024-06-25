@@ -24,7 +24,7 @@ export class ChartGkostenEinzelmassnahmenComponent {
     private einzelmassnahmenService: EinzelmassnahmenService
   ) {
     effect(() => {
-      // this.barChartData.datasets = [];
+      this.barChartData.datasets = [];
       for (
         let i = 0;
         i < einzelmassnahmenService.listEinzelmassnahmen().length;
