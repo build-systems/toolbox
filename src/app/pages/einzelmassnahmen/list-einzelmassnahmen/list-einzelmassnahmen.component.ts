@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 import { ReversePipe } from '../../../pipes/reverse.pipe';
 

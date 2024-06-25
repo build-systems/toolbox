@@ -8,6 +8,13 @@ import { einzelmassnahmen } from '../../shared/constants';
 export class EinzelmassnahmenService {
   projektName = signal('Untitled');
 
+  // Titles
+  titleKostenM2: OutputTitle = 'Kosten';
+  titleVollkosten: OutputTitle = 'Vollkosten';
+  titleSowiesoKosten: OutputTitle = 'Sowieso-Kosten';
+  titleEnergetischMehrkosten: OutputTitle = 'Energetisch Kosten';
+  descriptionEnergetischMehrkosten = 'Energetisch bedingte Mehrkosten';
+
   // baupreisindexErrechnet: number;
   // C11 → Baupreisindex errechnet
   // C11 = ((C10 / C9) * 100)
@@ -679,14 +686,24 @@ export class EinzelmassnahmenService {
           title: 'Außenwand',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               description: 'Placeholder',
               value: this.aussenwandKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.aussenwandKosten(),
+              unit: '€',
+            },
+            {
+              title: this.titleSowiesoKosten,
+              value: 0,
+              unit: '€',
+            },
+            {
+              title: this.titleEnergetischMehrkosten,
+              value: 0,
               unit: '€',
             },
           ],
@@ -696,22 +713,22 @@ export class EinzelmassnahmenService {
           title: 'Bodenplatte',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.bodenplatteKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.bodenplatteKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.bodenplatteSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.bodenplatteEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -723,22 +740,22 @@ export class EinzelmassnahmenService {
             title: 'Flachdach',
             items: [
               {
-                title: 'Kosten',
+                title: this.titleKostenM2,
                 value: this.flachdachKostenM2(),
                 unit: '€/m² Bauteil',
               },
               {
-                title: 'Vollkosten',
+                title: this.titleVollkosten,
                 value: this.flachdachKosten(),
                 unit: '€',
               },
               {
-                title: 'Sowieso-Kosten',
+                title: this.titleSowiesoKosten,
                 value: this.flachdachSowiesoKosten(),
                 unit: '€',
               },
               {
-                title: 'Energetisch Mehrkosten',
+                title: this.titleEnergetischMehrkosten,
                 value: this.flachdachEnergetischBedingteMehrkosten(),
                 unit: '€',
               },
@@ -749,22 +766,22 @@ export class EinzelmassnahmenService {
             title: 'Steildach',
             items: [
               {
-                title: 'Kosten',
+                title: this.titleKostenM2,
                 value: this.steildachKostenM2(),
                 unit: '€/m² Bauteil',
               },
               {
-                title: 'Vollkosten',
+                title: this.titleVollkosten,
                 value: this.steildachKosten(),
                 unit: '€',
               },
               {
-                title: 'Sowieso-Kosten',
+                title: this.titleSowiesoKosten,
                 value: this.steildachSowiesoKosten(),
                 unit: '€',
               },
               {
-                title: 'Energetisch Mehrkosten',
+                title: this.titleEnergetischMehrkosten,
                 value: this.steildachEnergetischBedingteMehrkosten(),
                 unit: '€',
               },
@@ -776,8 +793,23 @@ export class EinzelmassnahmenService {
           title: 'Dachflächenfenster',
           items: [
             {
-              title: 'Vollkosten',
+              title: this.titleKostenM2,
+              value: 0,
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: this.titleVollkosten,
               value: this.dachflaechenfensterKosten(),
+              unit: '€',
+            },
+            {
+              title: this.titleSowiesoKosten,
+              value: 0,
+              unit: '€',
+            },
+            {
+              title: this.titleEnergetischMehrkosten,
+              value: 0,
               unit: '€',
             },
           ],
@@ -787,22 +819,22 @@ export class EinzelmassnahmenService {
           title: 'Fenster',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.fensterKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.fensterKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.fensterSowiesoKosten(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.fensterEnergetischBedingteMehrkosten(),
               unit: '€/m² Bauteil',
             },
@@ -813,22 +845,22 @@ export class EinzelmassnahmenService {
           title: 'Innenwand',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.innenwandKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.innenwandKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.innenwandSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.innenwandEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -839,22 +871,22 @@ export class EinzelmassnahmenService {
           title: 'Keller',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.kellerKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.kellerKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.kellerSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.kellerEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -865,22 +897,22 @@ export class EinzelmassnahmenService {
           title: 'Oberste Geschossdecke',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.obersteGeschossdeckeKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.obersteGeschossdeckeKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.obersteGeschossdeckeSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.obersteGeschossdeckeEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -891,13 +923,23 @@ export class EinzelmassnahmenService {
           title: 'Steildachgauben',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.steildachgaubenKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.steildachgaubenKosten(),
+              unit: '€',
+            },
+            {
+              title: this.titleSowiesoKosten,
+              value: 0,
+              unit: '€',
+            },
+            {
+              title: this.titleEnergetischMehrkosten,
+              value: 0,
               unit: '€',
             },
           ],
@@ -907,22 +949,22 @@ export class EinzelmassnahmenService {
           title: 'Tür',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.tuerKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.tuerKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.tuerSowiesoKosten(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.tuerEnergetischBedingteMehrkosten(),
               unit: '€/m² Bauteil',
             },
@@ -933,22 +975,22 @@ export class EinzelmassnahmenService {
           title: 'Vorbaurollladen',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.vorbaurollladenKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.vorbaurollladenKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.vorbaurollladenSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.vorbaurollladenEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -959,22 +1001,22 @@ export class EinzelmassnahmenService {
           title: 'Wärmedämm­verbundsystem',
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
               value: this.wdvsKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
-              title: 'Vollkosten',
+              title: this.titleVollkosten,
               value: this.wdvsKosten(),
               unit: '€',
             },
             {
-              title: 'Sowieso-Kosten',
+              title: this.titleSowiesoKosten,
               value: this.wdvsSowiesoKosten(),
               unit: '€',
             },
             {
-              title: 'Energetisch Mehrkosten',
+              title: this.titleEnergetischMehrkosten,
               value: this.wdvsEnergetischBedingteMehrkosten(),
               unit: '€',
             },
@@ -985,7 +1027,22 @@ export class EinzelmassnahmenService {
           title: undefined,
           items: [
             {
-              title: 'Kosten',
+              title: this.titleKostenM2,
+              value: 0,
+              unit: '€/m² Bauteil',
+            },
+            {
+              title: this.titleVollkosten,
+              value: 0,
+              unit: '€',
+            },
+            {
+              title: this.titleSowiesoKosten,
+              value: 0,
+              unit: '€',
+            },
+            {
+              title: this.titleEnergetischMehrkosten,
               value: 0,
               unit: '€',
             },

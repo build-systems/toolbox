@@ -15,6 +15,9 @@ import { FormEinzelmassnahmenService } from '../form-einzelmassnahmen/form-einze
   imports: [],
   templateUrl: './haus-section.component.svg',
   styleUrl: './haus-section.component.css',
+  host: {
+    class: 'house',
+  },
 })
 export class HausSectionComponent implements AfterViewInit {
   selectedGroup: SVGElement | null = null;

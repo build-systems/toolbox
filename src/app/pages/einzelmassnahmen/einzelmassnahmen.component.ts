@@ -8,6 +8,9 @@ import { HelpComponent } from '../../help/help.component';
 import { FormEinzelmassnahmenComponent } from './form-einzelmassnahmen/form-einzelmassnahmen.component';
 import { ListEinzelmassnahmenComponent } from './list-einzelmassnahmen/list-einzelmassnahmen.component';
 import { ChartGkostenEinzelmassnahmenComponent } from './chart-gkosten-einzelmassnahmen/chart-gkosten-einzelmassnahmen.component';
+import { HausSectionComponent } from './haus-section/haus-section.component';
+import { FormsModule } from '@angular/forms';
+import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -20,12 +23,14 @@ import { ChartGkostenEinzelmassnahmenComponent } from './chart-gkosten-einzelmas
   animations: [fadeInAnimation],
   imports: [
     CommonModule,
+    FormsModule,
     TitleComponent,
     NumbersEinzelmassnahmenComponent,
     HelpComponent,
     FormEinzelmassnahmenComponent,
     ListEinzelmassnahmenComponent,
     ChartGkostenEinzelmassnahmenComponent,
+    HausSectionComponent,
   ],
 })
 export class EinzelmassnahmenComponent {
@@ -43,7 +48,10 @@ export class EinzelmassnahmenComponent {
     el.scrollIntoView();
   }
 
-  constructor(public einzelmassnahmenService: EinzelmassnahmenService) {
+  constructor(
+    public einzelmassnahmenService: EinzelmassnahmenService,
+    public formService: FormEinzelmassnahmenService
+  ) {
     // Service is used to check the current tab (Projekt or Darlehen).
   }
 }

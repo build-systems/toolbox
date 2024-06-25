@@ -221,7 +221,7 @@ type OutputTitle =
   | 'Kosten'
   | 'Vollkosten'
   | 'Sowieso-Kosten'
-  | 'Energetisch Mehrkosten';
+  | 'Energetisch Kosten';
 
 type einzelmassnahmenOutputItem = {
   title: OutputTitle;

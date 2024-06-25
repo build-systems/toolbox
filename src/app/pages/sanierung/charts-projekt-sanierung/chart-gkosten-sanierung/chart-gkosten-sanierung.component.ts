@@ -26,20 +26,14 @@ export class ChartGkostenSanierungComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$
-      .subscribe((projekt: SanierungProjekt) => {
-        this.barChartData.datasets[0].data = [
-          Math.round(projekt.baukosten),
-          0,
-        ];
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
+        this.barChartData.datasets[0].data = [Math.round(projekt.baukosten), 0];
         this.barChartData.datasets[1].data = [
           0,
           Math.round(projekt.bankKredit),
         ];
-        this.barChartData.datasets[2].data = [
-          0,
-          Math.round(projekt.kfwKredit),
-        ];
+        this.barChartData.datasets[2].data = [0, Math.round(projekt.kfwKredit)];
         this.barChartData.datasets[3].data = [
           0,
           Math.round(projekt.kfwZuschuss),
@@ -47,10 +41,9 @@ export class ChartGkostenSanierungComponent implements OnInit {
         // this.barChartData.datasets[4].data = [0, Math.round(value.finanzierungskostenFinanzmarkt)];
         // this.barChartData.datasets[5].data = [0, Math.round(value.finanzierungskostenKfw)];
         this.chart?.update();
-      });
+      }
+    );
   }
-
-  
 
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
@@ -136,7 +129,12 @@ export class ChartGkostenSanierungComponent implements OnInit {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
@@ -150,59 +148,41 @@ export class ChartGkostenSanierungComponent implements OnInit {
         data: [0, null],
         label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.colors[0].backgroundColor,
+        borderColor: this.styleService.datasets.colors[0].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.colors[0].hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
+        backgroundColor: this.styleService.datasets.colors[1].backgroundColor,
+        borderColor: this.styleService.datasets.colors[1].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
+          this.styleService.datasets.colors[1].hoverBackgroundColor,
       },
       {
         // KfW Kredit
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
+        backgroundColor: this.styleService.datasets.colors[2].backgroundColor,
+        borderColor: this.styleService.datasets.colors[2].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+          this.styleService.datasets.colors[2].hoverBackgroundColor,
       },
       {
         // KfW Zuschuss
         data: [null, 0],
         label: 'KfW Zuschuss',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color04.hoverBackgroundColor,
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
       },
-      // {
-      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten Bank',
-      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
-      //   borderColor: 'rgb(57, 190, 193)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
-      // },
-      // {
-      //   // Finanzierungskosten KfW
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten KfW',
-      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
-      //   borderColor: 'rgb(58, 194, 104)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
-      // },
     ],
   };
 

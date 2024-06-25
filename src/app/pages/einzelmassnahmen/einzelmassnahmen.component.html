@@ -12,38 +12,57 @@
   </div>
 </div>
 <div class="container-tool">
-  <div class="wrapper-inputs">
-    <div class="inputs inputs-shadow">
-      <div class="tool-tab">
-        <button title="Projekt Formular" class="pill-single">Bauteil</button>
-      </div>
-      <div class="wrapper-gradient">
-        <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
-      </div>
+  <div class="house-input">
+    <div class="house-container">
+      <app-haus-section></app-haus-section>
     </div>
-    <button
-      class="button"
-      [disabled]="
-        einzelmassnahmenService.outputEinzelmassnahmen.title === undefined
-      "
-      (click)="
-        einzelmassnahmenService.newAddOutputToList(
-          einzelmassnahmenService.outputEinzelmassnahmen,
-          einzelmassnahmenService.listEinzelmassnahmen
-        )
-      "
-    >
-      Add to list
-    </button>
+    <form>
+      <fieldset class="dropdown-fieldset">
+        <legend>{{ formService.bauteilObj().title }}</legend>
+        <select
+          class="dropdown"
+          [(ngModel)]="formService.bauteilSelected"
+          [name]="formService.bauteilObj().title"
+          [id]="formService.bauteilObj().title"
+          #bauteilField
+        >
+          <option value="" disabled selected>Bauteil</option>
+          <option
+            *ngFor="let item of formService.bauteilObj().options"
+            [ngValue]="item.value"
+            [id]="item.id"
+          >
+            {{ item.text ? item.text : item.value }}
+          </option>
+        </select>
+      </fieldset>
+    </form>
   </div>
   <div class="output">
-    <div>
+    <div class="output-numbers-inputs">
       <div class="numbers-mover">
         <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
       </div>
-      <app-chart-gkosten-einzelmassnahmen></app-chart-gkosten-einzelmassnahmen>
+      <div class="inputs">
+        <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
+      </div>
+      <button
+        class="button"
+        [disabled]="
+          einzelmassnahmenService.outputEinzelmassnahmen.title === undefined
+        "
+        (click)="
+          einzelmassnahmenService.newAddOutputToList(
+            einzelmassnahmenService.outputEinzelmassnahmen,
+            einzelmassnahmenService.listEinzelmassnahmen
+          )
+        "
+      >
+        Add to list
+      </button>
     </div>
     <div class="wrapper-list-button">
+      <app-chart-gkosten-einzelmassnahmen></app-chart-gkosten-einzelmassnahmen>
       <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
       <button
         class="button"

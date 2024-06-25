@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../shared/charts-settings.service';
+import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 
 @Component({
   selector: 'app-chart-gkosten-einzelmassnahmen',
@@ -10,14 +11,46 @@ import { ChartsSettingsService } from '../../../shared/charts-settings.service';
   imports: [CommonModule, NgChartsModule],
   templateUrl: './chart-gkosten-einzelmassnahmen.component.html',
   styleUrl: './chart-gkosten-einzelmassnahmen.component.css',
+  host: {
+    class: 'host-chart',
+  },
 })
 export class ChartGkostenEinzelmassnahmenComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   constructor(
     // private neubauService: NeubauService,
-    private styleService: ChartsSettingsService
-  ) {}
+    private styleService: ChartsSettingsService,
+    private einzelmassnahmenService: EinzelmassnahmenService
+  ) {
+    effect(() => {
+      // this.barChartData.datasets = [];
+      for (
+        let i = 0;
+        i < einzelmassnahmenService.listEinzelmassnahmen().length;
+        i++
+      ) {
+        let colorIndex = i % this.styleService.datasets.colors.length;
+        const kosten = einzelmassnahmenService.findValueByTitle(
+          einzelmassnahmenService.listEinzelmassnahmen()[i],
+          'Vollkosten'
+        );
+        const kostenBafa = kosten * 0.8;
+        this.barChartData.datasets.push({
+          data: [kosten, kostenBafa],
+          label: einzelmassnahmenService.listEinzelmassnahmen()[i].title,
+          borderWidth: this.styleService.datasets.borderWidth,
+          backgroundColor:
+            this.styleService.datasets.colors[colorIndex].backgroundColor,
+          borderColor:
+            this.styleService.datasets.colors[colorIndex].borderColor,
+          hoverBackgroundColor:
+            this.styleService.datasets.colors[colorIndex].hoverBackgroundColor,
+        });
+      }
+      this.chart?.update();
+    });
+  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
@@ -116,39 +149,8 @@ export class ChartGkostenEinzelmassnahmenComponent {
 
   public barChartType: ChartType = 'bar';
   public barChartData: ChartData<'bar'> = {
-    labels: ['Kosten', 'Fin.'],
-    datasets: [
-      {
-        // Investitionskosten
-        data: [0, null],
-        label: 'Investitionskosten',
-        borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
-        hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
-      },
-      {
-        // Bank Kredit
-        data: [null, 0],
-        label: 'Bank Kredit',
-        borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
-        hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
-      },
-      {
-        // KfW Kredit
-        data: [null, 0],
-        label: 'KfW Kredit',
-        borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
-        hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
-      },
-    ],
+    labels: ['Kosten ohne Förderung', 'Kosten mit Förderung'],
+    datasets: [],
   };
 
   public chartHovered({

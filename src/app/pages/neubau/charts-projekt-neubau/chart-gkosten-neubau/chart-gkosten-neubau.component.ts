@@ -147,30 +147,30 @@ export class ChartGkostenNeubauComponent implements OnInit {
         data: [0, null],
         label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.colors[0].backgroundColor,
+        borderColor: this.styleService.datasets.colors[0].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.colors[0].hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
+        backgroundColor: this.styleService.datasets.colors[1].backgroundColor,
+        borderColor: this.styleService.datasets.colors[1].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
+          this.styleService.datasets.colors[1].hoverBackgroundColor,
       },
       {
         // KfW Kredit
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
+        backgroundColor: this.styleService.datasets.colors[2].backgroundColor,
+        borderColor: this.styleService.datasets.colors[2].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+          this.styleService.datasets.colors[2].hoverBackgroundColor,
       },
     ],
   };

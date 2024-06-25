@@ -57,38 +57,40 @@ export class ChartsSettingsService {
 
   public datasets = {
     borderWidth: 1,
-    color01: {
-      backgroundColor: 'rgba(58, 149, 194, 0.3)',
-      borderColor: 'rgb(58, 149, 194)',
-      hoverBackgroundColor: 'rgb(58, 149, 194, 0.7)',
-    },
-    color02: {
-      backgroundColor: 'rgba(255, 150, 130, 0.3)',
-      borderColor: 'rgba(255, 179, 153)',
-      hoverBackgroundColor: 'rgba(255, 150, 130, 0.7)',
-    },
-    color03: {
-      backgroundColor01: 'rgba(249, 220, 130, 0.3)',
-      backgroundColor02: 'rgba(249, 220, 97, 0.2)',
-      borderColor: 'rgba(249, 220, 97)',
-      hoverBackgroundColor: 'rgba(249, 220, 97, 0.7)',
-    },
-    color04: {
-      backgroundColor01: 'rgba(58, 194, 150, 0.3)',
-      backgroundColor02: 'rgba(58, 194, 150, 0.1)',
-      borderColor: 'rgb(58, 194, 150)',
-      hoverBackgroundColor: 'rgb(58, 194, 150, 0.7)',
-    },
-    color05: {
-      backgroundColor: 'rgba(57, 190, 193, 0.3)',
-      borderColor: 'rgb(57, 190, 193)',
-      hoverBackgroundColor: 'rgb(57, 190, 193, 0.7)',
-    },
-    color06: {
-      backgroundColor: 'rgba(58, 194, 104, 0.3)',
-      borderColor: 'rgb(58, 194, 104)',
-      hoverBackgroundColor: 'rgb(58, 194, 104, 0.7)',
-    },
+    colors: [
+      {
+        backgroundColor: 'rgba(58, 149, 194, 0.3)',
+        borderColor: 'rgb(58, 149, 194)',
+        hoverBackgroundColor: 'rgb(58, 149, 194, 0.7)',
+      },
+      {
+        backgroundColor: 'rgba(255, 150, 130, 0.3)',
+        borderColor: 'rgba(255, 179, 153)',
+        hoverBackgroundColor: 'rgba(255, 150, 130, 0.7)',
+      },
+      {
+        backgroundColor: 'rgba(249, 220, 130, 0.3)',
+        backgroundColor02: 'rgba(249, 220, 97, 0.2)',
+        borderColor: 'rgba(249, 220, 97)',
+        hoverBackgroundColor: 'rgba(249, 220, 97, 0.7)',
+      },
+      {
+        backgroundColor: 'rgba(58, 194, 150, 0.3)',
+        backgroundColor02: 'rgba(58, 194, 150, 0.1)',
+        borderColor: 'rgb(58, 194, 150)',
+        hoverBackgroundColor: 'rgb(58, 194, 150, 0.7)',
+      },
+      {
+        backgroundColor: 'rgba(57, 190, 193, 0.3)',
+        borderColor: 'rgb(57, 190, 193)',
+        hoverBackgroundColor: 'rgb(57, 190, 193, 0.7)',
+      },
+      {
+        backgroundColor: 'rgba(58, 194, 104, 0.3)',
+        borderColor: 'rgb(58, 194, 104)',
+        hoverBackgroundColor: 'rgb(58, 194, 104, 0.7)',
+      },
+    ],
   };
 
   public applyLinearGradient(

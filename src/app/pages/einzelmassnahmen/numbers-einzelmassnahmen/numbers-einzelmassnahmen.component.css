@@ -1,7 +1,9 @@
 .card-container {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--layout-padding) / 2);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* flex-direction: row; */
+  flex-wrap: wrap;
+  gap: var(--mobile-padding);
   width: 100%;
 }
 

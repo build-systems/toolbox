@@ -38,9 +38,8 @@ export class ChartTilgungNeubauComponent {
   // Here I made a copy of the subscription to both observables.
   // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-
-    this.neubauService.currentOutputNeubau$
-      .subscribe((projekt: NeubauProjekt) => {
+    this.neubauService.currentOutputNeubau$.subscribe(
+      (projekt: NeubauProjekt) => {
         // If kreditlaufzeit was updated assign new value and create labels
         if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
           this.kreditlaufzeit = projekt.kreditlaufzeit;
@@ -70,8 +69,7 @@ export class ChartTilgungNeubauComponent {
               // Otherwise add just Annuität
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] +
-                projekt.efKfW / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
             }
           }
         }
@@ -89,8 +87,7 @@ export class ChartTilgungNeubauComponent {
                 projekt.bankKredit;
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] +
-                projekt.efBank   / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
             }
           }
         }
@@ -107,7 +104,8 @@ export class ChartTilgungNeubauComponent {
         this.barChartData.datasets[0].data = this.repaymentTotal;
         // If KfW-Darlehen === kein Darlehen
         this.chart?.update();
-      });
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -193,7 +191,12 @@ export class ChartTilgungNeubauComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
         usePointStyle: true,
       },
@@ -209,15 +212,15 @@ export class ChartTilgungNeubauComponent {
         data: this.repaymentTotal,
         fill: 'start',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor:this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color04.hoverBackgroundColor,
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
         pointStyle: 'circle',
         pointRadius: 2,
-        pointBorderColor: this.styleService.datasets.color04.borderColor,
+        pointBorderColor: this.styleService.datasets.colors[3].borderColor,
         pointBackgroundColor:
-          this.styleService.datasets.color04.backgroundColor01,
+          this.styleService.datasets.colors[3].backgroundColor,
       },
     ],
   };

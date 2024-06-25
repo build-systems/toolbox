@@ -1,3 +1,30 @@
+.house-input {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100%;
+  gap: calc(var(--layout-padding) / 2);
+}
+
+.house-container {
+  border-radius: var(--button-radius);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+}
+
+.dropdown-fieldset {
+  margin: 0;
+}
+
+.dropdown {
+  background-color: var(--bg-secondary);
+}
+
 .output {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -6,6 +33,9 @@
 .wrapper-list-button {
   overflow-y: auto;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mobile-padding);
 }
 
 .wrapper-list-button button {
@@ -14,9 +44,66 @@
 
 .button {
   border-color: var(--bg-secondary);
-  margin-top: calc(var(--layout-padding) / 2);
+  /* margin-top: calc(var(--layout-padding) / 2); */
 }
 
-.wrapper-gradient {
-  scrollbar-gutter: stable;
+form {
+  width: 100%;
+}
+
+.output-numbers-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mobile-padding);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.inputs {
+  flex: 1;
+}
+
+.host-forms {
+  flex: 1;
+  border-radius: var(--button-radius);
+  padding: var(--layout-padding);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.card {
+  flex-grow: auto;
+}
+
+.host-chart {
+  display: flex;
+  height: 40%;
+}
+
+.host-list {
+  overflow-y: auto;
+  display: flex;
+  flex: 1;
+}
+
+.house {
+  width: 300px;
+}
+
+@media screen and (max-width: 1280px) {
+  .house {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .house {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .house {
+    width: 250px;
+  }
 }

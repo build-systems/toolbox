@@ -13,7 +13,9 @@
       >}
     </h3>
     <div>
+      @if (item.value != 0) {
       {{ item.value | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+      } @else { - }
     </div>
   </div>
 </div>
