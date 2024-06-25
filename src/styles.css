@@ -188,8 +188,6 @@ li {
   border-radius: 0 0 var(--button-radius) var(--button-radius);
 }
 
-/* This was a gradient to explain that there are more items down and the inputs need to be scrolled*/
-/* It should be included later */
 .inputs-gradient::before {
   content: "";
   position: absolute;
@@ -1122,7 +1120,8 @@ button:hover {
   color: var(--secondary);
 }
 
-.host-profile {
+.host-profile,
+.host-portfolio {
   display: flex;
   flex: 1;
   flex-direction: column;

@@ -9,17 +9,27 @@
       formControlName="email"
       class="inputField"
       type="email"
-      placeholder="Your email"
+      placeholder="Email"
     />
     <div>
-      <i class="warning"
-      *ngIf="signInForm.controls['email'].invalid && (signInForm.controls['email'].dirty || signInForm.controls['email'].touched)"
-      >A valid email is required
+      <i
+        class="warning"
+        *ngIf="
+          signInForm.controls['email'].invalid &&
+          (signInForm.controls['email'].dirty ||
+            signInForm.controls['email'].touched)
+        "
+        >A valid email is required
       </i>
     </div>
   </div>
   <div>
-    <button type="submit" class="button" [disabled]="loading" [disabled]="signInForm.invalid">
+    <button
+      type="submit"
+      class="button"
+      [disabled]="loading"
+      [disabled]="signInForm.invalid"
+    >
       {{ loading ? "Loading" : "Get login link" }}
     </button>
   </div>
