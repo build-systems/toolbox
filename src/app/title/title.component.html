@@ -1,6 +1,6 @@
 <div class="title" #top>
   <div class="arrow-and-h1">
-    <div class="arrow-container">
+    <div (click)="toggleExpand()" class="arrow-container">
       <div class="arrow">
         <span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'"
           >&#9658;</span
