@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class EnvironmentService {
   get supabaseUrl(): string {
-    return (window as any).SUPABASE_URL || '';
+    return (window as any).VITE_SUPABASE_URL || '';
   }
 
   get supabaseKey(): string {
-    return (window as any).SUPABASE_KEY || '';
+    return (window as any).VITE_SUPABASE_KEY || '';
   }
 }
