@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  supabaseUrl: process.env['SUPABASE_URL'] || '',
-  supabaseKey: process.env['SUPABASE_KEY'] || '',
+  supabaseUrl: CF_PAGES.SUPABASE_URL || '',
+  supabaseKey: CF_PAGES.SUPABASE_KEY || '',
 };
