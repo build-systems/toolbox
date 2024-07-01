@@ -8,6 +8,7 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../../environments/environment.service';
 
 export interface Profile {
   id?: string;
@@ -23,10 +24,12 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   _session: AuthSession | null = null;
 
-  constructor() {
+  constructor(private envService: EnvironmentService) {
     this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey
+      // environment.supabaseUrl,
+      // environment.supabaseKey
+      this.envService.supabaseUrl,
+      this.envService.supabaseKey
     );
   }
 
