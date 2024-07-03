@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SupabaseService } from '../../shared/supabase.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { SupabaseService } from '../../auth/supabase.service';
 import { AccountComponent } from './account/account.component';
 import { AuthComponent } from '../../auth/auth.component';
 import { CommonModule } from '@angular/common';
@@ -15,12 +15,10 @@ import { CommonModule } from '@angular/common';
   },
 })
 export class ProfileComponent implements OnInit {
-  session = this.supabase.session;
-
-  constructor(private readonly supabase: SupabaseService) {
-  }
+  protected readonly supabase = inject(SupabaseService);
+  // session = this.supabase.session;
 
   ngOnInit() {
-    console.log(this.session);
+    // console.log(this.session);
   }
 }

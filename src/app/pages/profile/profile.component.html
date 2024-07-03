@@ -1,6 +1,6 @@
-<h2>Attention: features are still in development!</h2> 
-@if(session) {
-<app-account [session]="session"></app-account>
+<h2>Feature still in development.</h2>
+@if(supabase.sessionSignal()) {
+<app-account></app-account>
 } @else {
 <app-auth></app-auth>
 }

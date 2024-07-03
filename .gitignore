@@ -43,3 +43,6 @@ Thumbs.db
 
 # Supabase
 src/environments/environment.development.ts
+
+# DB
+src/db/

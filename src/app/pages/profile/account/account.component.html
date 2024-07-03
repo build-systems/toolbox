@@ -2,7 +2,6 @@
   <app-avatar [avatarUrl]="this.avatarUrl" (upload)="updateAvatar($event)">
   </app-avatar>
 </form>
-<!-- input fields -->
 <form
   [formGroup]="updateProfileForm"
   (ngSubmit)="updateProfile()"
@@ -10,15 +9,31 @@
 >
   <div>
     <label for="email">Email</label>
-    <input id="email" type="text" [value]="session.user.email" disabled />
+    <input
+      id="email"
+      type="text"
+      [value]="supabase.sessionSignal()!.user.email"
+      disabled
+      autocomplete="off"
+    />
   </div>
   <div>
     <label for="username">Name</label>
-    <input formControlName="username" id="username" type="text" />
+    <input
+      formControlName="username"
+      id="username"
+      type="text"
+      autocomplete="on"
+    />
   </div>
   <div>
     <label for="website">Website</label>
-    <input formControlName="website" id="website" type="url" />
+    <input
+      formControlName="website"
+      id="website"
+      type="url"
+      autocomplete="on"
+    />
   </div>
 
   <div>
@@ -28,6 +43,6 @@
   </div>
 
   <div>
-    <button class="button block" (click)="signOut()">Sign Out</button>
+    <button class="button block" (click)="signOut()">Log Out</button>
   </div>
 </form>

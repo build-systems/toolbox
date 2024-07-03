@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Profile, SupabaseService } from '../../../shared/supabase.service';
+import { Profile, SupabaseService } from '../../../auth/supabase.service';
 import { AuthSession } from '@supabase/supabase-js';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AvatarComponent } from '../avatar/avatar.component';
@@ -12,26 +12,23 @@ import { AvatarComponent } from '../avatar/avatar.component';
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
   host: {
-    class: "host-account"
-  }
+    class: 'host-account',
+  },
 })
 export class AccountComponent implements OnInit {
+  protected readonly supabase = inject(SupabaseService);
+  private formBuilder = inject(FormBuilder);
   loading = false;
   profile!: Profile;
 
-  @Input()
-  session!: AuthSession;
+  // @Input()
+  // session!: AuthSession;
 
   updateProfileForm = this.formBuilder.group({
     username: '',
     website: '',
     avatar_url: '',
   });
-
-  constructor(
-    private readonly supabase: SupabaseService,
-    private formBuilder: FormBuilder
-  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.getProfile();
@@ -43,13 +40,13 @@ export class AccountComponent implements OnInit {
       avatar_url,
     });
 
-    console.log(this.session);
+    // console.log(this.session);
   }
 
   async getProfile() {
     try {
       this.loading = true;
-      const { user } = this.session;
+      const { user } = this.supabase.sessionSignal()!;
       const {
         data: profile,
         error,
@@ -75,7 +72,7 @@ export class AccountComponent implements OnInit {
   async updateProfile(): Promise<void> {
     try {
       this.loading = true;
-      const { user } = this.session;
+      const { user } = this.supabase.sessionSignal()!;
 
       const username = this.updateProfileForm.value.username as string;
       const website = this.updateProfileForm.value.website as string;
@@ -102,14 +99,14 @@ export class AccountComponent implements OnInit {
   }
 
   // Avatar function and getter
-    get avatarUrl() {
-    return this.updateProfileForm.value.avatar_url as string
+  get avatarUrl() {
+    return this.updateProfileForm.value.avatar_url as string;
   }
 
   async updateAvatar(event: string): Promise<void> {
     this.updateProfileForm.patchValue({
       avatar_url: event,
-    })
-    await this.updateProfile()
+    });
+    await this.updateProfile();
   }
 }

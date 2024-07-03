@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SupabaseService } from '../../shared/supabase.service';
+import { SupabaseService } from '../../auth/supabase.service';
 import { AuthComponent } from '../../auth/auth.component';
+import { Session } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-portfolio',
@@ -14,11 +15,10 @@ import { AuthComponent } from '../../auth/auth.component';
   },
 })
 export class PortfolioComponent {
-  session = this.supabase.session;
-
-  constructor(private readonly supabase: SupabaseService) {}
+  protected readonly supabase = inject(SupabaseService);
+  // session = this.supabase.session;
 
   ngOnInit() {
-    console.log(this.session);
+    console.log(this.supabase.sessionSignal());
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   AuthChangeEvent,
   AuthSession,
@@ -23,18 +23,13 @@ export class SupabaseService {
   private supabase: SupabaseClient;
   _session: AuthSession | null = null;
 
+  sessionSignal = signal<Session | null>(null);
+
   constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
-  }
-
-  get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
-      this._session = data.session;
-    });
-    return this._session;
   }
 
   profile(user: User) {

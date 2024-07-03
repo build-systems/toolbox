@@ -83,6 +83,10 @@ ul {
   color: var(--primary);
 }
 
+.link.settings {
+  padding-top: 0.5rem;
+}
+
 .active-item {
   color: var(--primary);
   border-left: var(--nav-sel-thickness) solid var(--secondary);
