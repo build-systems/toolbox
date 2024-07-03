@@ -648,7 +648,7 @@ export class EinzelmassnahmenService {
 
   outputEinzelmassnahmen: einzelmassnahmenOutputObj = {
     title: undefined,
-    items: [],
+    values: [],
   };
 
   listEinzelmassnahmen = signal<einzelmassnahmenOutputObj[]>([]);
@@ -666,8 +666,8 @@ export class EinzelmassnahmenService {
 
   // Function to find the value by title
   findValueByTitle(obj: einzelmassnahmenOutputObj, title: OutputTitle): any {
-    if (obj.items && Array.isArray(obj.items)) {
-      for (const item of obj.items) {
+    if (obj.values && Array.isArray(obj.values)) {
+      for (const item of obj.values) {
         if (item.title === title) {
           return item.value;
         }
@@ -684,7 +684,7 @@ export class EinzelmassnahmenService {
       case 'Außenwand':
         return {
           title: 'Außenwand',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               description: 'Placeholder',
@@ -711,7 +711,7 @@ export class EinzelmassnahmenService {
       case 'Bodenplatte':
         return {
           title: 'Bodenplatte',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.bodenplatteKostenM2(),
@@ -738,7 +738,7 @@ export class EinzelmassnahmenService {
         if (dachSelected === 'Flachdach') {
           return {
             title: 'Flachdach',
-            items: [
+            values: [
               {
                 title: this.titleKostenM2,
                 value: this.flachdachKostenM2(),
@@ -764,7 +764,7 @@ export class EinzelmassnahmenService {
         } else {
           return {
             title: 'Steildach',
-            items: [
+            values: [
               {
                 title: this.titleKostenM2,
                 value: this.steildachKostenM2(),
@@ -791,7 +791,7 @@ export class EinzelmassnahmenService {
       case 'Dachflächenfenster':
         return {
           title: 'Dachflächenfenster',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: 0,
@@ -817,7 +817,7 @@ export class EinzelmassnahmenService {
       case 'Fenster':
         return {
           title: 'Fenster',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.fensterKostenM2(),
@@ -843,7 +843,7 @@ export class EinzelmassnahmenService {
       case 'Innenwand':
         return {
           title: 'Innenwand',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.innenwandKostenM2(),
@@ -869,7 +869,7 @@ export class EinzelmassnahmenService {
       case 'Keller':
         return {
           title: 'Keller',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.kellerKostenM2(),
@@ -895,7 +895,7 @@ export class EinzelmassnahmenService {
       case 'ObersteGeschossdecke':
         return {
           title: 'Oberste Geschossdecke',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.obersteGeschossdeckeKostenM2(),
@@ -921,7 +921,7 @@ export class EinzelmassnahmenService {
       case 'Steildachgauben':
         return {
           title: 'Steildachgauben',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.steildachgaubenKostenM2(),
@@ -947,7 +947,7 @@ export class EinzelmassnahmenService {
       case 'Türen':
         return {
           title: 'Tür',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.tuerKostenM2(),
@@ -973,7 +973,7 @@ export class EinzelmassnahmenService {
       case 'Vorbaurollladen':
         return {
           title: 'Vorbaurollladen',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.vorbaurollladenKostenM2(),
@@ -999,7 +999,7 @@ export class EinzelmassnahmenService {
       case 'Wärmedämmverbundsystem':
         return {
           title: 'Wärmedämm­verbundsystem',
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: this.wdvsKostenM2(),
@@ -1025,7 +1025,7 @@ export class EinzelmassnahmenService {
       default:
         return {
           title: undefined,
-          items: [
+          values: [
             {
               title: this.titleKostenM2,
               value: 0,
@@ -1639,11 +1639,5 @@ export class EinzelmassnahmenService {
       },
       { allowSignalWrites: true }
     );
-
-    // this.vorbaurollladenEnergetischBedingteMehrkosten =
-    //   this.calculateVorbaurollladenEnergetischBedingteMehrkosten(
-    //     this.vorbaurollladenKosten,
-    //     this.vorbaurollladenSowiesoKosten
-    //   );
   }
 }

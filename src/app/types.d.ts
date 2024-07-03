@@ -233,5 +233,5 @@ type einzelmassnahmenOutputItem = {
 type einzelmassnahmenOutputObj = {
   title: BauteilText | undefined;
   description?: string;
-  items: einzelmassnahmenOutputItem[];
+  values: einzelmassnahmenOutputItem[];
 };
