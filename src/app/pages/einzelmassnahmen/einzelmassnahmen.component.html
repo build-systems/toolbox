@@ -1,11 +1,13 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
-    [(projektName)]="einzelmassnahmenService.projektName"
+    [(projektName)]="
+      einzelmassnahmenService.einzelmassnahmenOutputProject().title
+    "
     [kfwId]="kfwId"
-    [kfwH2]="kfwH2"
-    [kfwH3]="kfwH3"
-    [kfwDescription]="kfwDescription"
+    [h2]="kfwH2"
+    [h3]="kfwH3"
+    [description]="kfwDescription"
   ></app-title>
   <div class="numbers-mover tablet">
     <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
@@ -49,12 +51,12 @@
       <button
         class="button"
         [disabled]="
-          einzelmassnahmenService.outputEinzelmassnahmen.title === undefined
+          einzelmassnahmenService.einzelmassnahmenOutputItem.title === undefined
         "
         (click)="
-          einzelmassnahmenService.newAddOutputToList(
-            einzelmassnahmenService.outputEinzelmassnahmen,
-            einzelmassnahmenService.listEinzelmassnahmen
+          einzelmassnahmenService.addOutputItemToProject(
+            einzelmassnahmenService.einzelmassnahmenOutputItem,
+            einzelmassnahmenService.einzelmassnahmenOutputProject
           )
         "
       >
@@ -66,9 +68,12 @@
       <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
       <button
         class="button"
-        [disabled]="einzelmassnahmenService.listEinzelmassnahmen().length === 0"
+        [disabled]="
+          einzelmassnahmenService.einzelmassnahmenOutputProject().items
+            .length === 0
+        "
+        (click)="createProject()"
       >
-        <!-- (click)="" -->
         Save
       </button>
     </div>

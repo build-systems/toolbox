@@ -1,7 +1,9 @@
 <div class="card-container">
   <div
     class="card"
-    *ngFor="let item of einzelmassnahmenService.outputEinzelmassnahmen.values"
+    *ngFor="
+      let item of einzelmassnahmenService.einzelmassnahmenOutputItem.values
+    "
     [title]="item.title"
   >
     <h3>

@@ -63,6 +63,10 @@ th {
   width: 30%;
 }
 
+.delete {
+  width: 10%;
+}
+
 #total {
   background-color: var(--bg-tertiary);
 }

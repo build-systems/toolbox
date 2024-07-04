@@ -1,6 +1,40 @@
-<h2>Feature still in development.</h2>
-@if(supabase.sessionSignal()) {
-<div>Logged</div>
+@if(supabaseService.sessionSignal()) {
+<div class="title-mob-numbers">
+  <app-title title="Portfolio" [description]="description"></app-title>
+</div>
+<div class="tables">
+  <h2>Fördermittel Einzelmaßnahmen</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let project of projects"
+          (click)="
+            loadEinzelmassnahmenProject(
+              project.projects.id,
+              einzelmassnahmenService.einzelmassnahmenOutputProject
+            )
+          "
+        >
+          <td>{{ project.projects.title }}</td>
+          <td>
+            {{ project.projects.created_at }}
+          </td>
+          <td>
+            {{ project.projects.last_edited_at }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 } @else {
 <app-auth></app-auth>
 }

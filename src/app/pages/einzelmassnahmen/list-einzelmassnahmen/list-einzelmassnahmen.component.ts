@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, WritableSignal } from '@angular/core';
 import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 import { ReversePipe } from '../../../pipes/reverse.pipe';
 
@@ -14,5 +14,19 @@ import { ReversePipe } from '../../../pipes/reverse.pipe';
   imports: [CommonModule, ReversePipe],
 })
 export class ListEinzelmassnahmenComponent {
-  constructor(public einzelmassnahmenService: EinzelmassnahmenService) {}
+  protected einzelmassnahmenService = inject(EinzelmassnahmenService);
+
+  delOutputItemFromList(
+    index: number,
+    projectSignal: WritableSignal<einzelmassnahmenOutputProject>
+  ) {
+    const project = projectSignal();
+    if (index < 0 || index >= project.items.length) {
+      throw new Error('Index out of bounds');
+    }
+    const projectItems = project.items
+      .slice(0, index)
+      .concat(project.items.slice(index + 1));
+    projectSignal.update((old) => ({ ...old, items: projectItems }));
+  }
 }

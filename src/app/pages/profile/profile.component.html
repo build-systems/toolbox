@@ -1,5 +1,7 @@
-<h2>Feature still in development.</h2>
 @if(supabase.sessionSignal()) {
+<div class="title-mob-numbers">
+  <app-title title="Profile" [description]="description"></app-title>
+</div>
 <app-account></app-account>
 } @else {
 <app-auth></app-auth>

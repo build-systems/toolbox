@@ -1,4 +1,10 @@
-import { Injectable, WritableSignal, effect, signal } from '@angular/core';
+import {
+  Injectable,
+  WritableSignal,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { einzelmassnahmen } from '../../shared/constants';
 
@@ -6,7 +12,8 @@ import { einzelmassnahmen } from '../../shared/constants';
   providedIn: 'root',
 })
 export class EinzelmassnahmenService {
-  projektName = signal('Untitled');
+  private constants = inject(einzelmassnahmen);
+  private formService = inject(FormEinzelmassnahmenService);
 
   // Titles
   titleKostenM2: OutputTitle = 'Kosten';
@@ -646,26 +653,31 @@ export class EinzelmassnahmenService {
     return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
   }
 
-  outputEinzelmassnahmen: einzelmassnahmenOutputObj = {
+  einzelmassnahmenOutputItem: einzelmassnahmenOutputItem = {
     title: undefined,
     values: [],
   };
 
-  listEinzelmassnahmen = signal<einzelmassnahmenOutputObj[]>([]);
+  // einzelmassnahmenOutputList = signal<einzelmassnahmenOutputItem[]>([]);
+
+  einzelmassnahmenOutputProject = signal<einzelmassnahmenOutputProject>({
+    title: 'Untitled',
+    items: [],
+  });
 
   totalKosten = signal<number>(0);
 
-  newAddOutputToList(
-    output: einzelmassnahmenOutputObj,
-    list: WritableSignal<einzelmassnahmenOutputObj[]>
+  addOutputItemToProject(
+    newItem: einzelmassnahmenOutputItem,
+    project: WritableSignal<einzelmassnahmenOutputProject>
   ) {
-    if (output.title != undefined) {
-      list.update((old) => [...old, output]);
+    if (newItem.title != undefined) {
+      project.update((old) => ({ ...old, items: [...old.items, newItem] }));
     }
   }
 
   // Function to find the value by title
-  findValueByTitle(obj: einzelmassnahmenOutputObj, title: OutputTitle): any {
+  findValueByTitle(obj: einzelmassnahmenOutputItem, title: OutputTitle): any {
     if (obj.values && Array.isArray(obj.values)) {
       for (const item of obj.values) {
         if (item.title === title) {
@@ -679,7 +691,7 @@ export class EinzelmassnahmenService {
   switchBauteil(
     bauteilSelected: string,
     dachSelected: Dach
-  ): einzelmassnahmenOutputObj {
+  ): einzelmassnahmenOutputItem {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {
@@ -1052,14 +1064,11 @@ export class EinzelmassnahmenService {
   }
 
   // Calculations
-  constructor(
-    private constants: einzelmassnahmen,
-    private formService: FormEinzelmassnahmenService
-  ) {
+  constructor() {
     effect(
       () => {
         this.totalKosten.set(
-          this.listEinzelmassnahmen().reduce(
+          this.einzelmassnahmenOutputProject().items.reduce(
             (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
             0
           )
@@ -1069,7 +1078,7 @@ export class EinzelmassnahmenService {
     );
 
     effect(() => {
-      this.outputEinzelmassnahmen = this.switchBauteil(
+      this.einzelmassnahmenOutputItem = this.switchBauteil(
         this.formService.bauteilSelected(),
         this.formService.dachSelected()
       );

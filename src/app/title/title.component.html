@@ -9,6 +9,7 @@
     </div>
     <h1>
       <span (click)="toggleExpand()" class="tool-title">{{ title() }}</span>
+      @if(projektName()) {
       <span> / </span>
       <input
         type="text"
@@ -20,6 +21,7 @@
         (click)="projektRename.select()"
         (keyup.enter)="projektRename.blur()"
       />
+      }
     </h1>
   </div>
   <div class="kfw-info">
@@ -28,16 +30,18 @@
         class="kfw-description"
         [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"
       >
+        @if(kfwId()){
         <div class="kfw-number-container">
           <div class="kfw-number">
             <div class="kfw-id">KfW id</div>
             {{ kfwId() }}
           </div>
         </div>
+        }
         <div>
-          <h2>{{ kfwH2() }}</h2>
-          <h3>{{ kfwH3() }}</h3>
-          <p [innerHTML]="kfwDescription()"></p>
+          <h2>{{ h2() }}</h2>
+          <h3>{{ h3() }}</h3>
+          <p [innerHTML]="description()"></p>
         </div>
       </div>
     </div>

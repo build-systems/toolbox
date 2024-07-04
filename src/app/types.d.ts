@@ -223,15 +223,20 @@ type OutputTitle =
   | 'Sowieso-Kosten'
   | 'Energetisch Kosten';
 
-type einzelmassnahmenOutputItem = {
+type einzelmassnahmenOutputValue = {
   title: OutputTitle;
   description?: string;
   unit: string;
   value: number;
 };
 
-type einzelmassnahmenOutputObj = {
+type einzelmassnahmenOutputItem = {
   title: BauteilText | undefined;
   description?: string;
-  values: einzelmassnahmenOutputItem[];
+  values: einzelmassnahmenOutputValue[];
+};
+
+type einzelmassnahmenOutputProject = {
+  title: string;
+  items: einzelmassnahmenOutputItem[];
 };

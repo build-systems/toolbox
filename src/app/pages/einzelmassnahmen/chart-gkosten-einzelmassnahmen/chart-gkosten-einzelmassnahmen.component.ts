@@ -27,18 +27,21 @@ export class ChartGkostenEinzelmassnahmenComponent {
       this.barChartData.datasets = [];
       for (
         let i = 0;
-        i < einzelmassnahmenService.listEinzelmassnahmen().length;
+        i <
+        einzelmassnahmenService.einzelmassnahmenOutputProject().items.length;
         i++
       ) {
         let colorIndex = i % this.styleService.datasets.colors.length;
         const kosten = einzelmassnahmenService.findValueByTitle(
-          einzelmassnahmenService.listEinzelmassnahmen()[i],
+          einzelmassnahmenService.einzelmassnahmenOutputProject().items[i],
           'Vollkosten'
         );
         const kostenBafa = kosten * 0.8;
         this.barChartData.datasets.push({
           data: [kosten, kostenBafa],
-          label: einzelmassnahmenService.listEinzelmassnahmen()[i].title,
+          label:
+            einzelmassnahmenService.einzelmassnahmenOutputProject().items[i]
+              .title,
           borderWidth: this.styleService.datasets.borderWidth,
           backgroundColor:
             this.styleService.datasets.colors[colorIndex].backgroundColor,

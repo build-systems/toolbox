@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit, inject } from '@angular/core';
 import { fadeInAnimation } from '../../shared/animations';
 import { EinzelmassnahmenService } from './einzelmassnahmen.service';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { ChartGkostenEinzelmassnahmenComponent } from './chart-gkosten-einzelmas
 import { HausSectionComponent } from './haus-section/haus-section.component';
 import { FormsModule } from '@angular/forms';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
+import { SupabaseService } from '../../auth/supabase.service';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -36,6 +37,21 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzel
 export class EinzelmassnahmenComponent {
   @HostBinding('@routeAnimations') routeAnimations = true;
 
+  protected einzelmassnahmenService = inject(EinzelmassnahmenService);
+  protected formService = inject(FormEinzelmassnahmenService);
+  protected supabaseService = inject(SupabaseService);
+
+  async createProject() {
+    try {
+      const result = await this.supabaseService.createProject(
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+      );
+      console.log('Project created with ID:', result.project_id);
+    } catch (error) {
+      console.error('Error creating project:', error);
+    }
+  }
+
   // Information for the title
   title = 'Fördermittel Einzelmaßnahmen';
   kfwId = '000';
@@ -46,12 +62,5 @@ export class EinzelmassnahmenComponent {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView();
-  }
-
-  constructor(
-    public einzelmassnahmenService: EinzelmassnahmenService,
-    public formService: FormEinzelmassnahmenService
-  ) {
-    // Service is used to check the current tab (Projekt or Darlehen).
   }
 }

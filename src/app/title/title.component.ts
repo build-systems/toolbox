@@ -13,11 +13,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class TitleComponent {
   title = input.required<string>();
-  projektName = model.required<string>();
-  kfwId = input.required<string>();
-  kfwH2 = input.required<string>();
-  kfwH3 = input.required<string>();
-  kfwDescription = input.required<string>();
+  projektName = model<string>();
+  kfwId = input<string>();
+  h2 = input<string>();
+  h3 = input<string>();
+  description = input<string>();
 
   isExpanded: boolean = false;
   editingTitle: boolean = false;

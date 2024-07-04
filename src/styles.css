@@ -158,11 +158,18 @@ li {
   display: flex;
 }
 
-.host-tool {
+.host-tool,
+.host-profile,
+.host-portfolio {
   display: flex;
   flex-direction: column;
   max-height: calc(100svh - 1.5rem);
   padding-bottom: var(--layout-padding);
+}
+
+.host-profile,
+.host-portfolio {
+  width: 100%;
 }
 
 .container-tool {
@@ -1118,29 +1125,6 @@ input[type="number"]:disabled:hover {
 
 button:hover {
   color: var(--secondary);
-}
-
-.host-profile,
-.host-portfolio {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  padding: var(--layout-padding);
-  & h1 {
-    font-size: 36px;
-    padding-bottom: var(--mobile-padding);
-  }
-  & h2 {
-    text-align: center;
-    padding-bottom: var(--mobile-padding);
-  }
-  & p {
-    text-align: center;
-  }
 }
 
 .host-auth {

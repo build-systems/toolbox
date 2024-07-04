@@ -4,13 +4,18 @@
       <tr>
         <th>Name</th>
         <th class="shrink">Kosten [€]</th>
+        <th class="delete"></th>
       </tr>
     </thead>
     <tbody>
       <tr
         *ngFor="
-          let item of einzelmassnahmenService.listEinzelmassnahmen() | reverse
+          let item of einzelmassnahmenService.einzelmassnahmenOutputProject()
+            .items | reverse;
+          let cnt = count;
+          let i = index
         "
+        [attr.id]="'num' + (cnt - i - 1)"
       >
         <td>{{ item.title }}</td>
         <td class="shrink">
@@ -18,6 +23,17 @@
             einzelmassnahmenService.findValueByTitle(item, "Vollkosten")
               | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
+        </td>
+        <td
+          class="delete"
+          (click)="
+            delOutputItemFromList(
+              cnt - i - 1,
+              einzelmassnahmenService.einzelmassnahmenOutputProject
+            )
+          "
+        >
+          del
         </td>
       </tr>
       <tr id="total">
@@ -28,6 +44,7 @@
               | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
         </td>
+        <td></td>
       </tr>
     </tbody>
   </table>
