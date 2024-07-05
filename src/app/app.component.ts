@@ -1,10 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ChildrenOutletContexts,
-  RouterModule,
-  RouterOutlet,
-} from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NavbarmobileComponent } from './navbarmobile/navbarmobile.component';

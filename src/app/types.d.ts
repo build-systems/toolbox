@@ -225,6 +225,7 @@ type OutputTitle =
 
 type einzelmassnahmenOutputValue = {
   title: OutputTitle;
+  id: number | undefined;
   description?: string;
   unit: string;
   value: number;
@@ -232,11 +233,13 @@ type einzelmassnahmenOutputValue = {
 
 type einzelmassnahmenOutputItem = {
   title: BauteilText | undefined;
+  id: number | undefined;
   description?: string;
   values: einzelmassnahmenOutputValue[];
 };
 
 type einzelmassnahmenOutputProject = {
   title: string;
+  id: number | undefined;
   items: einzelmassnahmenOutputItem[];
 };

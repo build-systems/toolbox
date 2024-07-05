@@ -1,4 +1,13 @@
-import { Component, HostBinding, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  OnInit,
+  Signal,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { fadeInAnimation } from '../../shared/animations';
 import { EinzelmassnahmenService } from './einzelmassnahmen.service';
 import { CommonModule } from '@angular/common';
@@ -12,16 +21,14 @@ import { HausSectionComponent } from './haus-section/haus-section.component';
 import { FormsModule } from '@angular/forms';
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { SupabaseService } from '../../auth/supabase.service';
+import { DbEinzelmassnahmenService } from './db-einzelmassnahmen.service';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-einzelmassnahmen',
   standalone: true,
   templateUrl: './einzelmassnahmen.component.html',
   styleUrl: './einzelmassnahmen.component.css',
-  host: {
-    class: 'host-tool',
-  },
-  animations: [fadeInAnimation],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,22 +40,46 @@ import { SupabaseService } from '../../auth/supabase.service';
     ChartGkostenEinzelmassnahmenComponent,
     HausSectionComponent,
   ],
+  animations: [fadeInAnimation],
+  host: {
+    class: 'host-tool',
+  },
 })
 export class EinzelmassnahmenComponent {
   @HostBinding('@routeAnimations') routeAnimations = true;
-
   protected einzelmassnahmenService = inject(EinzelmassnahmenService);
+  protected dbEinzelmassnahmenService = inject(DbEinzelmassnahmenService);
   protected formService = inject(FormEinzelmassnahmenService);
   protected supabaseService = inject(SupabaseService);
+  protected sharedService = inject(SharedService);
 
-  async createProject() {
-    try {
-      const result = await this.supabaseService.createProject(
-        this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+  async saveProject() {
+    const project =
+      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject().title
       );
-      console.log('Project created with ID:', result.project_id);
-    } catch (error) {
-      console.error('Error creating project:', error);
+
+    if (project.length > 0) {
+      try {
+        console.log('Project already exists');
+        await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
+          this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+        );
+        // console.log('Project updated with ID:', project[0].id);
+      } catch (error) {
+        console.error('Error creating project:', error);
+      }
+    } else {
+      try {
+        console.log('Creating new project');
+        const result =
+          await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+            this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+          );
+        // console.log('Project created with ID:', result.project_id);
+      } catch (error) {
+        console.error('Error creating project:', error);
+      }
     }
   }
 
@@ -62,5 +93,42 @@ export class EinzelmassnahmenComponent {
 
   scroll(el: HTMLElement) {
     el.scrollIntoView();
+  }
+
+  oldTitle = 'Untitled';
+  projectId: number | undefined;
+
+  constructor() {
+    // Debounce is a custom function to delay the signal delivery, see more here:
+    // https://stackoverflow.com/questions/76597307/angular-signals-debounce-in-effect
+    effect(
+      () => {
+        if (
+          this.einzelmassnahmenService.debouncedProjectTitle() !=
+            this.oldTitle &&
+          this.projectId
+        ) {
+          this.dbEinzelmassnahmenService.updateEinzelmassnahmenTitle(
+            this.einzelmassnahmenService.debouncedProjectTitle(),
+            this.projectId!
+          );
+
+          this.einzelmassnahmenService.einzelmassnahmenOutputProject.update(
+            (old) => ({
+              ...old,
+              title: this.einzelmassnahmenService.debouncedProjectTitle(),
+            })
+          );
+        }
+      },
+      { allowSignalWrites: true }
+    );
+
+    effect(() => {
+      this.oldTitle =
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
+      this.projectId =
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
+    });
   }
 }

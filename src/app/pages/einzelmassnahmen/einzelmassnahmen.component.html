@@ -1,9 +1,7 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
-    [(projektName)]="
-      einzelmassnahmenService.einzelmassnahmenOutputProject().title
-    "
+    [(projectTitle)]="einzelmassnahmenService.projectTitle"
     [kfwId]="kfwId"
     [h2]="kfwH2"
     [h3]="kfwH3"
@@ -72,7 +70,7 @@
           einzelmassnahmenService.einzelmassnahmenOutputProject().items
             .length === 0
         "
-        (click)="createProject()"
+        (click)="saveProject()"
       >
         Save
       </button>

@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TitleComponent {
   title = input.required<string>();
-  projektName = model<string>();
+  projectTitle = model<string>();
   kfwId = input<string>();
   h2 = input<string>();
   h3 = input<string>();

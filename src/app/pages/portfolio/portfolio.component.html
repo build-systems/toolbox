@@ -11,24 +11,47 @@
           <th>Title</th>
           <th>Created</th>
           <th>Edited</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let project of projects"
-          (click)="
-            loadEinzelmassnahmenProject(
-              project.projects.id,
-              einzelmassnahmenService.einzelmassnahmenOutputProject
-            )
-          "
-        >
-          <td>{{ project.projects.title }}</td>
-          <td>
+        <tr *ngFor="let project of projects">
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
+            {{ project.projects.title }}
+          </td>
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
             {{ project.projects.created_at }}
           </td>
-          <td>
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
             {{ project.projects.last_edited_at }}
+          </td>
+          <td
+            (click)="
+              deleteEinzelmassnahmenProjectByProjectId(project.projects.id)
+            "
+          >
+            del
           </td>
         </tr>
       </tbody>

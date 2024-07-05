@@ -1,11 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { NeubauComponent } from './pages/neubau/neubau.component';
-import { SanierungComponent } from './pages/sanierung/sanierung.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-import { EinzelmassnahmenComponent } from './pages/einzelmassnahmen/einzelmassnahmen.component';
 
 export const routes: Routes = [
   // {
@@ -24,6 +21,7 @@ export const routes: Routes = [
     title: 'BuildSystems | Portfolio',
   },
   { path: '', redirectTo: '/neubau', pathMatch: 'full' },
+  // loadComponent pattern is to lazy load the app
   {
     path: 'neubau',
     loadComponent: () =>

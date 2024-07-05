@@ -9,14 +9,14 @@
     </div>
     <h1>
       <span (click)="toggleExpand()" class="tool-title">{{ title() }}</span>
-      @if(projektName()) {
+      @if(projectTitle()) {
       <span> / </span>
       <input
         type="text"
         name="projektRename"
         id="projektRename"
         autocomplete="off"
-        [(ngModel)]="projektName"
+        [(ngModel)]="projectTitle"
         #projektRename
         (click)="projektRename.select()"
         (keyup.enter)="projektRename.blur()"
