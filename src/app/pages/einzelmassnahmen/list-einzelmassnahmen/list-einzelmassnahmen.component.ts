@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, WritableSignal } from '@angular/core';
 import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 import { ReversePipe } from '../../../pipes/reverse.pipe';
+import { einzelmassnahmen } from '../../../shared/constants';
 
 @Component({
   selector: 'app-list-einzelmassnahmen',
@@ -15,6 +16,7 @@ import { ReversePipe } from '../../../pipes/reverse.pipe';
 })
 export class ListEinzelmassnahmenComponent {
   protected einzelmassnahmenService = inject(EinzelmassnahmenService);
+  protected constants = inject(einzelmassnahmen);
 
   delOutputItemFromList(
     index: number,

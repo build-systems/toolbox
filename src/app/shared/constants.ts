@@ -83,6 +83,7 @@ export class sanierung {
   providedIn: 'root',
 })
 export class einzelmassnahmen {
+  public bafaMultiplier = 0.8;
   // C5 → Heizlast nach DIN EN 12831 Bbl 2 [kW]
   public heizlastDIN12831 = 12;
   // C9 → Baupreisindex 2015 (Q1)

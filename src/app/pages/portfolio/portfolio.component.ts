@@ -113,4 +113,48 @@ export class PortfolioComponent {
       () => einzelmassnahmenProjects
     );
   }
+
+  async createNewEinzelmassnahmen() {
+    const newProjectTitle = this.getNewProjectTitle(
+      this.einzelmassnahmenService.projectsEinzelmassnahmen()
+    );
+    this.einzelmassnahmenService.einzelmassnahmenOutputProject.update(() => ({
+      title: newProjectTitle,
+      id: undefined,
+      items: [],
+    }));
+    const result =
+      await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+      );
+    // Update the signal
+    let einzelmassnahmenProjects =
+      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
+      () => einzelmassnahmenProjects
+    );
+  }
+
+  getNewProjectTitle(projects: any[]): string {
+    // Regex to match titles like "Untitled", "Untitled (2)", "Untitled (3)", etc.
+    const untitledRegex = /^Untitled(?: \((\d+)\))?$/;
+
+    let maxNumber = 0;
+
+    for (const project of projects) {
+      const match = project.projects.title.match(untitledRegex);
+      if (match) {
+        // If match[1] exists, it means it matched "Untitled (x)" where x is a number
+        // If match[1] does not exist, it matched "Untitled"
+        const number = match[1] ? parseInt(match[1], 10) : 1;
+        if (number > maxNumber) {
+          maxNumber = number;
+        }
+      }
+    }
+
+    // Increment maxNumber to get the next project title
+    const newNumber = maxNumber + 1;
+    return newNumber === 1 ? 'Untitled' : `Untitled (${newNumber})`;
+  }
 }

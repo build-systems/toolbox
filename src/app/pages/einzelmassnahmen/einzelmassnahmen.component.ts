@@ -14,6 +14,9 @@ import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzel
 import { SupabaseService } from '../../auth/supabase.service';
 import { DbEinzelmassnahmenService } from './db-einzelmassnahmen.service';
 import { SharedService } from '../../shared/shared.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -43,36 +46,68 @@ export class EinzelmassnahmenComponent {
   protected formService = inject(FormEinzelmassnahmenService);
   protected supabaseService = inject(SupabaseService);
   protected sharedService = inject(SharedService);
+  private dialog = inject(MatDialog);
 
   protected projectExists = false;
 
   async saveProject() {
-    const project =
-      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
-        this.einzelmassnahmenService.einzelmassnahmenOutputProject().title
-      );
-
-    if (project.length > 0) {
-      this.projectExists = true;
-      try {
-        console.log('Project already exists');
-        await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
-          this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+    try {
+      const projectTitle =
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
+      const projectId =
+        this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
+      // Check if project exists
+      const projectDb =
+        await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
+          projectTitle
         );
-      } catch (error) {
-        console.error('Error creating project:', error);
-      }
-    } else {
-      try {
-        console.log('Creating new project');
-        const result =
-          await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+      this.projectExists = projectDb.length > 0;
+      console.log('project: ', projectDb);
+      // If project exists
+      if (this.projectExists && projectId) {
+        try {
+          await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
             this.einzelmassnahmenService.einzelmassnahmenOutputProject()
           );
-        // console.log('Project created with ID:', result.project_id);
-      } catch (error) {
-        console.error('Error creating project:', error);
+        } catch (error) {
+          console.error('Error creating project:', error);
+        }
+        // Project do not exist, then just create a new own
+      } else if (this.projectExists && !projectId) {
+        // Prompt user if we should overwrite
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          data: {
+            title: 'Overwrite existing project?',
+            message: `You already have a project with title ${projectTitle}.`,
+          },
+        });
+        const result = await firstValueFrom(dialogRef.afterClosed());
+        if (result) {
+          await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
+            projectDb[0].id
+          );
+          const result =
+            await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+              this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+            );
+        } else {
+          return;
+        }
+      } else {
+        try {
+          console.log('Creating new project');
+          const result =
+            await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+              this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+            );
+          // console.log('Project created with ID:', result.project_id);
+        } catch (error) {
+          console.error('Error creating project:', error);
+        }
       }
+    } catch (error) {
+      console.error('Error saving project:', error);
+      // Handle error (e.g., show an error message)
     }
   }
 

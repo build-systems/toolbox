@@ -1,9 +1,10 @@
-import { Component, ViewChild, effect } from '@angular/core';
+import { Component, ViewChild, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../shared/charts-settings.service';
 import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
+import { einzelmassnahmen } from '../../../shared/constants';
 
 @Component({
   selector: 'app-chart-gkosten-einzelmassnahmen',
@@ -17,6 +18,7 @@ import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 })
 export class ChartGkostenEinzelmassnahmenComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  private constantsEinzelmassnahmen = inject(einzelmassnahmen);
 
   constructor(
     // private neubauService: NeubauService,
@@ -36,7 +38,8 @@ export class ChartGkostenEinzelmassnahmenComponent {
           einzelmassnahmenService.einzelmassnahmenOutputProject().items[i],
           'Vollkosten'
         );
-        const kostenBafa = kosten * 0.8;
+        const kostenBafa =
+          kosten * this.constantsEinzelmassnahmen.bafaMultiplier;
         this.barChartData.datasets.push({
           data: [kosten, kostenBafa],
           label:

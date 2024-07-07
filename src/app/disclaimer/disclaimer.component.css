@@ -45,7 +45,6 @@
   background: var(--bg-primary);
 }
 
-
 .disclaimer__text__main {
   font-weight: 500;
 }
@@ -122,23 +121,10 @@ a:hover {
   gap: 1rem;
 }
 
-.understand {
+.understand__wrapper {
   display: flex;
   justify-content: end;
   width: 100%;
-}
-
-.understand__button {
-  font-weight: 700;
-  color: var(--bg-primary);
-  background-color: var(--primary);
-  height: var(--button-height);
-  &:hover {
-    text-decoration: none;
-    color: var(--bg-primary);
-    border-color: var(--primary90);
-    background-color: var(--primary90);
-  }
 }
 
 .footer {
@@ -150,7 +136,6 @@ a:hover {
   color: var(--primary);
   text-decoration: none;
 }
-
 
 @media screen and (max-width: 700px) {
   .disclaimer__content {

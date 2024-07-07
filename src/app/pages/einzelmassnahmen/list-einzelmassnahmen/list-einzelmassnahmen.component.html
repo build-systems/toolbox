@@ -46,6 +46,17 @@
         </td>
         <td></td>
       </tr>
+      <tr id="total">
+        <td>TOTAL BAFA</td>
+        <td class="shrink">
+          {{
+            einzelmassnahmenService.totalKosten() *
+              this.constants.bafaMultiplier
+              | currency : "EUR" : "symbol" : "1.0-0" : "de"
+          }}
+        </td>
+        <td></td>
+      </tr>
     </tbody>
   </table>
 </div>

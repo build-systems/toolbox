@@ -41,7 +41,7 @@ tbody {
 
 th,
 td {
-  border: 1px solid var(--bg-tertiary);
+  border: 1px solid #000;
   padding: 1rem 1rem;
 }
 
@@ -75,4 +75,8 @@ th {
   background-color: var(--bg-tertiary);
   text-align: left;
   font-weight: normal;
+}
+
+.new-item td {
+  color: var(--primary50);
 }

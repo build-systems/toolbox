@@ -11,7 +11,7 @@ import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-
 export class NeubauService {
   // Neubau active form tab
   public currentTab = signal(1);
-  public projektName = signal('Untitled');
+  public projectTitle = signal('Untitled');
 
   // Initial project parameters
   eigeneKostenDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
@@ -43,10 +43,10 @@ export class NeubauService {
   grundstuecksbezogeneKosten: number =
     this.formProjektService.grundstKosten.value;
   baunebenkostenOhneFinIn: number =
-    this.formProjektService.baunebenkostenOhneFin.value / 100; // Conersion from percentage to fraction multiplier;
+    this.formProjektService.baunebenkostenOhneFin.value / 100; // Conversion from percentage to fraction multiplier;
 
   // Darlehen parameters
-  zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
+  zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conversion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
   kfWDarlehen: KfWDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
@@ -74,7 +74,7 @@ export class NeubauService {
       this.baustellenlogistikIn = value.baustellenlogistikIn!;
       this.aussenanlagenIn = value.aussenanlagenIn!;
       this.grundstuecksbezogeneKosten = value.grundstuecksbezogeneKostenRange!;
-      this.baunebenkostenOhneFinIn = value.baunebenkostenOhneFinRange! / 100; // Conersion from percentage to fraction multiplier;
+      this.baunebenkostenOhneFinIn = value.baunebenkostenOhneFinRange! / 100; // Conversion from percentage to fraction multiplier;
       this.update();
     });
 
@@ -255,7 +255,7 @@ export class NeubauService {
 
   // KfW Zinssatz (Sollzins) old Sollzins KFW [%]
   private _zinssatzKfw = 0;
-  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number) {
+  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
     if (kfWDarlehen === 'Endfälliges') {
       return this.constants.zinssatzKfw_Endfälliges;
     } else if (kfWDarlehen === 'Annuitäten') {
@@ -282,7 +282,7 @@ export class NeubauService {
   updateBaunebenkostenOhneFin(
     baukosten: number,
     baunebenkostenOhneFinIn: number
-  ) {
+  ): number {
     return baukosten * baunebenkostenOhneFinIn;
   }
 
@@ -291,7 +291,7 @@ export class NeubauService {
   updateInvestitionskosten(
     baukosten: number,
     baunebenkostenOhneFinOut: number
-  ) {
+  ): number {
     return baukosten + baunebenkostenOhneFinOut;
   }
 
@@ -301,7 +301,7 @@ export class NeubauService {
   updateInvestitionskostenM2(
     gestehungskosten: number,
     baunebenkostenOhneFinIn: number
-  ) {
+  ): number {
     return gestehungskosten + gestehungskosten * baunebenkostenOhneFinIn;
   }
 
@@ -310,7 +310,7 @@ export class NeubauService {
   updateInvestitionskostenProBau(
     investitionkosten: number,
     anzahlWohnungen: number
-  ) {
+  ): number {
     return investitionkosten / anzahlWohnungen;
   }
 
@@ -515,7 +515,7 @@ export class NeubauService {
   updateFinKostenMitKfw(
     finanzierungskostenKfw: number,
     finanzierungskostenBank: number
-  ) {
+  ): number {
     return finanzierungskostenKfw + finanzierungskostenBank;
   }
 
@@ -693,7 +693,10 @@ export class NeubauService {
 
     this.outputNeubauSource.next(
       (this.outputNeubau = {
+        title: this.projectTitle(),
         // Projekt
+        eigeneKostenDisabled: this.eigeneKostenDisabled,
+        eigeneKosten: this.eigeneKosten,
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
         energiestandard: this.energiestandard,
