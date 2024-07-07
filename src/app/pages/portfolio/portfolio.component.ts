@@ -28,15 +28,15 @@ export class PortfolioComponent {
   );
   private router = inject(Router);
 
-  projects: any[] = [];
-  user = this.supabaseService.sessionSignal();
-
   description =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga doloremque cumque, nemo, non aliquid ipsum omnis atque assumenda cupiditate earum, modi nam deleniti laudantium. Possimus aperiam voluptas esse. Error, beatae eos! Pariatur atque consequatur doloremque iure eligendi vel molestiae quasi ipsa veritatis iste aliquam, obcaecati aspernatur! Accusantium distinctio suscipit voluptatibus.';
 
   async ngOnInit() {
-    this.projects =
+    let einzelmassnahmenProjects =
       await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
+      () => einzelmassnahmenProjects
+    );
   }
 
   async loadEinzelmassnahmenProject(
@@ -106,7 +106,11 @@ export class PortfolioComponent {
     await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
       projectId
     );
-    this.projects =
+    // Update the signal
+    let einzelmassnahmenProjects =
       await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
+      () => einzelmassnahmenProjects
+    );
   }
 }

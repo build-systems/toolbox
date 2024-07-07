@@ -1,6 +1,6 @@
 @if(supabaseService.sessionSignal()) {
 <div class="title-mob-numbers">
-  <app-title title="Portfolio" [description]="description"></app-title>
+  <h1 class="title">Portfolio</h1>
 </div>
 <div class="tables">
   <h2>Fördermittel Einzelmaßnahmen</h2>
@@ -15,7 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let project of projects">
+        <tr
+          *ngFor="
+            let project of this.einzelmassnahmenService.projectsEinzelmassnahmen()
+          "
+        >
           <td
             (click)="
               loadEinzelmassnahmenProject(

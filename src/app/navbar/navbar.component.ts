@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { DbEinzelmassnahmenService } from '../pages/einzelmassnahmen/db-einzelmassnahmen.service';
+import { EinzelmassnahmenService } from '../pages/einzelmassnahmen/einzelmassnahmen.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +12,9 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  private dbEinzelmassnahmenService = inject(DbEinzelmassnahmenService);
+  private einzelmassnahmenService = inject(EinzelmassnahmenService);
+
   // This logic is to apply style to the current route icon in the nav bar
   // Declaring the current route as string
   currentRoute!: string;
@@ -18,7 +23,7 @@ export class NavbarComponent {
   constructor(private router: Router) {
     // Subscribe to its observable
     router.events.subscribe((val) => {
-      // Check if val is NavigationEnd (it has many actions untile this last one)
+      // Check if val is NavigationEnd (it has many actions until this last one)
       if (val instanceof NavigationEnd)
         // Then assign the url as a string
         this.currentRoute = this.router.url.toString();
@@ -33,5 +38,15 @@ export class NavbarComponent {
     } else {
       return false;
     }
+  }
+
+  // Used to fetch the data before the user changes route
+  // For improved UX
+  async onHoverPrefetch() {
+    let einzelmassnahmenProjects =
+      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
+      () => einzelmassnahmenProjects
+    );
   }
 }

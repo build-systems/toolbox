@@ -28,6 +28,7 @@ export class EinzelmassnahmenService {
     this.projectTitle,
     1000
   );
+  projectsEinzelmassnahmen = signal<any[]>([]);
 
   // baupreisindexErrechnet: number;
   baupreisindexErrechnet: number;

@@ -33,6 +33,7 @@
             routerLink="portfolio"
             class="link"
             [class.active-item]="isRouteActive('/portfolio')"
+            (mouseenter)="onHoverPrefetch()"
           >
             <svg class="icon">
               <use xlink:href="assets/icons.svg#portfolio" />

@@ -1,11 +1,16 @@
-import { Component, input, model } from '@angular/core';
+import { Component, effect, input, model } from '@angular/core';
 import { expandCollapseTitle } from '../shared/animations';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-title',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './title.component.html',
   styleUrl: './title.component.css',
   animations: expandCollapseTitle,
@@ -13,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class TitleComponent {
   title = input.required<string>();
-  projectTitle = model<string>();
+  projectTitle = model.required<string>();
   kfwId = input<string>();
   h2 = input<string>();
   h3 = input<string>();
@@ -24,5 +29,11 @@ export class TitleComponent {
 
   toggleExpand() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  onBlurRenameIfEmpty() {
+    if (this.projectTitle().length < 1) {
+      this.projectTitle.set('Untitled');
+    }
   }
 }

@@ -1,13 +1,4 @@
-import {
-  Component,
-  HostBinding,
-  OnInit,
-  Signal,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, HostBinding, effect, inject } from '@angular/core';
 import { fadeInAnimation } from '../../shared/animations';
 import { EinzelmassnahmenService } from './einzelmassnahmen.service';
 import { CommonModule } from '@angular/common';
@@ -53,6 +44,8 @@ export class EinzelmassnahmenComponent {
   protected supabaseService = inject(SupabaseService);
   protected sharedService = inject(SharedService);
 
+  protected projectExists = false;
+
   async saveProject() {
     const project =
       await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
@@ -60,12 +53,12 @@ export class EinzelmassnahmenComponent {
       );
 
     if (project.length > 0) {
+      this.projectExists = true;
       try {
         console.log('Project already exists');
         await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
           this.einzelmassnahmenService.einzelmassnahmenOutputProject()
         );
-        // console.log('Project updated with ID:', project[0].id);
       } catch (error) {
         console.error('Error creating project:', error);
       }

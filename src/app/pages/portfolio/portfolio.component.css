@@ -12,6 +12,13 @@
   overflow-y: auto;
 }
 
+.title {
+  padding: var(--layout-padding);
+  & .arrow-and-h1 {
+    width: fit-content;
+  }
+}
+
 h2 {
   padding-top: var(--layout-padding);
   padding-bottom: var(--layout-padding);

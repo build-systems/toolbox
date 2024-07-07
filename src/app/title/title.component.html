@@ -9,7 +9,6 @@
     </div>
     <h1>
       <span (click)="toggleExpand()" class="tool-title">{{ title() }}</span>
-      @if(projectTitle()) {
       <span> / </span>
       <input
         type="text"
@@ -17,11 +16,11 @@
         id="projektRename"
         autocomplete="off"
         [(ngModel)]="projectTitle"
-        #projektRename
-        (click)="projektRename.select()"
-        (keyup.enter)="projektRename.blur()"
+        #projectTitleId
+        (click)="projectTitleId.select()"
+        (keyup.enter)="projectTitleId.blur()"
+        (blur)="onBlurRenameIfEmpty()"
       />
-      }
     </h1>
   </div>
   <div class="kfw-info">
