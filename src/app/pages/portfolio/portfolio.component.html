@@ -3,6 +3,36 @@
   <h1 class="title">Portfolio</h1>
 </div>
 <div class="tables">
+  <h2>Fördermittel Neubau</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of this.neubauService.projectsNeubau()">
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.title }}
+          </td>
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.created_at }}
+          </td>
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.last_edited_at }}
+          </td>
+          <td>del</td>
+        </tr>
+        <tr class="new-item" (click)="createNewEinzelmassnahmen()">
+          <td colspan="4">+ New</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <h2>Fördermittel Einzelmaßnahmen</h2>
   <div class="wrapper-table">
     <table>

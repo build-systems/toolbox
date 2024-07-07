@@ -7,6 +7,8 @@ import tableEinfamilienhaeuser from './sanierung-einfamilienhaeuser.json';
 import { FormProjektSanierungService } from './form-projekt-sanierung/form-projekt-sanierung.service';
 import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-darlehen-sanierung.service';
 
+// Neubau and Sanierung are using RXJS instead of Signals
+// Sorry about the mess :)
 @Injectable({
   providedIn: 'root',
 })

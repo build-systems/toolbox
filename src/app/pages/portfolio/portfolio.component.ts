@@ -7,6 +7,11 @@ import { TitleComponent } from '../../title/title.component';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../shared/animations';
 import { DbEinzelmassnahmenService } from '../einzelmassnahmen/db-einzelmassnahmen.service';
+import { DbNeubauService } from '../neubau/db-neubau.service';
+import { NeubauService } from '../neubau/neubau.service';
+import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { FormProjektNeubauService } from '../neubau/form-projekt-neubau/form-projekt-neubau.service';
+import { DbNeubau } from '../neubau/db-neubau';
 
 @Component({
   selector: 'app-portfolio',
@@ -22,10 +27,13 @@ import { DbEinzelmassnahmenService } from '../einzelmassnahmen/db-einzelmassnahm
 export class PortfolioComponent {
   @HostBinding('@routeAnimations') routeAnimations = true;
   protected readonly supabaseService = inject(SupabaseService);
-  protected readonly einzelmassnahmenService = inject(EinzelmassnahmenService);
+  protected einzelmassnahmenService = inject(EinzelmassnahmenService);
   protected readonly dbEinzelmassnahmenService = inject(
     DbEinzelmassnahmenService
   );
+  protected neubauService = inject(NeubauService);
+  protected readonly dbNeubauService = inject(DbNeubauService);
+  protected neubauProjektFormService = inject(FormProjektNeubauService);
   private router = inject(Router);
 
   description =
@@ -37,11 +45,15 @@ export class PortfolioComponent {
     this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
       () => einzelmassnahmenProjects
     );
+
+    let neubauProjects = await this.dbNeubauService.getNeubauProjects();
+    // console.dir(neubauProjects);
+    this.neubauService.projectsNeubau.update(() => neubauProjects);
   }
 
   async loadEinzelmassnahmenProject(
     projectId: number,
-    einzelmassnahmenProject: WritableSignal<einzelmassnahmenOutputProject>
+    einzelmassnahmenProject: WritableSignal<EinzelmassnahmenOutputProject>
   ) {
     // Clean project signal (to avoid flashing)
     einzelmassnahmenProject.update(() => ({
@@ -60,7 +72,7 @@ export class PortfolioComponent {
       );
 
     // Get Project items
-    let outputItems: einzelmassnahmenOutputItem[] = [];
+    let outputItems: EinzelmassnahmenOutputItem[] = [];
     const itemsDb =
       await this.dbEinzelmassnahmenService.getEinzelmassnahmenItemsByProjectId(
         projectId
@@ -68,7 +80,7 @@ export class PortfolioComponent {
 
     // Create items list
     for (const itemDb of itemsDb) {
-      let newItem: einzelmassnahmenOutputItem = {
+      let newItem: EinzelmassnahmenOutputItem = {
         title: itemDb.title,
         id: itemDb.id,
         values: [],
@@ -82,7 +94,7 @@ export class PortfolioComponent {
       valuesDb.sort((a, b) => a.position - b.position);
 
       for (const valueDb of valuesDb) {
-        let newValue: einzelmassnahmenOutputValue = {
+        let newValue: EinzelmassnahmenOutputValue = {
           title: valueDb.title,
           id: valueDb.id,
           unit: valueDb.unit,
@@ -156,5 +168,42 @@ export class PortfolioComponent {
     // Increment maxNumber to get the next project title
     const newNumber = maxNumber + 1;
     return newNumber === 1 ? 'Untitled' : `Untitled (${newNumber})`;
+  }
+
+  async loadNeubauProject(projectId: number) {
+    // Redirect
+    this.router.navigateByUrl('/neubau');
+
+    // Get project to retrieve name
+    const projectDb: DbNeubau = (
+      await this.dbNeubauService.getNeubauProjectByProjectId(projectId)
+    )[0];
+
+    this.neubauService.projectTitle.set(projectDb.title);
+    // Update the form
+    this.neubauProjektFormService.projektFormNeu.patchValue({
+      eigeneKostenToggle: projectDb.eigene_kosten_disabled,
+      eigeneKostenRange: projectDb.eigene_kosten,
+      eigeneKosten: projectDb.eigene_kosten,
+      wohnflaecheRange: projectDb.wohnflaeche,
+      wohnflaeche: projectDb.wohnflaeche,
+      anzahlWohnungenRange: projectDb.anzahl_wohnungen,
+      anzahlWohnungen: projectDb.anzahl_wohnungen,
+      konstruktion: projectDb.konstruktion,
+      energiestandard: projectDb.energiestandard,
+      zertifizierung: projectDb.zertifizierung,
+      // Details
+      kellergeschossIn: projectDb.kellergeschoss_in,
+      stellplaetzeIn: projectDb.stellplaetze_in,
+      aufzugsanlageIn: projectDb.aufzugsanlage_in,
+      barrierefreiheitIn: projectDb.barrierefreiheit_in,
+      dachbegruenungIn: projectDb.dachbegruenung_in,
+      baustellenlogistikIn: projectDb.baustellenlogistik_in,
+      aussenanlagenIn: projectDb.aussenanlagen_in,
+      grundstuecksbezogeneKostenRange: projectDb.grundstuecksbezogene_kosten,
+      grundstuecksbezogeneKosten: projectDb.grundstuecksbezogene_kosten,
+      baunebenkostenOhneFinRange: projectDb.baunebenkosten_ohne_fin_in,
+      baunebenkostenOhneFin: projectDb.baunebenkosten_ohne_fin_in,
+    });
   }
 }

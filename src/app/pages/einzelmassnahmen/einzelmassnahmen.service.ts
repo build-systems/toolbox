@@ -578,13 +578,13 @@ export class EinzelmassnahmenService {
     return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
   }
 
-  einzelmassnahmenOutputItem: einzelmassnahmenOutputItem = {
+  einzelmassnahmenOutputItem: EinzelmassnahmenOutputItem = {
     title: undefined,
     id: undefined,
     values: [],
   };
 
-  einzelmassnahmenOutputProject = signal<einzelmassnahmenOutputProject>({
+  einzelmassnahmenOutputProject = signal<EinzelmassnahmenOutputProject>({
     title: 'Untitled',
     id: undefined,
     items: [],
@@ -593,15 +593,15 @@ export class EinzelmassnahmenService {
   totalKosten = signal<number>(0);
 
   addOutputItemToProject(
-    newItem: einzelmassnahmenOutputItem,
-    project: WritableSignal<einzelmassnahmenOutputProject>
+    newItem: EinzelmassnahmenOutputItem,
+    project: WritableSignal<EinzelmassnahmenOutputProject>
   ) {
     if (newItem.title != undefined) {
       project.update((old) => ({ ...old, items: [...old.items, newItem] }));
     }
   }
 
-  findValueByTitle(obj: einzelmassnahmenOutputItem, title: OutputTitle): any {
+  findValueByTitle(obj: EinzelmassnahmenOutputItem, title: OutputTitle): any {
     if (obj.values && Array.isArray(obj.values)) {
       for (const item of obj.values) {
         if (item.title === title) {
@@ -615,7 +615,7 @@ export class EinzelmassnahmenService {
   switchBauteil(
     bauteilSelected: string,
     dachSelected: Dach
-  ): einzelmassnahmenOutputItem {
+  ): EinzelmassnahmenOutputItem {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {

@@ -5,6 +5,8 @@ import { neubau } from '../../shared/constants';
 import { FormProjektNeubauService } from './form-projekt-neubau/form-projekt-neubau.service';
 import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-neubau.service';
 
+// Neubau and Sanierung are using RXJS instead of Signals
+// Sorry about the mess :)
 @Injectable({
   providedIn: 'root',
 })
@@ -12,6 +14,8 @@ export class NeubauService {
   // Neubau active form tab
   public currentTab = signal(1);
   public projectTitle = signal('Untitled');
+
+  projectsNeubau = signal<any[]>([]);
 
   // Initial project parameters
   eigeneKostenDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
@@ -694,6 +698,7 @@ export class NeubauService {
     this.outputNeubauSource.next(
       (this.outputNeubau = {
         title: this.projectTitle(),
+        id: undefined,
         // Projekt
         eigeneKostenDisabled: this.eigeneKostenDisabled,
         eigeneKosten: this.eigeneKosten,

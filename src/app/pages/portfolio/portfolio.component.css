@@ -1,11 +1,11 @@
 .tables {
+  display: flex;
+  flex-direction: column;
   margin-right: var(--layout-padding);
   margin-left: var(--layout-padding);
 }
 
 .wrapper-table {
-  height: 100%;
-  flex: 1;
   gap: calc(var(--layout-padding) / 2);
   background-color: var(--bg-secondary);
   border-radius: var(--button-radius);
@@ -78,5 +78,11 @@ th {
 }
 
 .new-item td {
+  background-color: var(--bg-secondary);
   color: var(--primary50);
+  border: none;
+}
+
+.new-item:hover td {
+  background-color: var(--bg-tertiary);
 }

@@ -1,5 +1,6 @@
 export interface NeubauProjekt {
   title: string;
+  id: number | undefined;
   // Projekt
   eigeneKostenDisabled: boolean;
   eigeneKosten: number;

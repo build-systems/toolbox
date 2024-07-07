@@ -1,29 +1,26 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from '../../auth/supabase.service';
+import { NeubauProjekt } from '../../shared/neubauprojekt';
 
-export const PROJECTS_TABLE = 'einzelmassnahmen_projects';
-export const ITEMS_TABLE = 'einzelmassnahmen_items';
-export const VALUES_TABLE = 'einzelmassnahmen_values';
-export const USER_PROJECTS_TABLE = 'user_einzelmassnahmen_projects';
-export const CREATE_PROJECT_FUNCTION =
-  'create_einzelmassnahmen_project_with_items_and_values';
-export const UPDATE_PROJECT_FUNCTION =
-  'update_einzelmassnahmen_project_items_and_values';
+export const PROJECTS_TABLE = 'neubau_projects';
+export const USER_PROJECTS_TABLE = 'user_neubau_projects';
+export const CREATE_PROJECT_FUNCTION = 'insert_neubau_project';
+export const UPDATE_PROJECT_FUNCTION = 'update_neubau_project';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DbEinzelmassnahmenService {
+export class DbNeubauService {
   private supabaseService = inject(SupabaseService);
 
-  async getEinzelmassnahmenProjects() {
+  async getNeubauProjects() {
     const projects = await this.supabaseService.supabase
       .from(USER_PROJECTS_TABLE)
       .select('projects:project_id(*)');
     return projects.data || [];
   }
 
-  async getEinzelmassnahmenProjectByProjectId(projectId: number) {
+  async getNeubauProjectByProjectId(projectId: number) {
     const { data, error } = await this.supabaseService.supabase
       .from(PROJECTS_TABLE)
       .select('*')
@@ -34,7 +31,7 @@ export class DbEinzelmassnahmenService {
     return data;
   }
 
-  async getEinzelmassnahmenProjectByProjectTitle(projectName: string) {
+  async getNeubauProjectByProjectTitle(projectName: string) {
     const { data, error } = await this.supabaseService.supabase
       .from(PROJECTS_TABLE)
       .select('*')
@@ -48,37 +45,12 @@ export class DbEinzelmassnahmenService {
     return data;
   }
 
-  async getEinzelmassnahmenItemsByProjectId(projectId: number) {
-    const { data, error } = await this.supabaseService.supabase
-      .from(ITEMS_TABLE)
-      .select('*')
-      .eq('project_id', projectId);
-    if (error) {
-      throw error;
-    }
-    return data;
-  }
-
-  async getEinzelmassnahmenValuesByItemId(itemId: number) {
-    const { data, error } = await this.supabaseService.supabase
-      .from(VALUES_TABLE)
-      .select('*')
-      .eq('item_id', itemId);
-    if (error) {
-      throw error;
-    }
-    return data;
-  }
-
-  async createEinzelmassnahmenProject(
-    projectData: EinzelmassnahmenOutputProject
-  ) {
+  async createNeubauProject(projectData: NeubauProjekt) {
     try {
       const { data, error } = await this.supabaseService.supabase.rpc(
         CREATE_PROJECT_FUNCTION,
         {
-          project_data: { title: projectData.title },
-          items_data: projectData.items,
+          project_data: projectData,
         }
       );
 
@@ -91,7 +63,7 @@ export class DbEinzelmassnahmenService {
     }
   }
 
-  async deleteEinzelmassnahmenProjectByProjectId(projectId: number) {
+  async deleteNeubauProjectByProjectId(projectId: number) {
     const response = await this.supabaseService.supabase
       .from(PROJECTS_TABLE)
       .delete()
@@ -100,10 +72,7 @@ export class DbEinzelmassnahmenService {
     return response;
   }
 
-  async updateEinzelmassnahmenProject(
-    projectData: EinzelmassnahmenOutputProject
-  ) {
-    console.log('updateEinzelmassnahmenProject: ', projectData);
+  async updateNeubauProject(projectData: NeubauProjekt) {
     try {
       const { data, error } = await this.supabaseService.supabase.rpc(
         UPDATE_PROJECT_FUNCTION,
@@ -122,7 +91,7 @@ export class DbEinzelmassnahmenService {
     }
   }
 
-  async updateEinzelmassnahmenTitle(projectTitle: string, projectId: number) {
+  async updateNeubauTitle(projectTitle: string, projectId: number) {
     const { error } = await this.supabaseService.supabase
       .from(PROJECTS_TABLE)
       .update({ title: projectTitle })

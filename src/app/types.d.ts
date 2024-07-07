@@ -223,7 +223,7 @@ type OutputTitle =
   | 'Sowieso-Kosten'
   | 'Energetisch Kosten';
 
-type einzelmassnahmenOutputValue = {
+type EinzelmassnahmenOutputValue = {
   title: OutputTitle;
   id: number | undefined;
   description?: string;
@@ -231,15 +231,15 @@ type einzelmassnahmenOutputValue = {
   value: number;
 };
 
-type einzelmassnahmenOutputItem = {
+type EinzelmassnahmenOutputItem = {
   title: BauteilText | undefined;
   id: number | undefined;
   description?: string;
-  values: einzelmassnahmenOutputValue[];
+  values: EinzelmassnahmenOutputValue[];
 };
 
-type einzelmassnahmenOutputProject = {
+type EinzelmassnahmenOutputProject = {
   title: string;
   id: number | undefined;
-  items: einzelmassnahmenOutputItem[];
+  items: EinzelmassnahmenOutputItem[];
 };
