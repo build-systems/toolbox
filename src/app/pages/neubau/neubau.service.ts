@@ -764,49 +764,4 @@ export class NeubauService {
       })
     );
   }
-
-  // Reset was created to make sure the outputs match the form values
-  // After doing some changes, going to another route, and then coming back,
-  // the outputs in the services were the same while the forms had reset to default values.
-  // Another solution would be to restore the previous values in the forms. But that would require more work.
-  // The main problem is that the forms are being reused across different projects/routes
-  // So it would require either separating the forms, or identifying the current route in each form
-  // to then assign the form values from the service(neubau / sanierung).
-  public reset() {
-    // Project parameters
-    this.wohnflaeche = this.formProjektService.wohnflaeche.value;
-    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
-    this.energiestandard =
-      this.formProjektService.energiestandard.options[0].value;
-    this.konstruktion = this.formProjektService.konstruktion.options[0].value;
-    this.zertifizierung =
-      this.formProjektService.zertifizierung.options[0].value;
-
-    // Neubau form parameters
-    this.kellergeschossIn =
-      this.formProjektService.kellergeschoss.options[0].value;
-    this.stellplaetzeIn = this.formProjektService.stellplaetze.options[0].value;
-    this.aufzugsanlageIn =
-      this.formProjektService.aufzugsanlage.options[0].value;
-    this.barrierefreiheitIn =
-      this.formProjektService.barrierefreiheit.options[0].value;
-    this.dachbegruenungIn =
-      this.formProjektService.dachbegruenung.options[0].value;
-    this.baustellenlogistikIn =
-      this.formProjektService.baustellenlogistik.options[0].value;
-    this.aussenanlagenIn =
-      this.formProjektService.aussenanlagen.options[0].value;
-    this.grundstuecksbezogeneKosten =
-      this.formProjektService.grundstKosten.value;
-    this.baunebenkostenOhneFinIn =
-      this.formProjektService.baunebenkostenOhneFin.value;
-
-    // Darlehen parameters
-    this.zinssatzBank = this.formDarlehenService.zinssatzBank.value;
-    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
-    this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
-    this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;
-
-    this.update();
-  }
 }
