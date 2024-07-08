@@ -59,12 +59,12 @@ export class ChartAnnuitaetenNeubauComponent {
             if (i === this.kreditlaufzeit - 1) {
               this.annuitaeten[i] =
                 this.annuitaeten[i] +
-                projekt.efKfW / this.kreditlaufzeit +
+                projekt.efKfw / this.kreditlaufzeit +
                 projekt.kfwKredit;
               // Otherwise add just Annuität
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efKfw / this.kreditlaufzeit;
             }
           }
         }

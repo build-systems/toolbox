@@ -723,7 +723,7 @@ describe('SanierungService', () => {
   });
 
   it('should update Finanzierungskosten-KfW = 20000 if KfW Darlehen is Annuitäten, Annuitaet-KfW is 10000 kreditlaufzeit is 10, KfW-Kredit is 100000, EF-KfW is 10000', () => {
-    const kfWDarlehen: KfWDarlehen = 'Annuitäten';
+    const kfWDarlehen: KfwDarlehen = 'Annuitäten';
     const annuitaetKfW = 10000;
     const kreditlaufzeit = 10;
     const kfwKredit = 80000;
@@ -739,7 +739,7 @@ describe('SanierungService', () => {
   });
 
   it('should update Finanzierungskosten-KfW = 10000 if KfW Darlehen is Endfälliges, Annuitaet-KfW is 10000 kreditlaufzeit is 10, KfW-Kredit is 100000, EF-KfW is 10000', () => {
-    const kfWDarlehen: KfWDarlehen = 'Endfälliges';
+    const kfWDarlehen: KfwDarlehen = 'Endfälliges';
     const annuitaetKfW = 10000;
     const kreditlaufzeit = 10;
     const kfwKredit = 80000;
@@ -765,7 +765,7 @@ describe('SanierungService', () => {
   });
 
   it('should update Finanzierungskosten-Bank = 20000 if bank Darlehen is Annuitäten, Annuitaet is 10000 kreditlaufzeit is 10, bank-Kredit is 100000, EF-KfW is 10000', () => {
-    const bankDarlehen: KfWDarlehen = 'Annuitäten';
+    const bankDarlehen: KfwDarlehen = 'Annuitäten';
     const annuitaetBank = 10000;
     const kreditlaufzeit = 10;
     const bankKredit = 80000;
@@ -781,7 +781,7 @@ describe('SanierungService', () => {
   });
 
   it('should update Finanzierungskosten-Bank = 10000 if bank Darlehen is Endfälliges, Annuitaet is 8000 kreditlaufzeit is 10, bank-Kredit is 100000, EF-KfW is 10000', () => {
-    const bankDarlehen: KfWDarlehen = 'Endfälliges';
+    const bankDarlehen: KfwDarlehen = 'Endfälliges';
     const annuitaetBank = 8000;
     const kreditlaufzeit = 10;
     const bankKredit = 80000;
@@ -809,10 +809,7 @@ describe('SanierungService', () => {
   it('should update Investitionskosten = 600000 € if Wohnflaeche is 200 m² and gestehungskosten is 3000 €/m²', () => {
     const wohnflaeche = 200;
     const gestehungskosten = 3000;
-    const result = service.updateBaukosten(
-      wohnflaeche,
-      gestehungskosten
-    );
+    const result = service.updateBaukosten(wohnflaeche, gestehungskosten);
     expect(result).toBe(600000);
   });
 
@@ -886,7 +883,11 @@ describe('SanierungService', () => {
     const bankDarlehen: BankDarlehen = 'Annuitäten';
     const gbEndfaelliges = 280000;
     const gbAnnuitaet = 160000;
-    const result = service.updatefinKostenOhneKfw(bankDarlehen, gbEndfaelliges, gbAnnuitaet);
+    const result = service.updatefinKostenOhneKfw(
+      bankDarlehen,
+      gbEndfaelliges,
+      gbAnnuitaet
+    );
     expect(result).toBe(160000);
   });
 
@@ -894,7 +895,11 @@ describe('SanierungService', () => {
     const bankDarlehen: BankDarlehen = 'Endfälliges';
     const gbEndfaelliges = 280000;
     const gbAnnuitaet = 160000;
-    const result = service.updatefinKostenOhneKfw(bankDarlehen, gbEndfaelliges, gbAnnuitaet);
+    const result = service.updatefinKostenOhneKfw(
+      bankDarlehen,
+      gbEndfaelliges,
+      gbAnnuitaet
+    );
     expect(result).toBe(280000);
   });
 

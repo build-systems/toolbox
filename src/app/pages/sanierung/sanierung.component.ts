@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, effect, HostBinding, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SanierungService } from './sanierung.service';
 import { FormProjektSanierungComponent } from './form-projekt-sanierung/form-projekt-sanierung.component';
@@ -10,6 +10,11 @@ import { NumbersDarlehenSanierungComponent } from './numbers-darlehen-sanierung/
 import { TitleComponent } from '../../title/title.component';
 import { fadeInAnimation } from '../../shared/animations';
 import { HelpComponent } from '../../help/help.component';
+import { DbSanierungService } from './db-sanierung.service';
+import { MatDialog } from '@angular/material/dialog';
+import { debounceTime, firstValueFrom, take } from 'rxjs';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { DbSanierung } from './db-sanierung';
 
 @Component({
   selector: 'app-sanierung',
@@ -37,6 +42,9 @@ export class SanierungComponent {
   // ATTENTION: the page is composed of multiple components, each one has a service.
   // for example, FormProjektComponent.ts has the form-projekt.service.ts
   // This top component has types at sanierungprojekt.ts
+  protected sanierungService = inject(SanierungService);
+  private dbSanierungService = inject(DbSanierungService);
+  private dialog = inject(MatDialog);
 
   // Information for the title
   title = 'Fördermittel Komplettsanierung';
@@ -51,7 +59,94 @@ export class SanierungComponent {
     el.scrollIntoView();
   }
 
-  constructor(public sanierungService: SanierungService) {
-    // Service is used to check the current tab (Projekt or Darlehen).
+  async saveProject() {
+    try {
+      this.sanierungService.currentOutputSanierung$
+        .pipe(take(1))
+        .subscribe(async (value) => {
+          console.dir(value);
+          const projectDb: DbSanierung = (
+            await this.dbSanierungService.getSanierungProjectByProjectTitle(
+              value.title
+            )
+          )[0];
+          if (projectDb && this.sanierungService.projectId()) {
+            try {
+              await this.dbSanierungService.updateSanierungProject(value);
+            } catch (error) {
+              console.error('Error updating project:', error);
+            }
+          } else if (projectDb && !this.sanierungService.projectId()) {
+            // Prompt user if we should overwrite
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              data: {
+                title: 'Overwrite existing project?',
+                message: `You already have a project with title ${value.title}.`,
+              },
+            });
+            const result = await firstValueFrom(dialogRef.afterClosed());
+            if (result) {
+              await this.dbSanierungService.deleteSanierungProjectByProjectId(
+                projectDb.id
+              );
+              this.dbSanierungService.createSanierungProject(value);
+            } else {
+              return;
+            }
+          } else {
+            try {
+              this.dbSanierungService.createSanierungProject(value);
+            } catch (error) {
+              console.error('Error creating project:', error);
+            }
+          }
+        });
+    } catch (error) {
+      console.error('Error saving project:', error);
+      // Handle error (e.g., show an error message)
+    }
+  }
+
+  oldTitle = 'Untitled';
+  projectId: number | undefined;
+
+  constructor() {
+    // Debounce is a custom function to delay the signal delivery, see more here:
+    // https://stackoverflow.com/questions/76597307/angular-signals-debounce-in-effect
+    effect(
+      () => {
+        console.log(
+          'this.sanierungService.debouncedProjectTitle() ',
+          this.sanierungService.debouncedProjectTitle()
+        );
+        console.log('this.oldTitle: ', this.oldTitle);
+
+        if (
+          this.sanierungService.debouncedProjectTitle() != this.oldTitle &&
+          this.sanierungService.projectId()
+        ) {
+          this.dbSanierungService.updateSanierungTitle(
+            this.sanierungService.debouncedProjectTitle(),
+            this.sanierungService.projectId()!
+          );
+
+          const currentData = this.sanierungService.outputSanierung;
+          this.sanierungService.outputSanierungSource.next({
+            ...currentData,
+            title: this.sanierungService.debouncedProjectTitle(),
+          });
+        }
+      },
+      { allowSignalWrites: true }
+    );
+
+    this.sanierungService.currentOutputSanierung$
+      .pipe(
+        debounceTime(600) // Wait for 1000ms pause in events
+      )
+      .subscribe((value) => {
+        this.oldTitle = value.title;
+        this.projectId = value.id;
+      });
   }
 }

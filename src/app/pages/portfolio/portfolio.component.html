@@ -35,6 +35,38 @@
       </tbody>
     </table>
   </div>
+  <h2>Fördermittel Komplettsanierung</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of this.sanierungService.projectsSanierung()">
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.title }}
+          </td>
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.created_at }}
+          </td>
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.last_edited_at }}
+          </td>
+          <td (click)="deleteSanierungProjectByProjectId(project.projects.id)">
+            del
+          </td>
+        </tr>
+        <tr class="new-item" (click)="createNewSanierungProject()">
+          <td colspan="4">+ New</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <h2>Fördermittel Einzelmaßnahmen</h2>
   <div class="wrapper-table">
     <table>

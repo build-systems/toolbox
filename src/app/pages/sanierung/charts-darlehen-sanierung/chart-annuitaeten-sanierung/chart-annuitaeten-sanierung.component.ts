@@ -56,22 +56,22 @@ export class ChartAnnuitaetenSanierungComponent {
         // Monthly KfW-Darlehen
         this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
         // KfW-Darlehen
-        if (projekt.kfWDarlehen === 'Annuitäten') {
+        if (projekt.kfwDarlehen === 'Annuitäten') {
           this.annuitaeten = this.annuitaeten.map(
-            (num) => num + projekt.annuitaetKfW
+            (num) => num + projekt.annuitaetKfw
           );
-        } else if (projekt.kfWDarlehen === 'Endfälliges') {
+        } else if (projekt.kfwDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             // If it is the last installment, add Annuität and KfW-Kredit
             if (i === this.kreditlaufzeit - 1) {
               this.annuitaeten[i] =
                 this.annuitaeten[i] +
-                projekt.efKfW / this.kreditlaufzeit +
+                projekt.efKfw / this.kreditlaufzeit +
                 projekt.kfwKredit;
               // Otherwise add just Annuität
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efKfw / this.kreditlaufzeit;
             }
           }
         }

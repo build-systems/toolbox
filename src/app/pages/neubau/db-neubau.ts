@@ -24,7 +24,7 @@ export interface DbNeubau {
   baunebenkosten_ohne_fin_in: number;
   zinssatz_bank: number;
   kreditlaufzeit: number;
-  kfw_darlehen: KfWDarlehen;
+  kfw_darlehen: KfwDarlehen;
   bank_darlehen: BankDarlehen;
   kellergeschoss_out: number;
   stellplaetze_out: number;

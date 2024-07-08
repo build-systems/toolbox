@@ -1,7 +1,7 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
-    [(projectTitle)]="sanierungService.projektName"
+    [(projectTitle)]="sanierungService.projectTitle"
     [kfwId]="kfwId"
     [h2]="kfwH2"
     [h3]="kfwH3"
@@ -56,6 +56,7 @@
       <app-numbers-projekt-sanierung></app-numbers-projekt-sanierung>
     </div>
     <app-charts-projekt-sanierung></app-charts-projekt-sanierung>
+    <button class="button" (click)="saveProject()">Save</button>
   </div>
   } @else {
   <div class="output">
@@ -63,6 +64,7 @@
       <app-numbers-darlehen-sanierung></app-numbers-darlehen-sanierung>
     </div>
     <app-charts-darlehen-sanierung></app-charts-darlehen-sanierung>
+    <button class="button" (click)="saveProject()">Save</button>
   </div>
   }
 </div>

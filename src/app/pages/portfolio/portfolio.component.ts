@@ -14,6 +14,11 @@ import { FormProjektNeubauService } from '../neubau/form-projekt-neubau/form-pro
 import { DbNeubau } from '../neubau/db-neubau';
 import { FormDarlehenNeubauService } from '../neubau/form-darlehen-neubau/form-darlehen-neubau.service';
 import { take } from 'rxjs';
+import { SanierungService } from '../sanierung/sanierung.service';
+import { DbSanierungService } from '../sanierung/db-sanierung.service';
+import { FormProjektSanierungService } from '../sanierung/form-projekt-sanierung/form-projekt-sanierung.service';
+import { FormDarlehenSanierungService } from '../sanierung/form-darlehen-sanierung/form-darlehen-sanierung.service';
+import { DbSanierung } from '../sanierung/db-sanierung';
 
 @Component({
   selector: 'app-portfolio',
@@ -37,6 +42,10 @@ export class PortfolioComponent {
   protected readonly dbNeubauService = inject(DbNeubauService);
   protected neubauProjektFormService = inject(FormProjektNeubauService);
   protected neubauDarlehenFormService = inject(FormDarlehenNeubauService);
+  protected sanierungService = inject(SanierungService);
+  protected readonly dbSanierungService = inject(DbSanierungService);
+  protected sanierungProjektFormService = inject(FormProjektSanierungService);
+  protected sanierungDarlehenFormService = inject(FormDarlehenSanierungService);
   private router = inject(Router);
 
   description =
@@ -52,6 +61,11 @@ export class PortfolioComponent {
     let neubauProjects = await this.dbNeubauService.getNeubauProjects();
     // console.dir(neubauProjects);
     this.neubauService.projectsNeubau.update(() => neubauProjects);
+
+    let sanierungProjects =
+      await this.dbSanierungService.getSanierungProjects();
+    // console.dir(neubauProjects);
+    this.sanierungService.projectsSanierung.update(() => sanierungProjects);
   }
 
   async loadEinzelmassnahmenProject(
@@ -184,6 +198,12 @@ export class PortfolioComponent {
 
     this.neubauService.projectTitle.set(projectDb.title);
     this.neubauService.projectId.set(projectDb.id);
+    const currentData = this.neubauService.outputNeubau;
+    this.neubauService.outputNeubauSource.next({
+      ...currentData,
+      id: projectDb.id,
+      title: projectDb.title,
+    });
     // Update the form
     this.neubauProjektFormService.projektFormNeu.patchValue({
       eigeneKostenToggle: projectDb.eigene_kosten_disabled,
@@ -289,6 +309,114 @@ export class PortfolioComponent {
         // Update the signal
         let neubauProjects = await this.dbNeubauService.getNeubauProjects();
         this.neubauService.projectsNeubau.update(() => neubauProjects);
+      });
+  }
+
+  async loadSanierungProject(projectId: number) {
+    // Redirect
+    this.router.navigateByUrl('/sanierung');
+
+    // Get project to retrieve name
+    const projectDb: DbSanierung = (
+      await this.dbSanierungService.getSanierungProjectByProjectId(projectId)
+    )[0];
+
+    console.log(projectDb);
+
+    this.sanierungService.projectTitle.set(projectDb.title);
+    this.sanierungService.projectId.set(projectDb.id);
+    const currentData = this.sanierungService.outputSanierung;
+    this.sanierungService.outputSanierungSource.next({
+      ...currentData,
+      id: projectDb.id,
+      title: projectDb.title,
+    });
+    // Update the form
+    this.sanierungProjektFormService.projektForm.patchValue({
+      projektType: projectDb.projekt_type,
+      eigeneKostenToggle: !projectDb.user_price_disabled, // this type should match neubau this looks horrible
+      eigeneKostenRange: projectDb.user_price, // this type should match neubau
+      eigeneKosten: projectDb.user_price,
+      wohnflaecheRange: projectDb.wohnflaeche,
+      wohnflaeche: projectDb.wohnflaeche,
+      anzahlWohnungenRange: projectDb.anzahl_wohnungen,
+      anzahlWohnungen: projectDb.anzahl_wohnungen,
+      energiestandard: projectDb.energiestandard,
+      // Details
+      umfangModernisierung: projectDb.umfang_modernisierung!,
+      worstPerformingBuilding: projectDb.worst_performing_building,
+      foerderbonus: projectDb.foerderbonus,
+      serielleSanierung: projectDb.serielle_sanierung,
+    });
+    this.neubauDarlehenFormService.darlehenForm.patchValue({
+      zinssatzBankRange: projectDb.zinssatz_bank,
+      zinssatzBank: projectDb.zinssatz_bank.toFixed(2),
+      kreditlaufzeitRange: projectDb.kreditlaufzeit,
+      kreditlaufzeit: projectDb.kreditlaufzeit,
+      kfWDarlehen: projectDb.kfw_darlehen,
+      bankDarlehen: projectDb.kfw_darlehen,
+    });
+  }
+
+  async deleteSanierungProjectByProjectId(projectId: number) {
+    await this.dbSanierungService.deleteSanierungProjectByProjectId(projectId);
+    // Update the signal
+    let sanierungProjects =
+      await this.dbSanierungService.getSanierungProjects();
+    this.sanierungService.projectsSanierung.update(() => sanierungProjects);
+  }
+
+  async createNewSanierungProject() {
+    const newProjectTitle = this.getNewProjectTitle(
+      this.sanierungService.projectsSanierung()
+    );
+    this.sanierungService.projectTitle.set(newProjectTitle);
+    // Update the form with initial values (referencing service for form project and darlehen)
+    this.sanierungProjektFormService.projektForm.patchValue({
+      projektType:
+        this.sanierungProjektFormService.projektType.options[0].value,
+      eigeneKostenToggle: false,
+      eigeneKostenRange: this.sanierungProjektFormService.eigeneKosten.value,
+      eigeneKosten: this.sanierungProjektFormService.eigeneKosten.value,
+      wohnflaecheRange: this.sanierungProjektFormService.wohnflaeche.value,
+      wohnflaeche: this.sanierungProjektFormService.wohnflaeche.value,
+      anzahlWohnungenRange:
+        this.sanierungProjektFormService.anzahlWohnungen.value,
+      anzahlWohnungen: this.sanierungProjektFormService.anzahlWohnungen.value,
+      umfangModernisierung:
+        this.sanierungProjektFormService.umfangModernisierung.options[0].value,
+      energiestandard:
+        this.sanierungProjektFormService.energiestandard.options[0].value,
+      worstPerformingBuilding:
+        this.sanierungProjektFormService.worstPerformingBuilding.value,
+      foerderbonus:
+        this.sanierungProjektFormService.foerderbonus.options[0].value,
+      serielleSanierung:
+        this.sanierungProjektFormService.serielleSanierung.value,
+    });
+    this.sanierungDarlehenFormService.darlehenForm.patchValue({
+      zinssatzBankRange: this.sanierungDarlehenFormService.zinssatzBank.value,
+      zinssatzBank:
+        this.sanierungDarlehenFormService.zinssatzBank.value.toFixed(2),
+      kreditlaufzeitRange:
+        this.sanierungDarlehenFormService.kreditlaufzeit.value,
+      kreditlaufzeit: this.sanierungDarlehenFormService.kreditlaufzeit.value,
+      kfWDarlehen:
+        this.sanierungDarlehenFormService.kfWDarlehen.options[0]['value'],
+      bankDarlehen:
+        this.sanierungDarlehenFormService.bankDarlehen.options[0]['value'],
+    });
+
+    // After updating the form values, insert the project to the database
+    this.sanierungService.currentOutputSanierung$
+      .pipe(take(1))
+      .subscribe(async (value) => {
+        await this.dbSanierungService.createSanierungProject(value);
+        // Update the signal
+        let sanierungProjects =
+          await this.dbSanierungService.getSanierungProjects();
+        console.log(sanierungProjects);
+        this.sanierungService.projectsSanierung.update(() => sanierungProjects);
       });
   }
 }

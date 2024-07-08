@@ -33,7 +33,7 @@ export interface NeubauProjekt {
   // Dalehen
   zinssatzBank: number;
   kreditlaufzeit: number;
-  kfWDarlehen: KfWDarlehen;
+  kfWDarlehen: KfwDarlehen;
   bankDarlehen: BankDarlehen;
   // Output
   gestehungskosten: number;
@@ -48,7 +48,7 @@ export interface NeubauProjekt {
   afBank: number;
   annuitaetKfW: number;
   annuitaetBank: number;
-  efKfW: number;
+  efKfw: number;
   efBank: number;
   gbAnnuitaet: number;
   gbEndfaelliges: number;

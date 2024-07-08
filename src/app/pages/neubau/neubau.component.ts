@@ -64,45 +64,50 @@ export class NeubauComponent {
       this.neubauService.currentOutputNeubau$
         .pipe(take(1))
         .subscribe(async (value) => {
+          console.dir(value);
           const projectDb: DbNeubau = (
             await this.dbNeubauService.getNeubauProjectByProjectTitle(
               value.title
             )
           )[0];
-          if (projectDb && this.neubauService.projectId()) {
+          // If observable does have id, it means the project wasnt loaded aka is new
+          if (projectDb && value.id) {
             try {
               await this.dbNeubauService.updateNeubauProject(value);
             } catch (error) {
               console.error('Error updating project:', error);
             }
-          } else if (projectDb && !this.neubauService.projectId()) {
-            // Prompt user if we should overwrite
-            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-              data: {
-                title: 'Overwrite existing project?',
-                message: `You already have a project with title ${value.title}.`,
-              },
-            });
-            const result = await firstValueFrom(dialogRef.afterClosed());
-            if (result) {
-              await this.dbNeubauService.deleteNeubauProjectByProjectId(
-                projectDb.id
-              );
-              this.dbNeubauService.createNeubauProject(value);
-            } else {
-              return;
+          } else if (projectDb && !value.id) {
+            try {
+              // Prompt user if we should overwrite
+              const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                  title: 'Overwrite existing project?',
+                  message: `You already have a project with title ${value.title}.`,
+                },
+              });
+              const result = await firstValueFrom(dialogRef.afterClosed());
+              if (result) {
+                await this.dbNeubauService.deleteNeubauProjectByProjectId(
+                  projectDb.id
+                );
+                this.dbNeubauService.createNeubauProject(value);
+              } else {
+                return;
+              }
+            } catch (error) {
+              console.error('Error overwriting project:', error);
             }
           } else {
             try {
-              this.dbNeubauService.createNeubauProject(value);
+              await this.dbNeubauService.createNeubauProject(value);
             } catch (error) {
               console.error('Error creating project:', error);
             }
           }
         });
     } catch (error) {
-      console.error('Error saving project:', error);
-      // Handle error (e.g., show an error message)
+      console.error('Error on saveProject() function:', error);
     }
   }
 
@@ -141,7 +146,7 @@ export class NeubauComponent {
 
     this.neubauService.currentOutputNeubau$
       .pipe(
-        debounceTime(1000) // Wait for 1000ms pause in events
+        debounceTime(600) // Wait for 1000ms pause in events
       )
       .subscribe((value) => {
         this.oldTitle = value.title;

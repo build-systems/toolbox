@@ -113,9 +113,9 @@ type AussenanlagenObj = OptionObj<Aussenanlagen>;
 
 // Darlehen
 // KfW Darlehen
-type KfWDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
-type KfWDarlehenOption = Option<KfWDarlehen>;
-type KfWDarlehenObj = OptionObj<KfWDarlehen>;
+type KfwDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
+type KfWDarlehenOption = Option<KfwDarlehen>;
+type KfWDarlehenObj = OptionObj<KfwDarlehen>;
 
 // Bank Darlehen
 type BankDarlehen = 'Annuitäten' | 'Endfälliges';

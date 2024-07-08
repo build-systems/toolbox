@@ -18,10 +18,9 @@ export class NeubauService {
   public projectTitle = signal('Untitled');
   public debouncedProjectTitle = this.sharedService.debouncedSignal(
     this.projectTitle,
-    1000
+    600
   );
   public projectId = signal<number | undefined>(undefined);
-
   projectsNeubau = signal<any[]>([]);
 
   // Initial project parameters
@@ -59,7 +58,7 @@ export class NeubauService {
   // Darlehen parameters
   zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conversion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
-  kfWDarlehen: KfWDarlehen =
+  kfWDarlehen: KfwDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
   bankDarlehen: BankDarlehen =
     this.formDarlehenService.bankDarlehen.options[0].value;
@@ -271,7 +270,7 @@ export class NeubauService {
 
   // KfW Zinssatz (Sollzins) old Sollzins KFW [%]
   private _zinssatzKfw = 0;
-  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
+  updateZinssatzKfw(kfWDarlehen: KfwDarlehen, nrKredit: number): number {
     if (kfWDarlehen === 'Endfälliges') {
       return this.constants.zinssatzKfw_Endfälliges;
     } else if (kfWDarlehen === 'Annuitäten') {
@@ -433,7 +432,7 @@ export class NeubauService {
   // Finanzierungskosten (KfW) [€]
   private _finanzierungskostenKfw = 0;
   updateFinanzierungskostenKfw(
-    kfWDarlehen: KfWDarlehen,
+    kfWDarlehen: KfwDarlehen,
     annuitaetKfW: number,
     kreditlaufzeit: number,
     kfwKredit: number,
@@ -710,7 +709,7 @@ export class NeubauService {
     this.outputNeubauSource.next(
       (this.outputNeubau = {
         title: this.projectTitle(),
-        id: undefined,
+        id: this.projectId(),
         // Projekt
         eigeneKostenDisabled: this.eigeneKostenDisabled,
         eigeneKosten: this.eigeneKosten,
@@ -761,7 +760,7 @@ export class NeubauService {
         afBank: this._afBank,
         annuitaetKfW: this._annuitaetKfW,
         annuitaetBank: this._annuitaetBank,
-        efKfW: this._efKfW,
+        efKfw: this._efKfW,
         efBank: this._efBank,
         gbAnnuitaet: this._gbAnnuitaet,
         gbEndfaelliges: this._gbEndfaelliges,

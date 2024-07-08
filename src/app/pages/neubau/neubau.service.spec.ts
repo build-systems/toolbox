@@ -340,21 +340,21 @@ describe('NeubauService', () => {
   });
 
   it('should update Sollzins-KfW to Endfälliges constant when Endfälliges is selected', () => {
-    const kfWDarlehen: KfWDarlehen = 'Endfälliges';
+    const kfWDarlehen: KfwDarlehen = 'Endfälliges';
     const nrKredit = 2;
     const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
     expect(result).toBe(constants.zinssatzKfw_Endfälliges);
   });
 
   it('should update Sollzins-KfW to NR-Kredit when Annuitäten is selected', () => {
-    const kfWDarlehen: KfWDarlehen = 'Annuitäten';
+    const kfWDarlehen: KfwDarlehen = 'Annuitäten';
     const nrKredit = 2;
     const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
     expect(result).toBe(nrKredit);
   });
 
   it('should update Sollzins-KfW to 0 when kein is selected', () => {
-    const kfWDarlehen: KfWDarlehen = 'kein';
+    const kfWDarlehen: KfwDarlehen = 'kein';
     const nrKredit = 2;
     const result = service.updateZinssatzKfw(kfWDarlehen, nrKredit);
     expect(result).toBe(0);
@@ -363,10 +363,7 @@ describe('NeubauService', () => {
   it('should update Gesamtgestehungskosten = 3000,000 when Gestehungskosten is 3,000 and Wohnflaeche is 1,000', () => {
     const gestehungskosten = 3000;
     const wohnflaeche = 1000;
-    const result = service.updateBaukosten(
-      gestehungskosten,
-      wohnflaeche
-    );
+    const result = service.updateBaukosten(gestehungskosten, wohnflaeche);
     expect(result).toBe(3000000);
   });
 
@@ -556,7 +553,7 @@ describe('NeubauService', () => {
   });
 
   it('should update Finanzierungskosten-KfW = 300,000 when kfW-Darlehen is Annuitäten; Annuitaet-KfW is 20000; Kreditlaufzeit is 20; KfW-Kredit is 100000; and EF-KfW is 1,000', () => {
-    const kfWDarlehen: KfWDarlehen = 'Annuitäten';
+    const kfWDarlehen: KfwDarlehen = 'Annuitäten';
     const annuitaetKfW: number = 20_000;
     const kreditlaufzeit: number = 20;
     const kfwKredit: number = 100_000;
@@ -574,12 +571,15 @@ describe('NeubauService', () => {
   it('should update Finanzierungskosten-KfW pro m² = 500 when Finanzierungskosten-KfW is 500,000; and wohnflaeche is 1,000', () => {
     const finanzierungskostenKfW: number = 500_000;
     const wohnflaeche: number = 1000;
-    const result = service.updateFinanzierungskostenKfwM2(finanzierungskostenKfW, wohnflaeche);
+    const result = service.updateFinanzierungskostenKfwM2(
+      finanzierungskostenKfW,
+      wohnflaeche
+    );
     expect(result).toBe(500);
   });
 
   it('should update Finanzierungskosten-KfW = 40,000 when kfW-Darlehen is Endfälliges and EF-KfW is 40,000', () => {
-    const kfWDarlehen: KfWDarlehen = 'Endfälliges';
+    const kfWDarlehen: KfwDarlehen = 'Endfälliges';
     const annuitaetKfW: number = 20_000;
     const kreditlaufzeit: number = 20;
     const kfwKredit: number = 100_000;
@@ -595,7 +595,7 @@ describe('NeubauService', () => {
   });
 
   it('should update Finanzierungskosten-KfW = 0 when kfW-Darlehen is kein', () => {
-    const kfWDarlehen: KfWDarlehen = 'kein';
+    const kfWDarlehen: KfwDarlehen = 'kein';
     const annuitaetKfW: number = 20_000;
     const kreditlaufzeit: number = 20;
     const kfwKredit: number = 100_000;
@@ -646,17 +646,17 @@ describe('NeubauService', () => {
   it('should update Finanzierungskosten-Bank pro m² = 500 when Finanzierungskosten-Bank is 500,000; and wohnflaeche is 1,000', () => {
     const finanzierungskostenBank: number = 500_000;
     const wohnflaeche: number = 1000;
-    const result = service.updateFinanzierungskostenBankM2(finanzierungskostenBank, wohnflaeche);
+    const result = service.updateFinanzierungskostenBankM2(
+      finanzierungskostenBank,
+      wohnflaeche
+    );
     expect(result).toBe(500);
   });
 
   it('should update investitionkosten = 10,000,000 when wohnflaeche 1,000 and gestehungskosten is 10,000', () => {
     const wohnflaeche: number = 1000;
     const gestehungskosten: number = 10_000;
-    const result = service.updateBaukosten(
-      wohnflaeche,
-      gestehungskosten
-    );
+    const result = service.updateBaukosten(wohnflaeche, gestehungskosten);
     expect(result).toBe(10_000_000);
   });
 
@@ -670,7 +670,10 @@ describe('NeubauService', () => {
   it('should update Investitionskosten pro Bau = 500,000 when Investitionskosten is 5,000,000; and Anzahl Wohnungen is 10', () => {
     const investitionskosten: number = 5_000_000;
     const anzahlWohnungen: number = 10;
-    const result = service.updateBaukostenProBau(investitionskosten, anzahlWohnungen);
+    const result = service.updateBaukostenProBau(
+      investitionskosten,
+      anzahlWohnungen
+    );
     expect(result).toBe(500_000);
   });
 
@@ -729,7 +732,10 @@ describe('NeubauService', () => {
   it('should update Finanzierungskosten Ohne-KfW pro m² = 500 when Finanzierungskosten Ohne-KfW is 500,000; and wohnflaeche is 1,000', () => {
     const finKostenOhneKfw: number = 500_000;
     const wohnflaeche: number = 1000;
-    const result = service.updateFinKostenOhneKfwM2(finKostenOhneKfw, wohnflaeche);
+    const result = service.updateFinKostenOhneKfwM2(
+      finKostenOhneKfw,
+      wohnflaeche
+    );
     expect(result).toBe(500);
   });
 
@@ -746,7 +752,10 @@ describe('NeubauService', () => {
   it('should update Finanzierungskosten Mit-KfW pro m² = 500 when Finanzierungskosten Mit-KfW is 500,000; and wohnflaeche is 1,000', () => {
     const finKostenMitKfw: number = 500_000;
     const wohnflaeche: number = 1000;
-    const result = service.updateFinKostenMitKfwM2(finKostenMitKfw, wohnflaeche);
+    const result = service.updateFinKostenMitKfwM2(
+      finKostenMitKfw,
+      wohnflaeche
+    );
     expect(result).toBe(500);
   });
 });
