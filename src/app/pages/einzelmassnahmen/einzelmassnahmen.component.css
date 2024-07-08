@@ -25,6 +25,10 @@
   background-color: var(--bg-secondary);
 }
 
+.dropdown:hover {
+  background-color: #2f2f2f;
+}
+
 .output {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -40,11 +44,6 @@
 
 .wrapper-list-button button {
   width: 100%;
-}
-
-.button {
-  border-color: var(--bg-secondary);
-  /* margin-top: calc(var(--layout-padding) / 2); */
 }
 
 form {

@@ -37,6 +37,7 @@
   --primary50: rgba(255, 255, 255, 0.5);
   --primary30: rgba(255, 255, 255, 0.3);
   --primary20: rgba(255, 255, 255, 0.2);
+  --primary10: rgba(255, 255, 255, 0.1);
   --secondary: aquamarine;
   --bg-primary: #222;
   --bg-primary50: rgba(34, 34, 34, 0.5);
@@ -49,7 +50,7 @@
   --bg-primary97: rgba(34, 34, 34, 0.97);
   --bg-secondary: #333;
   --bg-tertiary: #444;
-  --bg-tertiary95: rgba(17, 17, 17, 0.95);
+  --bg-tertiary95: rgba(68, 68, 68, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
   --font-alt: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
@@ -271,13 +272,14 @@ li {
   align-items: center;
   font-size: 1.2rem;
   cursor: pointer;
+  color: var(--primary70);
   background-color: var(--bg-secondary);
   font-family: var(--font-family-primary), sans-serif;
   height: var(--button-height);
   min-height: var(--button-height);
   text-align: center;
   border-radius: var(--button-radius);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--bg-secondary);
   padding-left: var(--layout-padding);
   padding-right: var(--layout-padding);
 }
@@ -287,10 +289,8 @@ li {
 }
 
 .button:hover {
-  font-weight: 300;
   color: var(--primary);
-  border: 1px solid var(--secondary);
-  background-color: var(--bg-secondary);
+  background-color: #2f2f2f;
 }
 
 .button:active {
