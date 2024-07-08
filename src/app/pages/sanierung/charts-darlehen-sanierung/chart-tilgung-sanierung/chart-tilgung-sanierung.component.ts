@@ -4,7 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { SanierungService } from '../../sanierung.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-tilgung-sanierung',

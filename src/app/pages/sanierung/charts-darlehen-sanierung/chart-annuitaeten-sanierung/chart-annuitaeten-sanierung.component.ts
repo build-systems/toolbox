@@ -11,7 +11,7 @@ import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 // import { BaseChartDirective, NgChartsModule, Color } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { SanierungService } from '../../sanierung.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-annuitaeten-sanierung',

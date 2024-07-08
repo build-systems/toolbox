@@ -5,7 +5,7 @@ import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-tilgung-neubau',

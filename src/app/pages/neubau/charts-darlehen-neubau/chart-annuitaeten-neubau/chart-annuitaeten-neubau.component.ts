@@ -5,7 +5,7 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
 import { NeubauService } from '../../neubau.service';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-annuitaeten-neubau',

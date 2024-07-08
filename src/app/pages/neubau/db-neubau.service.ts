@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from '../../auth/supabase.service';
-import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { NeubauProjekt } from './neubauprojekt';
 
 export const PROJECTS_TABLE = 'neubau_projects';
 export const USER_PROJECTS_TABLE = 'user_neubau_projects';

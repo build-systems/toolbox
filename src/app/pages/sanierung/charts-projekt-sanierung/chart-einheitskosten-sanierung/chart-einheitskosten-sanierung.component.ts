@@ -5,7 +5,7 @@ import { ChartsSettingsService } from '../../../../shared/charts-settings.servic
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
 import { SanierungService } from '../../sanierung.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-einheitskosten-sanierung',

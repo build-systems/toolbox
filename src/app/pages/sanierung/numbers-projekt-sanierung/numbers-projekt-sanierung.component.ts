@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SanierungService } from '../sanierung.service';
-import { SanierungProjekt } from '../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../sanierungprojekt';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de'
+import localeDe from '@angular/common/locales/de';
 import { allgemein, sanierung } from '../../../shared/tooltips';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
 registerLocaleData(localeDe, 'de');
-
 
 @Component({
   selector: 'app-numbers-projekt-sanierung',
@@ -15,8 +14,8 @@ registerLocaleData(localeDe, 'de');
   templateUrl: './numbers-projekt-sanierung.component.html',
   styleUrl: './numbers-projekt-sanierung.component.css',
   host: {
-    class: 'dashboard-numbers'
-  }
+    class: 'dashboard-numbers',
+  },
 })
 export class NumbersProjektSanierungComponent implements OnInit {
   output!: SanierungProjekt;
@@ -27,7 +26,11 @@ export class NumbersProjektSanierungComponent implements OnInit {
   kfwZuschussPercent: number = 0;
   KfwKreditschwelleProWe: number = 0;
 
-  constructor(private sanierungService: SanierungService, public allgemeinTooltips: allgemein, public sanierungTooltips: sanierung) {}
+  constructor(
+    private sanierungService: SanierungService,
+    public allgemeinTooltips: allgemein,
+    public sanierungTooltips: sanierung
+  ) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {
@@ -40,5 +43,4 @@ export class NumbersProjektSanierungComponent implements OnInit {
       this.KfwKreditschwelleProWe = this.output.kfwKreditschwelleProWe;
     });
   }
-
 }

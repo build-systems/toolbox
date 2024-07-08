@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, effect, HostBinding, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NeubauService } from './neubau.service';
 import { FormProjektNeubauComponent } from './form-projekt-neubau/form-projekt-neubau.component';
@@ -11,6 +11,10 @@ import { TitleComponent } from '../../title/title.component';
 import { fadeInAnimation } from '../../shared/animations';
 import { HelpComponent } from '../../help/help.component';
 import { DbNeubauService } from './db-neubau.service';
+import { debounceTime, firstValueFrom, take } from 'rxjs';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DbNeubau } from './db-neubau';
 
 @Component({
   selector: 'app-neubau',
@@ -40,6 +44,7 @@ export class NeubauComponent {
   // This top component has types at neubauprojekt.ts
   protected neubauService = inject(NeubauService);
   private dbNeubauService = inject(DbNeubauService);
+  private dialog = inject(MatDialog);
 
   // Information for the title section
   title = 'Fördermittel Neubau';
@@ -54,9 +59,93 @@ export class NeubauComponent {
     el.scrollIntoView();
   }
 
-  saveProject() {
-    this.neubauService.currentOutputNeubau$.subscribe((value) => {
-      this.dbNeubauService.createNeubauProject(value);
-    });
+  async saveProject() {
+    try {
+      this.neubauService.currentOutputNeubau$
+        .pipe(take(1))
+        .subscribe(async (value) => {
+          const projectDb: DbNeubau = (
+            await this.dbNeubauService.getNeubauProjectByProjectTitle(
+              value.title
+            )
+          )[0];
+          if (projectDb && this.neubauService.projectId()) {
+            try {
+              await this.dbNeubauService.updateNeubauProject(value);
+            } catch (error) {
+              console.error('Error updating project:', error);
+            }
+          } else if (projectDb && !this.neubauService.projectId()) {
+            // Prompt user if we should overwrite
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              data: {
+                title: 'Overwrite existing project?',
+                message: `You already have a project with title ${value.title}.`,
+              },
+            });
+            const result = await firstValueFrom(dialogRef.afterClosed());
+            if (result) {
+              await this.dbNeubauService.deleteNeubauProjectByProjectId(
+                projectDb.id
+              );
+              this.dbNeubauService.createNeubauProject(value);
+            } else {
+              return;
+            }
+          } else {
+            try {
+              this.dbNeubauService.createNeubauProject(value);
+            } catch (error) {
+              console.error('Error creating project:', error);
+            }
+          }
+        });
+    } catch (error) {
+      console.error('Error saving project:', error);
+      // Handle error (e.g., show an error message)
+    }
+  }
+
+  oldTitle = 'Untitled';
+  projectId: number | undefined;
+
+  constructor() {
+    // Debounce is a custom function to delay the signal delivery, see more here:
+    // https://stackoverflow.com/questions/76597307/angular-signals-debounce-in-effect
+    effect(
+      () => {
+        console.log(
+          'this.neubauService.debouncedProjectTitle() ',
+          this.neubauService.debouncedProjectTitle()
+        );
+        console.log('this.oldTitle: ', this.oldTitle);
+
+        if (
+          this.neubauService.debouncedProjectTitle() != this.oldTitle &&
+          this.neubauService.projectId()
+        ) {
+          this.dbNeubauService.updateNeubauTitle(
+            this.neubauService.debouncedProjectTitle(),
+            this.neubauService.projectId()!
+          );
+
+          const currentData = this.neubauService.outputNeubau;
+          this.neubauService.outputNeubauSource.next({
+            ...currentData,
+            title: this.neubauService.debouncedProjectTitle(),
+          });
+        }
+      },
+      { allowSignalWrites: true }
+    );
+
+    this.neubauService.currentOutputNeubau$
+      .pipe(
+        debounceTime(1000) // Wait for 1000ms pause in events
+      )
+      .subscribe((value) => {
+        this.oldTitle = value.title;
+        this.projectId = value.id;
+      });
   }
 }

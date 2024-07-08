@@ -25,9 +25,11 @@
           <td (click)="loadNeubauProject(project.projects.id)">
             {{ project.projects.last_edited_at }}
           </td>
-          <td>del</td>
+          <td (click)="deleteNeubauProjectByProjectId(project.projects.id)">
+            del
+          </td>
         </tr>
-        <tr class="new-item" (click)="createNewEinzelmassnahmen()">
+        <tr class="new-item" (click)="createNewNeubauProject()">
           <td colspan="4">+ New</td>
         </tr>
       </tbody>

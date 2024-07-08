@@ -1,9 +1,10 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { NeubauProjekt } from './neubauprojekt';
 import { neubau } from '../../shared/constants';
 import { FormProjektNeubauService } from './form-projekt-neubau/form-projekt-neubau.service';
 import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-neubau.service';
+import { SharedService } from '../../shared/shared.service';
 
 // Neubau and Sanierung are using RXJS instead of Signals
 // Sorry about the mess :)
@@ -11,9 +12,15 @@ import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-
   providedIn: 'root',
 })
 export class NeubauService {
+  private sharedService = inject(SharedService);
   // Neubau active form tab
   public currentTab = signal(1);
   public projectTitle = signal('Untitled');
+  public debouncedProjectTitle = this.sharedService.debouncedSignal(
+    this.projectTitle,
+    1000
+  );
+  public projectId = signal<number | undefined>(undefined);
 
   projectsNeubau = signal<any[]>([]);
 
@@ -62,6 +69,11 @@ export class NeubauService {
     private formProjektService: FormProjektNeubauService,
     private formDarlehenService: FormDarlehenNeubauService
   ) {
+    effect(() => {
+      this.debouncedProjectTitle();
+      this.update();
+    });
+
     this.formProjektService.projektFormNeu.valueChanges.subscribe((value) => {
       this.eigeneKostenDisabled = !value.eigeneKostenToggle!;
       this.eigeneKosten = value.eigeneKosten!;
@@ -530,7 +542,7 @@ export class NeubauService {
 
   // Neubau Output to be used in the Save and Export
   outputNeubau!: NeubauProjekt;
-  private outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
+  public outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
     this.outputNeubau
   );
   currentOutputNeubau$ = this.outputNeubauSource.asObservable();

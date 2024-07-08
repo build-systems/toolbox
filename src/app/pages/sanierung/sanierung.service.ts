@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SanierungProjekt } from '../../shared/sanierungprojekt';
+import { SanierungProjekt } from './sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableMehrfamilienhaeuser from './sanierung-mehrfamilienhaeuser.json';
 import tableEinfamilienhaeuser from './sanierung-einfamilienhaeuser.json';

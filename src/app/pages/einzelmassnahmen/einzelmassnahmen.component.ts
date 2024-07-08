@@ -62,7 +62,7 @@ export class EinzelmassnahmenComponent {
           projectTitle
         );
       this.projectExists = projectDb.length > 0;
-      console.log('project: ', projectDb);
+      // console.log('project: ', projectDb);
       // If project exists
       if (this.projectExists && projectId) {
         try {
@@ -86,6 +86,8 @@ export class EinzelmassnahmenComponent {
           await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
             projectDb[0].id
           );
+          // console.log('projectDb[0].id: ', projectDb[0].id);
+
           const result =
             await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
               this.einzelmassnahmenService.einzelmassnahmenOutputProject()
@@ -95,7 +97,7 @@ export class EinzelmassnahmenComponent {
         }
       } else {
         try {
-          console.log('Creating new project');
+          // console.log('Creating new project');
           const result =
             await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
               this.einzelmassnahmenService.einzelmassnahmenOutputProject()

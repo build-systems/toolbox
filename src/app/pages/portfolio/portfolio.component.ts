@@ -9,9 +9,11 @@ import { fadeInAnimation } from '../../shared/animations';
 import { DbEinzelmassnahmenService } from '../einzelmassnahmen/db-einzelmassnahmen.service';
 import { DbNeubauService } from '../neubau/db-neubau.service';
 import { NeubauService } from '../neubau/neubau.service';
-import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { NeubauProjekt } from '../neubau/neubauprojekt';
 import { FormProjektNeubauService } from '../neubau/form-projekt-neubau/form-projekt-neubau.service';
 import { DbNeubau } from '../neubau/db-neubau';
+import { FormDarlehenNeubauService } from '../neubau/form-darlehen-neubau/form-darlehen-neubau.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -34,6 +36,7 @@ export class PortfolioComponent {
   protected neubauService = inject(NeubauService);
   protected readonly dbNeubauService = inject(DbNeubauService);
   protected neubauProjektFormService = inject(FormProjektNeubauService);
+  protected neubauDarlehenFormService = inject(FormDarlehenNeubauService);
   private router = inject(Router);
 
   description =
@@ -180,6 +183,7 @@ export class PortfolioComponent {
     )[0];
 
     this.neubauService.projectTitle.set(projectDb.title);
+    this.neubauService.projectId.set(projectDb.id);
     // Update the form
     this.neubauProjektFormService.projektFormNeu.patchValue({
       eigeneKostenToggle: projectDb.eigene_kosten_disabled,
@@ -205,5 +209,86 @@ export class PortfolioComponent {
       baunebenkostenOhneFinRange: projectDb.baunebenkosten_ohne_fin_in,
       baunebenkostenOhneFin: projectDb.baunebenkosten_ohne_fin_in,
     });
+    this.neubauDarlehenFormService.darlehenForm.patchValue({
+      zinssatzBankRange: projectDb.zinssatz_bank,
+      zinssatzBank: projectDb.zinssatz_bank.toFixed(2),
+      kreditlaufzeitRange: projectDb.kreditlaufzeit,
+      kreditlaufzeit: projectDb.kreditlaufzeit,
+      kfWDarlehen: projectDb.kfw_darlehen,
+      bankDarlehen: projectDb.kfw_darlehen,
+    });
+  }
+
+  async deleteNeubauProjectByProjectId(projectId: number) {
+    await this.dbNeubauService.deleteNeubauProjectByProjectId(projectId);
+    // Update the signal
+    let neubauProjects = await this.dbNeubauService.getNeubauProjects();
+    this.neubauService.projectsNeubau.update(() => neubauProjects);
+  }
+
+  async createNewNeubauProject() {
+    const newProjectTitle = this.getNewProjectTitle(
+      this.neubauService.projectsNeubau()
+    );
+    this.neubauService.projectTitle.set(newProjectTitle);
+    // Update the form with initial values (referencing service for form project and darlehen)
+    this.neubauProjektFormService.projektFormNeu.patchValue({
+      eigeneKostenToggle: false,
+      eigeneKostenRange: this.neubauProjektFormService.eigeneKosten.value,
+      eigeneKosten: this.neubauProjektFormService.eigeneKosten.value,
+      wohnflaecheRange: this.neubauProjektFormService.wohnflaeche.value,
+      wohnflaeche: this.neubauProjektFormService.wohnflaeche.value,
+      anzahlWohnungenRange: this.neubauProjektFormService.anzahlWohnungen.value,
+      anzahlWohnungen: this.neubauProjektFormService.anzahlWohnungen.value,
+      konstruktion: this.neubauProjektFormService.konstruktion.options[0].value,
+      energiestandard:
+        this.neubauProjektFormService.energiestandard.options[0].value,
+      zertifizierung:
+        this.neubauProjektFormService.zertifizierung.options[0].value,
+      // Details
+      kellergeschossIn:
+        this.neubauProjektFormService.kellergeschoss.options[0].value,
+      stellplaetzeIn:
+        this.neubauProjektFormService.stellplaetze.options[0].value,
+      aufzugsanlageIn:
+        this.neubauProjektFormService.aufzugsanlage.options[0].value,
+      barrierefreiheitIn:
+        this.neubauProjektFormService.barrierefreiheit.options[0].value,
+      dachbegruenungIn:
+        this.neubauProjektFormService.dachbegruenung.options[0].value,
+      baustellenlogistikIn:
+        this.neubauProjektFormService.baustellenlogistik.options[0].value,
+      aussenanlagenIn:
+        this.neubauProjektFormService.aussenanlagen.options[0].value,
+      grundstuecksbezogeneKostenRange:
+        this.neubauProjektFormService.grundstKosten.value,
+      grundstuecksbezogeneKosten:
+        this.neubauProjektFormService.grundstKosten.value,
+      baunebenkostenOhneFinRange:
+        this.neubauProjektFormService.baunebenkostenOhneFin.value,
+      baunebenkostenOhneFin:
+        this.neubauProjektFormService.baunebenkostenOhneFin.value,
+    });
+    this.neubauDarlehenFormService.darlehenForm.patchValue({
+      zinssatzBankRange: this.neubauDarlehenFormService.zinssatzBank.value,
+      zinssatzBank:
+        this.neubauDarlehenFormService.zinssatzBank.value.toFixed(2),
+      kreditlaufzeitRange: this.neubauDarlehenFormService.kreditlaufzeit.value,
+      kreditlaufzeit: this.neubauDarlehenFormService.kreditlaufzeit.value,
+      kfWDarlehen:
+        this.neubauDarlehenFormService.kfWDarlehen.options[0]['value'],
+      bankDarlehen:
+        this.neubauDarlehenFormService.bankDarlehen.options[0]['value'],
+    });
+
+    // After updating the form values, insert the project to the database
+    this.neubauService.currentOutputNeubau$
+      .pipe(take(1))
+      .subscribe(async (value) => {
+        await this.dbNeubauService.createNeubauProject(value);
+        // Update the signal
+        let neubauProjects = await this.dbNeubauService.getNeubauProjects();
+        this.neubauService.projectsNeubau.update(() => neubauProjects);
+      });
   }
 }
