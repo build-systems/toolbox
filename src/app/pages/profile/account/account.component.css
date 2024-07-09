@@ -1,0 +1,30 @@
+.form-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  & div {
+    height: var(--button-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-bottom: var(--layout-padding);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: var(--button-radius);
+    & label {
+      width: 20%;
+      padding-left: var(--layout-padding);
+    }
+    & input {
+      width: 80%;
+      height: 100%;
+      padding-left: var(--layout-padding);
+      border: none;
+      border-radius: 0 var(--button-radius) var(--button-radius) 0;
+    }
+    & button {
+      width: 100%;
+    }
+  }
+}

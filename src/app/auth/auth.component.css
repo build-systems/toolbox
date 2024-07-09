@@ -1,0 +1,33 @@
+.auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 30rem;
+  width: 50%;
+  padding: var(--layout-padding);
+  border-radius: var(--button-radius);
+  border: 1px solid var(--primary);
+}
+
+form {
+  width: 100%;
+  & div {
+    padding-top: var(--layout-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    & label {
+      padding-bottom: 0.5rem;
+    }
+    & input {
+      height: var(--button-height);
+      border-radius: var(--button-radius);
+      padding-left: 1rem;
+      border: 1px solid var(--primary);
+    }
+    input:focus {
+      outline-color: var(--secondary);
+    }
+  }
+}

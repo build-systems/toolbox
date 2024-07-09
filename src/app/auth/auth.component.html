@@ -1,37 +1,41 @@
-<h1>{{ title }}</h1>
-<p class="description">Sign in via magic link with your email</p>
-<form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-widget">
-  <div>
-    <label for="email">Email</label>
-    <input
-      id="email"
-      inputmode="email"
-      formControlName="email"
-      class="inputField"
-      type="email"
-      placeholder="Email"
-      autocomplete="on"
-    />
+<div class="auth-wrapper">
+  <div class="title-mob-numbers">
+    <h1 class="title">{{ title }}</h1>
+  </div>
+  <p class="description">Sign in via magic link with your email</p>
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-widget">
     <div>
-      <i
-        class="warning"
-        *ngIf="
-          signInForm.controls['email'].invalid &&
-          (signInForm.controls['email'].dirty ||
-            signInForm.controls['email'].touched)
-        "
-        >A valid email is required
-      </i>
+      <label for="email">Email</label>
+      <input
+        id="email"
+        inputmode="email"
+        formControlName="email"
+        class="inputField"
+        type="email"
+        placeholder="Email"
+        autocomplete="on"
+      />
+      <div>
+        <i
+          class="warning"
+          *ngIf="
+            signInForm.controls['email'].invalid &&
+            (signInForm.controls['email'].dirty ||
+              signInForm.controls['email'].touched)
+          "
+          >A valid email is required
+        </i>
+      </div>
     </div>
-  </div>
-  <div>
-    <button
-      type="submit"
-      class="button"
-      [disabled]="loading"
-      [disabled]="signInForm.invalid"
-    >
-      {{ loading ? "Loading" : "Get login link" }}
-    </button>
-  </div>
-</form>
+    <div>
+      <button
+        type="submit"
+        class="button"
+        [disabled]="loading"
+        [disabled]="signInForm.invalid"
+      >
+        {{ loading ? "Loading" : "Get login link" }}
+      </button>
+    </div>
+  </form>
+</div>
