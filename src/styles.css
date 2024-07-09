@@ -313,6 +313,9 @@ li {
   color: var(--bg-primary);
   background-color: var(--primary);
   height: var(--button-height);
+  border: 1px solid var(--primary);
+  border-radius: var(--button-height);
+  padding: 0.2rem var(--layout-padding);
   &:hover {
     text-decoration: none;
     color: var(--bg-primary);
