@@ -22,8 +22,7 @@ export class DisclaimerComponent {
     }
   }
 
-  // userAgreed: boolean = false;
-  userAgreed: boolean = true;
+  userAgreed: boolean = false;
   userAgree() {
     this.userAgreed = true;
   }
