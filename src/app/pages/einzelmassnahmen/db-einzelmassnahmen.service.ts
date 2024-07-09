@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from '../../auth/supabase.service';
 
-export const PROJECTS_TABLE = 'public.einzelmassnahmen_projects';
-export const ITEMS_TABLE = 'public.einzelmassnahmen_items';
-export const VALUES_TABLE = 'public.einzelmassnahmen_values';
-export const USER_PROJECTS_TABLE = 'public.user_einzelmassnahmen_projects';
+export const PROJECTS_TABLE = 'einzelmassnahmen_projects';
+export const ITEMS_TABLE = 'einzelmassnahmen_items';
+export const VALUES_TABLE = 'einzelmassnahmen_values';
+export const USER_PROJECTS_TABLE = 'user_einzelmassnahmen_projects';
 export const CREATE_PROJECT_FUNCTION =
-  'public.create_einzelmassnahmen_project_with_items_and_values';
+  'create_einzelmassnahmen_project_with_items_and_values';
 export const UPDATE_PROJECT_FUNCTION =
-  'public.update_einzelmassnahmen_project_items_and_values';
+  'update_einzelmassnahmen_project_items_and_values';
 
 @Injectable({
   providedIn: 'root',

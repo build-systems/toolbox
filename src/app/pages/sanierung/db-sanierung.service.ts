@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from '../../auth/supabase.service';
 import { SanierungProjekt } from './sanierungprojekt';
 
-export const PROJECTS_TABLE = 'public.sanierung_projects';
-export const USER_PROJECTS_TABLE = 'public.user_sanierung_projects';
-export const CREATE_PROJECT_FUNCTION = 'public.insert_sanierung_project';
-export const UPDATE_PROJECT_FUNCTION = 'public.update_sanierung_project';
+export const PROJECTS_TABLE = 'sanierung_projects';
+export const USER_PROJECTS_TABLE = 'user_sanierung_projects';
+export const CREATE_PROJECT_FUNCTION = 'insert_sanierung_project';
+export const UPDATE_PROJECT_FUNCTION = 'update_sanierung_project';
 
 @Injectable({
   providedIn: 'root',
