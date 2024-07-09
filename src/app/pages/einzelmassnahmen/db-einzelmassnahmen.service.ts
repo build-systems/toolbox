@@ -103,7 +103,6 @@ export class DbEinzelmassnahmenService {
   async updateEinzelmassnahmenProject(
     projectData: EinzelmassnahmenOutputProject
   ) {
-    console.log('updateEinzelmassnahmenProject: ', projectData);
     try {
       const { data, error } = await this.supabaseService.supabase.rpc(
         UPDATE_PROJECT_FUNCTION,
@@ -113,7 +112,6 @@ export class DbEinzelmassnahmenService {
       );
 
       if (error) throw error;
-      console.log(data);
 
       return data;
     } catch (error) {

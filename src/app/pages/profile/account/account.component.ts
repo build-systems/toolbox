@@ -39,8 +39,6 @@ export class AccountComponent implements OnInit {
       website,
       avatar_url,
     });
-
-    // console.log(this.session);
   }
 
   async getProfile() {

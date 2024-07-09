@@ -198,7 +198,7 @@ export class SanierungService {
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
         return tableResult;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return 0;
       }
     } else {

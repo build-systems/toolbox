@@ -119,12 +119,6 @@ export class NeubauComponent {
     // https://stackoverflow.com/questions/76597307/angular-signals-debounce-in-effect
     effect(
       () => {
-        console.log(
-          'this.neubauService.debouncedProjectTitle() ',
-          this.neubauService.debouncedProjectTitle()
-        );
-        console.log('this.oldTitle: ', this.oldTitle);
-
         if (
           this.neubauService.debouncedProjectTitle() != this.oldTitle &&
           this.neubauService.projectId()

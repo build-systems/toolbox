@@ -321,8 +321,6 @@ export class PortfolioComponent {
       await this.dbSanierungService.getSanierungProjectByProjectId(projectId)
     )[0];
 
-    console.log(projectDb);
-
     this.sanierungService.projectTitle.set(projectDb.title);
     this.sanierungService.projectId.set(projectDb.id);
     const currentData = this.sanierungService.outputSanierung;
@@ -415,7 +413,6 @@ export class PortfolioComponent {
         // Update the signal
         let sanierungProjects =
           await this.dbSanierungService.getSanierungProjects();
-        console.log(sanierungProjects);
         this.sanierungService.projectsSanierung.update(() => sanierungProjects);
       });
   }

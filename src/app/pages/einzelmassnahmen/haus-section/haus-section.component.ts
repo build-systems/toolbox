@@ -62,7 +62,6 @@ export class HausSectionComponent implements AfterViewInit {
 
       this.formService.bauteilSelected.set(group.id);
 
-      // console.log('Clicked group id:', group.id);
       // Perform further processing with the group id here
     }
   }
@@ -100,7 +99,5 @@ export class HausSectionComponent implements AfterViewInit {
     group.classList.add('selected');
     // Update the selected group
     this.selectedGroup = group;
-
-    // console.log('Selected group id:', group.id);
   }
 }
