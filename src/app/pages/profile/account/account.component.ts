@@ -16,7 +16,7 @@ import { AvatarComponent } from '../avatar/avatar.component';
   },
 })
 export class AccountComponent implements OnInit {
-  protected readonly supabase = inject(SupabaseService);
+  protected readonly supabaseService = inject(SupabaseService);
   private formBuilder = inject(FormBuilder);
   loading = false;
   profile!: Profile;
@@ -46,12 +46,12 @@ export class AccountComponent implements OnInit {
   async getProfile() {
     try {
       this.loading = true;
-      const { user } = this.supabase.sessionSignal()!;
+      const { user } = this.supabaseService.sessionSignal()!;
       const {
         data: profile,
         error,
         status,
-      } = await this.supabase.profile(user);
+      } = await this.supabaseService.profile(user);
 
       if (error && status !== 406) {
         throw error;
@@ -72,13 +72,13 @@ export class AccountComponent implements OnInit {
   async updateProfile(): Promise<void> {
     try {
       this.loading = true;
-      const { user } = this.supabase.sessionSignal()!;
+      const { user } = this.supabaseService.sessionSignal()!;
 
       const username = this.updateProfileForm.value.username as string;
       const website = this.updateProfileForm.value.website as string;
       const avatar_url = this.updateProfileForm.value.avatar_url as string;
 
-      const { error } = await this.supabase.updateProfile({
+      const { error } = await this.supabaseService.updateProfile({
         id: user.id,
         username,
         website,
@@ -95,7 +95,7 @@ export class AccountComponent implements OnInit {
   }
 
   async signOut() {
-    await this.supabase.signOut();
+    await this.supabaseService.signOut();
   }
 
   // Avatar function and getter

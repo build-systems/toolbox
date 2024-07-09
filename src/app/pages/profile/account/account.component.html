@@ -12,7 +12,7 @@
     <input
       id="email"
       type="text"
-      [value]="supabase.sessionSignal()!.user.email"
+      [value]="supabaseService.sessionSignal()!.user.email"
       disabled
       autocomplete="off"
     />
