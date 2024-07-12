@@ -292,7 +292,6 @@ li {
   align-items: center;
   font-size: 1.2rem;
   cursor: pointer;
-  color: var(--primary70);
   background-color: var(--bg-secondary);
   font-family: var(--font-family-primary), sans-serif;
   height: var(--button-height);
@@ -310,7 +309,7 @@ li {
 
 .button:hover {
   color: var(--primary);
-  background-color: #2f2f2f;
+  background-color: #404040;
 }
 
 .button:active {

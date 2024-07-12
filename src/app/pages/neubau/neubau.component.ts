@@ -70,6 +70,7 @@ export class NeubauComponent {
               value.title
             )
           )[0];
+
           // If observable does have id, it means the project wasnt loaded aka is new
           if (projectDb && value.id) {
             try {
@@ -99,6 +100,8 @@ export class NeubauComponent {
               console.error('Error overwriting project:', error);
             }
           } else {
+            console.log(value.baunebenkostenOhneFinIn);
+
             try {
               await this.dbNeubauService.createNeubauProject(value);
             } catch (error) {

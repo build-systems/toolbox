@@ -588,6 +588,7 @@ export class EinzelmassnahmenService {
     title: 'Untitled',
     id: undefined,
     items: [],
+    vollkosten: 0,
   });
 
   totalKosten = signal<number>(0);
@@ -597,7 +598,12 @@ export class EinzelmassnahmenService {
     project: WritableSignal<EinzelmassnahmenOutputProject>
   ) {
     if (newItem.title != undefined) {
-      project.update((old) => ({ ...old, items: [...old.items, newItem] }));
+      project.update((old) => ({
+        ...old,
+        items: [...old.items, newItem],
+        vollkosten:
+          old.vollkosten + this.findValueByTitle(newItem, 'Vollkosten'),
+      }));
     }
   }
 
@@ -1061,12 +1067,11 @@ export class EinzelmassnahmenService {
   constructor() {
     effect(
       () => {
-        this.totalKosten.set(
-          this.einzelmassnahmenOutputProject().items.reduce(
-            (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
-            0
-          )
+        let vollkosten = this.einzelmassnahmenOutputProject().items.reduce(
+          (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
+          0
         );
+        this.totalKosten.set(vollkosten);
       },
       { allowSignalWrites: true }
     );

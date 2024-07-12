@@ -1,5 +1,5 @@
 import { Component, HostBinding, inject, WritableSignal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { SupabaseService } from '../../auth/supabase.service';
 import { AuthComponent } from '../../auth/auth.component';
 import { EinzelmassnahmenService } from '../einzelmassnahmen/einzelmassnahmen.service';
@@ -20,6 +20,8 @@ import { FormProjektSanierungService } from '../sanierung/form-projekt-sanierung
 import { FormDarlehenSanierungService } from '../sanierung/form-darlehen-sanierung/form-darlehen-sanierung.service';
 import { DbSanierung } from '../sanierung/db-sanierung';
 import { DatePipe } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+registerLocaleData(localeDe, 'de');
 
 @Component({
   selector: 'app-portfolio',
@@ -60,12 +62,11 @@ export class PortfolioComponent {
     );
 
     let neubauProjects = await this.dbNeubauService.getNeubauProjects();
-    // console.dir(neubauProjects);
     this.neubauService.projectsNeubau.update(() => neubauProjects);
 
     let sanierungProjects =
       await this.dbSanierungService.getSanierungProjects();
-    // console.dir(neubauProjects);
+    // console.dir(sanierungProjects);
     this.sanierungService.projectsSanierung.update(() => sanierungProjects);
   }
 
@@ -78,6 +79,7 @@ export class PortfolioComponent {
       title: 'Untitled',
       id: undefined,
       items: [],
+      vollkosten: 0,
     }));
 
     // Redirect
@@ -129,6 +131,7 @@ export class PortfolioComponent {
       title: projectDb[0].title,
       id: projectDb[0].id,
       items: outputItems,
+      vollkosten: projectDb[0].vollkosten,
     }));
   }
 
@@ -152,6 +155,7 @@ export class PortfolioComponent {
       title: newProjectTitle,
       id: undefined,
       items: [],
+      vollkosten: 0,
     }));
     const result =
       await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
@@ -205,11 +209,12 @@ export class PortfolioComponent {
       id: projectDb.id,
       title: projectDb.title,
     });
+
     // Update the form
     this.neubauProjektFormService.projektFormNeu.patchValue({
-      eigeneKostenToggle: projectDb.eigene_kosten_disabled,
-      eigeneKostenRange: projectDb.eigene_kosten,
-      eigeneKosten: projectDb.eigene_kosten,
+      eigeneKostenToggle: !projectDb.eigene_kosten_disabled, // Remove negation as sanierung
+      eigeneKostenRange: projectDb.eigene_kosten, // Name should be similar to sanierung
+      eigeneKosten: projectDb.eigene_kosten, // Name should be similar to sanierung
       wohnflaecheRange: projectDb.wohnflaeche,
       wohnflaeche: projectDb.wohnflaeche,
       anzahlWohnungenRange: projectDb.anzahl_wohnungen,
@@ -227,16 +232,16 @@ export class PortfolioComponent {
       aussenanlagenIn: projectDb.aussenanlagen_in,
       grundstuecksbezogeneKostenRange: projectDb.grundstuecksbezogene_kosten,
       grundstuecksbezogeneKosten: projectDb.grundstuecksbezogene_kosten,
-      baunebenkostenOhneFinRange: projectDb.baunebenkosten_ohne_fin_in,
-      baunebenkostenOhneFin: projectDb.baunebenkosten_ohne_fin_in,
+      baunebenkostenOhneFinRange: projectDb.baunebenkosten_ohne_fin_in * 100, // Come as percentage
+      baunebenkostenOhneFin: projectDb.baunebenkosten_ohne_fin_in * 100, // Comes as percentage
     });
     this.neubauDarlehenFormService.darlehenForm.patchValue({
-      zinssatzBankRange: projectDb.zinssatz_bank,
-      zinssatzBank: projectDb.zinssatz_bank.toFixed(2),
+      zinssatzBankRange: projectDb.zinssatz_bank * 100,
+      zinssatzBank: (projectDb.zinssatz_bank * 100).toFixed(2),
       kreditlaufzeitRange: projectDb.kreditlaufzeit,
       kreditlaufzeit: projectDb.kreditlaufzeit,
       kfWDarlehen: projectDb.kfw_darlehen,
-      bankDarlehen: projectDb.kfw_darlehen,
+      bankDarlehen: projectDb.bank_darlehen,
     });
   }
 

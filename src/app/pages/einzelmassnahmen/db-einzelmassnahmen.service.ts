@@ -77,8 +77,7 @@ export class DbEinzelmassnahmenService {
       const { data, error } = await this.supabaseService.supabase.rpc(
         CREATE_PROJECT_FUNCTION,
         {
-          project_data: { title: projectData.title },
-          items_data: projectData.items,
+          project_data: projectData,
         }
       );
 
@@ -115,7 +114,7 @@ export class DbEinzelmassnahmenService {
 
       return data;
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error('Error updating project:', error);
       throw error;
     }
   }

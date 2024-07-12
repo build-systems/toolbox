@@ -1,16 +1,13 @@
 .tables {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  margin-right: var(--layout-padding);
+  padding-right: var(--layout-padding);
   margin-left: var(--layout-padding);
   overflow-y: auto;
 }
 
 .wrapper-table {
-  gap: calc(var(--layout-padding) / 2);
-  background-color: var(--bg-secondary);
-  border-radius: var(--button-radius);
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .title {
@@ -26,8 +23,8 @@ h2 {
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 table {
@@ -35,6 +32,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   border-radius: var(--button-radius);
+  table-layout: fixed;
   /* overflow-y: auto; */
 }
 
@@ -49,8 +47,12 @@ tbody {
 
 th,
 td {
-  border: 1px solid #000;
+  border-left: 1px solid #000;
   padding: 1rem 1rem;
+}
+
+th {
+  font-family: var(--font-family-secondary);
 }
 
 table tr:first-child th:first-child {
@@ -61,13 +63,17 @@ table tr:first-child th:last-child {
   border-top-right-radius: var(--button-radius);
 }
 
-table tr:last-child td:first-child {
+table tr:nth-last-child(2) td:first-child {
   border-bottom-left-radius: var(--button-radius);
 }
 
-table tr:first-child td:last-child {
+table tr:nth-last-child(2) td:last-child {
   border-bottom-right-radius: var(--button-radius);
 }
+
+/* table tr:first-child td:nth-last-child(2) {
+  border-bottom-right-radius: var(--button-radius);
+} */
 
 table tr:first-child th {
   border-top: 0;
@@ -77,36 +83,48 @@ table tr td:first-child,
 table tr th:first-child {
   border-left: 0;
 }
-table tr td:last-child,
-table tr th:last-child {
+table tr td:nth-last-child(2),
+table tr th:nth-last-child(2) {
   border-right: 0;
 }
 
-tr:last-child {
+tr:nth-last-child(2) {
   border-bottom-left-radius: var(--button-radius);
   border-bottom-right-radius: var(--button-radius);
 }
+
 tr:nth-child(even) {
-  background-color: var(--bg-primary);
+  background-color: var(--bg-tertiary);
 }
 
-tr:hover {
-  background-color: var(--bg-tertiary);
-  cursor: grab;
+tr:nth-child(odd) {
+  background-color: var(--bg-secondary);
 }
 
 th {
-  background-color: var(--bg-tertiary);
+  background-color: #555;
   text-align: left;
   font-weight: normal;
 }
 
+th:last-child,
+td:last-child {
+  width: 50px;
+  border-left: 0;
+}
+
+.list-item:hover {
+  mix-blend-mode: hard-light;
+  cursor: pointer;
+}
+
 .new-item td {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-primary);
   color: var(--primary50);
   border: none;
 }
 
 .new-item:hover td {
-  background-color: var(--bg-tertiary);
+  color: var(--primary);
+  cursor: pointer;
 }

@@ -242,4 +242,5 @@ type EinzelmassnahmenOutputProject = {
   title: string;
   id: number | undefined;
   items: EinzelmassnahmenOutputItem[];
+  vollkosten: number;
 };
