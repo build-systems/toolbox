@@ -19,6 +19,7 @@ import { DbSanierungService } from '../sanierung/db-sanierung.service';
 import { FormProjektSanierungService } from '../sanierung/form-projekt-sanierung/form-projekt-sanierung.service';
 import { FormDarlehenSanierungService } from '../sanierung/form-darlehen-sanierung/form-darlehen-sanierung.service';
 import { DbSanierung } from '../sanierung/db-sanierung';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-portfolio',

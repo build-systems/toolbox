@@ -179,10 +179,26 @@ li {
 .host-profile,
 .host-portfolio {
   width: 100%;
+  flex: 1;
 }
 
 .host-portfolio {
   overflow-y: auto;
+}
+
+.host-auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+.host-account {
+  width: 100%;
+  flex: 1;
 }
 
 .container-tool {
@@ -1153,20 +1169,6 @@ input[type="number"]:disabled:hover {
 
 button:hover {
   color: var(--secondary);
-}
-
-.host-auth {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-  height: 100%;
-}
-
-.host-account {
-  width: 100%;
-  height: 100%;
 }
 
 .warning {

@@ -10,7 +10,7 @@
   gap: calc(var(--layout-padding) / 2);
   background-color: var(--bg-secondary);
   border-radius: var(--button-radius);
-  /* overflow-y: hidden; */
+  overflow-x: scroll;
 }
 
 .title {
@@ -23,6 +23,11 @@
 h2 {
   padding-top: var(--layout-padding);
   padding-bottom: var(--layout-padding);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 table {

@@ -28,3 +28,37 @@
     }
   }
 }
+
+@media screen and (max-width: 1280px) {
+  .form-profile {
+    div {
+      width: 65%;
+    }
+  }
+}
+@media screen and (max-width: 850px) {
+  .form-profile {
+    div {
+      width: 75%;
+    }
+  }
+}
+@media screen and (max-width: 700px) {
+  .form-profile {
+    div {
+      width: 85%;
+    }
+  }
+}
+@media (max-width: 400px) {
+  .form-profile {
+    div {
+      width: 90%;
+    }
+  }
+}
+@media (max-width: 350px) {
+  .form-profile div {
+    width: 98%;
+  }
+}

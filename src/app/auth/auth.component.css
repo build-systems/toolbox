@@ -3,8 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 30rem;
-  width: 50%;
+  width: 40%;
   padding: var(--layout-padding);
   border-radius: var(--button-radius);
   border: 1px solid var(--primary);
@@ -29,5 +28,31 @@ form {
     input:focus {
       outline-color: var(--secondary);
     }
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .auth-wrapper {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 850px) {
+  .auth-wrapper {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 700px) {
+  .auth-wrapper {
+    width: 80%;
+  }
+}
+@media (max-width: 400px) {
+  .auth-wrapper {
+    width: 95%;
+  }
+}
+@media (max-width: 350px) {
+  .auth-wrapper {
+    width: 98%;
   }
 }
