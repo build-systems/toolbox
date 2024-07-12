@@ -352,13 +352,13 @@ export class PortfolioComponent {
       foerderbonus: projectDb.foerderbonus,
       serielleSanierung: projectDb.serielle_sanierung,
     });
-    this.neubauDarlehenFormService.darlehenForm.patchValue({
-      zinssatzBankRange: projectDb.zinssatz_bank,
-      zinssatzBank: projectDb.zinssatz_bank.toFixed(2),
+    this.sanierungDarlehenFormService.darlehenForm.patchValue({
+      zinssatzBankRange: projectDb.zinssatz_bank * 100,
+      zinssatzBank: (projectDb.zinssatz_bank * 100).toFixed(2),
       kreditlaufzeitRange: projectDb.kreditlaufzeit,
       kreditlaufzeit: projectDb.kreditlaufzeit,
       kfWDarlehen: projectDb.kfw_darlehen,
-      bankDarlehen: projectDb.kfw_darlehen,
+      bankDarlehen: projectDb.bank_darlehen,
     });
   }
 

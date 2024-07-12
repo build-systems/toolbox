@@ -41,6 +41,10 @@ h2 {
   background-color: var(--bg-tertiary);
 }
 
+.nav-category:has(.active-item) a {
+  border-left: var(--nav-sel-thickness) solid var(--bg-secondary);
+}
+
 ul {
   display: flex;
   flex-direction: column;
@@ -89,7 +93,7 @@ ul {
 
 .active-item {
   color: var(--primary);
-  border-left: var(--nav-sel-thickness) solid var(--secondary);
+  border-left: var(--nav-sel-thickness) solid var(--secondary) !important;
   padding-left: 0px;
 }
 

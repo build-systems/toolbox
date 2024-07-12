@@ -31,6 +31,7 @@
 
 .output {
   display: grid;
+  overflow-y: auto;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
@@ -90,8 +91,32 @@ form {
 }
 
 @media screen and (max-width: 1280px) {
-  .house {
-    width: 400px;
+  .container-tool {
+    overflow-y: auto;
+    gap: var(--layout-padding);
+  }
+
+  .output {
+    display: block;
+    overflow-y: visible;
+  }
+
+  .inputs {
+    flex: 0;
+  }
+
+  .output-numbers-inputs {
+    height: auto;
+    padding-bottom: var(--layout-padding);
+  }
+
+  .wrapper-list-button {
+    padding-bottom: var(--layout-padding);
+    height: fit-content;
+  }
+
+  .host-list {
+    flex: none;
   }
 }
 

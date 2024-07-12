@@ -3,7 +3,8 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th class="shrink">Kosten [€]</th>
+        <th class="shrink">Kosten</th>
+        <th class="shrink">Kosten BAFA</th>
         <th class="delete"></th>
       </tr>
     </thead>
@@ -24,6 +25,13 @@
               | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
         </td>
+        <td class="shrink">
+          {{
+            einzelmassnahmenService.findValueByTitle(item, "Vollkosten") *
+              this.constants.bafaMultiplier
+              | currency : "EUR" : "symbol" : "1.0-0" : "de"
+          }}
+        </td>
         <td
           class="delete"
           (click)="
@@ -33,7 +41,9 @@
             )
           "
         >
-          del
+          <svg class="icon">
+            <use xlink:href="assets/icons.svg#trash" />
+          </svg>
         </td>
       </tr>
       <tr id="total">
@@ -44,10 +54,6 @@
               | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
         </td>
-        <td></td>
-      </tr>
-      <tr id="total">
-        <td>TOTAL BAFA</td>
         <td class="shrink">
           {{
             einzelmassnahmenService.totalKosten() *

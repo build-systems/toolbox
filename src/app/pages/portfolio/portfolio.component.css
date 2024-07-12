@@ -7,6 +7,7 @@
 }
 
 .wrapper-table {
+  display: flex;
   overflow-x: auto;
 }
 
@@ -23,25 +24,20 @@ h2 {
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 table {
-  width: 100%;
   border-collapse: collapse;
-  width: 100%;
+  flex: 1;
   border-radius: var(--button-radius);
   table-layout: fixed;
-  /* overflow-y: auto; */
+  overflow-x: auto;
 }
 
 thead {
   border-radius: var(--button-radius);
-  /* overflow-y: auto; */
-}
-
-tbody {
   /* overflow-y: auto; */
 }
 
@@ -70,10 +66,6 @@ table tr:nth-last-child(2) td:first-child {
 table tr:nth-last-child(2) td:last-child {
   border-bottom-right-radius: var(--button-radius);
 }
-
-/* table tr:first-child td:nth-last-child(2) {
-  border-bottom-right-radius: var(--button-radius);
-} */
 
 table tr:first-child th {
   border-top: 0;
@@ -127,4 +119,11 @@ td:last-child {
 .new-item:hover td {
   color: var(--primary);
   cursor: pointer;
+}
+
+@media screen and (max-width: 1280px) {
+  table {
+    width: max-content;
+    flex: none;
+  }
 }

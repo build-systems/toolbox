@@ -96,6 +96,8 @@ export class FormDarlehenNeubauService {
 
   constructor(private fb: FormBuilder) {
     // Kalkulationszinssatz (Realzins)
+    // This could be simplified using simple two-way data binding
+    // And for the decimal places, using a directive in the input
     this.darlehenForm
       .get('zinssatzBankRange')
       ?.valueChanges.subscribe((value) => {

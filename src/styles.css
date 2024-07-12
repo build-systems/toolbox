@@ -89,6 +89,7 @@ html {
 
 ::-webkit-scrollbar {
   width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {
@@ -283,7 +284,6 @@ li {
   display: flex;
   flex-direction: column;
   gap: calc(var(--layout-padding) / 2);
-  overflow-y: auto;
 }
 
 .button {
@@ -968,6 +968,7 @@ input[type="number"]:disabled:hover {
 .dashboard-numbers {
   display: flex;
   gap: calc(var(--layout-padding) / 2);
+  flex-wrap: wrap;
 }
 
 .numbers-mover.tablet {
@@ -979,7 +980,7 @@ input[type="number"]:disabled:hover {
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-  flex-grow: 1;
+  flex: 1 0 24%;
   text-align: center;
   padding: var(--layout-padding);
   border-radius: var(--button-radius);
@@ -1298,6 +1299,9 @@ span.nowrap {
     padding-left: 0px;
   }
 
+  .output {
+    padding-bottom: var(--mobile-padding);
+  }
   .dashboard-numbers {
     flex-direction: row;
     flex-wrap: wrap;
