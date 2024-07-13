@@ -48,6 +48,10 @@ input:focus {
   outline-color: var(--secondary);
 }
 
+.warning-wrapper {
+  height: 1rem;
+}
+
 .provider-button {
   display: flex;
   align-items: center;
