@@ -17,6 +17,7 @@ import { SharedService } from '../../shared/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -47,72 +48,79 @@ export class EinzelmassnahmenComponent {
   protected supabaseService = inject(SupabaseService);
   protected sharedService = inject(SharedService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
 
   protected projectExists = false;
 
   async saveProject() {
-    try {
-      const projectTitle =
-        this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
-      const projectId =
-        this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
-      const projectKosten =
-        this.einzelmassnahmenService.einzelmassnahmenOutputProject().vollkosten;
+    if (!this.supabaseService.sessionSignal()) {
+      // Redirect
+      this.router.navigateByUrl('/profile');
+    } else {
+      try {
+        const projectTitle =
+          this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
+        const projectId =
+          this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
+        const projectKosten =
+          this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+            .vollkosten;
 
-      // Check if project exists
-      const projectDb =
-        await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
-          projectTitle
-        );
-      this.projectExists = projectDb.length > 0;
-      // If project exists
-      if (this.projectExists && projectId) {
-        try {
-          await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
-            this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+        // Check if project exists
+        const projectDb =
+          await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
+            projectTitle
           );
-        } catch (error) {
-          console.error('Error updating project:', error);
-        }
-        // Project do not exist, then just create a new own
-      } else if (this.projectExists && !projectId) {
-        try {
-          // Prompt user if we should overwrite
-          const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-            data: {
-              title: 'Overwrite existing project?',
-              message: `You already have a project with title ${projectTitle}.`,
-            },
-          });
-          const result = await firstValueFrom(dialogRef.afterClosed());
-          if (result) {
-            await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
-              projectDb[0].id
+        this.projectExists = projectDb.length > 0;
+        // If project exists
+        if (this.projectExists && projectId) {
+          try {
+            await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
+              this.einzelmassnahmenService.einzelmassnahmenOutputProject()
             );
+          } catch (error) {
+            console.error('Error updating project:', error);
+          }
+          // Project do not exist, then just create a new own
+        } else if (this.projectExists && !projectId) {
+          try {
+            // Prompt user if we should overwrite
+            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+              data: {
+                title: 'Overwrite existing project?',
+                message: `You already have a project with title ${projectTitle}.`,
+              },
+            });
+            const result = await firstValueFrom(dialogRef.afterClosed());
+            if (result) {
+              await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
+                projectDb[0].id
+              );
 
+              const result =
+                await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+                  this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+                );
+            } else {
+              return;
+            }
+          } catch (error) {
+            console.error('Error overwriting project:', error);
+          }
+        } else {
+          try {
             const result =
               await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
                 this.einzelmassnahmenService.einzelmassnahmenOutputProject()
               );
-          } else {
-            return;
+          } catch (error) {
+            console.error('Error creating project:', error);
           }
-        } catch (error) {
-          console.error('Error overwriting project:', error);
         }
-      } else {
-        try {
-          const result =
-            await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
-              this.einzelmassnahmenService.einzelmassnahmenOutputProject()
-            );
-        } catch (error) {
-          console.error('Error creating project:', error);
-        }
+      } catch (error) {
+        console.error('Error saving project:', error);
+        // Handle error (e.g., show an error message)
       }
-    } catch (error) {
-      console.error('Error saving project:', error);
-      // Handle error (e.g., show an error message)
     }
   }
 

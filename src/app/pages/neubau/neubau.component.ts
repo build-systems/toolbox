@@ -15,6 +15,8 @@ import { debounceTime, firstValueFrom, take } from 'rxjs';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DbNeubau } from './db-neubau';
+import { Router } from '@angular/router';
+import { SupabaseService } from '../../auth/supabase.service';
 
 @Component({
   selector: 'app-neubau',
@@ -45,6 +47,8 @@ export class NeubauComponent {
   protected neubauService = inject(NeubauService);
   private dbNeubauService = inject(DbNeubauService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private supabaseService = inject(SupabaseService);
 
   // Information for the title section
   title = 'Fördermittel Neubau';
@@ -60,57 +64,61 @@ export class NeubauComponent {
   }
 
   async saveProject() {
-    try {
-      this.neubauService.currentOutputNeubau$
-        .pipe(take(1))
-        .subscribe(async (value) => {
-          console.dir(value);
-          const projectDb: DbNeubau = (
-            await this.dbNeubauService.getNeubauProjectByProjectTitle(
-              value.title
-            )
-          )[0];
+    if (!this.supabaseService.sessionSignal()) {
+      this.router.navigateByUrl('/profile');
+    } else {
+      try {
+        this.neubauService.currentOutputNeubau$
+          .pipe(take(1))
+          .subscribe(async (value) => {
+            console.dir(value);
+            const projectDb: DbNeubau = (
+              await this.dbNeubauService.getNeubauProjectByProjectTitle(
+                value.title
+              )
+            )[0];
 
-          // If observable does have id, it means the project wasnt loaded aka is new
-          if (projectDb && value.id) {
-            try {
-              await this.dbNeubauService.updateNeubauProject(value);
-            } catch (error) {
-              console.error('Error updating project:', error);
-            }
-          } else if (projectDb && !value.id) {
-            try {
-              // Prompt user if we should overwrite
-              const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                  title: 'Overwrite existing project?',
-                  message: `You already have a project with title ${value.title}.`,
-                },
-              });
-              const result = await firstValueFrom(dialogRef.afterClosed());
-              if (result) {
-                await this.dbNeubauService.deleteNeubauProjectByProjectId(
-                  projectDb.id
-                );
-                this.dbNeubauService.createNeubauProject(value);
-              } else {
-                return;
+            // If observable does have id, it means the project wasnt loaded aka is new
+            if (projectDb && value.id) {
+              try {
+                await this.dbNeubauService.updateNeubauProject(value);
+              } catch (error) {
+                console.error('Error updating project:', error);
               }
-            } catch (error) {
-              console.error('Error overwriting project:', error);
-            }
-          } else {
-            console.log(value.baunebenkostenOhneFinIn);
+            } else if (projectDb && !value.id) {
+              try {
+                // Prompt user if we should overwrite
+                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                  data: {
+                    title: 'Overwrite existing project?',
+                    message: `You already have a project with title ${value.title}.`,
+                  },
+                });
+                const result = await firstValueFrom(dialogRef.afterClosed());
+                if (result) {
+                  await this.dbNeubauService.deleteNeubauProjectByProjectId(
+                    projectDb.id
+                  );
+                  this.dbNeubauService.createNeubauProject(value);
+                } else {
+                  return;
+                }
+              } catch (error) {
+                console.error('Error overwriting project:', error);
+              }
+            } else {
+              console.log(value.baunebenkostenOhneFinIn);
 
-            try {
-              await this.dbNeubauService.createNeubauProject(value);
-            } catch (error) {
-              console.error('Error creating project:', error);
+              try {
+                await this.dbNeubauService.createNeubauProject(value);
+              } catch (error) {
+                console.error('Error creating project:', error);
+              }
             }
-          }
-        });
-    } catch (error) {
-      console.error('Error on saveProject() function:', error);
+          });
+      } catch (error) {
+        console.error('Error on saveProject() function:', error);
+      }
     }
   }
 

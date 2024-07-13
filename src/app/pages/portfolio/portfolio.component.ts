@@ -9,7 +9,6 @@ import { fadeInAnimation } from '../../shared/animations';
 import { DbEinzelmassnahmenService } from '../einzelmassnahmen/db-einzelmassnahmen.service';
 import { DbNeubauService } from '../neubau/db-neubau.service';
 import { NeubauService } from '../neubau/neubau.service';
-import { NeubauProjekt } from '../neubau/neubauprojekt';
 import { FormProjektNeubauService } from '../neubau/form-projekt-neubau/form-projekt-neubau.service';
 import { DbNeubau } from '../neubau/db-neubau';
 import { FormDarlehenNeubauService } from '../neubau/form-darlehen-neubau/form-darlehen-neubau.service';
@@ -19,7 +18,6 @@ import { DbSanierungService } from '../sanierung/db-sanierung.service';
 import { FormProjektSanierungService } from '../sanierung/form-projekt-sanierung/form-projekt-sanierung.service';
 import { FormDarlehenSanierungService } from '../sanierung/form-darlehen-sanierung/form-darlehen-sanierung.service';
 import { DbSanierung } from '../sanierung/db-sanierung';
-import { DatePipe } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 registerLocaleData(localeDe, 'de');
 

@@ -15,6 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { debounceTime, firstValueFrom, take } from 'rxjs';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { DbSanierung } from './db-sanierung';
+import { Router } from '@angular/router';
+import { SupabaseService } from '../../auth/supabase.service';
 
 @Component({
   selector: 'app-sanierung',
@@ -45,6 +47,8 @@ export class SanierungComponent {
   protected sanierungService = inject(SanierungService);
   private dbSanierungService = inject(DbSanierungService);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private supabaseService = inject(SupabaseService);
 
   // Information for the title
   title = 'Fördermittel Komplettsanierung';
@@ -60,50 +64,55 @@ export class SanierungComponent {
   }
 
   async saveProject() {
-    try {
-      this.sanierungService.currentOutputSanierung$
-        .pipe(take(1))
-        .subscribe(async (value) => {
-          console.dir(value);
-          const projectDb: DbSanierung = (
-            await this.dbSanierungService.getSanierungProjectByProjectTitle(
-              value.title
-            )
-          )[0];
-          if (projectDb && this.sanierungService.projectId()) {
-            try {
-              await this.dbSanierungService.updateSanierungProject(value);
-            } catch (error) {
-              console.error('Error updating project:', error);
-            }
-          } else if (projectDb && !this.sanierungService.projectId()) {
-            // Prompt user if we should overwrite
-            const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-              data: {
-                title: 'Overwrite existing project?',
-                message: `You already have a project with title ${value.title}.`,
-              },
-            });
-            const result = await firstValueFrom(dialogRef.afterClosed());
-            if (result) {
-              await this.dbSanierungService.deleteSanierungProjectByProjectId(
-                projectDb.id
-              );
-              this.dbSanierungService.createSanierungProject(value);
+    if (!this.supabaseService.sessionSignal()) {
+      // Redirect
+      this.router.navigateByUrl('/profile');
+    } else {
+      try {
+        this.sanierungService.currentOutputSanierung$
+          .pipe(take(1))
+          .subscribe(async (value) => {
+            console.dir(value);
+            const projectDb: DbSanierung = (
+              await this.dbSanierungService.getSanierungProjectByProjectTitle(
+                value.title
+              )
+            )[0];
+            if (projectDb && this.sanierungService.projectId()) {
+              try {
+                await this.dbSanierungService.updateSanierungProject(value);
+              } catch (error) {
+                console.error('Error updating project:', error);
+              }
+            } else if (projectDb && !this.sanierungService.projectId()) {
+              // Prompt user if we should overwrite
+              const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                data: {
+                  title: 'Overwrite existing project?',
+                  message: `You already have a project with title ${value.title}.`,
+                },
+              });
+              const result = await firstValueFrom(dialogRef.afterClosed());
+              if (result) {
+                await this.dbSanierungService.deleteSanierungProjectByProjectId(
+                  projectDb.id
+                );
+                this.dbSanierungService.createSanierungProject(value);
+              } else {
+                return;
+              }
             } else {
-              return;
+              try {
+                this.dbSanierungService.createSanierungProject(value);
+              } catch (error) {
+                console.error('Error creating project:', error);
+              }
             }
-          } else {
-            try {
-              this.dbSanierungService.createSanierungProject(value);
-            } catch (error) {
-              console.error('Error creating project:', error);
-            }
-          }
-        });
-    } catch (error) {
-      console.error('Error saving project:', error);
-      // Handle error (e.g., show an error message)
+          });
+      } catch (error) {
+        console.error('Error saving project:', error);
+        // Handle error (e.g., show an error message)
+      }
     }
   }
 
