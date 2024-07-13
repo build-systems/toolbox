@@ -17,6 +17,7 @@
 .button {
   background-color: var(--bg-primary);
   justify-content: start;
+  border-radius: calc(var(--button-radius) / 2);
 }
 
 form {
@@ -40,7 +41,7 @@ label {
 
 input {
   height: var(--button-height);
-  border-radius: var(--button-radius);
+  border-radius: calc(var(--button-radius) / 2);
   padding-left: 1rem;
   border: 1px solid var(--primary);
 }
@@ -60,6 +61,7 @@ input:focus {
   margin-bottom: 0.25rem;
   gap: 1rem;
   cursor: pointer;
+  border-radius: calc(var(--button-radius) / 2);
 }
 
 .provider-button p {
