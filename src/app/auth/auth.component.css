@@ -1,58 +1,96 @@
 .auth-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-  width: 40%;
-  padding: var(--layout-padding);
+  width: 50%;
+  padding: 2rem;
   border-radius: var(--button-radius);
-  border: 1px solid var(--primary);
+  /* border: 1px solid var(--primary); */
+  background-color: var(--bg-secondary);
+}
+
+.description {
+  padding: 1rem 0;
+}
+
+.button {
+  background-color: var(--bg-primary);
+  justify-content: start;
 }
 
 form {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  & div {
-    padding-top: var(--layout-padding);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    & label {
-      padding-bottom: 0.5rem;
-    }
-    & input {
-      height: var(--button-height);
-      border-radius: var(--button-radius);
-      padding-left: 1rem;
-      border: 1px solid var(--primary);
-    }
-    input:focus {
-      outline-color: var(--secondary);
-    }
-  }
+  padding-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: left; */
+  /* align-items: start; */
+}
+
+label {
+  padding-bottom: 0.5rem;
+}
+
+input {
+  height: var(--button-height);
+  border-radius: var(--button-radius);
+  padding-left: 1rem;
+  border: 1px solid var(--primary);
+}
+input:focus {
+  outline-color: var(--secondary);
+}
+
+.provider-button {
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  height: 3rem;
+  margin-bottom: 0.25rem;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.provider-button p {
+  color: var(--bg-primary);
+  font-family: var(--font-family-primary);
+  font-size: 1rem;
+}
+
+svg {
+  height: 24px;
+  width: 24px;
 }
 
 @media screen and (max-width: 1280px) {
   .auth-wrapper {
-    width: 60%;
+    width: 75%;
   }
 }
 @media screen and (max-width: 850px) {
   .auth-wrapper {
-    width: 80%;
-  }
-}
-@media screen and (max-width: 700px) {
-  .auth-wrapper {
-    width: 80%;
-  }
-}
-@media (max-width: 400px) {
-  .auth-wrapper {
-    width: 95%;
-  }
-}
-@media (max-width: 350px) {
-  .auth-wrapper {
     width: 98%;
   }
 }
+/* @media screen and (max-width: 700px) {
+  .auth-wrapper {
+    width: 98%;
+  }
+} */
+/* @media (max-width: 400px) {
+  .auth-wrapper {
+    width: 98%;
+  }
+} */
+/* @media (max-width: 350px) {
+  .auth-wrapper {
+    width: 98%;
+  }
+} */

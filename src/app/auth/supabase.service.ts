@@ -54,6 +54,12 @@ export class SupabaseService {
     return this.supabase.auth.signOut();
   }
 
+  async loginWithGoogle() {
+    const { error } = await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  }
+
   updateProfile(profile: Profile) {
     const update = {
       ...profile,
