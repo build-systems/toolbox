@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SupabaseService } from '../../auth/supabase.service';
+import { DbEinzelmassnahmen } from './db-einzelmassnahmen';
 
 export const PROJECTS_TABLE = 'einzelmassnahmen_projects';
 export const ITEMS_TABLE = 'einzelmassnahmen_items';
@@ -32,6 +33,19 @@ export class DbEinzelmassnahmenService {
       throw error;
     }
     return data;
+  }
+
+  async getFullEinzelmassnahmenProjectByProjectId(
+    projectId: number
+  ): Promise<DbEinzelmassnahmen> {
+    const { data, error } = await this.supabaseService.supabase
+      .from(PROJECTS_TABLE)
+      .select(`*, ${ITEMS_TABLE} (*, ${VALUES_TABLE} (*))`)
+      .eq('id', projectId);
+    if (error) {
+      throw error;
+    }
+    return data[0];
   }
 
   async getEinzelmassnahmenProjectByProjectTitle(projectName: string) {
@@ -70,9 +84,7 @@ export class DbEinzelmassnahmenService {
     return data;
   }
 
-  async createEinzelmassnahmenProject(
-    projectData: EinzelmassnahmenOutputProject
-  ) {
+  async createEinzelmassnahmenProject(projectData: EinzelmassnahmenProject) {
     try {
       const { data, error } = await this.supabaseService.supabase.rpc(
         CREATE_PROJECT_FUNCTION,
@@ -99,9 +111,7 @@ export class DbEinzelmassnahmenService {
     return response;
   }
 
-  async updateEinzelmassnahmenProject(
-    projectData: EinzelmassnahmenOutputProject
-  ) {
+  async updateEinzelmassnahmenProject(projectData: EinzelmassnahmenProject) {
     try {
       const { data, error } = await this.supabaseService.supabase.rpc(
         UPDATE_PROJECT_FUNCTION,

@@ -217,30 +217,30 @@ type Vorbaurollladen =
 type VorbaurollladenOption = Option<Vorbaurollladen>;
 type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
 
-type OutputTitle =
+type EinzelmassnahmenValueTitle =
   | 'Kosten'
   | 'Vollkosten'
   | 'Sowieso-Kosten'
   | 'Energetisch Kosten';
 
-type EinzelmassnahmenOutputValue = {
-  title: OutputTitle;
+type EinzelmassnahmenValue = {
+  title: EinzelmassnahmenValueTitle;
   id: number | undefined;
   description?: string;
   unit: string;
   value: number;
 };
 
-type EinzelmassnahmenOutputItem = {
+type EinzelmassnahmenItem = {
   title: BauteilText | undefined;
   id: number | undefined;
   description?: string;
-  values: EinzelmassnahmenOutputValue[];
+  values: EinzelmassnahmenValue[];
 };
 
-type EinzelmassnahmenOutputProject = {
+type EinzelmassnahmenProject = {
   title: string;
   id: number | undefined;
-  items: EinzelmassnahmenOutputItem[];
+  items: EinzelmassnahmenItem[];
   vollkosten: number;
 };

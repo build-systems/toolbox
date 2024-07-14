@@ -20,7 +20,7 @@ export class ListEinzelmassnahmenComponent {
 
   delOutputItemFromList(
     index: number,
-    projectSignal: WritableSignal<EinzelmassnahmenOutputProject>
+    projectSignal: WritableSignal<EinzelmassnahmenProject>
   ) {
     const project = projectSignal();
     if (index < 0 || index >= project.items.length) {

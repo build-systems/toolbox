@@ -19,6 +19,7 @@ import { FormProjektSanierungService } from '../sanierung/form-projekt-sanierung
 import { FormDarlehenSanierungService } from '../sanierung/form-darlehen-sanierung/form-darlehen-sanierung.service';
 import { DbSanierung } from '../sanierung/db-sanierung';
 import localeDe from '@angular/common/locales/de';
+import { DbEinzelmassnahmen } from '../einzelmassnahmen/db-einzelmassnahmen';
 registerLocaleData(localeDe, 'de');
 
 @Component({
@@ -70,7 +71,7 @@ export class PortfolioComponent {
 
   async loadEinzelmassnahmenProject(
     projectId: number,
-    einzelmassnahmenProject: WritableSignal<EinzelmassnahmenOutputProject>
+    einzelmassnahmenProject: WritableSignal<EinzelmassnahmenProject>
   ) {
     // Clean project signal (to avoid flashing)
     einzelmassnahmenProject.update(() => ({
@@ -83,36 +84,26 @@ export class PortfolioComponent {
     // Redirect
     this.router.navigateByUrl('/einzelmassnahmen');
 
-    // Get project to retrieve name
-    const projectDb =
-      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectId(
+    const fullProjectDb: DbEinzelmassnahmen =
+      await this.dbEinzelmassnahmenService.getFullEinzelmassnahmenProjectByProjectId(
         projectId
       );
 
-    // Get Project items
-    let outputItems: EinzelmassnahmenOutputItem[] = [];
-    const itemsDb =
-      await this.dbEinzelmassnahmenService.getEinzelmassnahmenItemsByProjectId(
-        projectId
-      );
+    // Re-create the list using interface
+    let outputItems: EinzelmassnahmenItem[] = [];
 
     // Create items list
-    for (const itemDb of itemsDb) {
-      let newItem: EinzelmassnahmenOutputItem = {
+    for (const itemDb of fullProjectDb.einzelmassnahmen_items) {
+      let newItem: EinzelmassnahmenItem = {
         title: itemDb.title,
         id: itemDb.id,
         values: [],
       };
 
-      let valuesDb =
-        await this.dbEinzelmassnahmenService.getEinzelmassnahmenValuesByItemId(
-          itemDb.id
-        );
+      itemDb.einzelmassnahmen_values.sort((a, b) => a.position - b.position);
 
-      valuesDb.sort((a, b) => a.position - b.position);
-
-      for (const valueDb of valuesDb) {
-        let newValue: EinzelmassnahmenOutputValue = {
+      for (const valueDb of itemDb.einzelmassnahmen_values) {
+        let newValue: EinzelmassnahmenValue = {
           title: valueDb.title,
           id: valueDb.id,
           unit: valueDb.unit,
@@ -123,13 +114,13 @@ export class PortfolioComponent {
       outputItems = [...outputItems, newItem];
     }
 
-    this.einzelmassnahmenService.projectTitle.set(projectDb[0].title);
+    this.einzelmassnahmenService.projectTitle.set(fullProjectDb.title);
     // Update project signal
     einzelmassnahmenProject.update(() => ({
-      title: projectDb[0].title,
-      id: projectDb[0].id,
+      title: fullProjectDb.title,
+      id: fullProjectDb.id,
       items: outputItems,
-      vollkosten: projectDb[0].vollkosten,
+      vollkosten: fullProjectDb.vollkosten,
     }));
   }
 

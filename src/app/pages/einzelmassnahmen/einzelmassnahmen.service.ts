@@ -18,10 +18,10 @@ export class EinzelmassnahmenService {
   private sharedService = inject(SharedService);
 
   // Titles
-  titleKostenM2: OutputTitle = 'Kosten';
-  titleVollkosten: OutputTitle = 'Vollkosten';
-  titleSowiesoKosten: OutputTitle = 'Sowieso-Kosten';
-  titleEnergetischMehrkosten: OutputTitle = 'Energetisch Kosten';
+  titleKostenM2: EinzelmassnahmenValueTitle = 'Kosten';
+  titleVollkosten: EinzelmassnahmenValueTitle = 'Vollkosten';
+  titleSowiesoKosten: EinzelmassnahmenValueTitle = 'Sowieso-Kosten';
+  titleEnergetischMehrkosten: EinzelmassnahmenValueTitle = 'Energetisch Kosten';
   descriptionEnergetischMehrkosten = 'Energetisch bedingte Mehrkosten';
   projectTitle = signal<string>('Untitled');
   debouncedProjectTitle = this.sharedService.debouncedSignal(
@@ -578,13 +578,13 @@ export class EinzelmassnahmenService {
     return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
   }
 
-  einzelmassnahmenOutputItem: EinzelmassnahmenOutputItem = {
+  einzelmassnahmenOutputItem: EinzelmassnahmenItem = {
     title: undefined,
     id: undefined,
     values: [],
   };
 
-  einzelmassnahmenOutputProject = signal<EinzelmassnahmenOutputProject>({
+  einzelmassnahmenOutputProject = signal<EinzelmassnahmenProject>({
     title: 'Untitled',
     id: undefined,
     items: [],
@@ -594,8 +594,8 @@ export class EinzelmassnahmenService {
   totalKosten = signal<number>(0);
 
   addOutputItemToProject(
-    newItem: EinzelmassnahmenOutputItem,
-    project: WritableSignal<EinzelmassnahmenOutputProject>
+    newItem: EinzelmassnahmenItem,
+    project: WritableSignal<EinzelmassnahmenProject>
   ) {
     if (newItem.title != undefined) {
       project.update((old) => ({
@@ -607,7 +607,10 @@ export class EinzelmassnahmenService {
     }
   }
 
-  findValueByTitle(obj: EinzelmassnahmenOutputItem, title: OutputTitle): any {
+  findValueByTitle(
+    obj: EinzelmassnahmenItem,
+    title: EinzelmassnahmenValueTitle
+  ): any {
     if (obj.values && Array.isArray(obj.values)) {
       for (const item of obj.values) {
         if (item.title === title) {
@@ -621,7 +624,7 @@ export class EinzelmassnahmenService {
   switchBauteil(
     bauteilSelected: string,
     dachSelected: Dach
-  ): EinzelmassnahmenOutputItem {
+  ): EinzelmassnahmenItem {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {
