@@ -1,12 +1,11 @@
 .auth-wrapper {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   width: 50%;
+  max-width: 35rem;
   padding: 2rem;
   border-radius: var(--button-radius);
-  /* border: 1px solid var(--primary); */
   background-color: var(--bg-secondary);
 }
 
