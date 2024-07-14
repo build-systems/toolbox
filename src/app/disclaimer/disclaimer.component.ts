@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { SupabaseService } from '../../auth/supabase.service';
+import { SupabaseService } from '../auth/supabase.service';
 
 @Component({
   selector: 'app-disclaimer',
