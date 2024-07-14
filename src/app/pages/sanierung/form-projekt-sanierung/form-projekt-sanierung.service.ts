@@ -52,6 +52,8 @@ export class FormProjektSanierungService {
       { id: 'enstd4', value: 'EH 85', disabled: false },
     ],
   };
+  energiestandardValue: EnergiestandardSanierung =
+    this.energiestandard.options[0].value;
   // Effizienz­haus https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Das-Effizienzhaus/
 
   // Zusätzliche Nachhaltigkeitskriterien
@@ -264,6 +266,7 @@ export class FormProjektSanierungService {
 
     // Energiestandard
     this.projektForm.get('energiestandard')?.valueChanges.subscribe((value) => {
+      this.energiestandardValue = value!;
       // Relationship with Zertifizierung
       const zertifizierung = this.projektForm.get('zertifizierung');
       if (value != 'EH 40') {

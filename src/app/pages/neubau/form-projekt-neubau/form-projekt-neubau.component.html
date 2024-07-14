@@ -171,7 +171,7 @@
   this.formService.zertifizierung.options[1].disabled ||
   this.formService.zertifizierung.options[2].disabled) {
   <div class="warning-block">
-    {{ this.formService.zertifizierungWarningMessage$i() }}
+    {{ this.formService.zertifizierungWarningMessage$() }}
   </div>
   }
   <br />
@@ -274,7 +274,7 @@
     </div>
   </fieldset>
   @if (formService.noKellergeschoss) {
-  <div class="warning-block">*Kellergeschoss nicht vorhanden</div>
+  <div class="warning-block">* Kellergeschoss nicht vorhanden.</div>
   }
   <fieldset class="radio-fieldset">
     <legend>

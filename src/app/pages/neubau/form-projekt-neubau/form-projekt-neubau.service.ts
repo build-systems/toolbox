@@ -82,7 +82,7 @@ export class FormProjektNeubauService {
     ],
   };
   // Signal to edit the disable property
-  zertifizierungWarningMessage$i = signal('');
+  zertifizierungWarningMessage$ = signal('');
 
   // Details
   // Kellergeschoss
@@ -409,8 +409,8 @@ export class FormProjektNeubauService {
           zertifizierung?.setValue('Keine');
           this.zertifizierung.options[1].disabled = true;
           this.zertifizierung.options[2].disabled = true;
-          this.zertifizierungWarningMessage$i.set(
-            '* Zertifizierung ist nur mit EH 40 möglich'
+          this.zertifizierungWarningMessage$.set(
+            '* Zertifizierung ist nur mit EH 40 möglich.'
           );
         } else if (value === 'EH 40' && konstruktion?.value === 'Holzbau') {
           this.zertifizierung.options[1].disabled = false;
@@ -421,8 +421,8 @@ export class FormProjektNeubauService {
         ) {
           this.zertifizierung.options[1].disabled = false;
           this.zertifizierung.options[2].disabled = true;
-          this.zertifizierungWarningMessage$i.set(
-            '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+          this.zertifizierungWarningMessage$.set(
+            '* QNG-Zertifizierung ist nur mit Holzbau möglich.'
           );
         }
       });
@@ -438,8 +438,8 @@ export class FormProjektNeubauService {
         }
         this.zertifizierung.options[1].disabled = false;
         this.zertifizierung.options[2].disabled = true;
-        this.zertifizierungWarningMessage$i.set(
-          '* QNG-Zertifizierung ist nur mit Holzbau möglich'
+        this.zertifizierungWarningMessage$.set(
+          '* QNG-Zertifizierung ist nur mit Holzbau möglich.'
         );
       } else if (
         value === 'Konventionell' &&

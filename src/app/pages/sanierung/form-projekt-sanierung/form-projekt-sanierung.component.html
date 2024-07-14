@@ -230,6 +230,13 @@
       </span>
     </div>
   </fieldset>
+  @if (formService.energiestandardValue === 'EH 85' &&
+  formService.worstPerformingBuilding) {
+  <div class="warning-block">
+    * Bitte beachten Sie, dass der Bonus für "Worst Performing Building" nur für
+    die EH 40, 55 und 70 gilt. EH 85 ist davon ausgeschlossen.
+  </div>
+  }
   <fieldset class="radio-fieldset">
     <legend>
       {{ formService.foerderbonus.title }}&nbsp;<span
