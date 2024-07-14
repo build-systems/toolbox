@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SupabaseService } from '../../auth/supabase.service';
 
 @Component({
   selector: 'app-disclaimer',
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './disclaimer.component.css',
 })
 export class DisclaimerComponent {
+protected readonly supabaseService = inject(SupabaseService);
   isCopied: boolean = false;
 
   async copyContent() {
