@@ -107,8 +107,6 @@ export class NeubauComponent {
                 console.error('Error overwriting project:', error);
               }
             } else {
-              console.log(value.baunebenkostenOhneFinIn);
-
               try {
                 await this.dbNeubauService.createNeubauProject(value);
               } catch (error) {
