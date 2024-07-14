@@ -11,6 +11,7 @@ li {
   display: flex;
   align-items: center;
   height: var(--mobile-header);
+  border-left: var(--nav-sel-thickness) solid var(--bg-secondary);
   & a {
     display: flex;
     width: 100%;
@@ -96,7 +97,7 @@ li a:hover {
   font-weight: 400;
   background-color: var(--bg-tertiary);
   opacity: 1;
-  border-left: var(--nav-sel-thickness) solid var(--secondary);
+  border-left-color: var(--secondary);
   padding-left: 0px;
   & a {
     opacity: 1;

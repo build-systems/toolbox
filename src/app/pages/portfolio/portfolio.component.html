@@ -1,1 +1,175 @@
-<h1 class="container">Portfolio page in development 🔨</h1>
+@if(supabaseService.sessionSignal()) {
+<div class="title-mob-numbers">
+  <h1 class="title">Portfolio</h1>
+</div>
+<div class="tables">
+  <h2>Fördermittel Neubau</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>Investitionskosten</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let project of this.neubauService.projectsNeubau()"
+          class="list-item"
+        >
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.title }}
+          </td>
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.created_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{ project.projects.last_edited_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td (click)="loadNeubauProject(project.projects.id)">
+            {{
+              project.projects.investitionskosten
+                | currency : "EUR" : "symbol" : "1.0-0" : "de"
+            }}
+          </td>
+          <td (click)="deleteNeubauProjectByProjectId(project.projects.id)">
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#trash" />
+            </svg>
+          </td>
+        </tr>
+        <tr class="new-item" (click)="createNewNeubauProject()">
+          <td colspan="4">+ New</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Fördermittel Komplettsanierung</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>Investitionskosten</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let project of this.sanierungService.projectsSanierung()"
+          class="list-item"
+        >
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.title }}
+          </td>
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.created_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{ project.projects.last_edited_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td (click)="loadSanierungProject(project.projects.id)">
+            {{
+              project.projects.baukosten
+                | currency : "EUR" : "symbol" : "1.0-0" : "de"
+            }}
+          </td>
+          <td (click)="deleteSanierungProjectByProjectId(project.projects.id)">
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#trash" />
+            </svg>
+          </td>
+        </tr>
+        <tr class="new-item" (click)="createNewSanierungProject()">
+          <td colspan="4">+ New</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Fördermittel Einzelmaßnahmen</h2>
+  <div class="wrapper-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>Investitionskosten</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let project of this.einzelmassnahmenService.projectsEinzelmassnahmen()
+          "
+          class="list-item"
+        >
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
+            {{ project.projects.title }}
+          </td>
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
+            {{ project.projects.created_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
+            {{ project.projects.last_edited_at | date : "dd/MM/yyyy H:mm" }}
+          </td>
+          <td
+            (click)="
+              loadEinzelmassnahmenProject(
+                project.projects.id,
+                einzelmassnahmenService.einzelmassnahmenOutputProject
+              )
+            "
+          >
+            {{
+              project.projects.vollkosten
+                | currency : "EUR" : "symbol" : "1.0-0" : "de"
+            }}
+          </td>
+          <td
+            (click)="
+              deleteEinzelmassnahmenProjectByProjectId(project.projects.id)
+            "
+          >
+            <svg class="icon">
+              <use xlink:href="assets/icons.svg#trash" />
+            </svg>
+          </td>
+        </tr>
+        <tr class="new-item" (click)="createNewEinzelmassnahmen()">
+          <td colspan="4">+ New</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+} @else {
+<app-auth></app-auth>
+}

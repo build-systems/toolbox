@@ -1,0 +1,23 @@
+<div class="card-container">
+  <div
+    class="card"
+    *ngFor="
+      let item of einzelmassnahmenService.einzelmassnahmenOutputItem.values
+    "
+    [title]="item.title"
+  >
+    <h3>
+      {{ item.title }} [{{ item.unit }}]@if (item.description) {&nbsp;<sup
+        class="tooltip-icon"
+        [appTooltip]="item.description"
+        placement="right"
+        >&#9432;</sup
+      >}
+    </h3>
+    <div>
+      @if (item.value != 0) {
+      {{ item.value | currency : "EUR" : "symbol" : "1.0-0" : "de" }}
+      } @else { - }
+    </div>
+  </div>
+</div>

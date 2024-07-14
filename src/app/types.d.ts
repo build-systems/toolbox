@@ -1,165 +1,91 @@
 // I added the optional text variable to be
 // able to change how it is displayed without affecting the formulas
 
-// Projekt
-type sanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
-type sanierungProjektTypeOptions = {
+// Generic type
+type SliderNumberObj = {
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  title: string;
+  tooltip?: string;
+  disabled: boolean;
+};
+
+type CheckboxObj = {
+  value: boolean;
+  title: string;
+  tooltip?: string;
+  disabled: boolean;
+};
+
+// Generic type
+type Option<T> = {
   id: string;
-  value: sanierungProjektType;
+  value: T;
   text?: string;
   disabled: boolean;
 };
-type sanierungProjektTypeObj = {
-  options: sanierungProjektTypeOptions[];
+
+type OptionObj<T> = {
   title: string;
+  tooltip?: string;
+  options: Option<T>[];
 };
 
-// User price
-type eigeneKostenObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
+//Number option (for the output)
+type NumberOption = Option<number>;
+type NumberOptionsObj = OptionObj<number>;
 
-// Wohnflaeche
-type wohnflaecheObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Anzahl Wohnungen
-type anzahlWohnungenObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
+// Projekt
+type SanierungProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type SanierungProjektTypeOption = Option<SanierungProjektType>;
+type SanierungProjektTypeObj = OptionObj<SanierungProjektType>;
 
 // Energiestandard Neubau
 type EnergiestandardNeubau = 'EH 40' | 'GEG';
-type EnergiestandardNeubauOptions = {
-  id: string;
-  value: EnergiestandardNeubau;
-  text?: string;
-  disabled: boolean;
-};
-type EnergiestandardNeubauObj = {
-  options: EnergiestandardNeubauOptions[];
-  title: string;
-};
+type EnergiestandardNeubauOption = Option<EnergiestandardNeubau>;
+type EnergiestandardNeubauObj = OptionObj<EnergiestandardNeubau>;
 
 // Energiestandard Sanierung
 type EnergiestandardSanierung = 'EH 40' | 'EH 55' | 'EH 70' | 'EH 85';
-type EnergiestandardSanierungOptions = {
-  id: string;
-  value: EnergiestandardSanierung;
-  text?: string;
-  disabled: boolean;
-};
-type EnergiestandardSanierungObj = {
-  options: EnergiestandardSanierungOptions[];
-  title: string;
-};
+type EnergiestandardSanierungOption = Option<EnergiestandardSanierung>;
+type EnergiestandardSanierungObj = OptionObj<EnergiestandardSanierung>;
 
 // Konstruktion typ
 type Konstruktion = 'Konventionell' | 'Holzbau';
-type KonstruktionOptions = {
-  id: string;
-  value: Konstruktion;
-  text?: string;
-  disabled: boolean;
-};
-type KonstruktionObj = {
-  options: KonstruktionOptions[];
-  title: string;
-};
+type KonstruktionOption = Option<Konstruktion>;
+type KonstruktionObj = OptionObj<Konstruktion>;
 
 // Zertifizierung Neubau
 type ZertifizierungNeubau = 'Keine' | 'ohne QNG' | 'mit QNG';
-type ZertifizierungNeubauOptions = {
-  id: string;
-  value: ZertifizierungNeubau;
-  text?: string;
-  disabled: boolean;
-};
-type ZertifizierungNeubauObj = {
-  options: ZertifizierungNeubauOptions[];
-  title: string;
-};
+type ZertifizierungNeubauOption = Option<ZertifizierungNeubau>;
+type ZertifizierungNeubauObj = OptionObj<ZertifizierungNeubau>;
 
 // Zusätzliche Nachhaltigkeitskriterien
 type Foerderbonus = 'EE' | 'NH' | 'Keine';
-type FoerderbonusOptions = {
-  id: string;
-  value: Foerderbonus;
-  text?: string;
-  disabled: boolean;
-}
-type FoerderbonusObj = {
-  options: FoerderbonusOptions[];
-  title: string;
-}
+type FoerderbonusOptions = Option<Foerderbonus>;
+type FoerderbonusObj = OptionObj<Foerderbonus>;
 
 // Zustand Bestand
 type UmfangModernisierung = 'Nicht/gering' | 'Größtenteils' | 'Umfassend';
-type UmfangModernisierungOptions = {
-  id: string;
-  value: UmfangModernisierung;
-  text?: string;
-  disabled: boolean;
-};
-type UmfangModernisierungObj = {
-  options: UmfangModernisierungOptions[];
-  title: string;
-};
+type UmfangModernisierungOption = Option<UmfangModernisierung>;
+type UmfangModernisierungObj = OptionObj<UmfangModernisierung>;
 
 // Kellergeschoss
 type Kellergeschoss = 'Geplant' | 'Nicht geplant';
-type KellergeschossOptions = {
-  id: string;
-  value: Kellergeschoss;
-  text?: string;
-  disabled: boolean;
-};
-type KellergeschossObj = {
-  options: KellergeschossOptions[];
-  title: string;
-};
+type KellergeschossOption = Option<Kellergeschoss>;
+type KellergeschossObj = OptionObj<Kellergeschoss>;
 
 // Stellplaetze
 type Stellplaetze = 'Garage' | 'Parkpalette' | 'Tiefgarage';
-type StellplaetzeOptions = {
-  id: string;
-  value: Stellplaetze;
-  text?: string;
-  disabled: boolean;
-};
-type StellplaetzeObj = {
-  options: StellplaetzeOptions[];
-  title: string;
-};
+type StellplaetzeOption = Option<Stellplaetze>;
+type StellplaetzeObj = OptionObj<Stellplaetze>;
 
 // Aufzugsanlage
 type Aufzugsanlage = 'Geplant' | 'Nicht geplant';
-type AufzugsanlageOptions = {
-  id: string;
-  value: Aufzugsanlage;
-  text?: string;
-  disabled: boolean;
-};
-type AufzugsanlageObj = {
-  options: AufzugsanlageOptions[];
-  title: string;
-};
+type AufzugsanlageOption = Option<Aufzugsanlage>;
+type AufzugsanlageObj = OptionObj<Aufzugsanlage>;
 
 // Barrierefreies Bauen
 type BarrierefreiesBauen =
@@ -167,133 +93,154 @@ type BarrierefreiesBauen =
   | 'Barrierereduziert'
   | 'Barrierefrei'
   | 'Barrierefrei (R)';
-type BarrierefreiesBauenOptions = {
-  id: string;
-  value: BarrierefreiesBauen;
-  text?: string;
-  disabled: boolean;
-};
-type BarrierefreiesBauenObj = {
-  options: BarrierefreiesBauenOptions[];
-  title: string;
-};
+type BarrierefreiesBauenOption = Option<BarrierefreiesBauen>;
+type BarrierefreiesBauenObj = OptionObj<BarrierefreiesBauen>;
 
 // Dachbegruenung
 type Dachbegruenung = 'Geplant' | 'Nicht geplant';
-type DachbegruenungOptions = {
-  id: string;
-  value: Dachbegruenung;
-  text?: string;
-  disabled: boolean;
-};
-type DachbegruenungObj = {
-  options: DachbegruenungOptions[];
-  title: string;
-};
+type DachbegruenungOption = Option<Dachbegruenung>;
+type DachbegruenungObj = OptionObj<Dachbegruenung>;
 
 // Anspruchsvolle Baustellenlogistik
 type Baustellenlogistik = 'Vorhanden' | 'Nicht Vorhanden';
-type BaustellenlogistikOptions = {
-  id: string;
-  value: Baustellenlogistik;
-  text?: string;
-  disabled: boolean;
-};
-type BaustellenlogistikObj = {
-  options: BaustellenlogistikOptions[];
-  title: string;
-};
+type BaustellenlogistikOption = Option<Baustellenlogistik>;
+type BaustellenlogistikObj = OptionObj<Baustellenlogistik>;
 
 // Außenanlagen
 type Aussenanlagen = 'Gering' | 'Mittel' | 'Hoch';
-type AussenanlagenOptions = {
-  id: string;
-  value: Aussenanlagen;
-  text?: string;
-  disabled: boolean;
-};
-type AussenanlagenObj = {
-  options: AussenanlagenOptions[];
-  title: string;
-};
-
-// Grundstuecksbezogene Kosten
-type grundstKostenObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Baunebenkosten Kein Fin
-type BaunebenkostenOhneFinObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
+type AussenanlagenOption = Option<Aussenanlagen>;
+type AussenanlagenObj = OptionObj<Aussenanlagen>;
 
 // Darlehen
-// Zinssatz Hausbank (Sollzins) old Kalkulationszinssatz (Realzins)
-type zinssatzBankObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
-// Kreditlaufzeit
-type KreditlaufzeitObj = {
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  title: string;
-  disabled: boolean;
-};
-
 // KfW Darlehen
-type KfWDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
-type KfWDarlehenOptions = {
-  id: string;
-  value: KfWDarlehen;
-  text?: string;
-  disabled: boolean;
-};
-type KfWDarlehenObj = {
-  options: KfWDarlehenOptions[];
-  title: string;
-};
+type KfwDarlehen = 'Annuitäten' | 'Endfälliges'; // | 'kein';
+type KfWDarlehenOption = Option<KfwDarlehen>;
+type KfWDarlehenObj = OptionObj<KfwDarlehen>;
 
 // Bank Darlehen
 type BankDarlehen = 'Annuitäten' | 'Endfälliges';
-type BankDarlehenOptions = {
-  id: string;
-  value: BankDarlehen;
-  text?: string;
-  disabled: boolean;
-};
-type BankDarlehenObj = {
-  options: BankDarlehenOptions[];
-  title: string;
+type BankDarlehenOption = Option<BankDarlehen>;
+type BankDarlehenObj = OptionObj<BankDarlehen>;
+
+// Einzelmaßnahmen
+// Haus
+type Haus = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type HausOption = Option<Haus>;
+type HausObj = OptionObj<Haus>;
+
+// Bauteil
+type Bauteil =
+  | 'Außenwand'
+  | 'Bodenplatte'
+  | 'Dach' // This is temporary. We need a typology selection step: MFH/EFH, Flach-/Steildach, mit/ohne keller
+  | 'Dachflächenfenster'
+  | 'Fenster'
+  | 'Flachdach'
+  | 'Innenwand'
+  | 'Keller'
+  | 'ObersteGeschossdecke'
+  | 'Steildach'
+  | 'Steildachgauben'
+  | 'Türen'
+  | 'Vorbaurollladen'
+  | 'Wärmedämmverbundsystem';
+type BauteilOption = Option<Bauteil>;
+type BauteilObj = OptionObj<Bauteil>;
+
+type BauteilText =
+  | 'Außenwand'
+  | 'Bodenplatte'
+  | 'Dachflächenfenster'
+  | 'Fenster'
+  | 'Flachdach'
+  | 'Innenwand'
+  | 'Keller'
+  | 'Oberste Geschossdecke'
+  | 'Steildach'
+  | 'Steildachgauben'
+  | 'Tür'
+  | 'Vorbaurollladen'
+  | 'Wärmedämm­verbundsystem';
+
+type Waermeerzeuger =
+  | 'Bestandskessel'
+  | 'Gas-BW-Kessel'
+  | 'Öl-BW-Kessel'
+  | 'Pelletkessel'
+  | 'Fernwärme'
+  | 'Wärmepumpe (Erdkollektor)'
+  | 'Wärmepumpe (Erdsonde)'
+  | 'Wärmepumpe (Luft)'
+  | 'BHKW Erdgas'
+  | 'BHKW Biogas'
+  | 'BHKW Klärgas'
+  | 'BHKW Flüssiggas'
+  | 'BHKW Heizöl'
+  | 'Solar für WW mit Gaskessel'
+  | 'Solar für WW mit Ölkessel'
+  | 'Solar für WW mit Pelletkessel'
+  | 'Solar für WW&H mit Gaskessel'
+  | 'Solar für WW&H mit Ölkessel'
+  | 'Solar für WW&H mit Pelletkessel'
+  | 'Alter Bestandskessel (Heizöl/Gas)';
+type WaermeerzeugerOption = Option<Waermeerzeuger>;
+type WaermeerzeugerObj = OptionObj<Waermeerzeuger>;
+
+type Fenster = '3WSV Passivhaus' | '3WSV konventionell' | '2WSV konventionell';
+type FensterOption = Option<Fenster>;
+type FensterObj = OptionObj<Fenster>;
+
+type Keller =
+  | 'unterseitig ohne Bekleidung'
+  | 'unterseitig mit Bekleidung'
+  | 'oberseitig';
+type KellerOption = Option<Keller>;
+type KellerObj = OptionObj<Keller>;
+
+type ObersteGeschossdecke = 'begehbar' | 'nicht begehbar';
+type ObersteGeschossdeckeOption = Option<ObersteGeschossdecke>;
+type ObersteGeschossdeckeObj = OptionObj<ObersteGeschossdecke>;
+
+type Dach = 'Flachdach' | 'Steildach';
+type DachOption = Option<Dach>;
+type DachObj = OptionObj<Dach>;
+
+type Flachdach = 'ohne Lichtkuppeln' | 'mit Lichtkuppeln';
+type FlachdachOption = Option<Flachdach>;
+type FlachdachObj = OptionObj<Flachdach>;
+
+type Vorbaurollladen =
+  | 'Kunststoff Gurt'
+  | 'Kunststoff Elektro'
+  | 'Alu Gurt'
+  | 'Alu Elektro';
+type VorbaurollladenOption = Option<Vorbaurollladen>;
+type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
+
+type OutputTitle =
+  | 'Kosten'
+  | 'Vollkosten'
+  | 'Sowieso-Kosten'
+  | 'Energetisch Kosten';
+
+type EinzelmassnahmenOutputValue = {
+  title: OutputTitle;
+  id: number | undefined;
+  description?: string;
+  unit: string;
+  value: number;
 };
 
-// Worst Performing Building
-type WorstPerformingBuildingObj = {
-  value: boolean;
-  title: string;
-  disabled: boolean;
+type EinzelmassnahmenOutputItem = {
+  title: BauteilText | undefined;
+  id: number | undefined;
+  description?: string;
+  values: EinzelmassnahmenOutputValue[];
 };
 
-// Serielle Sanierung
-type SerielleSanierungObj = {
-  value: boolean;
+type EinzelmassnahmenOutputProject = {
   title: string;
-  disabled: boolean;
+  id: number | undefined;
+  items: EinzelmassnahmenOutputItem[];
+  vollkosten: number;
 };

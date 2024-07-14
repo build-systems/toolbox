@@ -4,7 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-gkosten-m2-neubau',
@@ -35,7 +35,10 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
           0,
           Math.round(projekt.bankKreditM2),
         ];
-        this.barChartData.datasets[2].data = [0, Math.round(projekt.kfwKreditM2)];
+        this.barChartData.datasets[2].data = [
+          0,
+          Math.round(projekt.kfwKreditM2),
+        ];
         // this.barChartData.datasets[3].data = [
         //   0,
         //   Math.round(value.finanzierungskostenFinanzmarktM2),
@@ -95,12 +98,14 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
             weight: this.styleService.ticks.font.weight,
           },
           callback: function (value) {
-            return value.toLocaleString('de-DE', {
-              style: 'currency',
-              currency: 'EUR',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0,
-            }) + '/m²';
+            return (
+              value.toLocaleString('de-DE', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }) + '/m²'
+            );
           },
         },
       },
@@ -134,7 +139,11 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
       tooltip: {
         callbacks: {
           label: (item) =>
-            `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)} / m²`,
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)} / m²`,
         },
       },
     },
@@ -148,47 +157,30 @@ export class ChartGkostenM2NeubauComponent implements OnInit {
         data: [0, null],
         label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.colors[0].backgroundColor,
+        borderColor: this.styleService.datasets.colors[0].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.colors[0].hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
+        backgroundColor: this.styleService.datasets.colors[1].backgroundColor,
+        borderColor: this.styleService.datasets.colors[1].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
+          this.styleService.datasets.colors[1].hoverBackgroundColor,
       },
       {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor:this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
+        backgroundColor: this.styleService.datasets.colors[2].backgroundColor,
+        borderColor: this.styleService.datasets.colors[2].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+          this.styleService.datasets.colors[2].hoverBackgroundColor,
       },
-      // {
-      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten Bank',
-      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
-      //   borderColor: 'rgb(57, 190, 193)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
-      // },
-      // {
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten KfW',
-      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
-      //   borderColor: 'rgb(58, 194, 104)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
-      // },
     ],
   };
 

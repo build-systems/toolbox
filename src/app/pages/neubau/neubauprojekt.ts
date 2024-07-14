@@ -1,5 +1,9 @@
 export interface NeubauProjekt {
+  title: string;
+  id: number | undefined;
   // Projekt
+  eigeneKostenDisabled: boolean;
+  eigeneKosten: number;
   wohnflaeche: number;
   anzahlWohnungen: number;
   energiestandard: EnergiestandardNeubau;
@@ -29,7 +33,7 @@ export interface NeubauProjekt {
   // Dalehen
   zinssatzBank: number;
   kreditlaufzeit: number;
-  kfWDarlehen: KfWDarlehen;
+  kfWDarlehen: KfwDarlehen;
   bankDarlehen: BankDarlehen;
   // Output
   gestehungskosten: number;
@@ -37,14 +41,14 @@ export interface NeubauProjekt {
   zinssatzKfw: number;
   baukosten: number;
   baukostenProBau: number;
-  investitionkosten: number,
-  investitionkostenM2: number,
-  investitionkostenProBau: number,
+  investitionkosten: number;
+  investitionkostenM2: number;
+  investitionkostenProBau: number;
   afKfw: number;
   afBank: number;
   annuitaetKfW: number;
   annuitaetBank: number;
-  efKfW: number;
+  efKfw: number;
   efBank: number;
   gbAnnuitaet: number;
   gbEndfaelliges: number;

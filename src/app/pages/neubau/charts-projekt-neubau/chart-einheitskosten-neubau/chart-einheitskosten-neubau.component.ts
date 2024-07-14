@@ -5,7 +5,7 @@ import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-einheitskosten-neubau',
@@ -28,31 +28,30 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$
-      .subscribe((value) => {
-        this.output = value;
-        this.barChartData.datasets[0].data = [
-          Math.round(this.output.investitionkostenProBau),
-          0,
-        ];
-        this.barChartData.datasets[1].data = [
-          0,
-          Math.round(this.output.bankKreditProBau),
-        ];
-        this.barChartData.datasets[2].data = [
-          0,
-          Math.round(this.output.kfwKreditschwelleProWe),
-        ];
-        // this.barChartData.datasets[3].data = [
-        //   0,
-        //   Math.round(this.output['finanzierungskostenFinanzmarktM2']),
-        // ];
-        // this.barChartData.datasets[4].data = [
-        //   0,
-        //   Math.round(this.output['finanzierungskostenKfwM2']),
-        // ];
-        this.chart?.update();
-      });
+    this.neubauService.currentOutputNeubau$.subscribe((value) => {
+      this.output = value;
+      this.barChartData.datasets[0].data = [
+        Math.round(this.output.investitionkostenProBau),
+        0,
+      ];
+      this.barChartData.datasets[1].data = [
+        0,
+        Math.round(this.output.bankKreditProBau),
+      ];
+      this.barChartData.datasets[2].data = [
+        0,
+        Math.round(this.output.kfwKreditschwelleProWe),
+      ];
+      // this.barChartData.datasets[3].data = [
+      //   0,
+      //   Math.round(this.output['finanzierungskostenFinanzmarktM2']),
+      // ];
+      // this.barChartData.datasets[4].data = [
+      //   0,
+      //   Math.round(this.output['finanzierungskostenKfwM2']),
+      // ];
+      this.chart?.update();
+    });
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -140,7 +139,11 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
       tooltip: {
         callbacks: {
           label: (item) =>
-            `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
@@ -154,47 +157,30 @@ export class ChartEinheitskostenNeubauComponent implements OnInit {
         data: [0, null],
         label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.colors[0].backgroundColor,
+        borderColor: this.styleService.datasets.colors[0].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.colors[0].hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
+        backgroundColor: this.styleService.datasets.colors[1].backgroundColor,
+        borderColor: this.styleService.datasets.colors[1].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
+          this.styleService.datasets.colors[1].hoverBackgroundColor,
       },
       {
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
+        backgroundColor: this.styleService.datasets.colors[2].backgroundColor,
+        borderColor: this.styleService.datasets.colors[2].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+          this.styleService.datasets.colors[2].hoverBackgroundColor,
       },
-      // {
-      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten Bank',
-      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
-      //   borderColor: 'rgb(57, 190, 193)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
-      // },
-      // {
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten KfW',
-      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
-      //   borderColor: 'rgb(58, 194, 104)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
-      // },
     ],
   };
 

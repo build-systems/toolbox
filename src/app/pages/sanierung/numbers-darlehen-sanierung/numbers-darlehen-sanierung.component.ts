@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SanierungService } from '../sanierung.service';
-import { SanierungProjekt } from '../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../sanierungprojekt';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import localeDe from '@angular/common/locales/de'
+import localeDe from '@angular/common/locales/de';
 import { TooltipDirective } from '../../../shared/tooltip.directive';
 import { allgemein, sanierung } from '../../../shared/tooltips';
 registerLocaleData(localeDe, 'de');
@@ -12,7 +12,7 @@ registerLocaleData(localeDe, 'de');
   standalone: true,
   imports: [CommonModule, TooltipDirective],
   templateUrl: './numbers-darlehen-sanierung.component.html',
-  styleUrl: './numbers-darlehen-sanierung.component.css'
+  styleUrl: './numbers-darlehen-sanierung.component.css',
 })
 export class NumbersDarlehenSanierungComponent implements OnInit {
   kfwZuschuss: number = 0;
@@ -24,16 +24,18 @@ export class NumbersDarlehenSanierungComponent implements OnInit {
   zinssatzKfw: number = 0;
   output!: SanierungProjekt;
 
-
-  constructor(private sanierungService: SanierungService, public sanierungTooltips: sanierung, public allgemeinTooltips: allgemein) {}
+  constructor(
+    private sanierungService: SanierungService,
+    public sanierungTooltips: sanierung,
+    public allgemeinTooltips: allgemein
+  ) {}
 
   ngOnInit(): void {
     this.sanierungService.currentOutputSanierung$.subscribe((value) => {
       this.output = value;
       this.kfwZuschuss = this.output.kfwZuschuss;
       this.investitionskosten = this.output.baukosten;
-      this.finanzierungskostenFinanzmarkt =
-        this.output.finanzierungskostenBank;
+      this.finanzierungskostenFinanzmarkt = this.output.finanzierungskostenBank;
       this.finanzierungskostenKfw = this.output.finanzierungskostenKfw;
       this.bankKredit = this.output.bankKredit;
       this.kfwKredit = this.output.kfwKredit;

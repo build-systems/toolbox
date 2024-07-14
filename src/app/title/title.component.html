@@ -1,30 +1,46 @@
-<div class="title" #top (click)="toggleExpand()">
+<div class="title" #top>
   <div class="arrow-and-h1">
-    <div class="arrow-container">
+    <div (click)="toggleExpand()" class="arrow-container">
       <div class="arrow">
         <span [@rotateArrow]="isExpanded ? 'expanded' : 'collapsed'"
           >&#9658;</span
         >
       </div>
     </div>
-    <h1>{{ title() }}</h1>
+    <h1>
+      <span (click)="toggleExpand()" class="tool-title">{{ title() }}</span>
+      <span> / </span>
+      <input
+        type="text"
+        name="projektRename"
+        id="projektRename"
+        autocomplete="off"
+        [(ngModel)]="projectTitle"
+        #projectTitleId
+        (click)="projectTitleId.select()"
+        (keyup.enter)="projectTitleId.blur()"
+        (blur)="onBlurRenameIfEmpty()"
+      />
+    </h1>
   </div>
   <div class="kfw-info">
-    <div class="kfw-text">
+    <div>
       <div
         class="kfw-description"
         [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"
       >
+        @if(kfwId()){
         <div class="kfw-number-container">
           <div class="kfw-number">
             <div class="kfw-id">KfW id</div>
             {{ kfwId() }}
           </div>
         </div>
+        }
         <div>
-          <h2>{{ kfwH2() }}</h2>
-          <h3>{{ kfwH3() }}</h3>
-          <p [innerHTML]="kfwDescription()"></p>
+          <h2>{{ h2() }}</h2>
+          <h3>{{ h3() }}</h3>
+          <p [innerHTML]="description()"></p>
         </div>
       </div>
     </div>

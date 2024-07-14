@@ -5,7 +5,7 @@ import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { ChartEvent } from 'chart.js/dist/core/core.plugins';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-finanzierungskosten-neubau',
@@ -23,19 +23,20 @@ export class ChartFinanzierungskostenNeubauComponent {
   constructor(
     private neubauService: NeubauService,
     private styleService: ChartsSettingsService
-  ) {  }
+  ) {}
 
   // Here I made a copy of the subscription to both observables.
   // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$
-      .subscribe((projekt: NeubauProjekt) => {
+    this.neubauService.currentOutputNeubau$.subscribe(
+      (projekt: NeubauProjekt) => {
         this.barChartData.datasets[0].data = [
           Math.round(projekt.finKostenOhneKfw),
           Math.round(projekt.finKostenMitKfw),
         ];
         this.chart?.update();
-      });
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -120,7 +121,12 @@ export class ChartFinanzierungskostenNeubauComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
@@ -133,9 +139,10 @@ export class ChartFinanzierungskostenNeubauComponent {
         data: [0, 0],
         label: 'Gesamt',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
-        hoverBackgroundColor: this.styleService.datasets.color04.hoverBackgroundColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
+        hoverBackgroundColor:
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
       },
     ],
   };

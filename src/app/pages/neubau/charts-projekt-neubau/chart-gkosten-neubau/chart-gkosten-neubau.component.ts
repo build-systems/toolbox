@@ -4,7 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { NeubauService } from '../../neubau.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { NeubauProjekt } from '../../../../shared/neubauprojekt';
+import { NeubauProjekt } from '../../neubauprojekt';
 
 @Component({
   selector: 'app-chart-gkosten-neubau',
@@ -18,10 +18,7 @@ import { NeubauProjekt } from '../../../../shared/neubauprojekt';
 })
 export class ChartGkostenNeubauComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  
-  delayed: boolean = false;
 
-  // Router links. There must be better way to get the strings from app.routes.ts
   constructor(
     private neubauService: NeubauService,
     private styleService: ChartsSettingsService
@@ -30,24 +27,22 @@ export class ChartGkostenNeubauComponent implements OnInit {
   // Here I made a copy of the subscription to both observables.
   // It is a lot of repetitive code, but I run out of time
   ngOnInit(): void {
-    this.neubauService.currentOutputNeubau$.subscribe((projekt: NeubauProjekt) => {
-      this.barChartData.datasets[0].data = [
-        Math.round(projekt.investitionkosten),
-        0,
-      ];
-      this.barChartData.datasets[1].data = [
-        0,
-        Math.round(projekt.bankKredit),
-      ];
-      this.barChartData.datasets[2].data = [
-        0,
-        Math.round(projekt.kfwKredit),
-      ];
-      this.chart?.update();
-    });
+    this.neubauService.currentOutputNeubau$.subscribe(
+      (projekt: NeubauProjekt) => {
+        this.barChartData.datasets[0].data = [
+          Math.round(projekt.investitionkosten),
+          0,
+        ];
+        this.barChartData.datasets[1].data = [
+          0,
+          Math.round(projekt.bankKredit),
+        ];
+        this.barChartData.datasets[2].data = [0, Math.round(projekt.kfwKredit)];
+        this.chart?.update();
+      }
+    );
   }
 
-  
   public barChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
     elements: {
@@ -132,7 +127,12 @@ export class ChartGkostenNeubauComponent implements OnInit {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
@@ -147,49 +147,31 @@ export class ChartGkostenNeubauComponent implements OnInit {
         data: [0, null],
         label: 'Investitionskosten',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color01.backgroundColor,
-        borderColor: this.styleService.datasets.color01.borderColor,
+        backgroundColor: this.styleService.datasets.colors[0].backgroundColor,
+        borderColor: this.styleService.datasets.colors[0].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color01.hoverBackgroundColor,
+          this.styleService.datasets.colors[0].hoverBackgroundColor,
       },
       {
         // Bank Kredit
         data: [null, 0],
         label: 'Bank Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color02.backgroundColor,
-        borderColor: this.styleService.datasets.color02.borderColor,
+        backgroundColor: this.styleService.datasets.colors[1].backgroundColor,
+        borderColor: this.styleService.datasets.colors[1].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color02.hoverBackgroundColor,
+          this.styleService.datasets.colors[1].hoverBackgroundColor,
       },
       {
         // KfW Kredit
         data: [null, 0],
         label: 'KfW Kredit',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color03.backgroundColor01,
-        borderColor: this.styleService.datasets.color03.borderColor,
+        backgroundColor: this.styleService.datasets.colors[2].backgroundColor,
+        borderColor: this.styleService.datasets.colors[2].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color03.hoverBackgroundColor,
+          this.styleService.datasets.colors[2].hoverBackgroundColor,
       },
-      // {
-      //   // Finanzierungskosten Bank (Finanzierungskosten Finanzmarkt)
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten Bank',
-      //   backgroundColor: 'rgba(57, 190, 193, 0.6)',
-      //   borderColor: 'rgb(57, 190, 193)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(57, 190, 193)',
-      // },
-      // {
-      //   // Finanzierungskosten KfW
-      //   data: [null, 0],
-      //   label: 'Finanzierungskosten KfW',
-      //   backgroundColor: 'rgba(58, 194, 104, 0.6)',
-      //   borderColor: 'rgb(58, 194, 104)',
-      //   borderWidth: 1,
-      //   hoverBackgroundColor: 'rgb(58, 194, 104)',
-      // }
     ],
   };
 

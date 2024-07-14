@@ -1,0 +1,38 @@
+<fieldset>
+  <div class="legend-info">
+    <legend>
+      {{ data().title }}
+      @if (data().tooltip) {&nbsp;
+      <span
+        class="tooltip-icon"
+        [appTooltip]="data().tooltip!"
+        placement="right"
+        >&#9432;</span
+      >
+      }
+    </legend>
+  </div>
+  <span class="slidernumber">
+    <input
+      type="range"
+      class="slider"
+      [name]="data().title"
+      [(ngModel)]="value"
+      [min]="data().min"
+      [max]="data().max"
+      [step]="data().step"
+      required
+    />
+    <input
+      type="number"
+      [id]="data().title"
+      [ngModel]="value().toFixed(round())"
+      (ngModelChange)="onValueChange($event)"
+      [ngModelOptions]="{ updateOn: 'blur' }"
+      [min]="data().min"
+      [max]="data().max"
+      (keyup.enter)="onEnterKey($event)"
+      required
+    />
+  </span>
+</fieldset>

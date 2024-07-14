@@ -1,21 +1,32 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SanierungProjekt } from '../../shared/sanierungprojekt';
+import { SanierungProjekt } from './sanierungprojekt';
 import { sanierung } from '../../shared/constants';
 import tableMehrfamilienhaeuser from './sanierung-mehrfamilienhaeuser.json';
 import tableEinfamilienhaeuser from './sanierung-einfamilienhaeuser.json';
 import { FormProjektSanierungService } from './form-projekt-sanierung/form-projekt-sanierung.service';
 import { FormDarlehenSanierungService } from './form-darlehen-sanierung/form-darlehen-sanierung.service';
+import { SharedService } from '../../shared/shared.service';
 
+// Neubau and Sanierung are using RXJS instead of Signals
+// Sorry about the mess :)
 @Injectable({
   providedIn: 'root',
 })
 export class SanierungService {
+  private sharedService = inject(SharedService);
   // Active form tab
   public currentTab = signal(1);
+  public projectTitle = signal('Untitled');
+  public debouncedProjectTitle = this.sharedService.debouncedSignal(
+    this.projectTitle,
+    600
+  );
+  public projectId = signal<number | undefined>(undefined);
+  projectsSanierung = signal<any[]>([]);
 
   // Initial project parameters
-  proketType: sanierungProjektType =
+  projektType: SanierungProjektType =
     this.formProjektService.projektType.options[0].value;
   userPriceDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
   userPrice: number = this.formProjektService.eigeneKosten.value;
@@ -34,7 +45,7 @@ export class SanierungService {
   // Initial darlehen parameters
   zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
-  kfWDarlehen: KfWDarlehen =
+  kfwDarlehen: KfwDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
   bankDarlehen: BankDarlehen =
     this.formDarlehenService.bankDarlehen.options[0].value;
@@ -44,25 +55,28 @@ export class SanierungService {
     private formProjektService: FormProjektSanierungService,
     private formDarlehenService: FormDarlehenSanierungService
   ) {
-    this.formProjektService.projektFormSanierung.valueChanges.subscribe(
-      (value) => {
-        this.proketType = value.projektType!;
-        this.wohnflaeche = value.wohnflaecheRange!;
-        this.anzahlWohnungen = value.anzahlWohnungenRange!;
-        this.userPriceDisabled = !value.eigeneKostenToggle!;
-        this.userPrice = value.eigeneKostenRange!;
-        this.umfangModernisierung = value.umfangModernisierung!;
-        this.worstPerformingBuilding = value.worstPerformingBuilding!;
-        this.energiestandard = value.energiestandard!;
-        this._foerderbonus = value.foerderbonus!;
-        this.serielleSanierung = value.serielleSanierung!;
-        this.update();
-      }
-    );
+    effect(() => {
+      this.debouncedProjectTitle();
+      this.update();
+    });
+
+    this.formProjektService.projektForm.valueChanges.subscribe((value) => {
+      this.projektType = value.projektType!;
+      this.wohnflaeche = value.wohnflaecheRange!;
+      this.anzahlWohnungen = value.anzahlWohnungenRange!;
+      this.userPriceDisabled = !value.eigeneKostenToggle!;
+      this.userPrice = value.eigeneKostenRange!;
+      this.umfangModernisierung = value.umfangModernisierung!;
+      this.worstPerformingBuilding = value.worstPerformingBuilding!;
+      this.energiestandard = value.energiestandard!;
+      this._foerderbonus = value.foerderbonus!;
+      this.serielleSanierung = value.serielleSanierung!;
+      this.update();
+    });
     this.formDarlehenService.darlehenForm.valueChanges.subscribe((value) => {
       this.zinssatzBank = value.zinssatzBankRange! / 100; // Conersion from percentage to fraction multiplier
       this.kreditlaufzeit = value.kreditlaufzeitRange!;
-      this.kfWDarlehen = value.kfWDarlehen!;
+      this.kfwDarlehen = value.kfWDarlehen!;
       this.bankDarlehen = value.bankDarlehen!;
       this.update();
     });
@@ -170,12 +184,12 @@ export class SanierungService {
       try {
         // Filter
         var filteredData: any;
-        if (this.proketType === 'Einfamilienhaus') {
+        if (this.projektType === 'Einfamilienhaus') {
           var filteredTableEin = tableEinfamilienhaeuser.filter((item) =>
             filterByProperties(item, desiredProperties)
           );
           filteredData = filteredTableEin;
-        } else if (this.proketType === 'Mehrfamilienhaus') {
+        } else if (this.projektType === 'Mehrfamilienhaus') {
           var filteredTableMehr = tableMehrfamilienhaeuser.filter((item) =>
             filterByProperties(item, desiredProperties)
           );
@@ -184,7 +198,7 @@ export class SanierungService {
         var tableResult = filteredData[0].Min; // Considering only unique results from the filter
         return tableResult;
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return 0;
       }
     } else {
@@ -206,7 +220,7 @@ export class SanierungService {
 
   // Sollzins KFW [%]
   private _zinssatzKfw = 0;
-  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number): number {
+  updateZinssatzKfw(kfWDarlehen: KfwDarlehen, nrKredit: number): number {
     if (kfWDarlehen === 'Endfälliges') {
       return this.constants.sollzinsKfw_Endfälliges;
     } else if (kfWDarlehen === 'Annuitäten') {
@@ -395,7 +409,7 @@ export class SanierungService {
   // Finanzierungskosten (KfW) [€]
   private _finanzierungskostenKfw = 0;
   updateFinanzierungskostenKfw(
-    kfWDarlehen: KfWDarlehen,
+    kfWDarlehen: KfwDarlehen,
     annuitaetKfW: number,
     kreditlaufzeit: number,
     kfwKredit: number,
@@ -505,7 +519,7 @@ export class SanierungService {
 
   // Sanierung Output to be used in the Save and Export
   outputSanierung!: SanierungProjekt;
-  private outputSanierungSource = new BehaviorSubject<SanierungProjekt>(
+  public outputSanierungSource = new BehaviorSubject<SanierungProjekt>(
     this.outputSanierung
   );
   currentOutputSanierung$ = this.outputSanierungSource.asObservable();
@@ -530,7 +544,7 @@ export class SanierungService {
     );
     this._nrKredit = this.updateNrKredit(this.kreditlaufzeit);
     this._zinssatzKfw = this.updateZinssatzKfw(
-      this.kfWDarlehen,
+      this.kfwDarlehen,
       this._nrKredit
     );
     this._kfwKreditschwelleProWe = this.updateKfwKreditschwelleProWe(
@@ -613,7 +627,7 @@ export class SanierungService {
       this.kreditlaufzeit
     );
     this._finanzierungskostenKfw = this.updateFinanzierungskostenKfw(
-      this.kfWDarlehen,
+      this.kfwDarlehen,
       this._annuitaetKfW,
       this.kreditlaufzeit,
       this._kfwKredit,
@@ -666,6 +680,11 @@ export class SanierungService {
 
     this.outputSanierungSource.next(
       (this.outputSanierung = {
+        title: this.projectTitle(),
+        id: this.projectId(),
+        projektType: this.projektType,
+        userPriceDisabled: this.userPriceDisabled,
+        userPrice: this.userPrice,
         // Projekt
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
@@ -678,7 +697,7 @@ export class SanierungService {
         // Dalehen
         zinssatzBank: this.zinssatzBank,
         kreditlaufzeit: this.kreditlaufzeit,
-        kfWDarlehen: this.kfWDarlehen,
+        kfwDarlehen: this.kfwDarlehen,
         bankDarlehen: this.bankDarlehen,
         // Output
         tilgungszuschuss: this._tilgungszuschuss,
@@ -694,9 +713,9 @@ export class SanierungService {
         foerdersumme: this._foerdersumme,
         afKfw: this._afKfw,
         afBank: this._afBank,
-        annuitaetKfW: this._annuitaetKfW,
+        annuitaetKfw: this._annuitaetKfW,
         annuitaetBank: this._annuitaetBank,
-        efKfW: this._efKfW,
+        efKfw: this._efKfW,
         efBank: this._efBank,
         gbAnnuitaet: this._gbAnnuitaet,
         gbEndfaelliges: this._gbEndfaelliges,
@@ -724,27 +743,5 @@ export class SanierungService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
-  }
-
-  public reset() {
-    // Project parameters
-    this.wohnflaeche = this.formProjektService.wohnflaeche.value;
-    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
-    this.energiestandard =
-      this.formProjektService.energiestandard.options[0].value;
-    this.worstPerformingBuilding =
-      this.formProjektService.worstPerformingBuilding.value;
-    this.serielleSanierung = this.formProjektService.serielleSanierung.value;
-    this.umfangModernisierung =
-      this.formProjektService.umfangModernisierung.options[0].value;
-    // this.eeKlasse = this.formProjektService.eeKlasse.value;
-
-    // Darlehen parameters
-    this.zinssatzBank = this.formDarlehenService.zinssatzBank.value;
-    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
-    this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
-    this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;
-
-    this.update();
   }
 }

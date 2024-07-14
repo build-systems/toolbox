@@ -1,11 +1,17 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType, Color } from 'chart.js';
+import {
+  ChartConfiguration,
+  ChartData,
+  ChartEvent,
+  ChartType,
+  Color,
+} from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 // import { BaseChartDirective, NgChartsModule, Color } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { SanierungService } from '../../sanierung.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-annuitaeten-sanierung',
@@ -50,22 +56,22 @@ export class ChartAnnuitaetenSanierungComponent {
         // Monthly KfW-Darlehen
         this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
         // KfW-Darlehen
-        if (projekt.kfWDarlehen === 'Annuitäten') {
+        if (projekt.kfwDarlehen === 'Annuitäten') {
           this.annuitaeten = this.annuitaeten.map(
-            (num) => num + projekt.annuitaetKfW
+            (num) => num + projekt.annuitaetKfw
           );
-        } else if (projekt.kfWDarlehen === 'Endfälliges') {
+        } else if (projekt.kfwDarlehen === 'Endfälliges') {
           for (var i = 0; i < this.kreditlaufzeit; i++) {
             // If it is the last installment, add Annuität and KfW-Kredit
             if (i === this.kreditlaufzeit - 1) {
               this.annuitaeten[i] =
                 this.annuitaeten[i] +
-                projekt.efKfW / this.kreditlaufzeit +
+                projekt.efKfw / this.kreditlaufzeit +
                 projekt.kfwKredit;
               // Otherwise add just Annuität
             } else {
               this.annuitaeten[i] =
-                this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+                this.annuitaeten[i] + projekt.efKfw / this.kreditlaufzeit;
             }
           }
         }
@@ -194,10 +200,10 @@ export class ChartAnnuitaetenSanierungComponent {
         data: this.annuitaeten,
         pointStyle: 'circle',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color04.hoverBackgroundColor,
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
       },
     ],
   };

@@ -10,7 +10,7 @@ export class FormDarlehenNeubauService {
   // It is a source for Neubau Service.
 
   // Kalkulationszinssatz (Realzins) centralized form values
-  zinssatzBank: zinssatzBankObj = {
+  zinssatzBank: SliderNumberObj = {
     value: 4,
     min: 0.1,
     max: 8,
@@ -21,7 +21,7 @@ export class FormDarlehenNeubauService {
 
   // Kreditlaufzeit centralized form values
   // KfW 298, Checked on 2024/02/21 at https://www.kfw-formularsammlung.de/KonditionenanzeigerINet/KonditionenAnzeiger
-  kreditlaufzeit: KreditlaufzeitObj = {
+  kreditlaufzeit: SliderNumberObj = {
     value: 10,
     min: 4,
     max: 35,
@@ -32,21 +32,21 @@ export class FormDarlehenNeubauService {
 
   // KfW-Darlehen centralized form values
   kfWDarlehen: KfWDarlehenObj = {
+    title: 'KfW-Darlehen',
     options: [
       { id: 'kfwd1', value: 'Annuitäten', disabled: false },
       { id: 'kfwd2', value: 'Endfälliges', disabled: false },
       // { id: 'kfwd3', value: 'kein', disabled: false },
     ],
-    title: 'KfW-Darlehen',
   };
 
   // Bank-Darlehen centralized form values
   bankDarlehen: BankDarlehenObj = {
+    title: 'Bank-Darlehen',
     options: [
       { id: 'bankd1', value: 'Annuitäten', disabled: false },
       { id: 'bankd2', value: 'Endfälliges', disabled: false },
     ],
-    title: 'Bank-Darlehen',
   };
 
   // Define form controls
@@ -96,6 +96,8 @@ export class FormDarlehenNeubauService {
 
   constructor(private fb: FormBuilder) {
     // Kalkulationszinssatz (Realzins)
+    // This could be simplified using simple two-way data binding
+    // And for the decimal places, using a directive in the input
     this.darlehenForm
       .get('zinssatzBankRange')
       ?.valueChanges.subscribe((value) => {

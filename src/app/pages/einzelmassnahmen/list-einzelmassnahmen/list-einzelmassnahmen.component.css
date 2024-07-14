@@ -1,0 +1,85 @@
+.wrapper-table {
+  width: 100%;
+  /* height: calc(100% - var(--button-height) - calc(var(--layout-padding) / 2)); */
+  background-color: var(--bg-secondary);
+  border-radius: var(--button-radius);
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  width: 100%;
+  overflow-y: auto;
+}
+
+thead {
+  overflow-y: auto;
+}
+
+tbody {
+  overflow-y: auto;
+}
+
+th,
+td {
+  border-left: 1px solid #000;
+  padding: 1rem 1rem;
+}
+
+th:last-child,
+td:last-child {
+  width: 25px;
+  border-left: 0;
+}
+
+table tr:first-child th {
+  border-top: 0;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+
+tr:last-child {
+  border-bottom-left-radius: var(--button-radius);
+  border-bottom-right-radius: var(--button-radius);
+  border-top: 1px solid #000;
+}
+tr:nth-child(even) {
+  background-color: var(--bg-primary);
+}
+
+tr:hover {
+  background-color: var(--bg-tertiary);
+  cursor: grab;
+}
+
+th {
+  font-family: var(--font-family-primary), sans-serif;
+  background-color: var(--bg-tertiary);
+  text-align: left;
+  font-weight: normal;
+}
+
+.shrink {
+  width: 30%;
+}
+
+.delete {
+  width: 25px;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+#total {
+  background-color: var(--bg-tertiary);
+}

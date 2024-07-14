@@ -1,0 +1,80 @@
+<div class="title-mob-numbers">
+  <app-title
+    [title]="title"
+    [(projectTitle)]="einzelmassnahmenService.projectTitle"
+    [kfwId]="kfwId"
+    [h2]="kfwH2"
+    [h3]="kfwH3"
+    [description]="kfwDescription"
+  ></app-title>
+  <div class="numbers-mover tablet">
+    <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
+  </div>
+</div>
+<div class="container-tool">
+  <div class="house-input">
+    <div class="house-container">
+      <app-haus-section></app-haus-section>
+    </div>
+    <form>
+      <fieldset class="dropdown-fieldset">
+        <legend>{{ formService.bauteilObj().title }}</legend>
+        <select
+          class="dropdown"
+          [(ngModel)]="formService.bauteilSelected"
+          [name]="formService.bauteilObj().title"
+          [id]="formService.bauteilObj().title"
+          #bauteilField
+        >
+          <option value="" disabled selected>Bauteil</option>
+          <option
+            *ngFor="let item of formService.bauteilObj().options"
+            [ngValue]="item.value"
+            [id]="item.id"
+          >
+            {{ item.text ? item.text : item.value }}
+          </option>
+        </select>
+      </fieldset>
+    </form>
+  </div>
+  <div class="output">
+    <div class="output-numbers-inputs">
+      <div class="numbers-mover">
+        <app-numbers-einzelmassnahmen></app-numbers-einzelmassnahmen>
+      </div>
+      <div class="inputs">
+        <app-form-einzelmassnahmen></app-form-einzelmassnahmen>
+      </div>
+      <button
+        class="button"
+        [disabled]="
+          einzelmassnahmenService.einzelmassnahmenOutputItem.title === undefined
+        "
+        (click)="
+          einzelmassnahmenService.addOutputItemToProject(
+            einzelmassnahmenService.einzelmassnahmenOutputItem,
+            einzelmassnahmenService.einzelmassnahmenOutputProject
+          )
+        "
+      >
+        Add to list
+      </button>
+    </div>
+    <div class="wrapper-list-button">
+      <app-chart-gkosten-einzelmassnahmen></app-chart-gkosten-einzelmassnahmen>
+      <app-list-einzelmassnahmen></app-list-einzelmassnahmen>
+      <button
+        class="button"
+        [disabled]="
+          einzelmassnahmenService.einzelmassnahmenOutputProject().items
+            .length === 0
+        "
+        (click)="saveProject()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+<!-- <app-help></app-help> -->

@@ -4,7 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { SanierungService } from '../../sanierung.service';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-tilgung-sanierung',
@@ -33,70 +33,74 @@ export class ChartTilgungSanierungComponent {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
-      // If kreditlaufzeit was updated assign new value and create labels
-      if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
-        this.kreditlaufzeit = projekt.kreditlaufzeit;
-        this.chartLabels = [];
-        // Create labels
-        for (var i = 0; i <= this.kreditlaufzeit; i++) {
-          this.chartLabels.push(this.currentYear + i);
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
+        // If kreditlaufzeit was updated assign new value and create labels
+        if (this.kreditlaufzeit != projekt.kreditlaufzeit) {
+          this.kreditlaufzeit = projekt.kreditlaufzeit;
+          this.chartLabels = [];
+          // Create labels
+          for (var i = 0; i <= this.kreditlaufzeit; i++) {
+            this.chartLabels.push(this.currentYear + i);
+          }
+          // Update labels
+          this.barChartData.labels = this.chartLabels;
         }
-        // Update labels
-        this.barChartData.labels = this.chartLabels;
-      }
-      // Monthly KfW-Darlehen
-      this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
-      // KfW-Darlehen
-      if (projekt.kfWDarlehen === 'Annuitäten') {
-        this.annuitaeten = this.annuitaeten.map(
-          (num) => num + projekt.annuitaetKfW
-        );
-      } else if (projekt.kfWDarlehen === 'Endfälliges') {
-        for (var i = 0; i < this.kreditlaufzeit; i++) {
-          // If it is the last installment, add Annuität and KfW-Kredit
-          if (i === this.kreditlaufzeit - 1) {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] +
-              projekt.efKfW / this.kreditlaufzeit +
-              projekt.kfwKredit;
-            // Otherwise add just Annuität
-          } else {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] + projekt.efKfW / this.kreditlaufzeit;
+        // Monthly KfW-Darlehen
+        this.annuitaeten = new Array(this.kreditlaufzeit).fill(0);
+        // KfW-Darlehen
+        if (projekt.kfwDarlehen === 'Annuitäten') {
+          this.annuitaeten = this.annuitaeten.map(
+            (num) => num + projekt.annuitaetKfw
+          );
+        } else if (projekt.kfwDarlehen === 'Endfälliges') {
+          for (var i = 0; i < this.kreditlaufzeit; i++) {
+            // If it is the last installment, add Annuität and KfW-Kredit
+            if (i === this.kreditlaufzeit - 1) {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] +
+                projekt.efKfw / this.kreditlaufzeit +
+                projekt.kfwKredit;
+              // Otherwise add just Annuität
+            } else {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] + projekt.efKfw / this.kreditlaufzeit;
+            }
           }
         }
-      }
-      // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
-      if (projekt.bankDarlehen === 'Annuitäten') {
-        this.annuitaeten = this.annuitaeten.map(
-          (num) => num + projekt.annuitaetBank
-        );
-      } else if (projekt.bankDarlehen === 'Endfälliges') {
-        for (var i = 0; i < this.kreditlaufzeit; i++) {
-          if (i === this.kreditlaufzeit - 1) {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] +
-              projekt.efBank / this.kreditlaufzeit +
-              projekt.bankKredit;
-          } else {
-            this.annuitaeten[i] =
-              this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
+        // If KfW-Darlehen === Endfälliges, then EF KFW / years (array years -1, last item (KfW-Kredit + EF KFW / years)
+        if (projekt.bankDarlehen === 'Annuitäten') {
+          this.annuitaeten = this.annuitaeten.map(
+            (num) => num + projekt.annuitaetBank
+          );
+        } else if (projekt.bankDarlehen === 'Endfälliges') {
+          for (var i = 0; i < this.kreditlaufzeit; i++) {
+            if (i === this.kreditlaufzeit - 1) {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] +
+                projekt.efBank / this.kreditlaufzeit +
+                projekt.bankKredit;
+            } else {
+              this.annuitaeten[i] =
+                this.annuitaeten[i] + projekt.efBank / this.kreditlaufzeit;
+            }
           }
         }
+        this.repaymentTotal = [];
+        // Insert 0 for current year
+        this.repaymentTotal.push(0);
+        // Insert other values
+        for (var i = 0; i < this.kreditlaufzeit; i++) {
+          this.repaymentTotal.push(
+            this.annuitaeten[i] + this.repaymentTotal[i]
+          );
+        }
+        // Update chart data
+        this.barChartData.datasets[0].data = this.repaymentTotal;
+        // If KfW-Darlehen === kein Darlehen
+        this.chart?.update();
       }
-      this.repaymentTotal = [];
-      // Insert 0 for current year
-      this.repaymentTotal.push(0);
-      // Insert other values
-      for (var i = 0; i < this.kreditlaufzeit; i++) {
-        this.repaymentTotal.push(this.annuitaeten[i] + this.repaymentTotal[i]);
-      }
-      // Update chart data
-      this.barChartData.datasets[0].data = this.repaymentTotal;
-      // If KfW-Darlehen === kein Darlehen
-      this.chart?.update();
-    });
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -182,7 +186,12 @@ export class ChartTilgungSanierungComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
         usePointStyle: true,
       },
@@ -198,15 +207,15 @@ export class ChartTilgungSanierungComponent {
         data: this.repaymentTotal,
         fill: 'start',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color04.hoverBackgroundColor,
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
         pointStyle: 'circle',
         pointRadius: 2,
-        pointBorderColor: this.styleService.datasets.color04.borderColor,
+        pointBorderColor: this.styleService.datasets.colors[3].borderColor,
         pointBackgroundColor:
-          this.styleService.datasets.color04.backgroundColor01,
+          this.styleService.datasets.colors[3].backgroundColor,
       },
     ],
   };

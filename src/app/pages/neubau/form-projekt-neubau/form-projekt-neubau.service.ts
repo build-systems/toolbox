@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class FormProjektNeubauService {
   // User price
   // Wohnfläche centralized form values
-  eigeneKosten: eigeneKostenObj = {
+  eigeneKosten: SliderNumberObj = {
     value: 5000,
     min: 100,
     max: 20000,
@@ -17,7 +17,7 @@ export class FormProjektNeubauService {
   };
 
   // Wohnfläche centralized form values
-  wohnflaeche: wohnflaecheObj = {
+  wohnflaeche: SliderNumberObj = {
     min: 20,
     value: 1000,
     max: 10000,
@@ -27,7 +27,7 @@ export class FormProjektNeubauService {
   };
 
   // Anzahl Wohnungen centralized form values
-  anzahlWohnungen: anzahlWohnungenObj = {
+  anzahlWohnungen: SliderNumberObj = {
     min: 1,
     value: 10,
     max: 100,
@@ -38,6 +38,7 @@ export class FormProjektNeubauService {
 
   // Energiestandard centralized form values
   energiestandard: EnergiestandardNeubauObj = {
+    title: 'Stufe Energieeffizienzhaus',
     options: [
       { id: 'enstd1', value: 'EH 40', disabled: false },
       { id: 'enstd2', value: 'GEG', disabled: false },
@@ -45,20 +46,20 @@ export class FormProjektNeubauService {
       // { id: 'enstd4', value: 'EH 100' },
       // { id: 'enstd5', value: 'EH 115' },
     ],
-    title: 'Stufe Energieeffizienzhaus',
   };
 
   // Konstruktion centralized form values
   konstruktion: KonstruktionObj = {
+    title: 'Konstruktion',
     options: [
       { id: 'konst1', value: 'Holzbau', disabled: false },
       { id: 'konst2', value: 'Konventionell', disabled: false },
     ],
-    title: 'Konstruktion',
   };
 
   // Zertifizierung centralized form values
   zertifizierung: ZertifizierungNeubauObj = {
+    title: 'Zertifizierung klimafreundlicher Neubau',
     options: [
       {
         id: 'zert1',
@@ -79,7 +80,6 @@ export class FormProjektNeubauService {
         disabled: false,
       },
     ],
-    title: 'Zertifizierung klimafreundlicher Neubau',
   };
   // Signal to edit the disable property
   zertifizierungWarningMessage$i = signal('');
@@ -87,33 +87,34 @@ export class FormProjektNeubauService {
   // Details
   // Kellergeschoss
   kellergeschoss: KellergeschossObj = {
+    title: 'Kellergeschoss',
     options: [
       { id: 'kelgesc1', value: 'Geplant', disabled: false },
       { id: 'kelgesc2', value: 'Nicht geplant', disabled: false },
     ],
-    title: 'Kellergeschoss',
   };
 
   stellplaetze: StellplaetzeObj = {
+    title: 'Stellplätze',
     options: [
       { id: 'stpl1', value: 'Tiefgarage', disabled: false },
       { id: 'stpl2', value: 'Garage', disabled: false },
       { id: 'stpl3', value: 'Parkpalette', disabled: false },
     ],
-    title: 'Stellplätze',
   };
 
   // Aufzugsanlage
   aufzugsanlage: AufzugsanlageObj = {
+    title: 'Aufzugsanlage',
     options: [
       { id: 'aufanl1', value: 'Geplant', disabled: false },
       { id: 'aufanl2', value: 'Nicht geplant', disabled: false },
     ],
-    title: 'Aufzugsanlage',
   };
 
   // Barrierefreiheit
   barrierefreiheit: BarrierefreiesBauenObj = {
+    title: 'Barrierefreies Gebäude',
     options: [
       {
         id: 'barfre1',
@@ -135,39 +136,38 @@ export class FormProjektNeubauService {
         disabled: false,
       },
     ],
-    title: 'Barrierefreies Gebäude',
   };
 
   // Dachbegruenung
   dachbegruenung: DachbegruenungObj = {
+    title: 'Dachbegrünung',
     options: [
       { id: 'dachbe1', value: 'Geplant', disabled: false },
       { id: 'dachbe2', value: 'Nicht geplant', disabled: false },
     ],
-    title: 'Dachbegrünung',
   };
 
   // Baustellenlogistik
   baustellenlogistik: BaustellenlogistikObj = {
+    title: 'Anspruchsvolle Baustellenlogistik',
     options: [
       { id: 'baulog1', value: 'Vorhanden', disabled: false },
       { id: 'baulog2', value: 'Nicht Vorhanden', disabled: false },
     ],
-    title: 'Anspruchsvolle Baustellenlogistik',
   };
 
   // Aussenanlagen
   aussenanlagen: AussenanlagenObj = {
+    title: 'Aufwand Außenanlagen',
     options: [
       { id: 'ausanl1', value: 'Gering', disabled: false },
       { id: 'ausanl2', value: 'Mittel', disabled: false },
       { id: 'ausanl3', value: 'Hoch', disabled: false },
     ],
-    title: 'Aufwand Außenanlagen',
   };
 
   // Grundstücksbezogene Kosten
-  grundstKosten: grundstKostenObj = {
+  grundstKosten: SliderNumberObj = {
     value: 0,
     min: 0,
     max: 1000,
@@ -177,7 +177,7 @@ export class FormProjektNeubauService {
   };
 
   // Baunebenkosten (excl. Finanzierung)
-  baunebenkostenOhneFin: BaunebenkostenOhneFinObj = {
+  baunebenkostenOhneFin: SliderNumberObj = {
     value: 20,
     min: 0,
     max: 100,
@@ -194,7 +194,10 @@ export class FormProjektNeubauService {
     eigeneKostenToggle: [!this.eigeneKosten.disabled, Validators.required],
     eigeneKostenRange: [
       this.eigeneKosten.value, // init
-      [Validators.min(this.eigeneKosten.min), Validators.max(this.eigeneKosten.max)],
+      [
+        Validators.min(this.eigeneKosten.min),
+        Validators.max(this.eigeneKosten.max),
+      ],
     ],
     eigeneKosten: [
       this.eigeneKosten.value, // init
@@ -311,36 +314,34 @@ export class FormProjektNeubauService {
         this.aussenanlagen.options.forEach((obj) => (obj.disabled = value!));
         this.grundstKosten.disabled = value!;
         this.baunebenkostenOhneFin.disabled = value!;
+      });
+
+    // User Price
+    this.projektFormNeu
+      .get('eigeneKostenRange')
+      ?.valueChanges.subscribe((value) => {
+        // Update number input when range changes
+        this.projektFormNeu
+          .get('eigeneKosten')
+          ?.setValue(value, { emitEvent: false });
+      });
+
+    this.projektFormNeu.get('eigeneKosten')?.valueChanges.subscribe((value) => {
+      // Condition to avoid non-numeric or numbers unrealistically small
+      if (value && value >= this.eigeneKosten.min) {
+        // Update range input when number changes
+        this.projektFormNeu
+          .get('eigeneKostenRange')
+          ?.setValue(value, { emitEvent: false });
+      } else {
+        this.projektFormNeu
+          .get('eigeneKostenRange')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+        this.projektFormNeu
+          .get('eigeneKosten')
+          ?.setValue(this.eigeneKosten.min, { emitEvent: false });
+      }
     });
-
-     // User Price
-     this.projektFormNeu
-     .get('eigeneKostenRange')
-     ?.valueChanges.subscribe((value) => {
-       // Update number input when range changes
-       this.projektFormNeu
-         .get('eigeneKosten')
-         ?.setValue(value, { emitEvent: false });
-     });
-
-   this.projektFormNeu
-     .get('eigeneKosten')
-     ?.valueChanges.subscribe((value) => {
-       // Condition to avoid non-numeric or numbers unrealistically small
-       if (value && value >= this.eigeneKosten.min) {
-         // Update range input when number changes
-         this.projektFormNeu
-           .get('eigeneKostenRange')
-           ?.setValue(value, { emitEvent: false });
-       } else {
-         this.projektFormNeu
-           .get('eigeneKostenRange')
-           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-         this.projektFormNeu
-           .get('eigeneKosten')
-           ?.setValue(this.eigeneKosten.min, { emitEvent: false });
-       }
-     });
 
     // Wohnflaeche
     this.projektFormNeu

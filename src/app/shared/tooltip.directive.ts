@@ -60,8 +60,6 @@ export class TooltipDirective {
     if (!tooltipRect) return;
     let left = tooltipRect.left;
     let top = tooltipRect.top;
-    console.log("Tooltip height: " + tooltipRect.height);
-    console.log("Tooltip icon top: " + elemRect.top);
     if (windowWidth < 850) {
       // If mobile, then center tooltip horizontally to the page (left = 0)
       if (

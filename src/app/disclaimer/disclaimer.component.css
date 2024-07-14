@@ -45,7 +45,6 @@
   background: var(--bg-primary);
 }
 
-
 .disclaimer__text__main {
   font-weight: 500;
 }
@@ -99,6 +98,22 @@ button {
   }
 }
 
+.confirm__button {
+  font-weight: 700;
+  color: var(--bg-primary);
+  background-color: var(--primary);
+  height: var(--button-height);
+  border: 1px solid var(--primary);
+  border-radius: var(--button-height);
+  padding: 0.2rem var(--layout-padding);
+  &:hover {
+    text-decoration: none;
+    color: var(--bg-primary);
+    border-color: var(--primary90);
+    background-color: var(--primary90);
+  }
+}
+
 a {
   text-decoration: underline;
 }
@@ -122,23 +137,10 @@ a:hover {
   gap: 1rem;
 }
 
-.understand {
+.understand__wrapper {
   display: flex;
   justify-content: end;
   width: 100%;
-}
-
-.understand__button {
-  font-weight: 700;
-  color: var(--bg-primary);
-  background-color: var(--primary);
-  height: var(--button-height);
-  &:hover {
-    text-decoration: none;
-    color: var(--bg-primary);
-    border-color: var(--primary90);
-    background-color: var(--primary90);
-  }
 }
 
 .footer {
@@ -150,7 +152,6 @@ a:hover {
   color: var(--primary);
   text-decoration: none;
 }
-
 
 @media screen and (max-width: 700px) {
   .disclaimer__content {
@@ -173,14 +174,14 @@ a:hover {
     margin: 0 0 1rem 0;
   }
 
-  .understand__button {
+  .confirm__button {
     margin: 1rem;
     font-size: 0.9rem;
   }
 }
 
 @media screen and (max-width: 700px) {
-  .understand__button {
+  .confirm__button {
     margin: 1rem 0 0 0;
   }
 }

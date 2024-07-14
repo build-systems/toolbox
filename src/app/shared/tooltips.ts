@@ -89,3 +89,12 @@ export class neubau {
   baunebenkostenOhneFin: string =
     '<b>Baunebenkosten (KG 700)</b><p>Hierbei handelt es sich um die Kostengruppen 700. Das sind Leistungen, die neben den Bauleistungen und Lieferungen für das Bauprojekt erforderlich sind (z. B. Leistungen des Bauherren, Vorbereitung der Objektplanung, Leistungen der Objekt- und Fachplanung, künstlerische Leistungen und allgemeine Baunebenkosten). Diese Kosten schlägt das Tool den Investitionskosten zu.</p>';
 }
+
+@Injectable({
+  providedIn: 'root',
+})
+export class einzelmassnahmen {
+  // investitionskosten: string = 'Baukosten + Grundstuecksbezogene Kosten + Baunebenkosten Kein Finanz.';
+  placeholder: string =
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, doloremque, error quod molestias nobis magni ipsam vero dolorum rerum doloribus assumenda voluptates. Accusantium doloribus quae officia? Accusamus provident praesentium iure deleniti vel, architecto asperiores dolores voluptatem quo doloremque similique temporibus repellat cumque, possimus quam soluta alias nesciunt tempore ducimus fugit. Expedita natus nulla at harum porro odio commodi iure corporis explicabo animi alias voluptas est ducimus aspernatur ut doloremque necessitatibus, facilis ullam tenetur! Repudiandae vitae, nam veritatis enim maxime exercitationem molestias ipsam? Laborum veniam consequuntur illum quia ratione corporis, ex iure ea officia rerum, cum nulla quasi, incidunt quibusdam voluptatibus.';
+}

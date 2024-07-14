@@ -1,0 +1,81 @@
+<!-- <div class="house-container">
+  <app-haus-section></app-haus-section>
+</div> -->
+<form>
+  <app-radio
+    [hidden]="!(formService.bauteilSelected() === 'Dach')"
+    [(selected)]="formService.dachSelected"
+    [data]="formService.dachObj()"
+  />
+  <app-radio
+    [hidden]="
+      !(
+        formService.bauteilSelected() === 'Dach' &&
+        formService.dachSelected() === 'Flachdach'
+      )
+    "
+    [(selected)]="formService.flachdachSelected"
+    [data]="formService.flachdachObj()"
+  />
+  <app-radio
+    [hidden]="!formService.hausTypVisible()"
+    [(selected)]="formService.hausSelected"
+    [data]="formService.hausObj()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+    [(value)]="formService.fensterflaecheValue"
+    [data]="formService.fensterflaeche()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+    [(value)]="formService.anzahlFensterValue"
+    [data]="formService.anzahlFenster()"
+    [round]="0"
+  />
+  <app-radio
+    [hidden]="!(formService.bauteilSelected() === 'Fenster')"
+    [(selected)]="formService.fensterSelected"
+    [data]="formService.fensterObj()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Türen')"
+    [(value)]="formService.tuerflaecheValue"
+    [data]="formService.tuerflaecheObj()"
+  />
+  <app-radio
+    [hidden]="!(formService.bauteilSelected() === 'Keller')"
+    [(selected)]="formService.kellerSelected"
+    [data]="formService.kellerObj()"
+  />
+  <app-radio
+    [hidden]="!(formService.bauteilSelected() === 'ObersteGeschossdecke')"
+    [(selected)]="formService.obersteGeschossdeckeSelected"
+    [data]="formService.obersteGeschossdeckeObj()"
+  />
+  <app-slider-input
+    *ngIf="formService.isOpakeVisible()"
+    [(value)]="formService.gedaemmteflaecheValue"
+    [data]="formService.gedaemmteflaecheObj()"
+  />
+  <app-slider-input
+    *ngIf="formService.isOpakeVisible()"
+    [(value)]="formService.daemmstoffdickeValue"
+    [data]="formService.daemmstoffdickeObj()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Steildachgauben')"
+    [(value)]="formService.gaubeflaecheValue"
+    [data]="formService.gaubeflaecheObj()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
+    [(value)]="formService.rollladenflaecheValue"
+    [data]="formService.rollladenflaecheObj()"
+  />
+  <app-radio
+    [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
+    [(selected)]="formService.vorbaurollladenSelected"
+    [data]="formService.vorbaurollladenObj()"
+  />
+</form>

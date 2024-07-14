@@ -1,13 +1,14 @@
 <div class="title-mob-numbers">
   <app-title
     [title]="title"
+    [(projectTitle)]="sanierungService.projectTitle"
     [kfwId]="kfwId"
-    [kfwH2]="kfwH2"
-    [kfwH3]="kfwH3"
-    [kfwDescription]="kfwDescription"
+    [h2]="kfwH2"
+    [h3]="kfwH3"
+    [description]="kfwDescription"
   ></app-title>
   <div class="numbers-mover tablet">
-    @if(this.sanierungService.currentTab() === 1) {
+    @if(sanierungService.currentTab() === 1) {
     <app-numbers-projekt-sanierung></app-numbers-projekt-sanierung>
     } @else {
     <app-numbers-darlehen-sanierung></app-numbers-darlehen-sanierung>
@@ -15,13 +16,13 @@
   </div>
 </div>
 <div class="container-tool">
-  <div class="inputs">
+  <div class="inputs inputs-gradient">
     <div class="tool-tab">
       <button
         title="Projekt Formular"
-        (click)="this.sanierungService.currentTab.set(1)"
+        (click)="sanierungService.currentTab.set(1)"
         [className]="
-          this.sanierungService.currentTab() === 1
+          sanierungService.currentTab() === 1
             ? 'full-pill left-pill pill'
             : 'grayed-pill left-pill pill'
         "
@@ -30,9 +31,9 @@
       </button>
       <button
         title="Darlehen Formular"
-        (click)="this.sanierungService.currentTab.set(2)"
+        (click)="sanierungService.currentTab.set(2)"
         [className]="
-          this.sanierungService.currentTab() === 2
+          sanierungService.currentTab() === 2
             ? 'full-pill right-pill pill'
             : 'grayed-pill right-pill pill'
         "
@@ -42,19 +43,20 @@
     </div>
     <div class="wrapper-gradient">
       <app-form-projekt-sanierung
-        [hidden]="!(this.sanierungService.currentTab() === 1)"
+        [hidden]="!(sanierungService.currentTab() === 1)"
       ></app-form-projekt-sanierung>
       <app-form-darlehen-sanierung
-        [hidden]="!(this.sanierungService.currentTab() === 2)"
+        [hidden]="!(sanierungService.currentTab() === 2)"
       ></app-form-darlehen-sanierung>
     </div>
   </div>
-  @if (this.sanierungService.currentTab() === 1) {
+  @if (sanierungService.currentTab() === 1) {
   <div class="output">
     <div class="numbers-mover">
       <app-numbers-projekt-sanierung></app-numbers-projekt-sanierung>
     </div>
     <app-charts-projekt-sanierung></app-charts-projekt-sanierung>
+    <button class="button" (click)="saveProject()">Save</button>
   </div>
   } @else {
   <div class="output">
@@ -62,7 +64,8 @@
       <app-numbers-darlehen-sanierung></app-numbers-darlehen-sanierung>
     </div>
     <app-charts-darlehen-sanierung></app-charts-darlehen-sanierung>
+    <button class="button" (click)="saveProject()">Save</button>
   </div>
   }
 </div>
-<app-help></app-help>
+<!-- <app-help></app-help> -->

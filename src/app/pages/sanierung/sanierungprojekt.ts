@@ -1,9 +1,13 @@
 export interface SanierungProjekt {
   // Projekt
+  title: string;
+  id: number | undefined;
+  projektType: SanierungProjektType;
+  userPriceDisabled: boolean;
+  userPrice: number;
   wohnflaeche: number;
   anzahlWohnungen: number;
   energiestandard: EnergiestandardSanierung;
-  konstruktion?: Konstruktion;
   // Sanierung
   worstPerformingBuilding: boolean;
   serielleSanierung: boolean;
@@ -12,7 +16,7 @@ export interface SanierungProjekt {
   // Dalehen
   zinssatzBank: number;
   kreditlaufzeit: number;
-  kfWDarlehen: KfWDarlehen;
+  kfwDarlehen: KfwDarlehen;
   bankDarlehen: BankDarlehen;
   // Output
   tilgungszuschuss: number;
@@ -30,9 +34,9 @@ export interface SanierungProjekt {
   foerdersumme: number;
   afKfw: number;
   afBank: number;
-  annuitaetKfW: number;
+  annuitaetKfw: number;
   annuitaetBank: number;
-  efKfW: number;
+  efKfw: number;
   efBank: number;
   gbAnnuitaet: number;
   gbEndfaelliges: number;

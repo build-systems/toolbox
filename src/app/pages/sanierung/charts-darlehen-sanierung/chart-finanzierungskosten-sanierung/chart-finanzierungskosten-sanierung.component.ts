@@ -4,7 +4,7 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartsSettingsService } from '../../../../shared/charts-settings.service';
 import { SanierungService } from '../../sanierung.service';
-import { SanierungProjekt } from '../../../../shared/sanierungprojekt';
+import { SanierungProjekt } from '../../sanierungprojekt';
 
 @Component({
   selector: 'app-chart-finanzierungskosten-sanierung',
@@ -25,13 +25,15 @@ export class ChartFinanzierungskostenSanierungComponent {
   ) {}
 
   ngOnInit(): void {
-    this.sanierungService.currentOutputSanierung$.subscribe((projekt: SanierungProjekt) => {
-      this.barChartData.datasets[0].data = [
-        Math.round(projekt.finKostenOhneKfw),
-        Math.round(projekt.finKostenMitKfw),
-      ];
-      this.chart?.update();
-    });
+    this.sanierungService.currentOutputSanierung$.subscribe(
+      (projekt: SanierungProjekt) => {
+        this.barChartData.datasets[0].data = [
+          Math.round(projekt.finKostenOhneKfw),
+          Math.round(projekt.finKostenMitKfw),
+        ];
+        this.chart?.update();
+      }
+    );
   }
 
   public barChartOptions: ChartConfiguration['options'] = {
@@ -116,7 +118,12 @@ export class ChartFinanzierungskostenSanierungComponent {
       },
       tooltip: {
         callbacks: {
-          label: (item) => `${item.dataset.label}: ${Intl.NumberFormat('de', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(item.parsed.y)}`,
+          label: (item) =>
+            `${item.dataset.label}: ${Intl.NumberFormat('de', {
+              style: 'currency',
+              currency: 'EUR',
+              maximumFractionDigits: 0,
+            }).format(item.parsed.y)}`,
         },
       },
     },
@@ -129,10 +136,10 @@ export class ChartFinanzierungskostenSanierungComponent {
         data: [0, 0],
         label: 'Gesamt',
         borderWidth: this.styleService.datasets.borderWidth,
-        backgroundColor: this.styleService.datasets.color04.backgroundColor01,
-        borderColor: this.styleService.datasets.color04.borderColor,
+        backgroundColor: this.styleService.datasets.colors[3].backgroundColor,
+        borderColor: this.styleService.datasets.colors[3].borderColor,
         hoverBackgroundColor:
-          this.styleService.datasets.color04.hoverBackgroundColor,
+          this.styleService.datasets.colors[3].hoverBackgroundColor,
       },
     ],
   };

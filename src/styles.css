@@ -1,3 +1,11 @@
+/* Angular Material config */
+/* html, body { height: 100%; } */
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+.mat-mdc-dialog-inner-container {
+  margin: 1rem;
+}
+
 /* BuildSystems Official Font Family */
 /* ABC Diatype, ABC Diatype Mono */
 /* @import url("https://assets.buildsystems.de/font.css"); */
@@ -29,6 +37,7 @@
   --primary50: rgba(255, 255, 255, 0.5);
   --primary30: rgba(255, 255, 255, 0.3);
   --primary20: rgba(255, 255, 255, 0.2);
+  --primary10: rgba(255, 255, 255, 0.1);
   --secondary: aquamarine;
   --bg-primary: #222;
   --bg-primary50: rgba(34, 34, 34, 0.5);
@@ -41,7 +50,7 @@
   --bg-primary97: rgba(34, 34, 34, 0.97);
   --bg-secondary: #333;
   --bg-tertiary: #444;
-  --bg-tertiary95: rgba(17, 17, 17, 0.95);
+  --bg-tertiary95: rgba(68, 68, 68, 0.95);
   --font-family-primary: "ABC Diatype";
   --font-family-secondary: "ABC Diatype Mono";
   --font-alt: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
@@ -80,6 +89,7 @@ html {
 
 ::-webkit-scrollbar {
   width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {
@@ -158,104 +168,46 @@ li {
   display: flex;
 }
 
-.host-tool {
+.host-tool,
+.host-profile,
+.host-portfolio {
   display: flex;
   flex-direction: column;
   max-height: calc(100svh - 1.5rem);
   padding-bottom: var(--layout-padding);
 }
 
-.title {
-  padding: var(--layout-padding);
-  & .arrow-and-h1 {
-    width: fit-content;
-  }
+.host-profile,
+.host-portfolio {
+  width: 100%;
+  flex: 1;
 }
 
-.kfw-number-container {
-  width: fit-content;
-  justify-content: center;
+.host-portfolio {
+  overflow-y: auto;
 }
 
-.kfw-number {
-  font-family: var(--font-family-secondary);
+.host-auth {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  font-size: 1.7rem;
-  padding: 0 1rem;
-  background-color: var(--bg-secondary);
-  border-radius: var(--button-radius);
-  & .kfw-id {
-    width: 100%;
-    text-align: center;
-    font-size: 0.8rem;
-    padding-top: 0.5rem;
-    margin-bottom: -0.25rem;
-    color: var(--primary30);
-  }
-}
-
-.arrow-container {
-  cursor: pointer;
-  margin-right: 0.25rem;
-  margin-top: 0.5rem;
-}
-
-.arrow {
-  display: flex;
-  width: 1.4rem;
-  height: 1.4rem;
-  font-size: 0.8rem;
-  align-items: center;
   justify-content: center;
-  border-radius: calc(var(--button-radius) / 2);
+  align-items: center;
+  max-width: 100%;
+  height: 100%;
+  flex: 1;
 }
 
-.arrow-and-h1 {
-  display: flex;
-  cursor: pointer;
-  align-items: start;
-}
-
-.arrow-and-h1:hover .arrow {
-  background-color: var(--bg-secondary);
-}
-
-.kfw-info {
-  display: flex;
-  flex-direction: column;
-  & h2 {
-    padding-bottom: 0.4rem;
-  }
-  & h3 {
-    padding-bottom: 0.2rem;
-  }
-}
-
-.kfw-description {
-  display: flex;
-  gap: 1rem;
-  background-color: var(--bg-tertiary);
-  width: clamp(100px, 100%, 50rem);
-  font-family: var(--font-family-primary);
-  overflow: hidden;
-  padding: var(--layout-padding);
-  border-radius: var(--button-radius);
-}
-
-.kfw-description a {
-  text-decoration: underline;
-  color: var(--secondary);
-}
-.kfw-description a:hover {
-  color: var(--primary50);
+.host-account {
+  width: 100%;
+  flex: 1;
 }
 
 .container-tool {
   position: relative;
   top: 0;
   display: grid;
+  height: 100%;
+
   grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
   padding-right: var(--layout-padding);
   padding-left: var(--layout-padding);
@@ -263,7 +215,8 @@ li {
   overflow-y: auto;
 }
 
-.inputs {
+.inputs,
+.wrapper-inputs {
   position: relative;
   top: 0;
   display: flex;
@@ -272,9 +225,7 @@ li {
   border-radius: 0 0 var(--button-radius) var(--button-radius);
 }
 
-/* This was a gradient to explain that there are more items down and the inputs need to be scrolled*/
-/* It should be included later */
-.inputs::before {
+.inputs-gradient::before {
   content: "";
   position: absolute;
   bottom: 0;
@@ -291,7 +242,7 @@ li {
   z-index: 1;
 }
 
-.inputs::after {
+.inputs-gradient::after {
   content: "";
   position: absolute;
   top: 40px;
@@ -313,7 +264,7 @@ li {
   height: fit-content;
   padding: var(--layout-padding);
   /* padding-top: 2rem; */
-  padding-top: 40px;
+  /* padding-top: 40px; */
   padding-bottom: 3rem;
   background-color: var(--bg-tertiary);
   border-radius: 0 0 var(--button-radius) var(--button-radius);
@@ -325,7 +276,8 @@ li {
   position: relative;
   top: 0;
   left: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
 }
 
 .output {
@@ -343,9 +295,10 @@ li {
   background-color: var(--bg-secondary);
   font-family: var(--font-family-primary), sans-serif;
   height: var(--button-height);
+  min-height: var(--button-height);
   text-align: center;
   border-radius: var(--button-radius);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--bg-secondary);
   padding-left: var(--layout-padding);
   padding-right: var(--layout-padding);
 }
@@ -355,10 +308,8 @@ li {
 }
 
 .button:hover {
-  font-weight: 300;
   color: var(--primary);
-  border: 1px solid var(--secondary);
-  background-color: var(--bg-secondary);
+  background-color: #404040;
 }
 
 .button:active {
@@ -372,10 +323,27 @@ li {
   border-color: var(--primary30);
 }
 
+.confirm__button {
+  font-weight: 700;
+  color: var(--bg-primary);
+  background-color: var(--primary);
+  height: var(--button-height);
+  border: 1px solid var(--primary);
+  border-radius: var(--button-height);
+  padding: 0.2rem var(--layout-padding);
+  &:hover {
+    text-decoration: none;
+    color: var(--bg-primary);
+    border-color: var(--primary90);
+    background-color: var(--primary90);
+  }
+}
+
 input {
   background-color: var(--bg-primary);
   border: 1px solid var(--bg-primary);
-  font-family: var(--font-family-primary), sans-serif;
+  /* The main font family make the input numbers jump when changin decimal places */
+  /* font-family: var(--font-family-primary), sans-serif; */
   font-size: 1rem;
 }
 
@@ -386,9 +354,6 @@ label {
 
 fieldset {
   border-style: none;
-}
-
-fieldset + fieldset {
   margin-top: 1rem;
 }
 
@@ -676,9 +641,37 @@ input[type="radio"] {
   display: none;
 }
 
-.radio-fieldset {
+.dropdown-fieldset legend {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
+
+.dropdown {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 1rem;
+  background-color: var(--bg-primary);
   display: flex;
-  flex-direction: column;
+  margin: 0;
+  height: var(--button-height);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--bg-secondary);
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  word-break: normal;
+  padding: 0.25rem 0;
+  transition: 0.15s;
+}
+
+.dropdown:focus {
+  outline: var(--bg-secondary);
 }
 
 .radio-fieldset legend {
@@ -918,11 +911,24 @@ input[type="number"]:disabled:hover {
   align-items: center;
 }
 
+.pill-single {
+  font-family: var(--font-family-primary), sans-serif;
+  font-size: 1.1rem;
+  height: var(--button-height);
+  cursor: pointer;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--button-radius) var(--button-radius) 0 0;
+  border: none;
+  transition: all 0.2s;
+}
+
 .pill {
   font-family: var(--font-family-primary), sans-serif;
   font-size: 1.1rem;
   height: var(--button-height);
-  /* height: 3.5rem; */
   cursor: pointer;
   width: 50%;
   align-items: center;
@@ -962,6 +968,7 @@ input[type="number"]:disabled:hover {
 .dashboard-numbers {
   display: flex;
   gap: calc(var(--layout-padding) / 2);
+  flex-wrap: wrap;
 }
 
 .numbers-mover.tablet {
@@ -973,7 +980,7 @@ input[type="number"]:disabled:hover {
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
-  flex-grow: 1;
+  flex: 1 0 24%;
   text-align: center;
   padding: var(--layout-padding);
   border-radius: var(--button-radius);
@@ -1149,6 +1156,9 @@ input[type="number"]:disabled:hover {
   svg {
     color: inherit;
   }
+  img {
+    color: inherit;
+  }
   use {
     color: inherit;
   }
@@ -1159,62 +1169,6 @@ input[type="number"]:disabled:hover {
 
 button:hover {
   color: var(--secondary);
-}
-
-.host-profile {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  padding: var(--layout-padding);
-  & h1 {
-    font-size: 36px;
-    padding-bottom: var(--mobile-padding);
-  }
-  & h2 {
-    text-align: center;
-    padding-bottom: var(--mobile-padding);
-  }
-  & p {
-    text-align: center;
-  }
-}
-
-.host-auth {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--layout-padding);
-  border-radius: var(--button-radius);
-  border: 1px solid var(--primary);
-  & form {
-    & div {
-      padding-top: var(--layout-padding);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      & label {
-        padding-bottom: 0.5rem;
-      }
-      & input {
-        height: var(--button-height);
-        border-radius: var(--button-radius);
-        padding-left: 1rem;
-        border: 1px solid var(--primary);
-      }
-      input:focus {
-        outline-color: var(--secondary);
-      }
-    }
-  }
-}
-
-.host-account {
-  width: 100%;
-  height: 100%;
 }
 
 .warning {
@@ -1315,42 +1269,15 @@ button:hover {
   }
 }
 
-.form-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  & div {
-    height: var(--button-height);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    margin-bottom: var(--layout-padding);
-    border: 1px solid var(--bg-tertiary);
-    border-radius: var(--button-radius);
-    & label {
-      width: 20%;
-      padding-left: var(--layout-padding);
-    }
-    & input {
-      width: 80%;
-      height: 100%;
-      padding-left: var(--layout-padding);
-      border: none;
-      border-radius: 0 var(--button-radius) var(--button-radius) 0;
-    }
-    & button {
-      width: 100%;
-    }
-  }
-}
-
 span.nowrap {
   white-space: nowrap;
 }
 
 @media screen and (max-width: 1280px) {
+  .wrapper-gradient {
+    scrollbar-gutter: auto;
+  }
+
   .host-tool {
     padding-bottom: 0;
   }
@@ -1372,6 +1299,9 @@ span.nowrap {
     padding-left: 0px;
   }
 
+  .output {
+    padding-bottom: var(--mobile-padding);
+  }
   .dashboard-numbers {
     flex-direction: row;
     flex-wrap: wrap;
@@ -1417,16 +1347,6 @@ span.nowrap {
 }
 
 @media screen and (max-width: 850px) {
-  .arrow-container {
-    margin-top: 5px;
-  }
-
-  .arrow {
-    flex: 1;
-    height: 1.5rem;
-    width: 1.5rem;
-  }
-
   .card {
     padding: var(--mobile-padding);
     flex-basis: 40%;
@@ -1484,18 +1404,6 @@ span.nowrap {
     padding: 0 var(--mobile-padding);
   }
 
-  .title {
-    padding-left: var(--mobile-padding);
-    padding-right: var(--mobile-padding);
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
-  .kfw-description {
-    flex-direction: column;
-    margin-bottom: var(--mobile-padding);
-  }
-
   .container-tool {
     overflow-y: auto;
     padding-left: var(--mobile-padding);
@@ -1537,15 +1445,6 @@ span.nowrap {
   }
 }
 @media (max-width: 400px) {
-  .title {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .kfw-number {
-    font-size: 1.3rem;
-  }
-
   h1 {
     font-size: 1.2rem;
   }
@@ -1560,11 +1459,6 @@ span.nowrap {
 
   h3 {
     font-size: 0.8rem;
-  }
-
-  .arrow {
-    height: 1.2rem;
-    width: 1.2rem;
   }
 
   .card {

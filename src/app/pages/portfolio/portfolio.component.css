@@ -1,0 +1,129 @@
+.tables {
+  /* display: flex; */
+  flex-direction: column;
+  padding-right: var(--layout-padding);
+  margin-left: var(--layout-padding);
+  overflow-y: auto;
+}
+
+.wrapper-table {
+  display: flex;
+  overflow-x: auto;
+}
+
+.title {
+  padding: var(--layout-padding);
+  & .arrow-and-h1 {
+    width: fit-content;
+  }
+}
+
+h2 {
+  padding-top: var(--layout-padding);
+  padding-bottom: var(--layout-padding);
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+table {
+  border-collapse: collapse;
+  flex: 1;
+  border-radius: var(--button-radius);
+  table-layout: fixed;
+  overflow-x: auto;
+}
+
+thead {
+  border-radius: var(--button-radius);
+  /* overflow-y: auto; */
+}
+
+th,
+td {
+  border-left: 1px solid #000;
+  padding: 1rem 1rem;
+}
+
+th {
+  font-family: var(--font-family-secondary);
+}
+
+table tr:first-child th:first-child {
+  border-top-left-radius: var(--button-radius);
+}
+
+table tr:first-child th:last-child {
+  border-top-right-radius: var(--button-radius);
+}
+
+table tr:nth-last-child(2) td:first-child {
+  border-bottom-left-radius: var(--button-radius);
+}
+
+table tr:nth-last-child(2) td:last-child {
+  border-bottom-right-radius: var(--button-radius);
+}
+
+table tr:first-child th {
+  border-top: 0;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+table tr td:nth-last-child(2),
+table tr th:nth-last-child(2) {
+  border-right: 0;
+}
+
+tr:nth-last-child(2) {
+  border-bottom-left-radius: var(--button-radius);
+  border-bottom-right-radius: var(--button-radius);
+}
+
+tr:nth-child(even) {
+  background-color: var(--bg-tertiary);
+}
+
+tr:nth-child(odd) {
+  background-color: var(--bg-secondary);
+}
+
+th {
+  background-color: #555;
+  text-align: left;
+  font-weight: normal;
+}
+
+th:last-child,
+td:last-child {
+  width: 50px;
+  border-left: 0;
+}
+
+.list-item:hover {
+  mix-blend-mode: hard-light;
+  cursor: pointer;
+}
+
+.new-item td {
+  background-color: var(--bg-primary);
+  color: var(--primary50);
+  border: none;
+}
+
+.new-item:hover td {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1280px) {
+  table {
+    width: max-content;
+    flex: none;
+  }
+}

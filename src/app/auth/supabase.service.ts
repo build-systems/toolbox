@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   AuthChangeEvent,
   AuthSession,
@@ -7,7 +7,7 @@ import {
   SupabaseClient,
   User,
 } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 export interface Profile {
   id?: string;
@@ -20,21 +20,16 @@ export interface Profile {
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  public supabase: SupabaseClient;
   _session: AuthSession | null = null;
+
+  sessionSignal = signal<Session | null>(null);
 
   constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
-  }
-
-  get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
-      this._session = data.session;
-    });
-    return this._session;
   }
 
   profile(user: User) {
@@ -57,6 +52,12 @@ export class SupabaseService {
 
   signOut() {
     return this.supabase.auth.signOut();
+  }
+
+  async loginWithGoogle() {
+    const { error } = await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
   }
 
   updateProfile(profile: Profile) {

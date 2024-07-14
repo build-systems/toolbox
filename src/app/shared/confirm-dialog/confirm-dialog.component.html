@@ -1,0 +1,6 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>{{ data.message }}</mat-dialog-content>
+<mat-dialog-actions class="actions__wrapper">
+  <button class="button" mat-button [mat-dialog-close]="false">Cancel</button>
+  <button class="button" mat-button [mat-dialog-close]="true">Overwrite</button>
+</mat-dialog-actions>

@@ -1,0 +1,21 @@
+.card-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* flex-direction: row; */
+  flex-wrap: wrap;
+  gap: var(--mobile-padding);
+  width: 100%;
+}
+
+@media screen and (max-width: 1280px) {
+  .card-container {
+    flex-direction: row;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .card-container {
+    gap: calc(var(--button-radius) / 4);
+    overflow: hidden;
+  }
+}

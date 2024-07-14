@@ -1,16 +1,27 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { NeubauProjekt } from '../../shared/neubauprojekt';
+import { NeubauProjekt } from './neubauprojekt';
 import { neubau } from '../../shared/constants';
 import { FormProjektNeubauService } from './form-projekt-neubau/form-projekt-neubau.service';
 import { FormDarlehenNeubauService } from './form-darlehen-neubau/form-darlehen-neubau.service';
+import { SharedService } from '../../shared/shared.service';
 
+// Neubau and Sanierung are using RXJS instead of Signals
+// Sorry about the mess :)
 @Injectable({
   providedIn: 'root',
 })
 export class NeubauService {
+  private sharedService = inject(SharedService);
   // Neubau active form tab
   public currentTab = signal(1);
+  public projectTitle = signal('Untitled');
+  public debouncedProjectTitle = this.sharedService.debouncedSignal(
+    this.projectTitle,
+    600
+  );
+  public projectId = signal<number | undefined>(undefined);
+  projectsNeubau = signal<any[]>([]);
 
   // Initial project parameters
   eigeneKostenDisabled: boolean = this.formProjektService.eigeneKosten.disabled;
@@ -42,12 +53,12 @@ export class NeubauService {
   grundstuecksbezogeneKosten: number =
     this.formProjektService.grundstKosten.value;
   baunebenkostenOhneFinIn: number =
-    this.formProjektService.baunebenkostenOhneFin.value / 100; // Conersion from percentage to fraction multiplier;
+    this.formProjektService.baunebenkostenOhneFin.value / 100; // Conversion from percentage to fraction multiplier;
 
   // Darlehen parameters
-  zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conersion from percentage to fraction multiplier
+  zinssatzBank: number = this.formDarlehenService.zinssatzBank.value / 100; // Conversion from percentage to fraction multiplier
   kreditlaufzeit: number = this.formDarlehenService.kreditlaufzeit.value;
-  kfWDarlehen: KfWDarlehen =
+  kfWDarlehen: KfwDarlehen =
     this.formDarlehenService.kfWDarlehen.options[0].value;
   bankDarlehen: BankDarlehen =
     this.formDarlehenService.bankDarlehen.options[0].value;
@@ -57,6 +68,11 @@ export class NeubauService {
     private formProjektService: FormProjektNeubauService,
     private formDarlehenService: FormDarlehenNeubauService
   ) {
+    effect(() => {
+      this.debouncedProjectTitle();
+      this.update();
+    });
+
     this.formProjektService.projektFormNeu.valueChanges.subscribe((value) => {
       this.eigeneKostenDisabled = !value.eigeneKostenToggle!;
       this.eigeneKosten = value.eigeneKosten!;
@@ -73,7 +89,7 @@ export class NeubauService {
       this.baustellenlogistikIn = value.baustellenlogistikIn!;
       this.aussenanlagenIn = value.aussenanlagenIn!;
       this.grundstuecksbezogeneKosten = value.grundstuecksbezogeneKostenRange!;
-      this.baunebenkostenOhneFinIn = value.baunebenkostenOhneFinRange! / 100; // Conersion from percentage to fraction multiplier;
+      this.baunebenkostenOhneFinIn = value.baunebenkostenOhneFinRange! / 100; // Conversion from percentage to fraction multiplier;
       this.update();
     });
 
@@ -254,7 +270,7 @@ export class NeubauService {
 
   // KfW Zinssatz (Sollzins) old Sollzins KFW [%]
   private _zinssatzKfw = 0;
-  updateZinssatzKfw(kfWDarlehen: KfWDarlehen, nrKredit: number) {
+  updateZinssatzKfw(kfWDarlehen: KfwDarlehen, nrKredit: number): number {
     if (kfWDarlehen === 'Endfälliges') {
       return this.constants.zinssatzKfw_Endfälliges;
     } else if (kfWDarlehen === 'Annuitäten') {
@@ -281,7 +297,7 @@ export class NeubauService {
   updateBaunebenkostenOhneFin(
     baukosten: number,
     baunebenkostenOhneFinIn: number
-  ) {
+  ): number {
     return baukosten * baunebenkostenOhneFinIn;
   }
 
@@ -290,7 +306,7 @@ export class NeubauService {
   updateInvestitionskosten(
     baukosten: number,
     baunebenkostenOhneFinOut: number
-  ) {
+  ): number {
     return baukosten + baunebenkostenOhneFinOut;
   }
 
@@ -300,7 +316,7 @@ export class NeubauService {
   updateInvestitionskostenM2(
     gestehungskosten: number,
     baunebenkostenOhneFinIn: number
-  ) {
+  ): number {
     return gestehungskosten + gestehungskosten * baunebenkostenOhneFinIn;
   }
 
@@ -309,7 +325,7 @@ export class NeubauService {
   updateInvestitionskostenProBau(
     investitionkosten: number,
     anzahlWohnungen: number
-  ) {
+  ): number {
     return investitionkosten / anzahlWohnungen;
   }
 
@@ -416,7 +432,7 @@ export class NeubauService {
   // Finanzierungskosten (KfW) [€]
   private _finanzierungskostenKfw = 0;
   updateFinanzierungskostenKfw(
-    kfWDarlehen: KfWDarlehen,
+    kfWDarlehen: KfwDarlehen,
     annuitaetKfW: number,
     kreditlaufzeit: number,
     kfwKredit: number,
@@ -514,7 +530,7 @@ export class NeubauService {
   updateFinKostenMitKfw(
     finanzierungskostenKfw: number,
     finanzierungskostenBank: number
-  ) {
+  ): number {
     return finanzierungskostenKfw + finanzierungskostenBank;
   }
 
@@ -525,7 +541,7 @@ export class NeubauService {
 
   // Neubau Output to be used in the Save and Export
   outputNeubau!: NeubauProjekt;
-  private outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
+  public outputNeubauSource = new BehaviorSubject<NeubauProjekt>(
     this.outputNeubau
   );
   currentOutputNeubau$ = this.outputNeubauSource.asObservable();
@@ -692,7 +708,11 @@ export class NeubauService {
 
     this.outputNeubauSource.next(
       (this.outputNeubau = {
+        title: this.projectTitle(),
+        id: this.projectId(),
         // Projekt
+        eigeneKostenDisabled: this.eigeneKostenDisabled,
+        eigeneKosten: this.eigeneKosten,
         wohnflaeche: this.wohnflaeche,
         anzahlWohnungen: this.anzahlWohnungen,
         energiestandard: this.energiestandard,
@@ -740,7 +760,7 @@ export class NeubauService {
         afBank: this._afBank,
         annuitaetKfW: this._annuitaetKfW,
         annuitaetBank: this._annuitaetBank,
-        efKfW: this._efKfW,
+        efKfw: this._efKfW,
         efBank: this._efBank,
         gbAnnuitaet: this._gbAnnuitaet,
         gbEndfaelliges: this._gbEndfaelliges,
@@ -759,50 +779,5 @@ export class NeubauService {
         finKostenMitKfwM2: this._finKostenMitKfwM2,
       })
     );
-  }
-
-  // Reset was created to make sure the outputs match the form values
-  // After doing some changes, going to another route, and then coming back,
-  // the outputs in the services were the same while the forms had reset to default values.
-  // Another solution would be to restore the previous values in the forms. But that would require more work.
-  // The main problem is that the forms are being reused across different projects/routes
-  // So it would require either separating the forms, or identifying the current route in each form
-  // to then assign the form values from the service(neubau / sanierung).
-  public reset() {
-    // Project parameters
-    this.wohnflaeche = this.formProjektService.wohnflaeche.value;
-    this.anzahlWohnungen = this.formProjektService.anzahlWohnungen.value;
-    this.energiestandard =
-      this.formProjektService.energiestandard.options[0].value;
-    this.konstruktion = this.formProjektService.konstruktion.options[0].value;
-    this.zertifizierung =
-      this.formProjektService.zertifizierung.options[0].value;
-
-    // Neubau form parameters
-    this.kellergeschossIn =
-      this.formProjektService.kellergeschoss.options[0].value;
-    this.stellplaetzeIn = this.formProjektService.stellplaetze.options[0].value;
-    this.aufzugsanlageIn =
-      this.formProjektService.aufzugsanlage.options[0].value;
-    this.barrierefreiheitIn =
-      this.formProjektService.barrierefreiheit.options[0].value;
-    this.dachbegruenungIn =
-      this.formProjektService.dachbegruenung.options[0].value;
-    this.baustellenlogistikIn =
-      this.formProjektService.baustellenlogistik.options[0].value;
-    this.aussenanlagenIn =
-      this.formProjektService.aussenanlagen.options[0].value;
-    this.grundstuecksbezogeneKosten =
-      this.formProjektService.grundstKosten.value;
-    this.baunebenkostenOhneFinIn =
-      this.formProjektService.baunebenkostenOhneFin.value;
-
-    // Darlehen parameters
-    this.zinssatzBank = this.formDarlehenService.zinssatzBank.value;
-    this.kreditlaufzeit = this.formDarlehenService.kreditlaufzeit.value;
-    this.kfWDarlehen = this.formDarlehenService.kfWDarlehen.options[0].value;
-    this.bankDarlehen = this.formDarlehenService.bankDarlehen.options[0].value;
-
-    this.update();
   }
 }
