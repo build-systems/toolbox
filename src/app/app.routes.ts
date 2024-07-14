@@ -20,7 +20,7 @@ export const routes: Routes = [
     component: PortfolioComponent,
     title: 'BuildSystems | Portfolio',
   },
-  { path: '', redirectTo: '/portfolio', pathMatch: 'full' },
+  { path: '', redirectTo: '/neubau', pathMatch: 'full' },
   // loadComponent pattern is to lazy load the app
   {
     path: 'neubau',
