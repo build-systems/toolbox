@@ -20,7 +20,7 @@ export class SanierungService {
   public projectTitle = signal('Untitled');
   public debouncedProjectTitle = this.sharedService.debouncedSignal(
     this.projectTitle,
-    600
+    300
   );
   public projectId = signal<number | undefined>(undefined);
   projectsSanierung = signal<any[]>([]);

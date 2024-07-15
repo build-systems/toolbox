@@ -174,9 +174,7 @@ export class NeubauComponent {
     );
 
     this.neubauService.currentOutputNeubau$
-      .pipe(
-        debounceTime(600) // Wait for 1000ms pause in events
-      )
+      .pipe(debounceTime(300))
       .subscribe((value) => {
         this.oldTitle = value.title;
         this.projectId = value.id;

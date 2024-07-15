@@ -30,7 +30,7 @@ export class EinzelmassnahmenService {
   projectTitle = signal<string>('Untitled');
   debouncedProjectTitle = this.sharedService.debouncedSignal(
     this.projectTitle,
-    1000
+    300
   );
   projectsEinzelmassnahmen = signal<any[]>([]);
 
