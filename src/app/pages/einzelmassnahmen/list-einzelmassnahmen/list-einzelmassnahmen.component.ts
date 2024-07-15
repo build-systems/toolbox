@@ -3,6 +3,8 @@ import { Component, inject, WritableSignal } from '@angular/core';
 import { EinzelmassnahmenService } from '../einzelmassnahmen.service';
 import { ReversePipe } from '../../../pipes/reverse.pipe';
 import { einzelmassnahmen } from '../../../shared/constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../../shared/app-settings';
 
 @Component({
   selector: 'app-list-einzelmassnahmen',
@@ -17,6 +19,8 @@ import { einzelmassnahmen } from '../../../shared/constants';
 export class ListEinzelmassnahmenComponent {
   protected einzelmassnahmenService = inject(EinzelmassnahmenService);
   protected constants = inject(einzelmassnahmen);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   delOutputItemFromList(
     index: number,
@@ -30,5 +34,8 @@ export class ListEinzelmassnahmenComponent {
       .slice(0, index)
       .concat(project.items.slice(index + 1));
     projectSignal.update((old) => ({ ...old, items: projectItems }));
+    this.snackBar.open('Removed from the project list', 'Ok', {
+      duration: this.appDelay.snackbar,
+    });
   }
 }

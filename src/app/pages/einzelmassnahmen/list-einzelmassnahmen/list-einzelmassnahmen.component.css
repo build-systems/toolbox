@@ -57,7 +57,6 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: var(--bg-tertiary);
-  cursor: grab;
 }
 
 th {
@@ -73,6 +72,7 @@ th {
 
 .delete {
   width: 25px;
+  cursor: pointer;
 }
 
 .icon {

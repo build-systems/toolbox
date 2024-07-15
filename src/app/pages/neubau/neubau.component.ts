@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DbNeubau } from './db-neubau';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../auth/supabase.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../shared/app-settings';
 
 @Component({
   selector: 'app-neubau',
@@ -49,6 +51,8 @@ export class NeubauComponent {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private supabaseService = inject(SupabaseService);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   // Information for the title section
   title = 'Fördermittel Neubau';
@@ -71,7 +75,6 @@ export class NeubauComponent {
         this.neubauService.currentOutputNeubau$
           .pipe(take(1))
           .subscribe(async (value) => {
-            console.dir(value);
             const projectDb: DbNeubau = (
               await this.dbNeubauService.getNeubauProjectByProjectTitle(
                 value.title
@@ -79,13 +82,20 @@ export class NeubauComponent {
             )[0];
 
             // If observable does have id, it means the project wasnt loaded aka is new
-            if (projectDb && value.id) {
+            if (projectDb && this.neubauService.projectId()) {
               try {
-                await this.dbNeubauService.updateNeubauProject(value);
+                const result = await this.dbNeubauService.updateNeubauProject(
+                  value
+                );
+
+                this.snackBar.open('Project successfully updated', 'Ok', {
+                  duration: this.appDelay.snackbar,
+                });
               } catch (error) {
                 console.error('Error updating project:', error);
               }
-            } else if (projectDb && !value.id) {
+            } else if (projectDb && !this.dbNeubauService.updateNeubauProject) {
+              // Prompt user if we should overwrite
               try {
                 // Prompt user if we should overwrite
                 const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -96,10 +106,21 @@ export class NeubauComponent {
                 });
                 const result = await firstValueFrom(dialogRef.afterClosed());
                 if (result) {
-                  await this.dbNeubauService.deleteNeubauProjectByProjectId(
-                    projectDb.id
-                  );
-                  this.dbNeubauService.createNeubauProject(value);
+                  const deleted =
+                    await this.dbNeubauService.deleteNeubauProjectByProjectId(
+                      projectDb.id
+                    );
+                  if (deleted.status === 204) {
+                    const result =
+                      await this.dbNeubauService.createNeubauProject(value);
+                    this.snackBar.open(
+                      'Project successfully overwritten',
+                      'Ok',
+                      {
+                        duration: this.appDelay.snackbar,
+                      }
+                    );
+                  }
                 } else {
                   return;
                 }
@@ -108,7 +129,12 @@ export class NeubauComponent {
               }
             } else {
               try {
-                await this.dbNeubauService.createNeubauProject(value);
+                const result = await this.dbNeubauService.createNeubauProject(
+                  value
+                );
+                this.snackBar.open('Project successfully created', 'Ok', {
+                  duration: this.appDelay.snackbar,
+                });
               } catch (error) {
                 console.error('Error creating project:', error);
               }

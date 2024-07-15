@@ -7,7 +7,7 @@ export const ITEMS_TABLE = 'einzelmassnahmen_items';
 export const VALUES_TABLE = 'einzelmassnahmen_values';
 export const USER_PROJECTS_TABLE = 'user_einzelmassnahmen_projects';
 export const CREATE_PROJECT_FUNCTION =
-  'create_einzelmassnahmen_project_with_items_and_values';
+  'insert_einzelmassnahmen_project_with_items_and_values';
 export const UPDATE_PROJECT_FUNCTION =
   'update_einzelmassnahmen_project_items_and_values';
 

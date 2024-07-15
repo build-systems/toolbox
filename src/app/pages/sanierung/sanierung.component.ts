@@ -17,6 +17,8 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dial
 import { DbSanierung } from './db-sanierung';
 import { Router } from '@angular/router';
 import { SupabaseService } from '../../auth/supabase.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../shared/app-settings';
 
 @Component({
   selector: 'app-sanierung',
@@ -49,6 +51,8 @@ export class SanierungComponent {
   private dialog = inject(MatDialog);
   private router = inject(Router);
   private supabaseService = inject(SupabaseService);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   // Information for the title
   title = 'Fördermittel Komplettsanierung';
@@ -72,38 +76,62 @@ export class SanierungComponent {
         this.sanierungService.currentOutputSanierung$
           .pipe(take(1))
           .subscribe(async (value) => {
-            console.dir(value);
             const projectDb: DbSanierung = (
               await this.dbSanierungService.getSanierungProjectByProjectTitle(
                 value.title
               )
             )[0];
+
+            // If observable does have id, it means the project wasnt loaded aka is new
             if (projectDb && this.sanierungService.projectId()) {
               try {
-                await this.dbSanierungService.updateSanierungProject(value);
+                const result =
+                  await this.dbSanierungService.updateSanierungProject(value);
+                this.snackBar.open('Project successfully updated', 'Ok', {
+                  duration: this.appDelay.snackbar,
+                });
               } catch (error) {
                 console.error('Error updating project:', error);
               }
             } else if (projectDb && !this.sanierungService.projectId()) {
               // Prompt user if we should overwrite
-              const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-                data: {
-                  title: 'Overwrite existing project?',
-                  message: `You already have a project with title ${value.title}.`,
-                },
-              });
-              const result = await firstValueFrom(dialogRef.afterClosed());
-              if (result) {
-                await this.dbSanierungService.deleteSanierungProjectByProjectId(
-                  projectDb.id
-                );
-                this.dbSanierungService.createSanierungProject(value);
-              } else {
-                return;
+              try {
+                const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+                  data: {
+                    title: 'Overwrite existing project?',
+                    message: `You already have a project with title ${value.title}.`,
+                  },
+                });
+                const result = await firstValueFrom(dialogRef.afterClosed());
+                if (result) {
+                  const deleted =
+                    await this.dbSanierungService.deleteSanierungProjectByProjectId(
+                      projectDb.id
+                    );
+                  if (deleted.status === 204) {
+                    const result =
+                      this.dbSanierungService.createSanierungProject(value);
+                    this.snackBar.open(
+                      'Project successfully overwritten',
+                      'Ok',
+                      {
+                        duration: this.appDelay.snackbar,
+                      }
+                    );
+                  }
+                } else {
+                  return;
+                }
+              } catch (error) {
+                console.error('Error overwriting project:', error);
               }
             } else {
               try {
-                this.dbSanierungService.createSanierungProject(value);
+                const result =
+                  this.dbSanierungService.createSanierungProject(value);
+                this.snackBar.open('Project successfully created', 'Ok', {
+                  duration: this.appDelay.snackbar,
+                });
               } catch (error) {
                 console.error('Error creating project:', error);
               }

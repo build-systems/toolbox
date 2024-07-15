@@ -8,6 +8,8 @@ import {
 import { FormEinzelmassnahmenService } from './form-einzelmassnahmen/form-einzelmassnahmen.service';
 import { einzelmassnahmen } from '../../shared/constants';
 import { SharedService } from '../../shared/shared.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../shared/app-settings';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,8 @@ export class EinzelmassnahmenService {
   private constants = inject(einzelmassnahmen);
   private formService = inject(FormEinzelmassnahmenService);
   private sharedService = inject(SharedService);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   // Titles
   titleKostenM2: EinzelmassnahmenValueTitle = 'Kosten';
@@ -604,6 +608,9 @@ export class EinzelmassnahmenService {
         vollkosten:
           old.vollkosten + this.findValueByTitle(newItem, 'Vollkosten'),
       }));
+      this.snackBar.open('Added to the project list', 'Ok', {
+        duration: this.appDelay.snackbar,
+      });
     }
   }
 

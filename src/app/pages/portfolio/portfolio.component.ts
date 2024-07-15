@@ -21,6 +21,8 @@ import { DbSanierung } from '../sanierung/db-sanierung';
 import localeDe from '@angular/common/locales/de';
 import { DbEinzelmassnahmen } from '../einzelmassnahmen/db-einzelmassnahmen';
 registerLocaleData(localeDe, 'de');
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../shared/app-settings';
 
 @Component({
   selector: 'app-portfolio',
@@ -49,23 +51,42 @@ export class PortfolioComponent {
   protected sanierungProjektFormService = inject(FormProjektSanierungService);
   protected sanierungDarlehenFormService = inject(FormDarlehenSanierungService);
   private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   description =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga doloremque cumque, nemo, non aliquid ipsum omnis atque assumenda cupiditate earum, modi nam deleniti laudantium. Possimus aperiam voluptas esse. Error, beatae eos! Pariatur atque consequatur doloremque iure eligendi vel molestiae quasi ipsa veritatis iste aliquam, obcaecati aspernatur! Accusantium distinctio suscipit voluptatibus.';
 
   async ngOnInit() {
-    let einzelmassnahmenProjects =
+    let einzelmassnahmenProjects: any[] =
       await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    einzelmassnahmenProjects.sort((a, b) => {
+      return (
+        new Date(b.projects.created_at).getTime() -
+        new Date(a.projects.created_at).getTime()
+      );
+    });
     this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
       () => einzelmassnahmenProjects
     );
 
-    let neubauProjects = await this.dbNeubauService.getNeubauProjects();
+    let neubauProjects: any[] = await this.dbNeubauService.getNeubauProjects();
+    neubauProjects.sort((a, b) => {
+      return (
+        new Date(b.projects.created_at).getTime() -
+        new Date(a.projects.created_at).getTime()
+      );
+    });
     this.neubauService.projectsNeubau.update(() => neubauProjects);
 
-    let sanierungProjects =
+    let sanierungProjects: any[] =
       await this.dbSanierungService.getSanierungProjects();
-    // console.dir(sanierungProjects);
+    sanierungProjects.sort((a, b) => {
+      return (
+        new Date(b.projects.created_at).getTime() -
+        new Date(a.projects.created_at).getTime()
+      );
+    });
     this.sanierungService.projectsSanierung.update(() => sanierungProjects);
   }
 
@@ -125,18 +146,42 @@ export class PortfolioComponent {
   }
 
   async deleteEinzelmassnahmenProjectByProjectId(projectId: number) {
-    await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
-      projectId
-    );
-    // Update the signal
-    let einzelmassnahmenProjects =
-      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
-    this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
-      () => einzelmassnahmenProjects
-    );
+    try {
+      const projectCopy: any[] =
+        this.einzelmassnahmenService.projectsEinzelmassnahmen();
+      const snackbar = this.snackBar.open(
+        'Einzelmassnahmen project deleted',
+        'Undo',
+        {
+          duration: this.appDelay.snackbar,
+        }
+      );
+      // Update project list client side
+      this.einzelmassnahmenService.projectsEinzelmassnahmen.update(() =>
+        projectCopy.filter((item) => item.projects.id !== projectId)
+      );
+      // If user click 'Undo', load old list again and return.
+      snackbar.onAction().subscribe(() => {
+        this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
+          () => projectCopy
+        );
+        return;
+      });
+      // If user did not click 'Undo', then delete from database
+      snackbar.afterDismissed().subscribe(async (info) => {
+        if (!info.dismissedByAction) {
+          const deleted =
+            await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
+              projectId
+            );
+        }
+      });
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    }
   }
 
-  async createNewEinzelmassnahmen() {
+  async createEinzelmassnahmenProject() {
     const newProjectTitle = this.getNewProjectTitle(
       this.einzelmassnahmenService.projectsEinzelmassnahmen()
     );
@@ -150,12 +195,21 @@ export class PortfolioComponent {
       await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
         this.einzelmassnahmenService.einzelmassnahmenOutputProject()
       );
-    // Update the signal
-    let einzelmassnahmenProjects =
-      await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjects();
+    const oldArray: any[] =
+      this.einzelmassnahmenService.projectsEinzelmassnahmen();
+    let newArray = [...oldArray, { projects: result }];
+    newArray.sort((a, b) => {
+      return (
+        new Date(b.projects.created_at).getTime() -
+        new Date(a.projects.created_at).getTime()
+      );
+    });
     this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
-      () => einzelmassnahmenProjects
+      () => newArray
     );
+    this.snackBar.open('Project successfully created', 'Ok', {
+      duration: this.appDelay.snackbar,
+    });
   }
 
   getNewProjectTitle(projects: any[]): string {
@@ -235,13 +289,35 @@ export class PortfolioComponent {
   }
 
   async deleteNeubauProjectByProjectId(projectId: number) {
-    await this.dbNeubauService.deleteNeubauProjectByProjectId(projectId);
-    // Update the signal
-    let neubauProjects = await this.dbNeubauService.getNeubauProjects();
-    this.neubauService.projectsNeubau.update(() => neubauProjects);
+    try {
+      const projectCopy: any[] = this.neubauService.projectsNeubau();
+      const snackbar = this.snackBar.open('Neubau project deleted', 'Undo', {
+        duration: this.appDelay.snackbar,
+      });
+      // Update project list client side
+      this.neubauService.projectsNeubau.update(() =>
+        projectCopy.filter((item) => item.projects.id !== projectId)
+      );
+      // If user click 'Undo', load old list again and return.
+      snackbar.onAction().subscribe(() => {
+        this.neubauService.projectsNeubau.update(() => projectCopy);
+        return;
+      });
+      // If user did not click 'Undo', then delete from database
+      snackbar.afterDismissed().subscribe(async (info) => {
+        if (!info.dismissedByAction) {
+          const deleted =
+            await this.dbNeubauService.deleteNeubauProjectByProjectId(
+              projectId
+            );
+        }
+      });
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    }
   }
 
-  async createNewNeubauProject() {
+  async createNeubauProject() {
     const newProjectTitle = this.getNewProjectTitle(
       this.neubauService.projectsNeubau()
     );
@@ -300,11 +376,21 @@ export class PortfolioComponent {
     this.neubauService.currentOutputNeubau$
       .pipe(take(1))
       .subscribe(async (value) => {
-        await this.dbNeubauService.createNeubauProject(value);
+        const result = await this.dbNeubauService.createNeubauProject(value);
         // Update the signal
-        let neubauProjects = await this.dbNeubauService.getNeubauProjects();
-        this.neubauService.projectsNeubau.update(() => neubauProjects);
+        let oldArray: any[] = this.neubauService.projectsNeubau();
+        let newArray = [...oldArray, { projects: result }];
+        newArray.sort((a, b) => {
+          return (
+            new Date(b.projects.created_at).getTime() -
+            new Date(a.projects.created_at).getTime()
+          );
+        });
+        this.neubauService.projectsNeubau.update(() => newArray);
       });
+    this.snackBar.open('Project successfully created', 'Ok', {
+      duration: this.appDelay.snackbar,
+    });
   }
 
   async loadSanierungProject(projectId: number) {
@@ -352,14 +438,50 @@ export class PortfolioComponent {
   }
 
   async deleteSanierungProjectByProjectId(projectId: number) {
-    await this.dbSanierungService.deleteSanierungProjectByProjectId(projectId);
-    // Update the signal
-    let sanierungProjects =
-      await this.dbSanierungService.getSanierungProjects();
-    this.sanierungService.projectsSanierung.update(() => sanierungProjects);
+    try {
+      const projectListCopy: any[] = this.sanierungService.projectsSanierung();
+      const projectRemoved = projectListCopy.filter(
+        (item) => item.projects.id === projectId
+      )[0];
+      const snackbar = this.snackBar.open(
+        'Komplettsanierung project deleted',
+        'Undo',
+        {
+          duration: this.appDelay.snackbar,
+        }
+      );
+      // Update project list client side
+      this.sanierungService.projectsSanierung.update(() =>
+        projectListCopy.filter((item) => item.projects.id !== projectId)
+      );
+      // If user click 'Undo', load old list again and return.
+      snackbar.onAction().subscribe(() => {
+        let oldArray = this.sanierungService.projectsSanierung();
+        let newArray = [...oldArray, projectRemoved];
+        newArray.sort((a, b) => {
+          return (
+            new Date(b.projects.created_at).getTime() -
+            new Date(a.projects.created_at).getTime()
+          );
+        });
+        this.sanierungService.projectsSanierung.update(() => newArray);
+        return;
+      });
+      // If user did not click 'Undo', then delete from database
+      snackbar.afterDismissed().subscribe(async (info) => {
+        if (!info.dismissedByAction) {
+          const deleted =
+            await this.dbSanierungService.deleteSanierungProjectByProjectId(
+              projectId
+            );
+        }
+      });
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    }
   }
 
-  async createNewSanierungProject() {
+  async createSanierungProject() {
     const newProjectTitle = this.getNewProjectTitle(
       this.sanierungService.projectsSanierung()
     );
@@ -404,11 +526,22 @@ export class PortfolioComponent {
     this.sanierungService.currentOutputSanierung$
       .pipe(take(1))
       .subscribe(async (value) => {
-        await this.dbSanierungService.createSanierungProject(value);
+        const result = await this.dbSanierungService.createSanierungProject(
+          value
+        );
         // Update the signal
-        let sanierungProjects =
-          await this.dbSanierungService.getSanierungProjects();
-        this.sanierungService.projectsSanierung.update(() => sanierungProjects);
+        let oldArray: any[] = this.sanierungService.projectsSanierung();
+        let newArray = [...oldArray, { projects: result }];
+        newArray.sort((a, b) => {
+          return (
+            new Date(b.projects.created_at).getTime() -
+            new Date(a.projects.created_at).getTime()
+          );
+        });
+        this.sanierungService.projectsSanierung.update(() => newArray);
       });
+    this.snackBar.open('Project successfully created', 'Ok', {
+      duration: this.appDelay.snackbar,
+    });
   }
 }

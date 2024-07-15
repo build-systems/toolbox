@@ -30,7 +30,6 @@ export class SupabaseService {
       environment.supabaseUrl,
       environment.supabaseKey
     );
-    console.dir(this.supabase);
   }
 
   profile(user: User) {

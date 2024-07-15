@@ -18,6 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { delay } from '../../shared/app-settings';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -49,6 +51,8 @@ export class EinzelmassnahmenComponent {
   protected sharedService = inject(SharedService);
   private dialog = inject(MatDialog);
   private router = inject(Router);
+  private snackBar = inject(MatSnackBar);
+  private appDelay = inject(delay);
 
   protected projectExists = false;
 
@@ -62,9 +66,6 @@ export class EinzelmassnahmenComponent {
           this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
         const projectId =
           this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
-        const projectKosten =
-          this.einzelmassnahmenService.einzelmassnahmenOutputProject()
-            .vollkosten;
 
         // Check if project exists
         const projectDb =
@@ -75,9 +76,13 @@ export class EinzelmassnahmenComponent {
         // If project exists
         if (this.projectExists && projectId) {
           try {
-            await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
-              this.einzelmassnahmenService.einzelmassnahmenOutputProject()
-            );
+            const result =
+              await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
+                this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+              );
+            this.snackBar.open('Project successfully updated', 'Ok', {
+              duration: this.appDelay.snackbar,
+            });
           } catch (error) {
             console.error('Error updating project:', error);
           }
@@ -93,14 +98,19 @@ export class EinzelmassnahmenComponent {
             });
             const result = await firstValueFrom(dialogRef.afterClosed());
             if (result) {
-              await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
-                projectDb[0].id
-              );
-
-              const result =
-                await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
-                  this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+              const deleted =
+                await this.dbEinzelmassnahmenService.deleteEinzelmassnahmenProjectByProjectId(
+                  projectDb[0].id
                 );
+              if (deleted.status === 204) {
+                const result =
+                  await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
+                    this.einzelmassnahmenService.einzelmassnahmenOutputProject()
+                  );
+                this.snackBar.open('Project successfully overwritten', 'Ok', {
+                  duration: this.appDelay.snackbar,
+                });
+              }
             } else {
               return;
             }
@@ -113,13 +123,16 @@ export class EinzelmassnahmenComponent {
               await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
                 this.einzelmassnahmenService.einzelmassnahmenOutputProject()
               );
+            console.log(result);
+            this.snackBar.open('Project successfully created', 'Ok', {
+              duration: this.appDelay.snackbar,
+            });
           } catch (error) {
             console.error('Error creating project:', error);
           }
         }
       } catch (error) {
         console.error('Error saving project:', error);
-        // Handle error (e.g., show an error message)
       }
     }
   }

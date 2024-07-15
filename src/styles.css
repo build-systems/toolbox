@@ -6,6 +6,13 @@
   margin: 1rem;
 }
 
+.mat-mdc-snackbar-surface {
+  background-color: black !important;
+  color: white !important;
+  font-size: 1rem !important;
+  border-radius: calc(var(--button-radius) / 2) !important;
+}
+
 /* BuildSystems Official Font Family */
 /* ABC Diatype, ABC Diatype Mono */
 /* @import url("https://assets.buildsystems.de/font.css"); */
