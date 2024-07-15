@@ -608,7 +608,7 @@ export class EinzelmassnahmenService {
         vollkosten:
           old.vollkosten + this.findValueByTitle(newItem, 'Vollkosten'),
       }));
-      this.snackBar.open('Added to the project list', 'Ok', {
+      this.snackBar.open('Added to the list', 'Ok', {
         duration: this.appDelay.snackbar,
       });
     }
