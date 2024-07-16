@@ -58,7 +58,7 @@ export class EinzelmassnahmenComponent {
 
   async saveProject() {
     if (!this.supabaseService.sessionSignal()) {
-      // Redirect
+      // Redirect if not logged
       this.router.navigateByUrl('/profile');
     } else {
       try {
@@ -66,7 +66,6 @@ export class EinzelmassnahmenComponent {
           this.einzelmassnahmenService.einzelmassnahmenOutputProject().title;
         const projectId =
           this.einzelmassnahmenService.einzelmassnahmenOutputProject().id;
-
         // Check if project exists
         const projectDb =
           await this.dbEinzelmassnahmenService.getEinzelmassnahmenProjectByProjectTitle(
@@ -80,7 +79,13 @@ export class EinzelmassnahmenComponent {
               await this.dbEinzelmassnahmenService.updateEinzelmassnahmenProject(
                 this.einzelmassnahmenService.einzelmassnahmenOutputProject()
               );
-            this.snackBar.open('Project successfully updated', 'Ok', {
+            let message: string;
+            if (result) {
+              message = 'Project successfully updated';
+            } else {
+              message = 'Error';
+            }
+            this.snackBar.open(message, 'Ok', {
               duration: this.appDelay.snackbar,
             });
           } catch (error) {
@@ -107,7 +112,13 @@ export class EinzelmassnahmenComponent {
                   await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
                     this.einzelmassnahmenService.einzelmassnahmenOutputProject()
                   );
-                this.snackBar.open('Project successfully overwritten', 'Ok', {
+                let message: string;
+                if (result) {
+                  message = 'Project successfully overwritten';
+                } else {
+                  message = 'Error';
+                }
+                this.snackBar.open(message, 'Ok', {
                   duration: this.appDelay.snackbar,
                 });
               }
@@ -123,8 +134,13 @@ export class EinzelmassnahmenComponent {
               await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(
                 this.einzelmassnahmenService.einzelmassnahmenOutputProject()
               );
-            console.log(result);
-            this.snackBar.open('Project successfully created', 'Ok', {
+            let message: string;
+            if (result) {
+              message = 'Project successfully created';
+            } else {
+              message = 'Error';
+            }
+            this.snackBar.open(message, 'Ok', {
               duration: this.appDelay.snackbar,
             });
           } catch (error) {
