@@ -87,7 +87,13 @@ export class SanierungComponent {
               try {
                 const result =
                   await this.dbSanierungService.updateSanierungProject(value);
-                this.snackBar.open('Project successfully updated', 'Ok', {
+                let message: string;
+                if (result) {
+                  message = 'Project successfully updated';
+                } else {
+                  message = 'Error';
+                }
+                this.snackBar.open(message, 'Ok', {
                   duration: this.appDelay.snackbar,
                 });
               } catch (error) {
@@ -110,14 +116,18 @@ export class SanierungComponent {
                     );
                   if (deleted.status === 204) {
                     const result =
-                      this.dbSanierungService.createSanierungProject(value);
-                    this.snackBar.open(
-                      'Project successfully overwritten',
-                      'Ok',
-                      {
-                        duration: this.appDelay.snackbar,
-                      }
-                    );
+                      await this.dbSanierungService.createSanierungProject(
+                        value
+                      );
+                    let message: string;
+                    if (result) {
+                      message = 'Project successfully overwritten';
+                    } else {
+                      message = 'Error';
+                    }
+                    this.snackBar.open(message, 'Ok', {
+                      duration: this.appDelay.snackbar,
+                    });
                   }
                 } else {
                   return;
@@ -128,8 +138,14 @@ export class SanierungComponent {
             } else {
               try {
                 const result =
-                  this.dbSanierungService.createSanierungProject(value);
-                this.snackBar.open('Project successfully created', 'Ok', {
+                  await this.dbSanierungService.createSanierungProject(value);
+                let message: string;
+                if (result) {
+                  message = 'Project successfully created';
+                } else {
+                  message = 'Error';
+                }
+                this.snackBar.open(message, 'Ok', {
                   duration: this.appDelay.snackbar,
                 });
               } catch (error) {
@@ -139,7 +155,6 @@ export class SanierungComponent {
           });
       } catch (error) {
         console.error('Error saving project:', error);
-        // Handle error (e.g., show an error message)
       }
     }
   }
