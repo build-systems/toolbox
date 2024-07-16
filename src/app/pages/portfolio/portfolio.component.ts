@@ -207,7 +207,13 @@ export class PortfolioComponent {
     this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
       () => newArray
     );
-    this.snackBar.open('Project successfully created', 'Ok', {
+    let message: string;
+    if (result) {
+      message = 'Project successfully created';
+    } else {
+      message = 'Error';
+    }
+    this.snackBar.open(message, 'Ok', {
       duration: this.appDelay.snackbar,
     });
   }
@@ -387,10 +393,16 @@ export class PortfolioComponent {
           );
         });
         this.neubauService.projectsNeubau.update(() => newArray);
+        let message: string;
+        if (result) {
+          message = 'Project successfully created';
+        } else {
+          message = 'Error';
+        }
+        this.snackBar.open(message, 'Ok', {
+          duration: this.appDelay.snackbar,
+        });
       });
-    this.snackBar.open('Project successfully created', 'Ok', {
-      duration: this.appDelay.snackbar,
-    });
   }
 
   async loadSanierungProject(projectId: number) {
@@ -539,9 +551,15 @@ export class PortfolioComponent {
           );
         });
         this.sanierungService.projectsSanierung.update(() => newArray);
+        let message: string;
+        if (result) {
+          message = 'Project successfully created';
+        } else {
+          message = 'Error';
+        }
+        this.snackBar.open(message, 'Ok', {
+          duration: this.appDelay.snackbar,
+        });
       });
-    this.snackBar.open('Project successfully created', 'Ok', {
-      duration: this.appDelay.snackbar,
-    });
   }
 }
