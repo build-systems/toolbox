@@ -87,8 +87,13 @@ export class NeubauComponent {
                 const result = await this.dbNeubauService.updateNeubauProject(
                   value
                 );
-
-                this.snackBar.open('Project successfully updated', 'Ok', {
+                let message: string;
+                if (result) {
+                  message = 'Project successfully updated';
+                } else {
+                  message = 'Error';
+                }
+                this.snackBar.open(message, 'Ok', {
                   duration: this.appDelay.snackbar,
                 });
               } catch (error) {
@@ -113,15 +118,20 @@ export class NeubauComponent {
                   if (deleted.status === 204) {
                     const result =
                       await this.dbNeubauService.createNeubauProject(value);
-                    this.snackBar.open(
-                      'Project successfully overwritten',
-                      'Ok',
-                      {
-                        duration: this.appDelay.snackbar,
-                      }
-                    );
+                    let message: string;
+                    if (result) {
+                      message = 'Project successfully updated';
+                    } else {
+                      message = 'Error';
+                    }
+                    this.snackBar.open(message, 'Ok', {
+                      duration: this.appDelay.snackbar,
+                    });
                   }
                 } else {
+                  this.snackBar.open('Error', 'Ok', {
+                    duration: this.appDelay.snackbar,
+                  });
                   return;
                 }
               } catch (error) {
@@ -132,7 +142,13 @@ export class NeubauComponent {
                 const result = await this.dbNeubauService.createNeubauProject(
                   value
                 );
-                this.snackBar.open('Project successfully created', 'Ok', {
+                let message: string;
+                if (result) {
+                  message = 'Project successfully created';
+                } else {
+                  message = 'Error';
+                }
+                this.snackBar.open(message, 'Ok', {
                   duration: this.appDelay.snackbar,
                 });
               } catch (error) {
