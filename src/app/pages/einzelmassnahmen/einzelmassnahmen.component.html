@@ -15,6 +15,12 @@
   <div class="house-input">
     <div class="house-container">
       <app-haus-section></app-haus-section>
+      <form class="house-form">
+        <app-radio
+          [(selected)]="formService.hausSelected"
+          [data]="formService.hausObj()"
+        />
+      </form>
     </div>
     <form>
       <fieldset class="dropdown-fieldset">

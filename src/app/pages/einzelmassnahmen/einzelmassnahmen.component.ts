@@ -20,6 +20,7 @@ import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay } from '../../shared/app-settings';
+import { RadioComponent } from '../../radio/radio.component';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -36,6 +37,7 @@ import { delay } from '../../shared/app-settings';
     ListEinzelmassnahmenComponent,
     ChartGkostenEinzelmassnahmenComponent,
     HausSectionComponent,
+    RadioComponent,
   ],
   animations: [fadeInAnimation],
   host: {

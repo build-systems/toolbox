@@ -1,0 +1,17 @@
+@if(!closed) {
+<p>
+  <button
+    (click)="closeMessage()"
+    aria-label="Click to close the message"
+    title="Click to close"
+  >
+    <svg class="icon">
+      <use xlink:href="/assets/icons.svg#close"></use>
+    </svg>
+  </button>
+  <span
+    >Die hier angezeigten Werte basieren möglicherweise auf veralteten
+    Kreditgebühren.</span
+  >
+</p>
+}

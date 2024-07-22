@@ -8,6 +8,9 @@ import { TooltipDirective } from '../shared/tooltip.directive';
   imports: [CommonModule, TooltipDirective],
   templateUrl: './radio.component.html',
   styleUrl: './radio.component.css',
+  host: {
+    class: 'host-radio',
+  },
 })
 export class RadioComponent<T> {
   data = input.required<OptionObj<T>>();

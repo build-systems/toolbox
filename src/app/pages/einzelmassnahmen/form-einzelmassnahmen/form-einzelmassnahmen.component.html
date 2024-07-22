@@ -1,6 +1,3 @@
-<!-- <div class="house-container">
-  <app-haus-section></app-haus-section>
-</div> -->
 <form>
   <app-radio
     [hidden]="!(formService.bauteilSelected() === 'Dach')"
@@ -16,11 +13,6 @@
     "
     [(selected)]="formService.flachdachSelected"
     [data]="formService.flachdachObj()"
-  />
-  <app-radio
-    [hidden]="!formService.hausTypVisible()"
-    [(selected)]="formService.hausSelected"
-    [data]="formService.hausObj()"
   />
   <app-slider-input
     [hidden]="!(formService.bauteilSelected() === 'Fenster')"

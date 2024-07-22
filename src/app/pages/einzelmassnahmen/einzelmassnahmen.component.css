@@ -86,8 +86,14 @@ form {
   flex: 1;
 }
 
-.house {
+.host-house {
+  display: flex;
+  flex-grow: 1;
   width: 300px;
+}
+
+.house-form {
+  padding: var(--layout-padding);
 }
 
 @media screen and (max-width: 1280px) {

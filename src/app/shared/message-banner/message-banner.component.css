@@ -1,0 +1,29 @@
+p {
+  display: flex;
+  align-items: center;
+  background: rgba(127, 255, 212, 0.2);
+  padding: 0.5rem;
+  gap: 0.5rem;
+  margin: 0 var(--layout-padding);
+  border: 1px solid rgb(127, 255, 212);
+  border-radius: var(--button-radius);
+  font-family: var(--font-alt);
+  font-weight: 300;
+}
+
+/* rgb(127, 255, 212); */
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.icon {
+  width: 12px;
+  aspect-ratio: 1/1;
+}
+
+svg {
+  display: flex;
+}

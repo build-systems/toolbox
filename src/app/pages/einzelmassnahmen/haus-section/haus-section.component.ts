@@ -2,8 +2,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnDestroy,
-  OnInit,
   Renderer2,
   effect,
 } from '@angular/core';
@@ -16,7 +14,7 @@ import { FormEinzelmassnahmenService } from '../form-einzelmassnahmen/form-einze
   templateUrl: './haus-section.component.svg',
   styleUrl: './haus-section.component.css',
   host: {
-    class: 'house',
+    class: 'host-house',
   },
 })
 export class HausSectionComponent implements AfterViewInit {
