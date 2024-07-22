@@ -853,9 +853,9 @@ export class EinzelmassnahmenService {
             },
           ],
         };
-      case 'Keller':
+      case 'Kellerdecke':
         return {
-          title: 'Keller',
+          title: 'Kellerdecke',
           id: undefined,
           values: [
             {

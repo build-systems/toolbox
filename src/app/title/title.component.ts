@@ -1,11 +1,6 @@
-import { Component, effect, input, model } from '@angular/core';
+import { Component, input, model } from '@angular/core';
 import { expandCollapseTitle } from '../shared/animations';
-import {
-  FormControl,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-title',
@@ -25,7 +20,6 @@ export class TitleComponent {
   description = input<string>();
 
   isExpanded: boolean = false;
-  editingTitle: boolean = false;
 
   toggleExpand() {
     this.isExpanded = !this.isExpanded;

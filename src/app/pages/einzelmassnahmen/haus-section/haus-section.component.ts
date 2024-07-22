@@ -27,7 +27,7 @@ export class HausSectionComponent implements AfterViewInit {
     'Dach',
     'Steildachgauben',
     'Innenwand',
-    'Keller',
+    'Kellerdecke',
     'Türen',
     'Türen',
     'Fenster',

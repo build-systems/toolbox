@@ -23,17 +23,11 @@ import { DbEinzelmassnahmen } from '../einzelmassnahmen/db-einzelmassnahmen';
 registerLocaleData(localeDe, 'de');
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay } from '../../shared/app-settings';
-import { MessageBannerComponent } from '../../shared/message-banner/message-banner.component';
 
 @Component({
   selector: 'app-portfolio',
   standalone: true,
-  imports: [
-    CommonModule,
-    AuthComponent,
-    TitleComponent,
-    MessageBannerComponent,
-  ],
+  imports: [CommonModule, AuthComponent, TitleComponent],
   templateUrl: './portfolio.component.html',
   styleUrl: './portfolio.component.css',
   animations: [fadeInAnimation],

@@ -16,7 +16,7 @@ export class FormEinzelmassnahmenService {
       // Removing temporarily
       // { id: 'bauteil05', value: 'Flachdach', disabled: false },
       { id: 'bauteil06', value: 'Innenwand', disabled: false },
-      { id: 'bauteil07', value: 'Keller', disabled: false },
+      { id: 'bauteil07', value: 'Kellerdecke', disabled: false },
       {
         id: 'bauteil08',
         value: 'ObersteGeschossdecke',
@@ -179,7 +179,7 @@ export class FormEinzelmassnahmenService {
       'Dach',
       'Flachdach',
       'Innenwand',
-      'Keller',
+      'Kellerdecke',
       'ObersteGeschossdecke',
       'Steildach',
       'Wärmedämmverbundsystem',
@@ -210,7 +210,7 @@ export class FormEinzelmassnahmenService {
   daemmstoffdickeValue = signal<number>(10);
 
   kellerObj = signal<KellerObj>({
-    title: 'Keller Typ',
+    title: 'Art der Dämmung ',
     options: [
       { id: 'keller1', value: 'unterseitig ohne Bekleidung', disabled: false },
       { id: 'keller2', value: 'unterseitig mit Bekleidung', disabled: false },
