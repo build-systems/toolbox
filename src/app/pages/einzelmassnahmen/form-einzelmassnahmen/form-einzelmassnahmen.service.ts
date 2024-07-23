@@ -28,7 +28,6 @@ export class FormEinzelmassnahmenService {
       { id: 'bauteil10', value: 'Steildachgauben', disabled: false },
       { id: 'bauteil11', value: 'Türen', disabled: false },
       { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
-      { id: 'bauteil13', value: 'Wärmedämmverbundsystem', disabled: false },
     ],
     title: 'Bauteil',
   });
@@ -182,7 +181,6 @@ export class FormEinzelmassnahmenService {
       'Kellerdecke',
       'ObersteGeschossdecke',
       'Steildach',
-      'Wärmedämmverbundsystem',
     ];
     return allowedBauteile.includes(this.bauteilSelected() as Bauteil);
   }

@@ -142,8 +142,7 @@ type Bauteil =
   | 'Steildach'
   | 'Steildachgauben'
   | 'Türen'
-  | 'Vorbaurollladen'
-  | 'Wärmedämmverbundsystem';
+  | 'Vorbaurollladen';
 type BauteilOption = Option<Bauteil>;
 type BauteilObj = OptionObj<Bauteil>;
 
@@ -159,8 +158,7 @@ type BauteilText =
   | 'Steildach'
   | 'Steildachgauben'
   | 'Tür'
-  | 'Vorbaurollladen'
-  | 'Wärmedämm­verbundsystem';
+  | 'Vorbaurollladen';
 
 type Waermeerzeuger =
   | 'Bestandskessel'

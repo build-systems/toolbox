@@ -162,7 +162,7 @@ export class EinzelmassnahmenService {
   }
 
   // G29 → Vollkosten | Kosten [€/m² Bauteil]
-  wdvsKostenM2 = signal<number>(0);
+  aussenwandKostenM2 = signal<number>(0);
   private calculateWdvsKostenM2(
     aequDaemmstoffdicke: number,
     gesamtPreisindex: number
@@ -176,7 +176,7 @@ export class EinzelmassnahmenService {
     );
   }
 
-  wdvsKosten = signal<number>(0);
+  aussenwandKosten = signal<number>(0);
   private calculateWdvsKosten(
     wdvsKostenM2: number,
     gedaemmteflaeche: number
@@ -184,7 +184,7 @@ export class EinzelmassnahmenService {
     return wdvsKostenM2 * gedaemmteflaeche;
   }
 
-  wdvsSowiesoKosten = signal<number>(0);
+  aussenwandSowiesoKosten = signal<number>(0);
   private calculateWdvsSowiesoKosten(
     wdvsKosten: number,
     wdvsEnergetischBedingteMehrkosten: number
@@ -192,7 +192,7 @@ export class EinzelmassnahmenService {
     return wdvsKosten - wdvsEnergetischBedingteMehrkosten;
   }
 
-  wdvsEnergetischBedingteMehrkosten = signal<number>(0);
+  aussenwandEnergetischBedingteMehrkosten = signal<number>(0);
   private calculateWdvsEnergetischBedingteMehrkosten(
     aequDaemmstoffdicke: number,
     gesamtPreisindex: number,
@@ -209,7 +209,7 @@ export class EinzelmassnahmenService {
     );
   }
 
-  aussenwandKostenM2 = signal<number>(0);
+  aussenwandAltKostenM2 = signal<number>(0);
   private calculateAussenwandKostenM2(
     aequDaemmstoffdicke: number,
     gesamtPreisindex: number
@@ -223,7 +223,7 @@ export class EinzelmassnahmenService {
     );
   }
 
-  aussenwandKosten = signal<number>(0);
+  aussenwandAltKosten = signal<number>(0);
   private calculateAussenwandKosten(
     aussenwandKostenM2: number,
     gedaemmteflaeche: number
@@ -641,7 +641,6 @@ export class EinzelmassnahmenService {
             {
               title: this.titleKostenM2,
               id: undefined,
-              description: 'Placeholder',
               value: this.aussenwandKostenM2(),
               unit: '€/m² Bauteil',
             },
@@ -654,13 +653,13 @@ export class EinzelmassnahmenService {
             {
               title: this.titleSowiesoKosten,
               id: undefined,
-              value: 0,
+              value: this.aussenwandSowiesoKosten(),
               unit: '€',
             },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
-              value: 0,
+              value: this.aussenwandEnergetischBedingteMehrkosten(),
               unit: '€',
             },
           ],
@@ -1008,37 +1007,6 @@ export class EinzelmassnahmenService {
             },
           ],
         };
-      case 'Wärmedämmverbundsystem':
-        return {
-          title: 'Wärmedämm­verbundsystem',
-          id: undefined,
-          values: [
-            {
-              title: this.titleKostenM2,
-              id: undefined,
-              value: this.wdvsKostenM2(),
-              unit: '€/m² Bauteil',
-            },
-            {
-              title: this.titleVollkosten,
-              id: undefined,
-              value: this.wdvsKosten(),
-              unit: '€',
-            },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.wdvsSowiesoKosten(),
-              unit: '€',
-            },
-            {
-              title: this.titleEnergetischMehrkosten,
-              id: undefined,
-              value: this.wdvsEnergetischBedingteMehrkosten(),
-              unit: '€',
-            },
-          ],
-        };
       default:
         return {
           title: undefined,
@@ -1223,7 +1191,7 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.wdvsKostenM2.set(
+        this.aussenwandKostenM2.set(
           this.calculateWdvsKostenM2(
             this.aequDaemmstoffdicke(),
             this.gesamtPreisindex
@@ -1235,9 +1203,9 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.wdvsKosten.set(
+        this.aussenwandKosten.set(
           this.calculateWdvsKosten(
-            this.wdvsKostenM2(),
+            this.aussenwandKostenM2(),
             this.formService.gedaemmteflaecheValue()
           )
         );
@@ -1247,10 +1215,10 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.wdvsSowiesoKosten.set(
+        this.aussenwandSowiesoKosten.set(
           this.calculateWdvsSowiesoKosten(
-            this.wdvsKosten(),
-            this.wdvsEnergetischBedingteMehrkosten()
+            this.aussenwandKosten(),
+            this.aussenwandEnergetischBedingteMehrkosten()
           )
         );
       },
@@ -1259,7 +1227,7 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.wdvsEnergetischBedingteMehrkosten.set(
+        this.aussenwandEnergetischBedingteMehrkosten.set(
           this.calculateWdvsEnergetischBedingteMehrkosten(
             this.aequDaemmstoffdicke(),
             this.gesamtPreisindex,
@@ -1272,7 +1240,7 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.aussenwandKostenM2.set(
+        this.aussenwandAltKostenM2.set(
           this.calculateAussenwandKostenM2(
             this.aequDaemmstoffdicke(),
             this.gesamtPreisindex
@@ -1284,9 +1252,9 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.aussenwandKosten.set(
+        this.aussenwandAltKosten.set(
           this.calculateAussenwandKosten(
-            this.aussenwandKostenM2(),
+            this.aussenwandAltKostenM2(),
             this.formService.gedaemmteflaecheValue()
           )
         );
