@@ -147,7 +147,7 @@ type BauteilOption = Option<Bauteil>;
 type BauteilObj = OptionObj<Bauteil>;
 
 type BauteilText =
-  | 'Außenwand'
+  | 'Außenwand (WDVS)'
   | 'Bodenplatte'
   | 'Dachflächenfenster'
   | 'Fenster'

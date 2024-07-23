@@ -635,7 +635,7 @@ export class EinzelmassnahmenService {
     switch (bauteilSelected) {
       case 'Außenwand':
         return {
-          title: 'Außenwand',
+          title: 'Außenwand (WDVS)',
           id: undefined,
           values: [
             {

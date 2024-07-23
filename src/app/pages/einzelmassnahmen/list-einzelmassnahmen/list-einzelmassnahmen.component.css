@@ -11,6 +11,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   overflow-y: auto;
+  font-family: var(--font-alt);
 }
 
 thead {
@@ -60,7 +61,7 @@ tr:hover {
 }
 
 th {
-  font-family: var(--font-family-primary), sans-serif;
+  /* font-family: var(--font-family-primary), sans-serif; */
   background-color: var(--bg-tertiary);
   text-align: left;
   font-weight: normal;
@@ -82,4 +83,5 @@ th {
 
 #total {
   background-color: var(--bg-tertiary);
+  font-weight: 500;
 }

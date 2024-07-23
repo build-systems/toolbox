@@ -8,11 +8,21 @@ export class FormEinzelmassnahmenService {
   // Bauteil
   bauteilObj = signal<BauteilObj>({
     options: [
-      { id: 'bauteil01', value: 'Außenwand', disabled: false },
+      {
+        id: 'bauteil01',
+        value: 'Außenwand',
+        text: 'Außenwand (WDVS)',
+        disabled: false,
+      },
       { id: 'bauteil02', value: 'Bodenplatte', disabled: false },
       { id: 'bauteil03', value: 'Dach', disabled: false },
       { id: 'bauteil04', value: 'Dachflächenfenster', disabled: false },
-      { id: 'bauteil05', value: 'Fenster', disabled: false },
+      {
+        id: 'bauteil05',
+        value: 'Fenster',
+        text: 'Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster',
+        disabled: false,
+      },
       // Removing temporarily
       // { id: 'bauteil05', value: 'Flachdach', disabled: false },
       { id: 'bauteil06', value: 'Innenwand', disabled: false },
@@ -33,6 +43,43 @@ export class FormEinzelmassnahmenService {
   });
   bauteilSelected = signal<string>('');
 
+  getTextOrValue(value: string) {
+    const option = this.bauteilObj().options.find(
+      (option) => option.value === value
+    );
+    if (option) {
+      return option.text || option.value;
+    }
+    return null; // Or handle the case when the value is not found
+  }
+
+  getTooltip() {
+    switch (this.bauteilSelected()) {
+      case 'Außenwand':
+        return this.einzelmassnahmenTooltips.aussenwand;
+      case 'Bodenplatte':
+        return this.einzelmassnahmenTooltips.bodenplatte;
+      case 'Dach':
+        return this.einzelmassnahmenTooltips.dach;
+      case 'Fenster':
+        return this.einzelmassnahmenTooltips.fenster;
+      case 'Innenwand':
+        return this.einzelmassnahmenTooltips.innenwand;
+      case 'Kellerdecke':
+        return this.einzelmassnahmenTooltips.kellerdecke;
+      case 'ObersteGeschossdecke':
+        return this.einzelmassnahmenTooltips.obersteGeschossdecke;
+      case 'Steildachgauben':
+        return this.einzelmassnahmenTooltips.steildachgaube;
+      case 'Türen':
+        return this.einzelmassnahmenTooltips.tueren;
+      case 'Vorbaurollladen':
+        return this.einzelmassnahmenTooltips.vorbaurollladen;
+      default:
+        return null;
+    }
+  }
+
   // Haus
   hausObj = signal<HausObj>({
     title: 'Haus typ',
@@ -51,21 +98,6 @@ export class FormEinzelmassnahmenService {
   });
   hausSelected = signal<Haus>('Einfamilienhaus');
 
-  hausTypVisible(): boolean {
-    const allowedBauteile: Bauteil[] = [
-      'Dachflächenfenster',
-      'Türen',
-      'Steildachgauben',
-    ];
-    const allowedDach: Dach = 'Flachdach';
-    const allowedFlachdach: Flachdach = 'mit Lichtkuppeln';
-    return (
-      allowedBauteile.includes(this.bauteilSelected() as Bauteil) ||
-      (allowedDach === this.dachSelected() &&
-        allowedFlachdach === this.flachdachSelected())
-    );
-  }
-
   // C3 → Wohnfläche [m²]
   // Wohnfläche centralized form values
   // This one is not necessary for the first version
@@ -75,7 +107,6 @@ export class FormEinzelmassnahmenService {
     max: 10000,
     step: 1,
     title: 'Wohnfläche [m²]',
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   };
 
@@ -95,7 +126,6 @@ export class FormEinzelmassnahmenService {
   // This one is not necessary for the first version
   waermeerzeuger: WaermeerzeugerObj = {
     title: 'Wärmeerzeuger (Bestand)',
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
     options: [
       { id: 'w1', value: 'Bestandskessel', disabled: false },
       { id: 'w2', value: 'Gas-BW-Kessel', disabled: false },
@@ -131,7 +161,6 @@ export class FormEinzelmassnahmenService {
     max: 100,
     step: 0.1,
     title: 'Einzelfensterfläche [m²]',
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   });
   fensterflaecheValue = signal<number>(1);
@@ -143,7 +172,6 @@ export class FormEinzelmassnahmenService {
     max: 100,
     step: 1,
     title: 'Anzahl der Fenster',
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
     disabled: false,
   });
   anzahlFensterValue = signal<number>(1);
@@ -151,7 +179,7 @@ export class FormEinzelmassnahmenService {
   // Fenster
   fensterObj = signal<FensterObj>({
     title: 'Fenster Typ',
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
+    tooltip: this.einzelmassnahmenTooltips.fensterTyp,
     options: [
       { id: 'fenst1', value: '3WSV Passivhaus', disabled: false },
       { id: 'fenst2', value: '3WSV konventionell', disabled: false },
@@ -218,7 +246,7 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
+    tooltip: this.einzelmassnahmenTooltips.artDerDaemmungKellerdecke,
   });
   kellerSelected = signal<Keller>('unterseitig ohne Bekleidung');
 
@@ -236,7 +264,7 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
+    tooltip: this.einzelmassnahmenTooltips.artDerDaemmungObersteGeschossdecke,
   });
   obersteGeschossdeckeSelected = signal<ObersteGeschossdecke>('begehbar');
 
@@ -250,7 +278,7 @@ export class FormEinzelmassnahmenService {
   dachSelected = signal<Dach>('Steildach');
 
   flachdachObj = signal<FlachdachObj>({
-    title: 'Flachdach Typ',
+    title: 'Flachdach',
     options: [
       {
         id: 'flachdach1',
@@ -263,7 +291,6 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
     ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
   });
   flachdachSelected = signal<Flachdach>('ohne Lichtkuppeln');
 
@@ -299,7 +326,7 @@ export class FormEinzelmassnahmenService {
       { id: 'vorbaurollladen3', value: 'Alu Gurt', disabled: false },
       { id: 'vorbaurollladen4', value: 'Alu Elektro', disabled: false },
     ],
-    tooltip: this.einzelmassnahmenTooltips.placeholder,
+    tooltip: this.einzelmassnahmenTooltips.vorbaurolladenTyp,
   });
   vorbaurollladenSelected = signal<Vorbaurollladen>('Kunststoff Gurt');
 

@@ -95,6 +95,34 @@ export class neubau {
 })
 export class einzelmassnahmen {
   // investitionskosten: string = 'Baukosten + Grundstuecksbezogene Kosten + Baunebenkosten Kein Finanz.';
-  placeholder: string =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, doloremque, error quod molestias nobis magni ipsam vero dolorum rerum doloribus assumenda voluptates. Accusantium doloribus quae officia? Accusamus provident praesentium iure deleniti vel, architecto asperiores dolores voluptatem quo doloremque similique temporibus repellat cumque, possimus quam soluta alias nesciunt tempore ducimus fugit. Expedita natus nulla at harum porro odio commodi iure corporis explicabo animi alias voluptas est ducimus aspernatur ut doloremque necessitatibus, facilis ullam tenetur! Repudiandae vitae, nam veritatis enim maxime exercitationem molestias ipsam? Laborum veniam consequuntur illum quia ratione corporis, ex iure ea officia rerum, cum nulla quasi, incidunt quibusdam voluptatibus.';
+  aussenwand: string =
+    'Ein Wärmedämmverbundsystem, kurz WDVS, stellt eine häufig genutzte Variante der Außendämmung von Fassaden dar. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt oder verkleidet werden soll und daher optisch kein Unterschied zu erkennen ist. Sie schließt zusammen mit der Dämmung des Dachs und des Bodens die thermische Hülle rund um das Gebäude.';
+  bodenplatte: string =
+    'Die Dämmung der Bodenplatte stellt sich häufig als spezifische Herausforderung dar. Besonders wenn das unterste Geschoss, z.B. ein Keller, beheizt und genutzt ist, ist es schwierig ist eine zusätzliche Wärmedämmung auf dem Fußboden aufzubringen, denn damit würden die lichten Höhen der Nutzräume verringert.';
+  dach: string =
+    'Bei der Sanierung von bestehenden Dächern gibt es die Möglichkeit der Zwischensparrendämmung, die relativ hürdenlos umgesetzt werden kann. Bei einem Flachdach wird zumeist eine zusätzliche außenseitige Dämmung aufgebracht.';
+  fenster: string =
+    'Mit Wärmeschutzverglasungen und neuen, dicht schließenden Fenstern können Wärmeverluste über Glasflächen enorm reduziert werden. ';
+  fensterTyp: string =
+    'Eine Wärmeschutzverglasung kann mit einer Zwei- oder Dreifachverglasung ausgeführt werden, dabei erhöht sich die Wärmedämmleistung sukzessive.';
+  innenwand: string =
+    'An Bauteilen, die nicht außenseitig gedämmt werden können wie z.B. bei Kellerwänden, kann eine Innenwanddämmung die Wärmeverluste reduzieren. Innenwanddämmungen sind allerdings anfällig gegen physische Einwirkung und empfehlen sich daher eher in kaum genutzten Räumlichkeiten oder Räumen mit einem geringeren Anspruch an Makellosigkeit.';
+  kellerdecke: string =
+    'In nicht beheizten und nicht benutzten Kellerräumen bietet sich eine deckenunterseitige Dämmung an. Diese kann mit geringem Aufwand umgesetzt werden.';
+  artDerDaemmungKellerdecke: string =
+    'Eine oberseitige Dämmung der Kellerdecke empfiehlt sich nur, wenn im Erdgeschoss der Bodenaufbau erneuert wird, z.B. beim Einbau einer Fußbodenheizung. Dabei ist jedoch zu beachten, dass sich die lichte Höhe des Nutzraumes verringert. Die Kosten repräsentieren allerdings nur die Kosten des Dämmmaterials und keine weiteren Maßnahmen. Bei einem genutzten EG ist die oberseitige Dämmung der Kellerdecke ohne zusätzliche Maßnahmen damit sehr unwahrscheinlich.';
+  obersteGeschossdecke: string =
+    'Ist ein Dachraum nicht genutzt und unbeheizt empfiehlt es sich, die obersten Geschossdecke oberseitig zu dämmen, anstelle das Dach zu dämmen. Eine unterseitige Dämmung ist ebenfalls möglich, allerdings verringern sich hier die lichten Höhen der Nutzräume.';
+  artDerDaemmungObersteGeschossdecke: string =
+    'Die Erbringung einer nicht begehbaren Dämmung ist technisch sehr niederschwellig und entsprechend kostengünstig.';
+  steildachgaube: string =
+    'Die Kosten beziehen sich auf die Ergänzung einer neuen Gaube im Dach.';
+  flaecheDerGaube: string =
+    'Die Fläche der Gaube schließt alle Flächen der Gaube inkl. der Fläche der Verglasung mit ein.';
+  tueren: string =
+    'Dicht schließende Türen mit einem hochwertigen Wärmeschutz können Wärmeverluste enorm reduzieren.';
+  vorbaurollladen: string =
+    'Rolläden können bei aktiver Nutzung besonders in der Nach Wärmeverluste reduzieren.';
+  vorbaurolladenTyp: string =
+    'Rollläden können aus Kunststoff oder Aluminium bestehen und entweder manuell über einen Gurt betätig oder elektrisch gesteuert werden.';
 }

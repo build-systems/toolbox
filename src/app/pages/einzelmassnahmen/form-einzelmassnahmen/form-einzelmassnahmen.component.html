@@ -1,3 +1,14 @@
+<h2>
+  {{ formService.getTextOrValue(formService.bauteilSelected()) }}@if
+  (formService.getTooltip()) {&nbsp;
+  <span
+    class="tooltip-icon"
+    [appTooltip]="formService.getTooltip()!"
+    placement="right"
+    >&#9432;</span
+  >
+  }
+</h2>
 <form>
   <app-radio
     [hidden]="!(formService.bauteilSelected() === 'Dach')"
