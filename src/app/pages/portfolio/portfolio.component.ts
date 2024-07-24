@@ -23,6 +23,7 @@ import { DbEinzelmassnahmen } from '../einzelmassnahmen/db-einzelmassnahmen';
 registerLocaleData(localeDe, 'de');
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay } from '../../shared/app-settings';
+import { einzelmassnahmen } from '../../shared/constants';
 
 @Component({
   selector: 'app-portfolio',
@@ -53,6 +54,7 @@ export class PortfolioComponent {
   private router = inject(Router);
   private snackBar = inject(MatSnackBar);
   private appDelay = inject(delay);
+  protected einzelmassnahmenConstants = inject(einzelmassnahmen);
 
   description =
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga doloremque cumque, nemo, non aliquid ipsum omnis atque assumenda cupiditate earum, modi nam deleniti laudantium. Possimus aperiam voluptas esse. Error, beatae eos! Pariatur atque consequatur doloremque iure eligendi vel molestiae quasi ipsa veritatis iste aliquam, obcaecati aspernatur! Accusantium distinctio suscipit voluptatibus.';

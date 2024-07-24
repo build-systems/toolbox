@@ -108,13 +108,15 @@ export class EinzelmassnahmenService {
   dachflaechenfensterKosten = signal<number>(0);
   private calculateDachflaechenfensterKosten(
     hausTyp: Haus,
-    gesamtPreisindex: number
+    gesamtPreisindex: number,
+    anzahlDachflaechenfenster: number
   ): number {
     const { SchaetzwertA } = this.constants.dachflaechenfenster[hausTyp];
     const schaetzwertA = SchaetzwertA;
     return (
-      ((1 + this.constants.baunebenkosten) * schaetzwertA * gesamtPreisindex) /
-      100
+      (((1 + this.constants.baunebenkosten) * schaetzwertA * gesamtPreisindex) /
+        100) *
+      anzahlDachflaechenfenster
     );
   }
 
@@ -136,9 +138,10 @@ export class EinzelmassnahmenService {
   tuerKosten = signal<number>(0);
   private calculateTuerKosten(
     tuerflaeche: number,
-    tuerKostenM2: number
+    tuerKostenM2: number,
+    tuerAnzahl: number
   ): number {
-    return tuerflaeche * tuerKostenM2;
+    return tuerflaeche * tuerKostenM2 * tuerAnzahl;
   }
 
   tuerEnergetischBedingteMehrkosten = signal<number>(0);
@@ -1128,7 +1131,8 @@ export class EinzelmassnahmenService {
         this.dachflaechenfensterKosten.set(
           this.calculateDachflaechenfensterKosten(
             this.formService.hausSelected(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex,
+            this.formService.anzahlDachflaechenfensterValue()
           )
         );
       },
@@ -1152,7 +1156,8 @@ export class EinzelmassnahmenService {
         this.tuerKosten.set(
           this.calculateTuerKosten(
             this.formService.tuerflaecheValue(),
-            this.tuerKostenM2()
+            this.tuerKostenM2(),
+            this.formService.anzahlTuerValue()
           )
         );
       },

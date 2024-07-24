@@ -26,6 +26,12 @@
     [data]="formService.flachdachObj()"
   />
   <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Dachflächenfenster')"
+    [(value)]="formService.anzahlDachflaechenfensterValue"
+    [data]="formService.anzahlDachflaechenfensterObj()"
+    [round]="0"
+  />
+  <app-slider-input
     [hidden]="!(formService.bauteilSelected() === 'Fenster')"
     [(value)]="formService.fensterflaecheValue"
     [data]="formService.fensterflaeche()"
@@ -45,6 +51,12 @@
     [hidden]="!(formService.bauteilSelected() === 'Türen')"
     [(value)]="formService.tuerflaecheValue"
     [data]="formService.tuerflaecheObj()"
+  />
+  <app-slider-input
+    [hidden]="!(formService.bauteilSelected() === 'Türen')"
+    [(value)]="formService.anzahlTuerValue"
+    [data]="formService.anzahlTuerObj()"
+    [round]="0"
   />
   <app-radio
     [hidden]="!(formService.bauteilSelected() === 'Kellerdecke')"

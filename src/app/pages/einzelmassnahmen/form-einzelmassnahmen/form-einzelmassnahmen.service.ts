@@ -204,6 +204,16 @@ export class FormEinzelmassnahmenService {
   });
   tuerflaecheValue = signal<number>(1);
 
+  anzahlTuerObj = signal<SliderNumberObj>({
+    min: 1,
+    value: 1,
+    max: 100,
+    step: 1,
+    title: 'Anzahl der Fenster',
+    disabled: false,
+  });
+  anzahlTuerValue = signal<number>(1);
+
   isOpakeVisible(): boolean {
     const allowedBauteile: Bauteil[] = [
       'Außenwand',
@@ -299,16 +309,15 @@ export class FormEinzelmassnahmenService {
   });
   flachdachSelected = signal<Flachdach>('ohne Lichtkuppeln');
 
-  // C20 → Eingabe Fensterfläche gesamt [m²]
-  anzahlSteildachgaubenObj = signal<SliderNumberObj>({
+  anzahlDachflaechenfensterObj = signal<SliderNumberObj>({
     min: 1,
     value: 1,
     max: 100,
     step: 1,
-    title: 'Anzahl der Gauben',
+    title: 'Anzahl der Dachflächenfenster',
     disabled: false,
   });
-  anzahlSteildachgaubenValue = signal<number>(1);
+  anzahlDachflaechenfensterValue = signal<number>(1);
 
   // C42 → Fläche der Gaube(n) [m²]
   gaubeflaecheObj = signal<SliderNumberObj>({
@@ -320,6 +329,16 @@ export class FormEinzelmassnahmenService {
     disabled: false,
   });
   gaubeflaecheValue = signal<number>(11);
+
+  anzahlSteildachgaubenObj = signal<SliderNumberObj>({
+    min: 1,
+    value: 1,
+    max: 100,
+    step: 1,
+    title: 'Anzahl der Gauben',
+    disabled: false,
+  });
+  anzahlSteildachgaubenValue = signal<number>(1);
 
   // C44 → Fläche Rollladen [m²]
   rollladenflaecheObj = signal<SliderNumberObj>({
