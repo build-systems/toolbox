@@ -124,9 +124,9 @@ type BankDarlehenObj = OptionObj<BankDarlehen>;
 
 // Einzelmaßnahmen
 // Haus
-type Haus = 'Einfamilienhaus' | 'Mehrfamilienhaus';
-type HausOption = Option<Haus>;
-type HausObj = OptionObj<Haus>;
+type EinzelmaßnahmenProjektType = 'Einfamilienhaus' | 'Mehrfamilienhaus';
+type EinzelmaßnahmenProjektTypeOption = Option<EinzelmaßnahmenProjektType>;
+type EinzelmaßnahmenProjektTypeObj = OptionObj<EinzelmaßnahmenProjektType>;
 
 // Bauteil
 type Bauteil =
@@ -194,6 +194,10 @@ type Keller =
   | 'oberseitig';
 type KellerOption = Option<Keller>;
 type KellerObj = OptionObj<Keller>;
+
+type HasKeller = 'Ohne Keller' | 'Mit Keller';
+type HasKellerOption = Option<HasKeller>;
+type HasKellerObj = OptionObj<HasKeller>;
 
 type ObersteGeschossdecke = 'begehbar' | 'nicht begehbar';
 type ObersteGeschossdeckeOption = Option<ObersteGeschossdecke>;

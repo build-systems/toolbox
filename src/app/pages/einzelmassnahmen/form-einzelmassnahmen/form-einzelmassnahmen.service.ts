@@ -86,7 +86,7 @@ export class FormEinzelmassnahmenService {
   }
 
   // Haus
-  hausObj = signal<HausObj>({
+  hausObj = signal<EinzelmaßnahmenProjektTypeObj>({
     title: 'Haus typ',
     options: [
       {
@@ -101,7 +101,25 @@ export class FormEinzelmassnahmenService {
       },
     ],
   });
-  hausSelected = signal<Haus>('Einfamilienhaus');
+  hausSelected = signal<EinzelmaßnahmenProjektType>('Einfamilienhaus');
+
+  // Has keller
+  hasKellerObj = signal<HasKellerObj>({
+    title: 'Keller',
+    options: [
+      {
+        id: 'keller1',
+        value: 'Mit Keller',
+        disabled: false,
+      },
+      {
+        id: 'keller2',
+        value: 'Ohne Keller',
+        disabled: false,
+      },
+    ],
+  });
+  hasKellerSelected = signal<HasKeller>('Mit Keller');
 
   // C3 → Wohnfläche [m²]
   // Wohnfläche centralized form values

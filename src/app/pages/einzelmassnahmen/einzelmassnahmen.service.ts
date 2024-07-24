@@ -107,7 +107,7 @@ export class EinzelmassnahmenService {
   // Vollkosten | Kosten [€]
   dachflaechenfensterKosten = signal<number>(0);
   private calculateDachflaechenfensterKosten(
-    hausTyp: Haus,
+    hausTyp: EinzelmaßnahmenProjektType,
     gesamtPreisindex: number,
     anzahlDachflaechenfenster: number
   ): number {
@@ -123,7 +123,7 @@ export class EinzelmassnahmenService {
   // Vollkosten | Kosten [€/m² Bauteil]
   tuerKostenM2 = signal<number>(0);
   private calculateTuerKostenM2(
-    hausTyp: Haus,
+    hausTyp: EinzelmaßnahmenProjektType,
     gesamtPreisindex: number
   ): number {
     const { SchaetzwertA } = this.constants.tuer[hausTyp];
@@ -530,7 +530,7 @@ export class EinzelmassnahmenService {
   // Vollkosten | Kosten [€/m² Bauteil]
   steildachgaubenKostenM2 = signal<number>(0);
   private calculateSteildachgaubenKostenM2(
-    hausTyp: Haus,
+    hausTyp: EinzelmaßnahmenProjektType,
     gesamtPreisindex: number
   ): number {
     const { SchaetzwertB } = this.constants.steildachgauben[hausTyp];
