@@ -1,6 +1,7 @@
 .tables {
   /* display: flex; */
   flex-direction: column;
+  font-family: var(--font-alt);
   padding-right: var(--layout-padding);
   margin-left: var(--layout-padding);
   overflow-y: auto;
@@ -45,10 +46,6 @@ th,
 td {
   border-left: 1px solid #000;
   padding: 1rem 1rem;
-}
-
-th {
-  font-family: var(--font-family-secondary);
 }
 
 table tr:first-child th:first-child {
