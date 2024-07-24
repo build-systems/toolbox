@@ -13,7 +13,7 @@ import { SanierungProjekt } from '../../sanierungprojekt';
   templateUrl: './chart-tilgung-sanierung.component.html',
   styleUrl: './chart-tilgung-sanierung.component.css',
   host: {
-    class: 'host-chart host-chart5',
+    class: 'host-chart host-chart6',
   },
 })
 export class ChartTilgungSanierungComponent {
@@ -168,7 +168,7 @@ export class ChartTilgungSanierungComponent {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Tilgung [€]',
+          text: 'Tilgung + Zins [€]',
         },
         display: true,
         labels: {

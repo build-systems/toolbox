@@ -14,7 +14,7 @@ import { NeubauProjekt } from '../../neubauprojekt';
   templateUrl: './chart-annuitaeten-neubau.component.html',
   styleUrl: './chart-annuitaeten-neubau.component.css',
   host: {
-    class: 'host-chart  host-chart6',
+    class: 'host-chart  host-chart5',
   },
 })
 export class ChartAnnuitaetenNeubauComponent {
@@ -155,7 +155,7 @@ export class ChartAnnuitaetenNeubauComponent {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Annuitäten [€]',
+          text: 'Annuitäten Summe [€]',
         },
         display: true,
         labels: {

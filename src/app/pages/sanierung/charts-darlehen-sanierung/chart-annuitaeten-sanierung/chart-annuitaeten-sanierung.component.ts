@@ -20,7 +20,7 @@ import { SanierungProjekt } from '../../sanierungprojekt';
   templateUrl: './chart-annuitaeten-sanierung.component.html',
   styleUrl: './chart-annuitaeten-sanierung.component.css',
   host: {
-    class: 'host-chart  host-chart6',
+    class: 'host-chart  host-chart5',
   },
 })
 export class ChartAnnuitaetenSanierungComponent {
@@ -162,7 +162,7 @@ export class ChartAnnuitaetenSanierungComponent {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Annuitäten [€]',
+          text: 'Annuitäten Summe [€]',
         },
         display: true,
         labels: {

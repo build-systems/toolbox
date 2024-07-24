@@ -14,7 +14,7 @@ import { NeubauProjekt } from '../../neubauprojekt';
   templateUrl: './chart-tilgung-neubau.component.html',
   styleUrl: './chart-tilgung-neubau.component.css',
   host: {
-    class: 'host-chart host-chart5',
+    class: 'host-chart host-chart6',
   },
 })
 export class ChartTilgungNeubauComponent {
@@ -173,7 +173,7 @@ export class ChartTilgungNeubauComponent {
             size: this.styleService.title.font.size,
             weight: this.styleService.title.font.weight,
           },
-          text: 'Tilgung [€]',
+          text: 'Tilgung + Zins [€]',
         },
         display: true,
         labels: {
