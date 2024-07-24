@@ -15,7 +15,7 @@
     [(selected)]="formService.dachSelected"
     [data]="formService.dachObj()"
   />
-  <app-radio
+  <!-- <app-radio
     [hidden]="
       !(
         formService.bauteilSelected() === 'Dach' &&
@@ -24,7 +24,7 @@
     "
     [(selected)]="formService.flachdachSelected"
     [data]="formService.flachdachObj()"
-  />
+  /> -->
   <app-slider-input
     [hidden]="!(formService.bauteilSelected() === 'Dachflächenfenster')"
     [(value)]="formService.anzahlDachflaechenfensterValue"

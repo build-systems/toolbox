@@ -416,24 +416,28 @@ export class EinzelmassnahmenService {
   // Vollkosten | Kosten [€/m² Bauteil]
   flachdachKostenM2 = signal<number>(0);
   private calculateFlachdachKostenM2(
-    hausTyp: Haus,
-    flachdachTyp: Flachdach,
+    // hausTyp: Haus,
+    // flachdachTyp: Flachdach,
     aequDaemmstoffdicke: number,
     gesamtPreisindex: number
   ): number {
     let schaetzwertA: number;
     let schaetzwertB: number;
-    if (flachdachTyp === 'ohne Lichtkuppeln') {
-      const { SchaetzwertA, SchaetzwertB } =
-        this.constants.flachdach[flachdachTyp];
-      schaetzwertA = SchaetzwertA;
-      schaetzwertB = SchaetzwertB;
-    } else {
-      const { SchaetzwertA, SchaetzwertB } =
-        this.constants.flachdach[`${flachdachTyp} ${hausTyp}`];
-      schaetzwertA = SchaetzwertA;
-      schaetzwertB = SchaetzwertB;
-    }
+    const { SchaetzwertA, SchaetzwertB } =
+      this.constants.flachdach['ohne Lichtkuppeln'];
+    schaetzwertA = SchaetzwertA;
+    schaetzwertB = SchaetzwertB;
+    // if (flachdachTyp === 'ohne Lichtkuppeln') {
+    //   const { SchaetzwertA, SchaetzwertB } =
+    //     this.constants.flachdach[flachdachTyp];
+    //   schaetzwertA = SchaetzwertA;
+    //   schaetzwertB = SchaetzwertB;
+    // } else {
+    //   const { SchaetzwertA, SchaetzwertB } =
+    //     this.constants.flachdach[`${flachdachTyp} ${hausTyp}`];
+    //   schaetzwertA = SchaetzwertA;
+    //   schaetzwertB = SchaetzwertB;
+    // }
     return (
       ((1 + this.constants.baunebenkosten) *
         (schaetzwertA * aequDaemmstoffdicke + schaetzwertB) *
@@ -1466,8 +1470,8 @@ export class EinzelmassnahmenService {
       () => {
         this.flachdachKostenM2.set(
           this.calculateFlachdachKostenM2(
-            this.formService.hausSelected(),
-            this.formService.flachdachSelected(),
+            // this.formService.hausSelected(),
+            // this.formService.flachdachSelected(),
             this.aequDaemmstoffdicke(),
             this.gesamtPreisindex
           )
