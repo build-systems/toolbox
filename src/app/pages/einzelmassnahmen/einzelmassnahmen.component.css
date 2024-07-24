@@ -71,6 +71,11 @@ form {
   /* padding-bottom: 0; */
 }
 
+.house-form {
+  padding: var(--layout-padding);
+  padding-top: 0;
+}
+
 .card {
   flex-grow: auto;
 }
@@ -90,10 +95,6 @@ form {
   display: flex;
   flex-grow: 1;
   width: 300px;
-}
-
-.house-form {
-  padding: var(--layout-padding);
 }
 
 @media screen and (max-width: 1280px) {

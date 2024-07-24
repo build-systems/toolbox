@@ -534,12 +534,14 @@ export class EinzelmassnahmenService {
   steildachgaubenKosten = signal<number>(0);
   private calculateSteildachgaubenKosten(
     steildachgaubenKostenM2: number,
-    gaubeflaeche: number
+    gaubeflaeche: number,
+    anzahlGauben: number
   ): number {
     return (
       (1 + this.constants.baunebenkosten) *
       gaubeflaeche *
-      steildachgaubenKostenM2
+      steildachgaubenKostenM2 *
+      anzahlGauben
     );
   }
 
@@ -916,7 +918,7 @@ export class EinzelmassnahmenService {
         };
       case 'Steildachgauben':
         return {
-          title: 'Steildachgauben',
+          title: 'Neue Steildachgauben',
           id: undefined,
           values: [
             {
@@ -1572,7 +1574,8 @@ export class EinzelmassnahmenService {
         this.steildachgaubenKosten.set(
           this.calculateSteildachgaubenKosten(
             this.steildachgaubenKostenM2(),
-            this.formService.gaubeflaecheValue()
+            this.formService.gaubeflaecheValue(),
+            this.formService.anzahlSteildachgaubenValue()
           )
         );
       },

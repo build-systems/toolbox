@@ -35,7 +35,12 @@ export class FormEinzelmassnahmenService {
       },
       // Removing temporarily
       // { id: 'bauteil09', value: 'Steildach', disabled: false },
-      { id: 'bauteil10', value: 'Steildachgauben', disabled: false },
+      {
+        id: 'bauteil10',
+        value: 'Steildachgauben',
+        text: 'Neue Steildachgauben',
+        disabled: false,
+      },
       { id: 'bauteil11', value: 'Türen', disabled: false },
       { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
     ],
@@ -293,6 +298,17 @@ export class FormEinzelmassnahmenService {
     ],
   });
   flachdachSelected = signal<Flachdach>('ohne Lichtkuppeln');
+
+  // C20 → Eingabe Fensterfläche gesamt [m²]
+  anzahlSteildachgaubenObj = signal<SliderNumberObj>({
+    min: 1,
+    value: 1,
+    max: 100,
+    step: 1,
+    title: 'Anzahl der Gauben',
+    disabled: false,
+  });
+  anzahlSteildachgaubenValue = signal<number>(1);
 
   // C42 → Fläche der Gaube(n) [m²]
   gaubeflaecheObj = signal<SliderNumberObj>({

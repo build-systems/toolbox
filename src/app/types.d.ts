@@ -156,7 +156,7 @@ type BauteilText =
   | 'Kellerdecke'
   | 'Oberste Geschossdecke'
   | 'Steildach'
-  | 'Steildachgauben'
+  | 'Neue Steildachgauben'
   | 'Tür'
   | 'Vorbaurollladen';
 
