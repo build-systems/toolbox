@@ -222,6 +222,7 @@ type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
 type EinzelmassnahmenValueTitle =
   | 'Kosten'
   | 'Vollkosten'
+  | 'Förderung durch Bafa'
   | 'Sowieso-Kosten'
   | 'Energetisch Kosten';
 
@@ -246,3 +247,6 @@ type EinzelmassnahmenProject = {
   items: EinzelmassnahmenItem[];
   vollkosten: number;
 };
+
+type QualitaetBauteilOption = Option<number>;
+type QualitaetBauteilObj = OptionObj<number>;

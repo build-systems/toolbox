@@ -1,4 +1,5 @@
 <fieldset class="radio-fieldset">
+  @if(this.showLegend()) {
   <legend>
     {{ data().title }}
   </legend>
@@ -9,6 +10,7 @@
     >
     }
   </div>
+  }
   <div class="radio-options">
     <span class="radio-option" *ngFor="let item of data().options">
       <input
@@ -20,7 +22,7 @@
         [attr.disabled]="item.disabled ? '' : null"
       />
       <label class="radio-container" [for]="item.id"
-        >{{ item.value }}
+        >{{ item.text || item.value }}
         <span class="radiomark"></span>
       </label>
     </span>

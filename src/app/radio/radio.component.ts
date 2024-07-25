@@ -14,6 +14,7 @@ import { TooltipDirective } from '../shared/tooltip.directive';
 })
 export class RadioComponent<T> {
   data = input.required<OptionObj<T>>();
+  showLegend = input<boolean>(true);
   selected = model<T>();
 
   onClick(newSelect: T) {

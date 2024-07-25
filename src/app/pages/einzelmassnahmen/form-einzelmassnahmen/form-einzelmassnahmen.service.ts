@@ -106,12 +106,12 @@ export class FormEinzelmassnahmenService {
     title: 'Keller',
     options: [
       {
-        id: 'keller1',
+        id: 'hasKeller1',
         value: 'Mit Keller',
         disabled: false,
       },
       {
-        id: 'keller2',
+        id: 'hasKeller2',
         value: 'Ohne Keller',
         disabled: false,
       },
@@ -259,12 +259,67 @@ export class FormEinzelmassnahmenService {
   daemmstoffdickeObj = signal<SliderNumberObj>({
     min: 1,
     value: 10,
-    max: 100,
+    max: 40,
     step: 0.1,
     title: 'Dämmstoffdicke [cm]',
     disabled: false,
   });
   daemmstoffdickeValue = signal<number>(10);
+
+  // Anforderungen Qualität
+  qualitaetBauteilObjArray: QualitaetBauteilObj[] = [
+    {
+      title: 'Außenwand',
+      options: [
+        { id: 'qualAu1', value: 14, text: 'Mindestqualität', disabled: false },
+        { id: 'qualAu2', value: 30, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'Bodenplatte',
+      options: [
+        { id: 'qualBo1', value: 8, text: 'Mindestqualität', disabled: false },
+        { id: 'qualBo2', value: 16, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'Steildach',
+      options: [
+        { id: 'qualSt1', value: 14, text: 'Mindestqualität', disabled: false },
+        { id: 'qualSt2', value: 30, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'Flachdach',
+      options: [
+        { id: 'qualFl1', value: 18, text: 'Mindestqualität', disabled: false },
+        { id: 'qualFl2', value: 36, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'Innenwand',
+      options: [
+        { id: 'qualIn1', value: 8, text: 'Mindestqualität', disabled: false },
+        { id: 'qualIn2', value: 10, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'Kellerdecke',
+      options: [
+        { id: 'qualKe1', value: 12, text: 'Mindestqualität', disabled: false },
+        { id: 'qualKe2', value: 20, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+    {
+      title: 'ObersteGeschossdecke',
+      options: [
+        { id: 'qualOG1', value: 14, text: 'Mindestqualität', disabled: false },
+        { id: 'qualOG2', value: 36, text: 'Hohe Qualität', disabled: false },
+      ],
+    },
+  ];
+  selectedQualitaetBauteilObj: QualitaetBauteilObj | null = null;
+  selectedQualitaet = signal<number>(0);
 
   kellerObj = signal<KellerObj>({
     title: 'Art der Dämmung ',
@@ -427,6 +482,30 @@ export class FormEinzelmassnahmenService {
             });
           }
         }
+      },
+      { allowSignalWrites: true }
+    );
+
+    effect(() => {
+      let bauteil = '';
+      if (this.bauteilSelected() === 'Dach') {
+        bauteil = this.dachSelected();
+      } else {
+        bauteil = this.bauteilSelected();
+      }
+      let obj = this.qualitaetBauteilObjArray.filter(
+        (item) => item.title === bauteil
+      )[0];
+      if (obj) {
+        this.selectedQualitaetBauteilObj = obj;
+      } else {
+        this.selectedQualitaetBauteilObj = null;
+      }
+    });
+
+    effect(
+      () => {
+        this.daemmstoffdickeValue.set(this.selectedQualitaet());
       },
       { allowSignalWrites: true }
     );

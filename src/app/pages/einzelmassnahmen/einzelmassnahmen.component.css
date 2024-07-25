@@ -113,7 +113,7 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 55%;
+    width: 70%;
     padding-top: 1rem;
   }
 }
@@ -166,6 +166,7 @@ form {
 
   .host-forms {
     padding-top: var(--layout-padding);
+    overflow-y: unset;
   }
 }
 

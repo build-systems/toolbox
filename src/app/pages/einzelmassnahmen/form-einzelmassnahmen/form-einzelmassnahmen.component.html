@@ -102,5 +102,12 @@
     [(selected)]="formService.vorbaurollladenSelected"
     [data]="formService.vorbaurollladenObj()"
   />
+  @if(this.formService.selectedQualitaetBauteilObj) {
+  <app-radio
+    [(selected)]="formService.selectedQualitaet"
+    [data]="formService.selectedQualitaetBauteilObj!"
+    [showLegend]="false"
+  />
+  }
 </form>
 }

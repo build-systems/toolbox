@@ -182,7 +182,7 @@ export class einzelmassnahmen {
     GeltungsbereichEinheit: 'cm Dämmstoffstärke',
     Lebensjahre: 30,
   };
-  public keller = {
+  public kellerdecke = {
     'unterseitig ohne Bekleidung': {
       SchaetzwertA: 1.25,
       SchaetzwertB: 30.75,
