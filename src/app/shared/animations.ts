@@ -23,6 +23,7 @@ export const expandCollapseTitle = [
     state(
       'expanded',
       style({
+        display: 'flex',
         height: '*',
       })
     ),

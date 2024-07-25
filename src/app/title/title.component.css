@@ -56,8 +56,9 @@ input:focus {
   }
 }
 
+/* I added display flex to the animation 'expandCollapseTitle' in animations.ts */
+/* to avoid content flashing on page load */
 .kfw-description {
-  display: flex;
   gap: 1rem;
   background-color: var(--bg-tertiary);
   width: clamp(100px, 100%, 50rem);
@@ -65,6 +66,7 @@ input:focus {
   overflow: hidden;
   padding: var(--layout-padding);
   border-radius: var(--button-radius);
+  display: none;
 }
 
 .kfw-description a {

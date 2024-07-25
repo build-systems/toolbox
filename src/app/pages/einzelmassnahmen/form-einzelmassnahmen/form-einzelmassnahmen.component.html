@@ -1,3 +1,6 @@
+@if(formService.bauteilSelected() === '') {
+<p class="empty-input">Wählen Sie ein Bauteil aus</p>
+} @else {
 <h2>
   {{ formService.getTextOrValue(formService.bauteilSelected()) }}@if
   (formService.getTooltip()) {&nbsp;
@@ -100,3 +103,4 @@
     [data]="formService.vorbaurollladenObj()"
   />
 </form>
+}
