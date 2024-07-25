@@ -382,46 +382,53 @@ export class FormEinzelmassnahmenService {
   vorbaurollladenSelected = signal<Vorbaurollladen>('Kunststoff Gurt');
 
   constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {
-    effect(() => {
-      if (this.hasKellerSelected() === 'Ohne Keller') {
-        const bauteilOptionsUpdated = this.bauteilObj.options.filter(
-          (item) =>
-            !(item.value === 'Kellerdecke' || item.value === 'Innenwand')
-        );
-        this.bauteilObj.options = bauteilOptionsUpdated;
-        console.log(bauteilOptionsUpdated);
-      } else {
-        if (
-          !this.bauteilObj.options.find((item) => item.value === 'Kellerdecke')
-        ) {
-          let index = this.bauteilObj.options.findIndex(
-            (item) => item.id > 'bauteil07'
+    const valuesToEdit = ['Kellerdecke', 'Innenwand'];
+    effect(
+      () => {
+        if (this.hasKellerSelected() === 'Ohne Keller') {
+          const bauteilOptionsUpdated = this.bauteilObj.options.filter(
+            (item) => !valuesToEdit.includes(item.value)
           );
-          if (index === -1) {
-            index = this.bauteilObj.options.length;
+          this.bauteilObj.options = bauteilOptionsUpdated;
+          if (valuesToEdit.includes(this.bauteilSelected())) {
+            this.bauteilSelected.set('');
           }
-          this.bauteilObj.options.splice(index, 0, {
-            id: 'bauteil07',
-            value: 'Kellerdecke',
-            disabled: false,
-          });
-        }
-        if (
-          !this.bauteilObj.options.find((item) => item.value === 'Innenwand')
-        ) {
-          let index = this.bauteilObj.options.findIndex(
-            (item) => item.id > 'bauteil06'
-          );
-          if (index === -1) {
-            index = this.bauteilObj.options.length;
+        } else {
+          if (
+            !this.bauteilObj.options.find(
+              (item) => item.value === 'Kellerdecke'
+            )
+          ) {
+            let index = this.bauteilObj.options.findIndex(
+              (item) => item.id > 'bauteil07'
+            );
+            if (index === -1) {
+              index = this.bauteilObj.options.length;
+            }
+            this.bauteilObj.options.splice(index, 0, {
+              id: 'bauteil07',
+              value: 'Kellerdecke',
+              disabled: false,
+            });
           }
-          this.bauteilObj.options.splice(index, 0, {
-            id: 'bauteil06',
-            value: 'Innenwand',
-            disabled: false,
-          });
+          if (
+            !this.bauteilObj.options.find((item) => item.value === 'Innenwand')
+          ) {
+            let index = this.bauteilObj.options.findIndex(
+              (item) => item.id > 'bauteil06'
+            );
+            if (index === -1) {
+              index = this.bauteilObj.options.length;
+            }
+            this.bauteilObj.options.splice(index, 0, {
+              id: 'bauteil06',
+              value: 'Innenwand',
+              disabled: false,
+            });
+          }
         }
-      }
-    });
+      },
+      { allowSignalWrites: true }
+    );
   }
 }
