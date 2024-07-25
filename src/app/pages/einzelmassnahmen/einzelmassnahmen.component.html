@@ -28,17 +28,17 @@
     </div>
     <form>
       <fieldset class="dropdown-fieldset">
-        <legend>{{ formService.bauteilObj().title }}</legend>
+        <legend>{{ formService.bauteilObj.title }}</legend>
         <select
           class="dropdown"
           [(ngModel)]="formService.bauteilSelected"
-          [name]="formService.bauteilObj().title"
-          [id]="formService.bauteilObj().title"
+          [name]="formService.bauteilObj.title"
+          [id]="formService.bauteilObj.title"
           #bauteilField
         >
           <option value="" disabled selected>Bauteil</option>
           <option
-            *ngFor="let item of formService.bauteilObj().options"
+            *ngFor="let item of formService.bauteilObj.options"
             [ngValue]="item.value"
             [id]="item.id"
           >

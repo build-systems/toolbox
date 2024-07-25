@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 
 @Injectable({
@@ -6,7 +6,7 @@ import { allgemein, einzelmassnahmen } from '../../../shared/tooltips';
 })
 export class FormEinzelmassnahmenService {
   // Bauteil
-  bauteilObj = signal<BauteilObj>({
+  bauteilObj: BauteilObj = {
     options: [
       {
         id: 'bauteil01',
@@ -23,8 +23,6 @@ export class FormEinzelmassnahmenService {
         text: 'Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster',
         disabled: false,
       },
-      // Removing temporarily
-      // { id: 'bauteil05', value: 'Flachdach', disabled: false },
       { id: 'bauteil06', value: 'Innenwand', disabled: false },
       { id: 'bauteil07', value: 'Kellerdecke', disabled: false },
       {
@@ -45,11 +43,11 @@ export class FormEinzelmassnahmenService {
       { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
     ],
     title: 'Bauteil',
-  });
+  };
   bauteilSelected = signal<string>('');
 
   getTextOrValue(value: string) {
-    const option = this.bauteilObj().options.find(
+    const option = this.bauteilObj.options.find(
       (option) => option.value === value
     );
     if (option) {
@@ -383,5 +381,47 @@ export class FormEinzelmassnahmenService {
   });
   vorbaurollladenSelected = signal<Vorbaurollladen>('Kunststoff Gurt');
 
-  constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {}
+  constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {
+    effect(() => {
+      if (this.hasKellerSelected() === 'Ohne Keller') {
+        const bauteilOptionsUpdated = this.bauteilObj.options.filter(
+          (item) =>
+            !(item.value === 'Kellerdecke' || item.value === 'Innenwand')
+        );
+        this.bauteilObj.options = bauteilOptionsUpdated;
+        console.log(bauteilOptionsUpdated);
+      } else {
+        if (
+          !this.bauteilObj.options.find((item) => item.value === 'Kellerdecke')
+        ) {
+          let index = this.bauteilObj.options.findIndex(
+            (item) => item.id > 'bauteil07'
+          );
+          if (index === -1) {
+            index = this.bauteilObj.options.length;
+          }
+          this.bauteilObj.options.splice(index, 0, {
+            id: 'bauteil07',
+            value: 'Kellerdecke',
+            disabled: false,
+          });
+        }
+        if (
+          !this.bauteilObj.options.find((item) => item.value === 'Innenwand')
+        ) {
+          let index = this.bauteilObj.options.findIndex(
+            (item) => item.id > 'bauteil06'
+          );
+          if (index === -1) {
+            index = this.bauteilObj.options.length;
+          }
+          this.bauteilObj.options.splice(index, 0, {
+            id: 'bauteil06',
+            value: 'Innenwand',
+            disabled: false,
+          });
+        }
+      }
+    });
+  }
 }
