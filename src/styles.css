@@ -181,6 +181,7 @@ li {
   display: flex;
   flex-direction: column;
   max-height: calc(100svh - 1.5rem);
+  flex: 1 1;
   padding-bottom: var(--layout-padding);
 }
 
