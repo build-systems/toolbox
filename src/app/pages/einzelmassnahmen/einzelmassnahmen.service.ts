@@ -752,7 +752,10 @@ export class EinzelmassnahmenService {
         ...old,
         items: [...old.items, newItem],
         vollkosten:
-          old.vollkosten + this.findValueByTitle(newItem, 'Vollkosten'),
+          old.vollkosten + this.findValueByTitle(newItem, this.titleVollkosten),
+        bafaFoerderung:
+          old.bafaFoerderung +
+          this.findValueByTitle(newItem, this.titleBafaFoerderung),
       }));
       this.snackBar.open('Added to the list', 'Ok', {
         duration: this.appDelay.snackbar,
@@ -1333,7 +1336,6 @@ export class EinzelmassnahmenService {
         this.fensterBafaFoerderung.set(
           this.calculateFensterBafa(this.fensterKosten())
         );
-        console.log(this.fensterBafaFoerderung());
       },
       { allowSignalWrites: true }
     );

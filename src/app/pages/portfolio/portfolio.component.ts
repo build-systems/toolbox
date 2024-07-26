@@ -68,6 +68,7 @@ export class PortfolioComponent {
         new Date(a.projects.created_at).getTime()
       );
     });
+
     this.einzelmassnahmenService.projectsEinzelmassnahmen.update(
       () => einzelmassnahmenProjects
     );
