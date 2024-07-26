@@ -35,8 +35,7 @@ export class EinzelmassnahmenService {
   );
   projectsEinzelmassnahmen = signal<any[]>([]);
 
-  // baupreisindexErrechnet: number;
-  baupreisindexErrechnet: number;
+  baupreisindexErrechnet = signal<number>(0);
   calculateBaupreisindexErrechnet(
     baupreisindexAktuell: number,
     baupreisindex2015: number
@@ -45,7 +44,7 @@ export class EinzelmassnahmenService {
   }
 
   // Preisindex C13 → Gesamt
-  gesamtPreisindex: number;
+  gesamtPreisindex = signal<number>(0);
   calculateGesamtPreisindex(
     baupreisindexErrechnet: number,
     ortsfaktor: number
@@ -1295,14 +1294,27 @@ export class EinzelmassnahmenService {
       );
     });
 
-    this.baupreisindexErrechnet = this.calculateBaupreisindexErrechnet(
-      this.constants.baupreisindexAktuell,
-      this.constants.baupreisindex2015
+    effect(
+      () => {
+        this.baupreisindexErrechnet.set(
+          this.calculateBaupreisindexErrechnet(
+            this.formService.baupreisindexAktuellValue(),
+            this.constants.baupreisindex2015
+          )
+        );
+      },
+      { allowSignalWrites: true }
     );
-
-    this.gesamtPreisindex = this.calculateGesamtPreisindex(
-      this.baupreisindexErrechnet,
-      this.constants.ortsfaktor
+    effect(
+      () => {
+        this.gesamtPreisindex.set(
+          this.calculateGesamtPreisindex(
+            this.baupreisindexErrechnet(),
+            this.formService.ortsfaktorValue()
+          )
+        );
+      },
+      { allowSignalWrites: true }
     );
 
     effect(
@@ -1311,7 +1323,7 @@ export class EinzelmassnahmenService {
           this.calculateFensterKostenM2(
             this.formService.fensterSelected(),
             this.formService.fensterflaecheValue(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1345,7 +1357,7 @@ export class EinzelmassnahmenService {
         this.fensterSowiesoKosten.set(
           this.calculateFensterSowiesoKosten(
             this.formService.fensterflaecheValue(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1369,7 +1381,7 @@ export class EinzelmassnahmenService {
         this.dachflaechenfensterKosten.set(
           this.calculateDachflaechenfensterKosten(
             this.formService.hausSelected(),
-            this.gesamtPreisindex,
+            this.gesamtPreisindex(),
             this.formService.anzahlDachflaechenfensterValue()
           )
         );
@@ -1393,7 +1405,7 @@ export class EinzelmassnahmenService {
         this.tuerKostenM2.set(
           this.calculateTuerKostenM2(
             this.formService.hausSelected(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1457,7 +1469,7 @@ export class EinzelmassnahmenService {
         this.aussenwandWdvsKostenM2.set(
           this.calculateWdvsKostenM2(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1502,7 +1514,7 @@ export class EinzelmassnahmenService {
         this.aussenwandEnergetischBedingteMehrkosten.set(
           this.calculateWdvsEnergetischBedingteMehrkosten(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex,
+            this.gesamtPreisindex(),
             this.formService.gedaemmteflaecheValue()
           )
         );
@@ -1515,7 +1527,7 @@ export class EinzelmassnahmenService {
         this.aussenwandAltKostenM2.set(
           this.calculateAussenwandAltKostenM2(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1540,7 +1552,7 @@ export class EinzelmassnahmenService {
           this.calculateKellerdeckeKostenM2(
             this.formService.kellerSelected(),
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1599,7 +1611,7 @@ export class EinzelmassnahmenService {
         this.bodenplatteKostenM2.set(
           this.calculateBodenplatteKostenM2(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1655,7 +1667,7 @@ export class EinzelmassnahmenService {
         this.innenwandKostenM2.set(
           this.calculateInnenwandKostenM2(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1712,7 +1724,7 @@ export class EinzelmassnahmenService {
           this.calculateObersteGeschossdeckeKostenM2(
             this.formService.obersteGeschossdeckeSelected(),
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1772,7 +1784,7 @@ export class EinzelmassnahmenService {
             // this.formService.hausSelected(),
             // this.formService.flachdachSelected(),
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1817,7 +1829,7 @@ export class EinzelmassnahmenService {
         this.flachdachEnergetischBedingteMehrkosten.set(
           this.calculateFlachdachEnergetischBedingteMehrkosten(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex,
+            this.gesamtPreisindex(),
             this.formService.gedaemmteflaecheValue()
           )
         );
@@ -1830,7 +1842,7 @@ export class EinzelmassnahmenService {
         this.steildachKostenM2.set(
           this.calculateSteildachKostenM2(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1875,7 +1887,7 @@ export class EinzelmassnahmenService {
         this.steildachEnergetischBedingteMehrkosten.set(
           this.calculateSteildachEnergetischBedingteMehrkosten(
             this.aequDaemmstoffdicke(),
-            this.gesamtPreisindex,
+            this.gesamtPreisindex(),
             this.formService.gedaemmteflaecheValue()
           )
         );
@@ -1888,7 +1900,7 @@ export class EinzelmassnahmenService {
         this.steildachgaubenKostenM2.set(
           this.calculateSteildachgaubenKostenM2(
             this.formService.hausSelected(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },
@@ -1922,7 +1934,7 @@ export class EinzelmassnahmenService {
         this.vorbaurollladenKostenM2.set(
           this.calculateVorbaurollladenKostenM2(
             this.formService.vorbaurollladenSelected(),
-            this.gesamtPreisindex
+            this.gesamtPreisindex()
           )
         );
       },

@@ -175,6 +175,28 @@ export class FormEinzelmassnahmenService {
     ],
   };
 
+  baupreisindexAktuellObj: SliderNumberObj = {
+    min: 1,
+    value: 161.3,
+    max: 200,
+    step: 1,
+    title: 'Baupreisindex aktuell',
+    tooltip: this.einzelmassnahmenTooltips.baupreisindexAktuell,
+    disabled: false,
+  };
+  baupreisindexAktuellValue = signal<number>(161.3);
+
+  ortsfaktorObj: SliderNumberObj = {
+    min: 0.1,
+    value: 1,
+    max: 2,
+    step: 0.01,
+    title: 'Ortsfaktor',
+    tooltip: this.einzelmassnahmenTooltips.ortsfaktor,
+    disabled: false,
+  };
+  ortsfaktorValue = signal<number>(1);
+
   // C19 → Eingabe Fläche Einzelfenster [m²]
   fensterflaeche = signal<SliderNumberObj>({
     min: 0.1,

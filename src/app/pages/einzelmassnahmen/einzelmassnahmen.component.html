@@ -24,6 +24,14 @@
           [(selected)]="formService.hasKellerSelected"
           [data]="formService.hasKellerObj()"
         />
+        <app-slider-input
+          [(value)]="this.formService.baupreisindexAktuellValue"
+          [data]="this.formService.baupreisindexAktuellObj"
+        />
+        <app-slider-input
+          [(value)]="this.formService.ortsfaktorValue"
+          [data]="this.formService.ortsfaktorObj"
+        />
       </form>
     </div>
     <form>

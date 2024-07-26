@@ -95,6 +95,10 @@ export class neubau {
 })
 export class einzelmassnahmen {
   // investitionskosten: string = 'Baukosten + Grundstuecksbezogene Kosten + Baunebenkosten Kein Finanz.';
+  baupreisindexAktuell: string =
+    '<a target="_blank" rel="noopener noreferrer" href="https://www.destatis.de/DE/ZahlenFakten/Indikatoren/Konjunkturindikatoren/Preise/bpr110.html">DESTATIS Zahlen Fakten <sup>↗</sup></a>';
+  ortsfaktor: string =
+    '<a target="_blank" rel="noopener noreferrer" href="https://www.sirados.de/ortsfaktoren.html">Sirados ortsfaktoren <sup>↗</sup></a>';
   aussenwand: string =
     'Ein Wärmedämmverbundsystem, kurz WDVS, stellt eine häufig genutzte Variante der Außendämmung von Fassaden dar. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt oder verkleidet werden soll und daher optisch kein Unterschied zu erkennen ist. Sie schließt zusammen mit der Dämmung des Dachs und des Bodens die thermische Hülle rund um das Gebäude.';
   bodenplatte: string =

@@ -21,6 +21,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay } from '../../shared/app-settings';
 import { RadioComponent } from '../../radio/radio.component';
+import { SliderInputComponent } from '../../slider-input/slider-input.component';
 
 @Component({
   selector: 'app-einzelmassnahmen',
@@ -38,6 +39,7 @@ import { RadioComponent } from '../../radio/radio.component';
     ChartGkostenEinzelmassnahmenComponent,
     HausSectionComponent,
     RadioComponent,
+    SliderInputComponent,
   ],
   animations: [fadeInAnimation],
   host: {
