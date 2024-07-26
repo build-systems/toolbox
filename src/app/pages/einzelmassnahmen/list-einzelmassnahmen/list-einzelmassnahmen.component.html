@@ -1,4 +1,8 @@
 <div class="wrapper-table">
+  @if (this.einzelmassnahmenService.einzelmassnahmenOutputProject().items.length
+  === 0) {
+  <p class="empty-input">Die Liste ist leer</p>
+  } @else {
   <table>
     <thead>
       <tr>
@@ -65,4 +69,5 @@
       </tr>
     </tbody>
   </table>
+  }
 </div>
