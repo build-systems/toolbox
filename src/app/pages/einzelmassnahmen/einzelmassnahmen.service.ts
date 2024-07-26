@@ -1240,6 +1240,12 @@ export class EinzelmassnahmenService {
               value: 0,
               unit: '€',
             },
+            {
+              title: this.titleBafaFoerderung,
+              id: undefined,
+              value: 0,
+              unit: '€',
+            },
             // {
             //   title: this.titleSowiesoKosten,
             //   id: undefined,
