@@ -128,7 +128,7 @@
           <th>Edited</th>
           <th>Energiestandard</th>
           <th>Kosten</th>
-          <th>KfW Förderung</th>
+          <th>Bafa Förderung</th>
           <th>Total</th>
           <th></th>
         </tr>
@@ -192,8 +192,7 @@
             "
           >
             {{
-              project.projects.vollkosten *
-                (1 - this.einzelmassnahmenConstants.bafaMultiplier)
+              project.projects.bafa_foerderung
                 | currency : "EUR" : "symbol" : "1.0-0" : "de"
             }}
           </td>
@@ -206,8 +205,7 @@
             "
           >
             {{
-              project.projects.vollkosten *
-                this.einzelmassnahmenConstants.bafaMultiplier
+              project.projects.vollkosten - project.projects.bafa_foerderung
                 | currency : "EUR" : "symbol" : "1.0-0" : "de"
             }}
           </td>

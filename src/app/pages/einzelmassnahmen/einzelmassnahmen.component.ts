@@ -44,6 +44,8 @@ import { RadioComponent } from '../../radio/radio.component';
     class: 'host-tool',
   },
 })
+
+// I know it is a mess, sorry
 export class EinzelmassnahmenComponent {
   @HostBinding('@routeAnimations') routeAnimations = true;
   protected einzelmassnahmenService = inject(EinzelmassnahmenService);

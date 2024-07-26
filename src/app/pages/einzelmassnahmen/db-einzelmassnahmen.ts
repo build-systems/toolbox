@@ -8,6 +8,7 @@ export interface DbEinzelmassnahmen {
   owned_by: string;
   title: string;
   vollkosten: number;
+  bafa_foerderung: number;
 }
 
 interface EinzelmassnahmenItem {

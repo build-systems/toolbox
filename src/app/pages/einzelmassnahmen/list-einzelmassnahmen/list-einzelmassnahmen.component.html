@@ -27,9 +27,10 @@
         </td>
         <td class="shrink">
           {{
-            einzelmassnahmenService.findValueByTitle(item, "Vollkosten") *
-              this.constants.bafaMultiplier
-              | currency : "EUR" : "symbol" : "1.0-0" : "de"
+            einzelmassnahmenService.findValueByTitle(
+              item,
+              einzelmassnahmenService.titleBafaFoerderung
+            ) | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
         </td>
         <td
@@ -56,8 +57,7 @@
         </td>
         <td class="shrink">
           {{
-            einzelmassnahmenService.totalKosten() *
-              this.constants.bafaMultiplier
+            einzelmassnahmenService.bafaFoerderung()
               | currency : "EUR" : "symbol" : "1.0-0" : "de"
           }}
         </td>

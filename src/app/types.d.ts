@@ -246,6 +246,7 @@ type EinzelmassnahmenProject = {
   id: number | undefined;
   items: EinzelmassnahmenItem[];
   vollkosten: number;
+  bafaFoerderung: number;
 };
 
 type QualitaetBauteilOption = Option<number>;

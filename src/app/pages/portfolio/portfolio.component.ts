@@ -102,6 +102,7 @@ export class PortfolioComponent {
       id: undefined,
       items: [],
       vollkosten: 0,
+      bafaFoerderung: 0,
     }));
 
     // Redirect
@@ -144,6 +145,7 @@ export class PortfolioComponent {
       id: fullProjectDb.id,
       items: outputItems,
       vollkosten: fullProjectDb.vollkosten,
+      bafaFoerderung: fullProjectDb.bafa_foerderung,
     }));
   }
 
@@ -192,6 +194,7 @@ export class PortfolioComponent {
       id: undefined,
       items: [],
       vollkosten: 0,
+      bafaFoerderung: 0,
     }));
     const result =
       await this.dbEinzelmassnahmenService.createEinzelmassnahmenProject(

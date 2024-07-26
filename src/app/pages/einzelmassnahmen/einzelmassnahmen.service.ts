@@ -737,9 +737,11 @@ export class EinzelmassnahmenService {
     id: undefined,
     items: [],
     vollkosten: 0,
+    bafaFoerderung: 0,
   });
 
   totalKosten = signal<number>(0);
+  bafaFoerderung = signal<number>(0);
 
   addOutputItemToProject(
     newItem: EinzelmassnahmenItem,
@@ -1268,10 +1270,17 @@ export class EinzelmassnahmenService {
     effect(
       () => {
         let vollkosten = this.einzelmassnahmenOutputProject().items.reduce(
-          (sum, item) => sum + this.findValueByTitle(item, 'Vollkosten'),
+          (sum, item) =>
+            sum + this.findValueByTitle(item, this.titleVollkosten),
           0
         );
         this.totalKosten.set(vollkosten);
+        let bafaFoerderung = this.einzelmassnahmenOutputProject().items.reduce(
+          (sum, item) =>
+            sum + this.findValueByTitle(item, this.titleBafaFoerderung),
+          0
+        );
+        this.bafaFoerderung.set(bafaFoerderung);
       },
       { allowSignalWrites: true }
     );
