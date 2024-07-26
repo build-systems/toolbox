@@ -208,7 +208,7 @@ export class EinzelmassnahmenService {
     if (
       this.formService.daemmstoffdickeValue() >=
       this.formService.qualitaetBauteilObjArray.filter(
-        (item) => item.title === 'Außenwand'
+        (item: QualitaetBauteilObj) => item.title === 'Außenwand'
       )[0].options[0].value
     ) {
       return aussenwandWdvsKosten * (1 - this.constants.bafaMultiplier);
@@ -243,7 +243,7 @@ export class EinzelmassnahmenService {
   }
 
   aussenwandAltKostenM2 = signal<number>(0);
-  private calculateAussenwandKostenM2(
+  private calculateAussenwandAltKostenM2(
     aequDaemmstoffdicke: number,
     gesamtPreisindex: number
   ): number {
@@ -257,7 +257,7 @@ export class EinzelmassnahmenService {
   }
 
   aussenwandAltKosten = signal<number>(0);
-  private calculateAussenwandKosten(
+  private calculateAussenwandAltKosten(
     aussenwandKostenM2: number,
     gedaemmteflaeche: number
   ): number {
@@ -294,7 +294,16 @@ export class EinzelmassnahmenService {
 
   kellerdeckeBafaFoerderung = signal<number>(0);
   private calculateKellerdeckeBafa(kellerdeckeKosten: number) {
-    return kellerdeckeKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item: QualitaetBauteilObj) => item.title === 'Kellerdecke'
+      )[0].options[0].value
+    ) {
+      return kellerdeckeKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   kellerdeckeSowiesoKosten = signal<number>(0);
@@ -349,7 +358,16 @@ export class EinzelmassnahmenService {
 
   bodenplatteBafaFoerderung = signal<number>(0);
   private calculateBodenplatteBafa(bodenplatteKosten: number) {
-    return bodenplatteKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item) => item.title === 'Bodenplatte'
+      )[0].options[0].value
+    ) {
+      return bodenplatteKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   // I34 → Sowieso-Kosten | Kosten [€]
@@ -397,7 +415,16 @@ export class EinzelmassnahmenService {
 
   innenwandBafaFoerderung = signal<number>(0);
   private calculateInnenwandBafa(innenwandKosten: number) {
-    return innenwandKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item) => item.title === 'Innenwand'
+      )[0].options[0].value
+    ) {
+      return innenwandKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   // I35 → Sowieso-Kosten | Kosten [€]
@@ -448,7 +475,16 @@ export class EinzelmassnahmenService {
   private calculateObersteGeschossdeckeBafa(
     obersteGeschossdeckeKosten: number
   ) {
-    return obersteGeschossdeckeKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item) => item.title === 'ObersteGeschossdecke'
+      )[0].options[0].value
+    ) {
+      return obersteGeschossdeckeKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   // Sowieso-Kosten | Kosten [€]
@@ -514,7 +550,16 @@ export class EinzelmassnahmenService {
 
   flachdachBafaFoerderung = signal<number>(0);
   private calculateFlachdachBafa(flachdachKosten: number) {
-    return flachdachKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item) => item.title === 'Flachdach'
+      )[0].options[0].value
+    ) {
+      return flachdachKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   // Sowieso-Kosten | Kosten [€]
@@ -568,7 +613,16 @@ export class EinzelmassnahmenService {
 
   steildachBafaFoerderung = signal<number>(0);
   private calculateSteildachBafa(steildachKosten: number) {
-    return steildachKosten * (1 - this.constants.bafaMultiplier);
+    if (
+      this.formService.daemmstoffdickeValue() >=
+      this.formService.qualitaetBauteilObjArray.filter(
+        (item) => item.title === 'Steildach'
+      )[0].options[0].value
+    ) {
+      return steildachKosten * (1 - this.constants.bafaMultiplier);
+    } else {
+      return 0;
+    }
   }
 
   // I41 → Sowieso-Kosten | Kosten [€]
@@ -746,12 +800,12 @@ export class EinzelmassnahmenService {
               value: this.aussenwandWdvsBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.aussenwandWdvsSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.aussenwandWdvsSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -783,12 +837,12 @@ export class EinzelmassnahmenService {
               value: this.bodenplatteBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.bodenplatteSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.bodenplatteSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -821,12 +875,12 @@ export class EinzelmassnahmenService {
                 value: this.flachdachBafaFoerderung(),
                 unit: '€',
               },
-              {
-                title: this.titleSowiesoKosten,
-                id: undefined,
-                value: this.flachdachSowiesoKosten(),
-                unit: '€',
-              },
+              // {
+              //   title: this.titleSowiesoKosten,
+              //   id: undefined,
+              //   value: this.flachdachSowiesoKosten(),
+              //   unit: '€',
+              // },
               {
                 title: this.titleEnergetischMehrkosten,
                 id: undefined,
@@ -858,12 +912,12 @@ export class EinzelmassnahmenService {
                 value: this.steildachBafaFoerderung(),
                 unit: '€',
               },
-              {
-                title: this.titleSowiesoKosten,
-                id: undefined,
-                value: this.steildachSowiesoKosten(),
-                unit: '€',
-              },
+              // {
+              //   title: this.titleSowiesoKosten,
+              //   id: undefined,
+              //   value: this.steildachSowiesoKosten(),
+              //   unit: '€',
+              // },
               {
                 title: this.titleEnergetischMehrkosten,
                 id: undefined,
@@ -896,12 +950,12 @@ export class EinzelmassnahmenService {
               value: this.dachflaechenfensterBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: 0,
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: 0,
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -933,12 +987,12 @@ export class EinzelmassnahmenService {
               value: this.fensterBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.fensterSowiesoKosten(),
-              unit: '€/m² Bauteil',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.fensterSowiesoKosten(),
+            //   unit: '€/m² Bauteil',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -970,12 +1024,12 @@ export class EinzelmassnahmenService {
               value: this.innenwandBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.innenwandSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.innenwandSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1007,12 +1061,12 @@ export class EinzelmassnahmenService {
               value: this.kellerdeckeBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.kellerdeckeSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.kellerdeckeSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1044,12 +1098,12 @@ export class EinzelmassnahmenService {
               value: this.obersteGeschossdeckeBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.obersteGeschossdeckeSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.obersteGeschossdeckeSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1081,12 +1135,12 @@ export class EinzelmassnahmenService {
               value: this.steildachgaubenBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: 0,
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: 0,
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1118,12 +1172,12 @@ export class EinzelmassnahmenService {
               value: this.tuerBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.tuerSowiesoKosten(),
-              unit: '€/m² Bauteil',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.tuerSowiesoKosten(),
+            //   unit: '€/m² Bauteil',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1155,12 +1209,12 @@ export class EinzelmassnahmenService {
               value: this.vorbaurollladenBafaFoerderung(),
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: this.vorbaurollladenSowiesoKosten(),
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: this.vorbaurollladenSowiesoKosten(),
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1186,12 +1240,12 @@ export class EinzelmassnahmenService {
               value: 0,
               unit: '€',
             },
-            {
-              title: this.titleSowiesoKosten,
-              id: undefined,
-              value: 0,
-              unit: '€',
-            },
+            // {
+            //   title: this.titleSowiesoKosten,
+            //   id: undefined,
+            //   value: 0,
+            //   unit: '€',
+            // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
@@ -1442,7 +1496,7 @@ export class EinzelmassnahmenService {
     effect(
       () => {
         this.aussenwandAltKostenM2.set(
-          this.calculateAussenwandKostenM2(
+          this.calculateAussenwandAltKostenM2(
             this.aequDaemmstoffdicke(),
             this.gesamtPreisindex
           )
@@ -1454,7 +1508,7 @@ export class EinzelmassnahmenService {
     effect(
       () => {
         this.aussenwandAltKosten.set(
-          this.calculateAussenwandKosten(
+          this.calculateAussenwandAltKosten(
             this.aussenwandAltKostenM2(),
             this.formService.gedaemmteflaecheValue()
           )

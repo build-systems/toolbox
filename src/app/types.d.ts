@@ -249,4 +249,8 @@ type EinzelmassnahmenProject = {
 };
 
 type QualitaetBauteilOption = Option<number>;
-type QualitaetBauteilObj = OptionObj<number>;
+type QualitaetBauteilObj = {
+  title: Bauteil;
+  tooltip?: string;
+  options: QualitaetBauteilOption[];
+};
