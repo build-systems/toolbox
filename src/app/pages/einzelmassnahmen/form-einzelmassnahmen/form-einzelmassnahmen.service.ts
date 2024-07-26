@@ -418,7 +418,7 @@ export class FormEinzelmassnahmenService {
     value: 11,
     max: 100,
     step: 0.1,
-    title: 'Fläche der Gaube(n) [m²]',
+    title: 'Fläche der Gaube [m²]',
     disabled: false,
   });
   gaubeflaecheValue = signal<number>(11);
