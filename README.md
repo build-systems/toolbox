@@ -22,7 +22,27 @@ This app, developed by BuildSystems, makes it easy to simulate a loan from the n
 ## Toolbox Features
 ### 1. Funding for new buildings (Fördermittel Neubau)
 This calculator has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-  -  **Projekt** This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
-  -  **Darlehen** This tab has all the loan-specific variables. What happens in construction is that even with subsidies from the government, the real estate developer still relies on bank loans to move forward with the construction because it is not common for them to afford the construction from their own pocket. The national bank KfW not only offers subsidies but also lends a certain amount of money for a lower fee compared to normal banks. After the subsidies and the loan from KfW, it is usually still necessary to cover the rest of the investment with the loan of a normal bank.
+#### Projekt
+This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
+Projekt Form documentation
+  Wohnfläche [m²]: Tragen Sie hier die Wohnfläche Ihrer Immobilie nach Wohnflächenverordnung - WoFlV ↗ ein.
+  
+  Anzahl Wohnungen:
+  3. Stufe Energieeffizienzhaus:
+  4. Konstruktion:
+  5. Zertifizierung klimafreundlicher Neubau:
+  6. Eigene Kostenberechnung: 
+  7. Kellergeschoss:
+  8: Stellplätze: 
+  9: Aufzugsanlage:
+  10: Barrierefreies Gebäude:
+  11: Dachbegrünung:
+  12: Anspruchsvolle Baustellenlogistik:
+  13: Aufwand Außenanlagen:
+  14: Grundstücksbezogene Kosten [€/m²]:
+  15: Baunebenkosten [%]:
+
+#### Darlehen
+This tab has all the loan-specific variables. What happens in construction is that even with subsidies from the government, the real estate developer still relies on bank loans to move forward with the construction because it is not common for them to afford the construction from their own pocket. The national bank KfW not only offers subsidies but also lends a certain amount of money for a lower fee compared to normal banks. After the subsidies and the loan from KfW, it is usually still necessary to cover the rest of the investment with the loan of a normal bank.
 ### 2. Renovation of residential buildings (Fördermittel Komplettsanierung)
 Funding calculator to fully renovate houses and apartments to be more energy efficient.
