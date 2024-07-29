@@ -12,7 +12,7 @@
 
 # About
 
-What do we do at BuildSystems? We help AEC developers and Homeowners build sustainably and affordably.
+What do we do at BuildSystems? We help AEC developers and homeowners build sustainably and affordably.
 
 ## Why did we build this toolbox?
 Germany is known for pushing green tech, such as solar panels and wind turbines, through public subsidies. But did you know that there are also many subsidies for energy-efficient construction? Although these subsidies are attractive, navigating the bureaucracy can be incredibly challenging.
@@ -28,6 +28,10 @@ In the case of a full residence renovation, the approach changes. There are spec
 This calculator is similar to the previous one. It also has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
 ### Funding for partial renovations of residences (Fördermittel Einzelmaßnahmen)
 If the user prefers to renovate only a small part of a residence, it is possible to get a subsidy from Bafa. The components that affect the energy efficiency of a building the most are shown here both in an interactive SVG and in a list. After the building component is selected, the user has specific options to fine-tune his choices. This part of the toolbox is, in fact, many small calculators. One for each building component.
+### Portfolio
+This is the area where users can access and delete their saved projects or create new ones.
+### Profile
+The place where the user can edit their name, email, and photo. Although there's no use for this feature yet. 
 
 ## Documentation
 ### 1 Funding for new buildings (Fördermittel Neubau)
@@ -82,4 +86,7 @@ Here, you can decide how you want to repay your loan. With an annuity loan, you 
 Here, you can decide how you want to repay your loan. With an annuity loan, you only pay interest in the first few years (repayment-free start-up period) - after that, you pay equal monthly annuities. These represent the repayment amount, which is made up of interest and repayment. With a bullet loan, you only pay interest over the entire term and then repay the entire loan amount in one sum at the end.
 
 ### 2. Renovation of residential buildings (Fördermittel Komplettsanierung)
-Funding calculator to fully renovate houses and apartments to be more energy efficient.
+
+
+### 3. Funding for partial renovations of residences (Fördermittel Einzelmaßnahmen)
+
