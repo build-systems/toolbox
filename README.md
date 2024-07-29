@@ -14,10 +14,15 @@
 
 What do we do at BuildSystems? We help AEC developers and Homeowners build sustainably and affordably.
 
-### Toolbox Features (EN)
-- **Sustainable construction of residential buildings:** Funding calculator to build houses and apartments in an energy-efficient and sustainable manner.
-- **Renovation of residential buildings:** Funding calculator to renovate houses and apartments to be more energy efficient.
+## Why did we build this toolbox?
+Germany is known for pushing green tech, such as solar panels and wind turbines, through public subsidies. But did you know that there are also many subsidies for energy-efficient construction? Although these subsidies are attractive, navigating the bureaucracy can be incredibly challenging.
 
-### Toolbox Features (DE)
-- **Klimafreundlicher Neubau von Wohngebäuden:** Haus und Wohnung energieeffizient und nachhaltig bauen.
-- **Sanierung Wohngebäude:** Haus und Wohnung energieeffizient sanieren.
+This app, developed by BuildSystems, makes it easy to simulate a loan from the national bank KfW. It simplifies the process by offering a user-friendly interface, allowing real estate developers and homeowners to understand their financial options quickly and easily.
+
+## Toolbox Features
+### 1. Funding for new buildings (Fördermittel Neubau)
+This calculator has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
+  -  **Projekt** This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
+  -  **Darlehen** This tab has all the loan-specific variables. What happens in construction is that even with subsidies from the government, the real estate developer still relies on bank loans to move forward with the construction because it is not common for them to afford the construction from their own pocket. The national bank KfW not only offers subsidies but also lends a certain amount of money for a lower fee compared to normal banks. After the subsidies and the loan from KfW, it is usually still necessary to cover the rest of the investment with the loan of a normal bank.
+### 2. Renovation of residential buildings (Fördermittel Komplettsanierung)
+Funding calculator to fully renovate houses and apartments to be more energy efficient.
