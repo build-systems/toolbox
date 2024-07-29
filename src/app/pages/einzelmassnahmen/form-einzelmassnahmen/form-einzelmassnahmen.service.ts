@@ -364,7 +364,7 @@ export class FormEinzelmassnahmenService {
   kellerSelected = signal<Keller>('unterseitig ohne Bekleidung');
 
   obersteGeschossdeckeObj = signal<ObersteGeschossdeckeObj>({
-    title: 'Oberste Geschossdecke',
+    title: 'Art der Dämmung',
     options: [
       {
         id: 'oberstegesch1',
