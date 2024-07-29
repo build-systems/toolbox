@@ -25,9 +25,8 @@ This calculator has two tabs: `Projekt`, which displays the project's form, and 
 #### Projekt
 This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
 Projekt Form documentation
-  Wohnfläche [m²]: Tragen Sie hier die Wohnfläche Ihrer Immobilie nach Wohnflächenverordnung - WoFlV ↗ ein.
-  
-  Anzahl Wohnungen:
+  1. **Wohnfläche [m²]**: Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).
+  2. Anzahl Wohnungen:
   3. Stufe Energieeffizienzhaus:
   4. Konstruktion:
   5. Zertifizierung klimafreundlicher Neubau:
