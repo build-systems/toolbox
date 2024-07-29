@@ -142,7 +142,7 @@ type Bauteil =
   | 'Steildach'
   | 'Steildachgauben'
   | 'Türen'
-  | 'Vorbaurollladen';
+  | 'Rollladen';
 type BauteilOption = Option<Bauteil>;
 type BauteilObj = OptionObj<Bauteil>;
 
@@ -158,7 +158,7 @@ type BauteilText =
   | 'Steildach'
   | 'Neue Steildachgauben'
   | 'Tür'
-  | 'Vorbaurollladen';
+  | 'Rollladen';
 
 type Waermeerzeuger =
   | 'Bestandskessel'
@@ -211,13 +211,13 @@ type Flachdach = 'ohne Lichtkuppeln' | 'mit Lichtkuppeln';
 type FlachdachOption = Option<Flachdach>;
 type FlachdachObj = OptionObj<Flachdach>;
 
-type Vorbaurollladen =
+type Rollladen =
   | 'Kunststoff Gurt'
   | 'Kunststoff Elektro'
   | 'Alu Gurt'
   | 'Alu Elektro';
-type VorbaurollladenOption = Option<Vorbaurollladen>;
-type VorbaurollladenObj = OptionObj<Vorbaurollladen>;
+type RollladenOption = Option<Rollladen>;
+type RollladenObj = OptionObj<Rollladen>;
 
 type EinzelmassnahmenValueTitle =
   | 'Kosten'

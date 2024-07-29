@@ -23,7 +23,12 @@ export class FormEinzelmassnahmenService {
         text: 'Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster',
         disabled: false,
       },
-      { id: 'bauteil06', value: 'Innenwand', disabled: false },
+      {
+        id: 'bauteil06',
+        value: 'Innenwand',
+        text: 'Innenwanddämmung',
+        disabled: false,
+      },
       { id: 'bauteil07', value: 'Kellerdecke', disabled: false },
       {
         id: 'bauteil08',
@@ -40,7 +45,7 @@ export class FormEinzelmassnahmenService {
         disabled: false,
       },
       { id: 'bauteil11', value: 'Türen', disabled: false },
-      { id: 'bauteil12', value: 'Vorbaurollladen', disabled: false },
+      { id: 'bauteil12', value: 'Rollladen', disabled: false },
     ],
     title: 'Bauteil',
   };
@@ -76,8 +81,8 @@ export class FormEinzelmassnahmenService {
         return this.einzelmassnahmenTooltips.steildachgaube;
       case 'Türen':
         return this.einzelmassnahmenTooltips.tueren;
-      case 'Vorbaurollladen':
-        return this.einzelmassnahmenTooltips.vorbaurollladen;
+      case 'Rollladen':
+        return this.einzelmassnahmenTooltips.rollladen;
       default:
         return null;
     }
@@ -446,17 +451,17 @@ export class FormEinzelmassnahmenService {
 
   // Rollladen Typ
   // To be implemented
-  vorbaurollladenObj = signal<VorbaurollladenObj>({
-    title: 'Vorbaurollladen Typ',
+  rollladenObj = signal<RollladenObj>({
+    title: 'Rollladen Typ',
     options: [
-      { id: 'vorbaurollladen1', value: 'Kunststoff Gurt', disabled: false },
-      { id: 'vorbaurollladen2', value: 'Kunststoff Elektro', disabled: false },
-      { id: 'vorbaurollladen3', value: 'Alu Gurt', disabled: false },
-      { id: 'vorbaurollladen4', value: 'Alu Elektro', disabled: false },
+      { id: 'rollladen1', value: 'Kunststoff Gurt', disabled: false },
+      { id: 'rollladen2', value: 'Kunststoff Elektro', disabled: false },
+      { id: 'rollladen3', value: 'Alu Gurt', disabled: false },
+      { id: 'rollladen4', value: 'Alu Elektro', disabled: false },
     ],
-    tooltip: this.einzelmassnahmenTooltips.vorbaurolladenTyp,
+    tooltip: this.einzelmassnahmenTooltips.rolladenTyp,
   });
-  vorbaurollladenSelected = signal<Vorbaurollladen>('Kunststoff Gurt');
+  rollladenSelected = signal<Rollladen>('Kunststoff Gurt');
 
   constructor(public einzelmassnahmenTooltips: einzelmassnahmen) {
     const valuesToEdit = ['Kellerdecke', 'Innenwand'];

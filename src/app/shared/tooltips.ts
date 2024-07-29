@@ -98,35 +98,37 @@ export class einzelmassnahmen {
   baupreisindexAktuell: string =
     '<a target="_blank" rel="noopener noreferrer" href="https://www.destatis.de/DE/ZahlenFakten/Indikatoren/Konjunkturindikatoren/Preise/bpr110.html">DESTATIS Zahlen Fakten <sup>↗</sup></a>';
   ortsfaktor: string =
-    '<a target="_blank" rel="noopener noreferrer" href="https://www.sirados.de/ortsfaktoren.html">Sirados ortsfaktoren <sup>↗</sup></a>';
+    '<a target="_blank" rel="noopener noreferrer" href="https://www.sirados.de/sirados-ortsfaktoren-gratis-download">Sirados Ortsfaktoren <sup>↗</sup></a>';
   aussenwand: string =
-    'Ein Wärmedämmverbundsystem, kurz WDVS, stellt eine häufig genutzte Variante der Außendämmung von Fassaden dar. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt oder verkleidet werden soll und daher optisch kein Unterschied zu erkennen ist. Sie schließt zusammen mit der Dämmung des Dachs und des Bodens die thermische Hülle rund um das Gebäude.';
+    'Ein Wärmedämmverbundsystem (WDVS) ist ein mehrschichtiges Dämmsystem, das an der Außenfassade eines Gebäudes angebracht wird, um die Außendämmung zu verbessern. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt werden soll. Die Bestandteile des WDVS untergliedern sich in eine Klebeschicht auf der existierenden Außenwand, die darauf angebrachten Dämmplatten, die Armierungsschicht und den abschließenden Oberputz.';
   bodenplatte: string =
-    'Die Dämmung der Bodenplatte stellt sich häufig als spezifische Herausforderung dar. Besonders wenn das unterste Geschoss, z.B. ein Keller, beheizt und genutzt ist, ist es schwierig ist eine zusätzliche Wärmedämmung auf dem Fußboden aufzubringen, denn damit würden die lichten Höhen der Nutzräume verringert.';
+    'Die Dämmung der Bodenplatte stellt sich häufig als Herausforderung dar. Besonders wenn das unterste Geschoss, z.B. ein Keller, beheizt und genutzt ist. Nachträglich ist es nicht mehr möglich von unten wie bei einem Neubau zu dämmen. Eine zusätzliche Wärmedämmung von oben auf der Bodenplatte ist meistens schwierig zu realisieren, da damit die lichten Höhen der Nutzräume verringert werden.';
   dach: string =
-    'Bei der Sanierung von bestehenden Dächern gibt es die Möglichkeit der Zwischensparrendämmung, die relativ hürdenlos umgesetzt werden kann. Bei einem Flachdach wird zumeist eine zusätzliche außenseitige Dämmung aufgebracht.';
+    'Bei der Sanierung von bestehenden Satteldächern gibt es die Möglichkeit der Zwischensparrendämmung, die relativ hürdenlos umgesetzt werden kann. Um bessere U-Werte zu erzielen wird oft eine zusätzliche Aufsparrendämmung angebracht. Bei einem Flachdach wird in den meisten Fällen direkt eine zusätzliche außenseitige Dämmung aufgebracht.';
+  dachflaechenfenster: string =
+    'Mit Wärmeschutzverglasungen oder neuen, dicht schließenden Fenstern können Wärmeverluste über den Rahmenanteil und die Glasflächen enorm reduziert werden.';
   fenster: string =
-    'Mit Wärmeschutzverglasungen und neuen, dicht schließenden Fenstern können Wärmeverluste über Glasflächen enorm reduziert werden. ';
+    'Mit Wärmeschutzverglasungen oder neuen, dicht schließenden Fenstern können Wärmeverluste über den Rahmenanteil und die Glasflächen enorm reduziert werden.';
   fensterTyp: string =
-    'Eine Wärmeschutzverglasung kann mit einer Zwei- oder Dreifachverglasung ausgeführt werden, dabei erhöht sich die Wärmedämmleistung sukzessive.';
+    'Eine Wärmeschutzverglasung kann mit einer Zwei- oder Dreifachverglasung ausgeführt werden, dabei reduzieren sich Wärmeverluste sukzessive.';
   innenwand: string =
-    'An Bauteilen, die nicht außenseitig gedämmt werden können wie z.B. bei Kellerwänden, kann eine Innenwanddämmung die Wärmeverluste reduzieren. Innenwanddämmungen sind allerdings anfällig gegen physische Einwirkung und empfehlen sich daher eher in kaum genutzten Räumlichkeiten oder Räumen mit einem geringeren Anspruch an Makellosigkeit.';
+    'An Bauteilen, die nicht außenseitig gedämmt werden können, wie z.B. bei Kellerwänden, kann eine Innenwanddämmung die Wärmeverluste reduzieren. Die ordnungsgemäße Ausführung der Innendämmung erfordert die Gewährleistung ausreichender Luft- und Dampfdichtheit, um das Eindringen von Feuchtigkeit aus der Raumluft in die Bausubstanz zu verhindern. Aus diesem Grund ist die Innendämmung im Vergleich zur Außendämmung nur in mit geringen Dicken (ca. 8 cm) möglich, wodurch sich die Wärmeverluste nicht so gut wie bei der Außendämmung reduzieren lassen. Darüber hinaus sind Innenwanddämmungen anfällig gegen physische Einwirkung.';
   kellerdecke: string =
-    'In nicht beheizten und nicht benutzten Kellerräumen bietet sich eine deckenunterseitige Dämmung an. Diese kann mit geringem Aufwand umgesetzt werden.';
+    'In nicht beheizten und nicht genutzten Kellerräumen bietet sich eine deckenunterseitige Dämmung an. Diese kann mit geringem Aufwand umgesetzt werden.';
   artDerDaemmungKellerdecke: string =
-    'Eine oberseitige Dämmung der Kellerdecke empfiehlt sich nur, wenn im Erdgeschoss der Bodenaufbau erneuert wird, z.B. beim Einbau einer Fußbodenheizung. Dabei ist jedoch zu beachten, dass sich die lichte Höhe des Nutzraumes verringert. Die Kosten repräsentieren allerdings nur die Kosten des Dämmmaterials und keine weiteren Maßnahmen. Bei einem genutzten EG ist die oberseitige Dämmung der Kellerdecke ohne zusätzliche Maßnahmen damit sehr unwahrscheinlich.';
+    'Eine oberseitige Dämmung der Kellerdecke empfiehlt sich nur, wenn im Erdgeschoss der Bodenaufbau erneuert wird, z.B. beim Einbau einer Fußbodenheizung. Dabei ist jedoch zu beachten, dass sich die lichte Höhe des Nutzraumes verringert. Die Kosten repräsentieren allerdings nur die Kosten des Dämmmaterials und keine weiteren Maßnahmen. Bei einem genutzten Erdgeschoss ist die oberseitige Dämmung der Kellerdecke ohne zusätzliche Maßnahmen damit sehr unwahrscheinlich.';
   obersteGeschossdecke: string =
-    'Ist ein Dachraum nicht genutzt und unbeheizt empfiehlt es sich, die obersten Geschossdecke oberseitig zu dämmen, anstelle das Dach zu dämmen. Eine unterseitige Dämmung ist ebenfalls möglich, allerdings verringern sich hier die lichten Höhen der Nutzräume.';
+    'Ist ein Dachraum nicht genutzt und unbeheizt, empfiehlt es sich aus Kostengründen, die oberste Geschossdecke oberseitig zu dämmen, anstatt die Dachkonstruktion zu dämmen. Eine unterseitige Dämmung ist in speziellen Fällen ebenfalls möglich. Bauphysikalisch wäre dieser Fall als Innendämmung zu betrachten, wodurch nur geringe Dämmstoffdicken (ca. 8 cm) möglich sind. Dennoch verringert sich damit die lichte Raumhöhe.';
   artDerDaemmungObersteGeschossdecke: string =
-    'Die Erbringung einer nicht begehbaren Dämmung ist technisch sehr niederschwellig und entsprechend kostengünstig.';
+    'Die Erbringung einer nicht begehbaren Dämmung ist technisch sehr niederschwellig und entsprechend kostengünstig umsetzbar.';
   steildachgaube: string =
     'Die Kosten beziehen sich auf die Ergänzung einer neuen Gaube im Dach.';
   flaecheDerGaube: string =
-    'Die Fläche der Gaube schließt alle Flächen der Gaube inkl. der Fläche der Verglasung mit ein.';
+    'Die Fläche der Gaube schließt alle Flächen der Wände und des Dachs der Gaube mit ein. Die Fenster der Gaube müssen separat berechnet werden.';
   tueren: string =
-    'Dicht schließende Türen mit einem hochwertigen Wärmeschutz können Wärmeverluste enorm reduzieren.';
-  vorbaurollladen: string =
-    'Rolläden können bei aktiver Nutzung besonders in der Nach Wärmeverluste reduzieren.';
-  vorbaurolladenTyp: string =
+    'Dichtschließende Türen mit niedrigen U-Werten können Wärmeverluste enorm reduzieren.';
+  rollladen: string =
+    'Gut gedämmte Rollladenkästen mit niedrigen U-Werten, die in der Dämmebene liegen (Vorbaurolladen), können Wärmeverluste enorm reduzieren.';
+  rolladenTyp: string =
     'Rollläden können aus Kunststoff oder Aluminium bestehen und entweder manuell über einen Gurt betätig oder elektrisch gesteuert werden.';
 }

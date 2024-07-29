@@ -93,14 +93,14 @@
     [round]="0"
   />
   <app-slider-input
-    [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
+    [hidden]="!(formService.bauteilSelected() === 'Rollladen')"
     [(value)]="formService.rollladenflaecheValue"
     [data]="formService.rollladenflaecheObj()"
   />
   <app-radio
-    [hidden]="!(formService.bauteilSelected() === 'Vorbaurollladen')"
-    [(selected)]="formService.vorbaurollladenSelected"
-    [data]="formService.vorbaurollladenObj()"
+    [hidden]="!(formService.bauteilSelected() === 'Rollladen')"
+    [(selected)]="formService.rollladenSelected"
+    [data]="formService.rollladenObj()"
   />
   @if(this.formService.selectedQualitaetBauteilObj) {
   <app-radio

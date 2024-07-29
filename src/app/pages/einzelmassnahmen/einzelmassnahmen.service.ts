@@ -680,14 +680,14 @@ export class EinzelmassnahmenService {
     return steildachgaubenKosten * (1 - this.constants.bafaMultiplier);
   }
 
-  // Vorbaurollladen
+  // Rollladen
   // Vollkosten | Kosten [€/m² Bauteil]
-  vorbaurollladenKostenM2 = signal<number>(0);
-  private calculateVorbaurollladenKostenM2(
-    vorbaurollladenTyp: Vorbaurollladen,
+  rollladenKostenM2 = signal<number>(0);
+  private calculateRollladenKostenM2(
+    rollladenTyp: Rollladen,
     gesamtPreisindex: number
   ): number {
-    const { SchaetzwertB } = this.constants.vorbaurollladen[vorbaurollladenTyp];
+    const { SchaetzwertB } = this.constants.rollladen[rollladenTyp];
     const schaetzwertB = SchaetzwertB;
     return (
       ((1 + this.constants.baunebenkosten) * schaetzwertB * gesamtPreisindex) /
@@ -695,34 +695,32 @@ export class EinzelmassnahmenService {
     );
   }
   // Vollkosten | Kosten [€]
-  vorbaurollladenKosten = signal<number>(0);
-  private calculateVorbaurollladenKosten(
-    vorbaurollladenKostenM2: number,
+  rollladenKosten = signal<number>(0);
+  private calculateRollladenKosten(
+    rollladenKostenM2: number,
     rollladenflaeche: number
   ): number {
-    return rollladenflaeche * vorbaurollladenKostenM2;
+    return rollladenflaeche * rollladenKostenM2;
   }
 
-  vorbaurollladenBafaFoerderung = signal<number>(0);
-  private calculateVorbaurollladenBafa(vorbaurollladenKosten: number) {
-    return vorbaurollladenKosten * (1 - this.constants.bafaMultiplier);
+  rollladenBafaFoerderung = signal<number>(0);
+  private calculateRollladenBafa(rollladenKosten: number) {
+    return rollladenKosten * (1 - this.constants.bafaMultiplier);
   }
 
   // Sowieso-Kosten | Kosten [€]
-  vorbaurollladenSowiesoKosten = signal<number>(0);
-  private calculateVorbaurollladenSowiesoKosten(
-    vorbaurollladenKosten: number
-  ): number {
-    return vorbaurollladenKosten;
+  rollladenSowiesoKosten = signal<number>(0);
+  private calculateRollladenSowiesoKosten(rollladenKosten: number): number {
+    return rollladenKosten;
   }
 
   // nergetisch bedingte Mehrkosten | Kosten [€]
-  vorbaurollladenEnergetischBedingteMehrkosten = signal<number>(0);
-  private calculateVorbaurollladenEnergetischBedingteMehrkosten(
-    vorbaurollladenKosten: number,
-    vorbaurollladenSowiesoKosten: number
+  rollladenEnergetischBedingteMehrkosten = signal<number>(0);
+  private calculateRollladenEnergetischBedingteMehrkosten(
+    rollladenKosten: number,
+    rollladenSowiesoKosten: number
   ): number {
-    return vorbaurollladenKosten - vorbaurollladenSowiesoKosten;
+    return rollladenKosten - rollladenSowiesoKosten;
   }
 
   einzelmassnahmenOutputItem: EinzelmassnahmenItem = {
@@ -1190,39 +1188,39 @@ export class EinzelmassnahmenService {
             },
           ],
         };
-      case 'Vorbaurollladen':
+      case 'Rollladen':
         return {
-          title: 'Vorbaurollladen',
+          title: 'Rollladen',
           id: undefined,
           values: [
             {
               title: this.titleKostenM2,
               id: undefined,
-              value: this.vorbaurollladenKostenM2(),
+              value: this.rollladenKostenM2(),
               unit: '€/m² Bauteil',
             },
             {
               title: this.titleVollkosten,
               id: undefined,
-              value: this.vorbaurollladenKosten(),
+              value: this.rollladenKosten(),
               unit: '€',
             },
             {
               title: this.titleBafaFoerderung,
               id: undefined,
-              value: this.vorbaurollladenBafaFoerderung(),
+              value: this.rollladenBafaFoerderung(),
               unit: '€',
             },
             // {
             //   title: this.titleSowiesoKosten,
             //   id: undefined,
-            //   value: this.vorbaurollladenSowiesoKosten(),
+            //   value: this.rollladenSowiesoKosten(),
             //   unit: '€',
             // },
             {
               title: this.titleEnergetischMehrkosten,
               id: undefined,
-              value: this.vorbaurollladenEnergetischBedingteMehrkosten(),
+              value: this.rollladenEnergetischBedingteMehrkosten(),
               unit: '€',
             },
           ],
@@ -1931,9 +1929,9 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.vorbaurollladenKostenM2.set(
-          this.calculateVorbaurollladenKostenM2(
-            this.formService.vorbaurollladenSelected(),
+        this.rollladenKostenM2.set(
+          this.calculateRollladenKostenM2(
+            this.formService.rollladenSelected(),
             this.gesamtPreisindex()
           )
         );
@@ -1943,9 +1941,9 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.vorbaurollladenKosten.set(
-          this.calculateVorbaurollladenKosten(
-            this.vorbaurollladenKostenM2(),
+        this.rollladenKosten.set(
+          this.calculateRollladenKosten(
+            this.rollladenKostenM2(),
             this.formService.rollladenflaecheValue()
           )
         );
@@ -1955,10 +1953,8 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.vorbaurollladenSowiesoKosten.set(
-          this.calculateVorbaurollladenSowiesoKosten(
-            this.vorbaurollladenKosten()
-          )
+        this.rollladenSowiesoKosten.set(
+          this.calculateRollladenSowiesoKosten(this.rollladenKosten())
         );
       },
       { allowSignalWrites: true }
@@ -1966,8 +1962,8 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.vorbaurollladenBafaFoerderung.set(
-          this.calculateVorbaurollladenBafa(this.vorbaurollladenKosten())
+        this.rollladenBafaFoerderung.set(
+          this.calculateRollladenBafa(this.rollladenKosten())
         );
       },
       { allowSignalWrites: true }
@@ -1975,10 +1971,10 @@ export class EinzelmassnahmenService {
 
     effect(
       () => {
-        this.vorbaurollladenEnergetischBedingteMehrkosten.set(
-          this.calculateVorbaurollladenEnergetischBedingteMehrkosten(
-            this.vorbaurollladenKosten(),
-            this.vorbaurollladenSowiesoKosten()
+        this.rollladenEnergetischBedingteMehrkosten.set(
+          this.calculateRollladenEnergetischBedingteMehrkosten(
+            this.rollladenKosten(),
+            this.rollladenSowiesoKosten()
           )
         );
       },

@@ -280,7 +280,7 @@ export class einzelmassnahmen {
       Lebensjahre: 30,
     },
   };
-  public vorbaurollladen = {
+  public rollladen = {
     'Kunststoff Gurt': {
       SchaetzwertB: 141,
       Lebensjahre: 30,

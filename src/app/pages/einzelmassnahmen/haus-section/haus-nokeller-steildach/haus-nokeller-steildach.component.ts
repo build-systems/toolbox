@@ -41,7 +41,7 @@ export class HausNokellerSteildachComponent implements AfterViewInit {
     'Türen',
     'Fenster',
     'Dachflächenfenster',
-    'Vorbaurollladen',
+    'Rollladen',
     'Wärmedämmverbundsystem',
   ];
 
