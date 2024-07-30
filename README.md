@@ -144,7 +144,7 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
 <details>
   <summary>3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)</summary>
 
-  ### 3.1 Projekt
+  ### **3.1 Projekt**
   
   #### 3.1.1 Haus typ
   Specify the type of house being renovated or built.
