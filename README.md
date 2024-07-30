@@ -20,13 +20,13 @@ Germany is known for pushing green tech, such as solar panels and wind turbines,
 This app, developed by BuildSystems, makes it easy to simulate a loan from the national bank KfW. It simplifies the process by offering a user-friendly interface, allowing real estate developers and homeowners to understand their financial options quickly and easily.
 
 ## Toolbox Features
-### Funding for new residences (Fördermittel Neubau)
+### Fördermittel Neubau (Funding for new residences)
 If the user wants to design a new residence, the first step is to check the feasibility. This calculator checks for available subsidies and loans.
 This calculator has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-### Funding for renovation of residences (Fördermittel Komplettsanierung)
+### Fördermittel Komplettsanierung (Funding for the renovation of residences)
 In the case of a full residence renovation, the approach changes. There are specific requirements and metrics that make this a completely different calculator. 
 This calculator is similar to the previous one. It also has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-### Funding for partial renovations of residences (Fördermittel Einzelmaßnahmen)
+### Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
 If the user prefers to renovate only a small part of a residence, it is possible to get a subsidy from Bafa. The components that affect the energy efficiency of a building the most are shown here both in an interactive SVG and in a list. After the building component is selected, the user has specific options to fine-tune his choices. This part of the toolbox is, in fact, many small calculators. One for each building component.
 ### Portfolio
 This is the area where users can access and delete their saved projects or create new ones.
@@ -34,7 +34,7 @@ This is the area where users can access and delete their saved projects or creat
 The place where the user can edit their name, email, and photo. Although there's no use for this feature yet. 
 
 ## Documentation
-### 1 Funding for new buildings (Fördermittel Neubau)
+### 1 Fördermittel Neubau (Funding for new buildings)
 #### 1.1 Projekt
 This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
 Projekt Form documentation
@@ -85,8 +85,8 @@ Here, you can decide how you want to repay your loan. With an annuity loan, you 
 ##### 1.2.4 Bank-Darlehen
 Here, you can decide how you want to repay your loan. With an annuity loan, you only pay interest in the first few years (repayment-free start-up period) - after that, you pay equal monthly annuities. These represent the repayment amount, which is made up of interest and repayment. With a bullet loan, you only pay interest over the entire term and then repay the entire loan amount in one sum at the end.
 
-### 2. Renovation of residential buildings (Fördermittel Komplettsanierung)
+### 2. Fördermittel Komplettsanierung (Renovation of residential buildings)
 
 
-### 3. Funding for partial renovations of residences (Fördermittel Einzelmaßnahmen)
+### 3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
 
