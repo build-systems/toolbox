@@ -152,5 +152,16 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
   #### 3.1.4 Ortsfaktor
   [Sirados Ortsfaktoren](https://www.sirados.de/sirados-ortsfaktoren-gratis-download)
   #### 3.1.5 Bauteil
+
+  ### 3.2 Außenwand (WDVS)
+  ### 3.3 Bodenplatte
+  ### 3.4 Dach
+  ### 3.5 Dachflächenfenster
+  ### 3.6 Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster
+  ### 3.7 Innenwanddämmung
+  ### 3.8 Kellerdecke
+  ### 3.9 Oberste Geschossdecke
+  ### 3.10 Neue Steildachgauben
+  ### 3.11 
 </details>
 
