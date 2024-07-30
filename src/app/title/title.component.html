@@ -29,11 +29,11 @@
         class="kfw-description"
         [@expandCollapse]="isExpanded ? 'expanded' : 'collapsed'"
       >
-        @if(kfwId()){
+        @if(id()){
         <div class="kfw-number-container">
           <div class="kfw-number">
-            <div class="kfw-id">KfW id</div>
-            {{ kfwId() }}
+            <div class="kfw-id">{{ idTitle() }}</div>
+            {{ id() }}
           </div>
         </div>
         }

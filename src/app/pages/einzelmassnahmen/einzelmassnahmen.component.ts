@@ -161,11 +161,12 @@ export class EinzelmassnahmenComponent {
 
   // Information for the title
   title = 'Fördermittel Einzelmaßnahmen';
-  kfwId = '000';
-  kfwH2 = 'Placeholder heading2';
-  kfwH3 = 'Placeholder heading3';
-  kfwDescription =
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, doloremque, error quod molestias nobis magni ipsam vero dolorum rerum doloribus assumenda voluptates. Accusantium doloribus quae officia? Accusamus provident praesentium iure deleniti vel, architecto asperiores dolores voluptatem quo doloremque similique temporibus repellat cumque, possimus quam soluta alias nesciunt tempore ducimus fugit. Expedita natus nulla at harum porro odio commodi iure corporis explicabo animi alias voluptas est ducimus aspernatur ut doloremque necessitatibus, facilis ullam tenetur! Repudiandae vitae, nam veritatis enim maxime exercitationem molestias ipsam? Laborum veniam consequuntur illum quia ratione corporis, ex iure ea officia rerum, cum nulla quasi, incidunt quibusdam voluptatibus.';
+  titleId = 'BEGEM';
+  titleIdTitle = 'BAFA ID';
+  titleH2 = 'Bundesförderung für Effiziente Gebäude';
+  titleH3 = 'Einzelmaßnahmen an der Gebäudehülle';
+  titleDescription =
+    'Gefördert werden Einzelmaßnahmen an Bestandsgebäuden, deren Bauantrag beziehungsweise Bauanzeige zum Zeitpunkt der Antragstellung mindestens fünf Jahre zurückliegt. Zu den Wohngebäuden gehören auch Wohn-, Alten- und Pflegeheime und ähnliche Einrichtungen.  <a target="_blank" rel="noopener noreferrer" href="https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Gebaeudehuelle/gebaeudehuelle_node.html">bafa.de ↗</a>';
 
   scroll(el: HTMLElement) {
     el.scrollIntoView();

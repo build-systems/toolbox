@@ -2,10 +2,10 @@
   <app-title
     [title]="title"
     [(projectTitle)]="neubauService.projectTitle"
-    [kfwId]="kfwId"
-    [h2]="kfwH2"
-    [h3]="kfwH3"
-    [description]="kfwDescription"
+    [id]="titleId"
+    [h2]="titleH2"
+    [h3]="titleH3"
+    [description]="titleDescription"
   ></app-title>
   <div class="numbers-mover tablet">
     @if(neubauService.currentTab() === 1) {

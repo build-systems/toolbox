@@ -14,7 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class TitleComponent {
   title = input.required<string>();
   projectTitle = model.required<string>();
-  kfwId = input<string>();
+  id = input<string>();
+  idTitle = input<string>('KfW id');
   h2 = input<string>();
   h3 = input<string>();
   description = input<string>();
