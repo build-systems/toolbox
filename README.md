@@ -34,14 +34,19 @@ This is the area where users can access and delete their saved projects or creat
 The place where the user can edit their name, email, and photo. Although there's no use for this feature yet.
 
 ## Documentation
-### 1 Fördermittel Neubau (Funding for new buildings)
-#### 1.1 Projekt
-This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
+<details>
+  <summary> <h3>1 Fördermittel Neubau (Funding for new buildings)</h3></summary>
+  <h4> 1.1 Projekt</h4>
+  <p>This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.</p>
 
----
- ##### 1.1.1 Wohnfläche [m²]
- Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).
- ##### 1.1.2  Anzahl Wohnungen
+  <h5>1.1.1 Wohnfläche [m²]</h5>
+  <p>Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).</p>
+</details>
+
+
+##### 1.1.1 Wohnfläche [m²]
+Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).
+##### 1.1.2  Anzahl Wohnungen
 This is where you determine how many residential units are on your property. An apartment or residential unit has its own entrance, a kitchen or kitchenette, a bathroom, and a toilet. The apartment must be suitable and intended for permanent residential use. A granny flat counts as a separate apartment if it is completed.
 ##### 1.1.3 Stufe Energieeffizienzhaus
 The [Effizienz­haus](https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/Das-Effizienzhaus/) is a technical standard that the KfW uses in its funding products and is anchored in the Federal Funding for Efficient Buildings (BEG). The numerical value 40 indicates that the efficiency house only requires 40% primary energy compared to a reference building (according to the Building Energy Act GEG).
