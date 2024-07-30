@@ -138,16 +138,26 @@ flowchart TB
 ```mermaid
 %%{ init: { 'flowchart': { 'curve': 'base' } } }%%
 flowchart TB
-	NC(Neubau Component) --> NPFC(Projekt Form Component) & NDFC(Darlehen Form Component)
-		subgraph NPF[Projekt Form]
-			direction TB
-			NPFC --> NPFS(Projekt Form Service)
-		end
 
-		subgraph NDF[Darlehen Form]
-			direction TB
-			NDFC --> NDFS(Darlehen Form Service)
-		end
+  subgraph NC[Neubau Component]
+    direction TB
+    NPF
+    NDF
+    NPOUT
+    NDOUT
+    NSV
+    NS
+  end
+
+  subgraph NPF[Projekt Form]
+    direction TB
+    NPFC(Projekt Form Component) --> NPFS(Projekt Form Service)
+  end
+
+  subgraph NDF[Darlehen Form]
+    direction TB
+    NDFC(Darlehen Form Component) --> NDFS(Darlehen Form Service)
+  end
 	NDFS --> NS(Neubau Service)
 	
 	NPFS --> NS
