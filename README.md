@@ -33,7 +33,188 @@ This is the area where users can access and delete their saved projects or creat
 ### 5. Profile
 The place where the user can edit their name, email, and photo. Although there's no use for this feature yet.
 
-## Documentation
+## Tech Stack
+- **GitHub:** For the Git repository.
+- **Angular:** A modern JavaScript framework backed by Google that is used for large-scale applications.
+- **ng2-charts:** Angular wrapper for the Chart.js library. It is used to create responsive and interactive charts.
+- **Cloudflare:** Hosting provider to ensure reliability and scalability, with no initial investment required.
+- **Supabase:** a PostgreSQL database, Auth, and Storage with an easy API for Angular (but also other frameworks).
+
+## Frontend Architecture
+```mermaid
+%%{ init: { 'flowchart': { 'curve': 'basis' } } }%%
+%%{init: {"flowchart": {"defaultRenderer": "elk"}} }%%
+flowchart TB
+
+	R(Routes) --> N & S & PO & PR & SE & E
+	
+	subgraph S[Sanierung Component]
+		SF
+		SS
+		SOUT
+		SSV
+	end
+	
+	subgraph SOUT[Output]
+		SD
+		SCH
+	end
+	
+	SF(Sanierung Forms)-->SS(Service)
+	SS-->SD(Dashboard)
+	SS-->SCH(Charts)
+	SS-->SSV(Save)
+	
+	subgraph N[Neubau Component]
+		NF
+		NS
+		NOUT
+		NSV
+	end
+	
+	subgraph NOUT[Output]
+		ND
+		NCH
+	end
+	
+	NF(Neubau Forms)-->NS(Service)
+	NS-->ND(Dashboard)
+	NS-->NCH(Charts)
+	NS-->NSV(Save)
+
+  subgraph E[Einzelmaßnahmen Component]
+    EF
+    ES
+    EOUT
+    ESV
+  end
+
+  subgraph EOUT[Output]
+    ED
+    ECH
+  end
+
+  EF(Einzelmaßnahmen Forms)-->ES(Service)
+  ES-->ED(Dashboard)
+  ES-->ECH(Charts)
+  ES-->ESV(Save)
+	
+	subgraph PR[Profile Component]
+		CP(Change password)
+		DC(Delete Account)
+	end
+	
+	subgraph SE[Settings Component]
+		CT(Change Theme)
+		CL(Change Language)
+	end
+	
+	NSV-->DB[(Database)]
+	SSV-->DB
+  ESV-->DB
+	
+	DB-->SL
+	DB-->NL
+  DB-->EL
+	
+	subgraph PO[Portfolio Component]
+		NL(Neubau List)
+		SL(Sanierung List)
+    EL(Einzelmaßnahmen List)
+		SLD(Load)
+		NLD(Load)
+    ELD(Load)
+	end
+
+	NL-->NLD
+	SL-->SLD
+  EL-->ELD
+
+  NLD-->N
+  SLD-->S
+  ELD-->E
+```
+### Neubau component diagram
+```mermaid
+%%{ init: { 'flowchart': { 'curve': 'base' } } }%%
+flowchart TB
+
+  subgraph NC[Neubau Component]
+    direction TB
+    NPF
+    NDF
+    NPOUT
+    NDOUT
+    NSV
+    NS
+  end
+
+  subgraph NPF[Projekt Form]
+    direction TB
+    NPFC(Projekt Form Component) --> NPFS(Projekt Form Service)
+  end
+
+  subgraph NDF[Darlehen Form]
+    direction TB
+    NDFC(Darlehen Form Component) --> NDFS(Darlehen Form Service)
+  end
+	NDFS --> NS(Neubau Service)
+	
+	NPFS --> NS
+	NS --> NPD(Projekt Dashboard)
+	NS-->NPCHC(Charts Component)
+	NPCHC-->NCHG(Gesamtkosten Chart)
+	NPCHC-->NCHG2(Gesamtkosten m² Chart)
+	NPCHC-->NCHE(Einheitskosten Chart)
+	
+	subgraph NPCH[Charts]
+		direction TB
+		NPCHC
+		NCHG
+		NCHG2
+		NCHE
+	end
+	
+	subgraph NPOUT[Output Projekt]
+		direction TB
+		NPD
+		NPCH
+	end
+	
+	NS-->NDD(Darlehen Dashboard)
+	NS-->NDCHC(Charts Component)
+	NDCHC-->NCHA(Annuitäten Chart)
+	NDCHC-->NCHF(Finanzierungskosten Chart)
+	NDCHC-->NCHT(Tilgung Chart)
+	subgraph NDOUT[Output Darlehen]
+		direction TB
+		NDD
+		NDCH
+	end
+	
+	subgraph NDCH[Charts]
+		direction TB
+		NDCHC
+		NCHA
+		NCHF
+		NCHT
+	end
+	
+	NS-->NSV(Save Option)
+
+	NPF:::paddingNPF
+	NDF:::paddingNDF
+	NPCH:::paddingNPCH
+	NDCH:::paddingNDCH
+	NDOUT:::paddingNDOUT
+	classDef paddingNDCH padding-right:34em;
+	classDef paddingNPCH padding-right:37em;
+	classDef paddingNPF padding-right:9em;
+	classDef paddingNDF padding-right:9em;
+```
+
+
+## User Documentation
 <details>
   <summary>1. Fördermittel Neubau (Funding for new buildings)</summary>
   
@@ -115,18 +296,14 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
   #### 2.1.7 Förderbonus
   Mit der Erneuerbare-Energien-Klasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz­haus eine neue Heizungs­anlage auf Basis erneuer­barer Energien einbauen und damit mindestens 65% des Energie­bedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65% des Energie­bedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden.
   
-  
-  Nachhaltigkeitsklasse
-  Mit der Nachhaltigkeitsklasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Ihr Wohn­gebäude Gebäude die Anforderungen des staatlichen "Qualitäts­siegels Nachhaltiges Gebäude" erfüllt. Sie können die EE- und NH-Klasse nicht miteinander kombinieren.
-  
+ Nachhaltigkeitsklasse
+ Mit der Nachhaltigkeitsklasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Ihr Wohn­gebäude Gebäude die Anforderungen des staatlichen "Qualitäts­siegels Nachhaltiges Gebäude" erfüllt. Sie können die EE- und NH-Klasse nicht miteinander kombinieren.
   
   🔍 Gut zu wissen: Den WPB-Bonus können Sie zusätzlich mit der Erneuerbare-Energien-Klasse (EE-Klasse), der Nachhaltig­keits-Klasse (NH-Klasse) und dem Bonus für die Serielle Sanierung kombinieren.
   #### 2.1.8 Serielle Sanierung
   Wenn Sie mit einer Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55 erreichen, erhalten Sie 15% Extra-Tilgungszuschuss. Für eine Serielle Sanierung werden vorgefertigte Bauele­mente für Fassa­de und gegebenen­falls Dach verwendet.
   
-  
   🔍 Gut zu wissen: Den WPB-Bonus können Sie zusätzlich mit der Erneuerbare-Energien-Klasse (EE-Klasse), der Nachhaltig­keits-Klasse (NH-Klasse) und dem Bonus für die Serielle Sanierung kombinieren.
-  
   
   ⚠️ Bitte beachten Sie: Sollten Sie den Bonus für das Worst Performing Building mit dem Bonus für die Serielle Sanierung kombinieren, dann werden die beiden Boni in Summe auf eine Förderung von 20% begrenzt.
   
@@ -144,13 +321,104 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
 <details>
   <summary>3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)</summary>
 
-  ### 3.1 Projekt
-  #### 3.1.1 Haus typ
-  #### 3.1.2 Keller
+  ### 3.1. Projekt
+  
+  #### 3.1.1. Haus typ
+  Specify the type of house being renovated or built.
+  
+  #### 3.1.2. Keller
+  Specify whether the building has a basement or not.
+  
   #### 3.1.3 Baupreisindex aktuell
-  [DESTATIS Zahlen Fakten](https://www.destatis.de/DE/ZahlenFakten/Indikatoren/Konjunkturindikatoren/Preise/bpr110.html)
+  Provides the current construction price index to estimate renovation costs. [DESTATIS Zahlen Fakten](https://www.destatis.de/DE/ZahlenFakten/Indikatoren/Konjunkturindikatoren/Preise/bpr110.html)
+  
   #### 3.1.4 Ortsfaktor
-  [Sirados Ortsfaktoren](https://www.sirados.de/sirados-ortsfaktoren-gratis-download)
+  Includes location factors that affect renovation costs based on the specific region. [Sirados Ortsfaktoren](https://www.sirados.de/sirados-ortsfaktoren-gratis-download)
+  
   #### 3.1.5 Bauteil
+  Choose the building component you want to renovate.
+  
+  ### 3.2 Außenwand (WDVS)
+  An external thermal insulation composite system (ETICS) is a multi-layer insulation system that is attached to the external façade of a building to improve external insulation. This type of insulation is always used when the façade is to be plastered anyway. The components of the ETICS are divided into an adhesive layer on the existing external wall, the insulation panels attached to it, the reinforcement layer, and the final plaster.
+  #### 3.2.1 Gedämmte Fläche [m²]
+  Specify the insulated area in square meters.
+  #### 3.2.2 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+  
+  ### 3.3 Bodenplatte
+  Insulating the floor slab is often a challenge, especially when the lowest floor, e.g. a basement, is heated and used. It is no longer possible to insulate from below as you would with a new building. Additional thermal insulation from above on the floor slab is usually difficult to implement, as it reduces the clear heights of the usable rooms.
+  #### 3.3.1 Gedämmte Fläche [m²]
+  Specify the insulated area of the floor slab in square meters.
+  #### 3.3.2 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+  
+  ### 3.4 Dach
+  When renovating existing gable roofs, there is the option of installing insulation between the rafters, which can be implemented relatively easily. In order to achieve better U-values, additional insulation is often installed above the rafters. In most cases, additional insulation is installed directly on the outside of a flat roof.
+  #### 3.4.1 Dach Typ
+  Specify the type of roof being insulated.
+  #### 3.4.2 Gedämmte Fläche [m²]
+  Specify the insulated area of the roof in square meters.
+  #### 3.4.3 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+  
+  ### 3.5 Dachflächenfenster
+  #### 3.5.1 Anzahl der Dachflächenfenster
+  Specify the number of roof windows.
+  
+  ### 3.6 Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster
+  With thermal insulation glazing or new, tightly closing windows, heat loss through the frame and the glass surfaces can be reduced enormously.
+  #### 3.6.1 Einzelfensterfläche [m²]
+  Specify the area of each individual window in square meters.
+  #### 3.6.2 Anzahl der Fenster
+  Specify the number of windows.
+  #### 3.6.3 Fenster Typ
+  A thermal insulation glazing can be done with double or triple glazing, progressively reducing heat losses.
+  
+  ### 3.7 Innenwanddämmung
+  For components that cannot be insulated externally, such as basement walls, internal wall insulation can reduce heat losses. Proper execution of internal insulation requires ensuring adequate air and vapor tightness to prevent moisture from the room air from penetrating the building substance. For this reason, internal insulation is only possible in a small thickness (approx. 8 cm), which does not reduce heat losses as well as external insulation. In addition, internal wall insulation is prone to physical impact.
+  #### 3.7.1 Gedämmte Fläche [m²]
+  Specify the insulated area of the interior walls in square meters.
+  #### 3.7.2 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+  
+  ### 3.8 Kellerdecke
+  In unheated and unused basement rooms, underside ceiling insulation can be implemented with minimal effort.
+  #### 3.8.1 Art der Dämmung
+  Specify the type of insulation for the basement ceiling. An upper insulation of the basement ceiling is recommended only if the ground floor's floor structure is being renewed, e.g., when installing underfloor heating. However, it should be noted that this reduces the clear height of the usable space. The costs only represent the cost of the insulation material and no other measures. In a used ground floor, the upper insulation of the basement ceiling is very unlikely without additional measures.
+  #### 3.8.2 Gedämmte Fläche [m²]
+  Specify the insulated area of the basement ceiling in square meters.
+  #### 3.8.3 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+  
+  ### 3.9 Oberste Geschossdecke
+  If an attic space is not used and unheated, it is cost-effective to insulate the top floor ceiling from above instead of insulating the roof structure. Under-ceiling insulation is also possible in special cases. Physically, this case would be considered internal insulation, allowing only small insulation thicknesses (approx. 8 cm). However, this reduces the height of the clear room.
+  #### 3.9.1 Art der Dämmung
+  Specify the type of insulation for the top floor ceiling. Providing non-walkable insulation is technically very simple and cost-effective.
+  #### 3.9.2 Gedämmte Fläche [m²]
+  Specify the insulated area of the top floor ceiling in square meters.
+  #### 3.9.3 Dämmstoffdicke [cm]
+  Specify the thickness of the insulation material in centimeters.
+
+  ### 3.10 Neue Steildachgauben
+  The costs relate to the addition of a new dormer on the roof.
+  #### 3.10.1 Fläche der Gaube [m²]
+  Specify the area of the dormer in square meters.
+  #### 3.10.2 Anzahl der Gauben
+  Specify the number of dormers.
+  
+  ### 3.11 Türen
+  Tightly closing doors with low U-values ​​can reduce heat loss enormously.
+  #### 3.11.1 Fläche Haustür [m²]
+  Specify the area of the front door in square meters.
+  #### 3.11.2 Anzahl der Fenster
+  Specify the number of windows in the door.
+  
+  ### 3.12 Rollladen
+  Well-insulated roller shutter boxes with low U-values ​​located in the insulation layer (front-mounted roller shutters) can reduce heat loss enormously.
+  #### 3.12.1 Fläche Rollladen [m²]
+  Specify the area of the roller shutters in square meters.
+  #### 3.12.2 Rollladen Typ
+  Roller shutters can be made of plastic or aluminum and can be operated either manually via a belt or controlled electrically.
+  
 </details>
 
