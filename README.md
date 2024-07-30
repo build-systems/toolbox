@@ -152,8 +152,11 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
   #### 3.1.4 Ortsfaktor
   [Sirados Ortsfaktoren](https://www.sirados.de/sirados-ortsfaktoren-gratis-download)
   #### 3.1.5 Bauteil
-
+  Choose the building component you want to rennovate.
   ### 3.2 Außenwand (WDVS)
+  Ein Wärmedämmverbundsystem (WDVS) ist ein mehrschichtiges Dämmsystem, das an der Außenfassade eines Gebäudes angebracht wird, um die Außendämmung zu verbessern. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt werden soll. Die Bestandteile des WDVS untergliedern sich in eine Klebeschicht auf der existierenden Außenwand, die darauf angebrachten Dämmplatten, die Armierungsschicht und den abschließenden Oberputz.
+  #### 3.2.1 Gedämmte Fläche [m²]
+  #### 3.2.2 Dämmstoffdicke [cm]
   ### 3.3 Bodenplatte
   ### 3.4 Dach
   ### 3.5 Dachflächenfenster
@@ -162,6 +165,7 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
   ### 3.8 Kellerdecke
   ### 3.9 Oberste Geschossdecke
   ### 3.10 Neue Steildachgauben
-  ### 3.11 
+  ### 3.11 Türen
+  ### 3.12 Rollladen
 </details>
 
