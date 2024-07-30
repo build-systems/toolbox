@@ -20,24 +20,25 @@ Germany is known for pushing green tech, such as solar panels and wind turbines,
 This app, developed by BuildSystems, makes it easy to simulate a loan from the national bank KfW. It simplifies the process by offering a user-friendly interface, allowing real estate developers and homeowners to understand their financial options quickly and easily.
 
 ## Toolbox Features
-### Fördermittel Neubau (Funding for new residences)
+### 1. Fördermittel Neubau (Funding for new residences)
 If the user wants to design a new residence, the first step is to check the feasibility. This calculator checks for available subsidies and loans.
 This calculator has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-### Fördermittel Komplettsanierung (Funding for complete renovation of residences)
+### 2. Fördermittel Komplettsanierung (Funding for complete renovation of residences)
 In the case of a full residence renovation, the approach changes. There are specific requirements and metrics that make this a completely different calculator. 
 This calculator is similar to the previous one. It also has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-### Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
+### 3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
 If the user prefers to renovate only a small part of a residence, it is possible to get a subsidy from Bafa. The components that affect the energy efficiency of a building the most are shown here both in an interactive SVG and in a list. After the building component is selected, the user has specific options to fine-tune his choices. This part of the toolbox is, in fact, many small calculators. One for each building component.
-### Portfolio
+### 4. Portfolio
 This is the area where users can access and delete their saved projects or create new ones.
-### Profile
-The place where the user can edit their name, email, and photo. Although there's no use for this feature yet. 
+### 5. Profile
+The place where the user can edit their name, email, and photo. Although there's no use for this feature yet.
 
 ## Documentation
 ### 1 Fördermittel Neubau (Funding for new buildings)
 #### 1.1 Projekt
 This tab has all the project-specific variables, for example, `Wohnfläche [m²]` (construction area). With these values, it is possible to estimate the price of a new building using publicly available data at [Arge e.V.](https://arge-ev.de/arge-ev/publikationen/studien/). If the user already has a defined construction price, it is possible to toggle the `Eigene Kostenberechnung` and input this value in the new field that will appear.
-Projekt Form documentation
+
+---
  ##### 1.1.1 Wohnfläche [m²]
  Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).
  ##### 1.1.2  Anzahl Wohnungen
@@ -69,13 +70,15 @@ Extensive greening of the entire roof area.
 Demanding construction site logistics primarily refer to the requirements of inner-city construction. Due to limited space and difficult traffic conditions, which bring with them logistical and infrastructural challenges, construction site management is considered to be complex and costly.
 ##### 1.1.13: Aufwand Außenanlagen
 Expenses for outdoor facilities.
-##### 14: Grundstücksbezogene Kosten [€/m²]
+##### 1.1.14: Grundstücksbezogene Kosten [€/m²]
 Costs of KG 100, which result from the acquisition of the land to be built on. These include the additional costs associated with the acquisition and ownership of the land, as well as the costs for the removal of rights and encumbrances. The land costs for new housing construction projects in German cities already account for an average of 20% of the total investment costs. There is currently no end in sight to this trend. (Arge e.V.). In addition, costs of KG 200 represent the preparatory measures so that all planned construction measures can be carried out on the land. The tool adds these costs to the investment costs.
 ##### 1.1.15: Baunebenkosten [%]
 These are cost groups 700. These are services that are required for the construction project in addition to the construction services and supplies (e.g. services provided by the client, preparation of the object planning, object and specialist planning services, artistic services, and general ancillary construction costs). The tool adds these costs to the investment costs.
 
 #### 1.2 Darlehen
 This tab has all the loan-specific variables. What happens in construction is that even with subsidies from the government, the real estate developer still relies on bank loans to move forward with the construction because it is not common for them to afford the construction from their own pocket. The national bank KfW not only offers subsidies but also lends a certain amount of money for a lower fee compared to normal banks. After the subsidies and the loan from KfW, it is usually still necessary to cover the rest of the investment with the loan of a normal bank.
+
+---
 ##### 1.2.1 Zinssatz Hausbank (Sollzins)
 Here, you determine the interest rate that you receive from your bank or another financier and the KfW conditions at which you would like to compare. All interest rates are given as nominal interest rates.
 ##### 1.2.2 Kreditlaufzeit [a]
@@ -124,6 +127,16 @@ Wenn Sie mit einer Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55 erreic
 
 
 ⚠️ Bitte beachten Sie: Sollten Sie den Bonus für das Worst Performing Building mit dem Bonus für die Serielle Sanierung kombinieren, dann werden die beiden Boni in Summe auf eine Förderung von 20% begrenzt.
+
+#### 2.2 Darlehen
+##### 2.2.1 Zinssatz Hausbank (Sollzins) [%]
+Here, you determine the interest rate that you receive from your bank or another financier and the KfW conditions at which you would like to compare. All interest rates are given as nominal interest rates.
+##### 2.2.2 Kreditlaufzeit [a]
+The loan term indicates how many years it takes until a loan is fully repaid.
+##### 2.2.3 KfW-Darlehen
+Here, you can decide how you want to repay your loan. With an annuity loan, you only pay interest in the first few years (repayment-free start-up period) - after that, you pay equal monthly annuities. These represent the repayment amount, which is made up of interest and repayment. With a bullet loan, you only pay the interest over the entire term and then repay the entire loan amount in one sum at the end. A bullet loan is only possible with a term of up to 10 years.
+##### 2.2.4 Bank-Darlehen
+Here, you can decide how you want to repay your loan. With an annuity loan, you only pay interest in the first few years (repayment-free start-up period) - after that, you pay equal monthly annuities. These represent the repayment amount, which is made up of interest and repayment. With a bullet loan, you only pay interest over the entire term and then repay the entire loan amount in one sum at the end.
 
 ### 3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
 
