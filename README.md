@@ -23,7 +23,7 @@ This app, developed by BuildSystems, makes it easy to simulate a loan from the n
 ### Fördermittel Neubau (Funding for new residences)
 If the user wants to design a new residence, the first step is to check the feasibility. This calculator checks for available subsidies and loans.
 This calculator has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
-### Fördermittel Komplettsanierung (Funding for the renovation of residences)
+### Fördermittel Komplettsanierung (Funding for complete renovation of residences)
 In the case of a full residence renovation, the approach changes. There are specific requirements and metrics that make this a completely different calculator. 
 This calculator is similar to the previous one. It also has two tabs: `Projekt`, which displays the project's form, and `Darlehen`, displaying the loan's form. The numbers and graphs in the dashboard are context-specific. Meaning that each tab has its own set of numbers and graphs. When changing from the Projekt to the Darlehen tab, notice that all the dashboard numbers and graphs also change.
 ### Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
@@ -86,7 +86,44 @@ Here, you can decide how you want to repay your loan. With an annuity loan, you 
 Here, you can decide how you want to repay your loan. With an annuity loan, you only pay interest in the first few years (repayment-free start-up period) - after that, you pay equal monthly annuities. These represent the repayment amount, which is made up of interest and repayment. With a bullet loan, you only pay interest over the entire term and then repay the entire loan amount in one sum at the end.
 
 ### 2. Fördermittel Komplettsanierung (Renovation of residential buildings)
+#### 2.1 Projekt
+##### 2.1.1 Projekt typ
+Either a house or an apartment
+##### 2.1.2 Wohnfläche [m²]
+Living space of your property according to the [Living Space Ordinance - WoFlV](https://www.gesetze-im-internet.de/woflv/).
+##### 2.1.3 Umfänglichkeit bisher durchgeführter Modernisierung
+This category describes the current modernization status of the building at the time before the implementation of measures to be funded by KfW. The focus is on the extent of the energy modernizations on key components of the building envelope and the system technology in connection with its execution quality, such as scope, materials, components, type of execution, energy standard, etc.
 
+A building is described as not/slightly modernized if no energy modernizations have been carried out since it was built or only on individual components of the building envelope and/or parts of the system technology. Largely modernized means that energy modernizations have been carried out on some/several components of the building envelope and system technology, while the state of comprehensively modernized requires a holistic energy modernization. The category of Largely Modernized is assessed with increased cost indicators, as additional demolition work or additional expenditure may be required.
+##### 2.1.4 Worst Performing Building
+If your property meets this requirement and reaches efficiency house level 40, 55, or 70, you will receive a 10% extra subsidy. A "Worst Performing Building" is a building that is among the worst 25% of buildings in Germany in terms of its energy renovation status. We define a residential building as a Worst Performing Building if the building falls into class H according to the energy certificate. A property also counts as a Worst Performing Building if the building was built in 1957 or earlier and at least 75% of the external wall area has not been renovated to improve energy efficiency.
+
+🔍 Good to know: You can also combine the WPB bonus with the Renewable Energy Class (EE Class), the Sustainability Class (NH Class), and the Bonus for Serial Renovation.
+
+⚠️ Please note: If you combine the Worst Performing Building bonus with the Serial Renovation bonus, the two bonuses will be limited to a total of 20% funding.
+##### 2.1.5 Eigene Kostenberechnung
+If the user already has the cost of a new construction, he can input it here. This will overwrite the native estimation.
+##### 2.1.6 Stufe Energieeffizienzhaus
+The [Effizienz­haus](https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/Energieeffizient-sanieren/Das-Effizienzhaus/) is a technical standard that the KfW uses in its funding products and which is anchored in the Federal Funding for Efficient Buildings (BEG). The numerical values ​​40, 55, 70, and 85 indicate how much primary energy an energy-efficient building requires in comparison to a reference building (according to the Building Energy Act). The following applies: the lower the number, the higher the energy efficiency.
+
+The standard of an efficient house always results from the combination of various structural and technical measures, especially in the areas of the building envelope and building services.
+##### 2.1.7 Förderbonus
+Mit der Erneuerbare-Energien-Klasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Sie im Zuge der Sanierung zum Effizienz­haus eine neue Heizungs­anlage auf Basis erneuer­barer Energien einbauen und damit mindestens 65% des Energie­bedarfs des Gebäudes gedeckt wird. Die höhere Förderung erhalten Sie auch, wenn mindestens 65% des Energie­bedarfs des Hauses zum Teil oder ganz durch unvermeidbare Abwärme erbracht werden.
+
+
+Nachhaltigkeitsklasse
+Mit der Nachhaltigkeitsklasse steigt der maximale Kredit­betrag von 120.000 Euro auf 150.000 Euro je Wohn­einheit und Sie erhalten 5% mehr Tilgungszuschuss. Diese können Sie in Anspruch nehmen, wenn Ihr Wohn­gebäude Gebäude die Anforderungen des staatlichen "Qualitäts­siegels Nachhaltiges Gebäude" erfüllt. Sie können die EE- und NH-Klasse nicht miteinander kombinieren.
+
+
+🔍 Gut zu wissen: Den WPB-Bonus können Sie zusätzlich mit der Erneuerbare-Energien-Klasse (EE-Klasse), der Nachhaltig­keits-Klasse (NH-Klasse) und dem Bonus für die Serielle Sanierung kombinieren.
+##### 2.1.8 Serielle Sanierung
+Wenn Sie mit einer Seriellen Sanierung die Effizienzhaus-Stufe 40 oder 55 erreichen, erhalten Sie 15% Extra-Tilgungszuschuss. Für eine Serielle Sanierung werden vorgefertigte Bauele­mente für Fassa­de und gegebenen­falls Dach verwendet.
+
+
+🔍 Gut zu wissen: Den WPB-Bonus können Sie zusätzlich mit der Erneuerbare-Energien-Klasse (EE-Klasse), der Nachhaltig­keits-Klasse (NH-Klasse) und dem Bonus für die Serielle Sanierung kombinieren.
+
+
+⚠️ Bitte beachten Sie: Sollten Sie den Bonus für das Worst Performing Building mit dem Bonus für die Serielle Sanierung kombinieren, dann werden die beiden Boni in Summe auf eine Förderung von 20% begrenzt.
 
 ### 3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)
 
