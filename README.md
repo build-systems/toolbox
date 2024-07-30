@@ -145,27 +145,81 @@ Barrier-free refers to the minimum requirements, while the "R" label indicates t
   <summary>3. Fördermittel Einzelmaßnahmen (Funding for partial renovations of residences)</summary>
 
   ### 3.1 Projekt
+  
   #### 3.1.1 Haus typ
+  
   #### 3.1.2 Keller
+  
   #### 3.1.3 Baupreisindex aktuell
   [DESTATIS Zahlen Fakten](https://www.destatis.de/DE/ZahlenFakten/Indikatoren/Konjunkturindikatoren/Preise/bpr110.html)
+  
   #### 3.1.4 Ortsfaktor
   [Sirados Ortsfaktoren](https://www.sirados.de/sirados-ortsfaktoren-gratis-download)
+  
   #### 3.1.5 Bauteil
   Choose the building component you want to rennovate.
+  
   ### 3.2 Außenwand (WDVS)
-  Ein Wärmedämmverbundsystem (WDVS) ist ein mehrschichtiges Dämmsystem, das an der Außenfassade eines Gebäudes angebracht wird, um die Außendämmung zu verbessern. Diese Art Dämmung kommt immer dann zum Einsatz, wenn die Fassade ohnehin verputzt werden soll. Die Bestandteile des WDVS untergliedern sich in eine Klebeschicht auf der existierenden Außenwand, die darauf angebrachten Dämmplatten, die Armierungsschicht und den abschließenden Oberputz.
+  An external thermal insulation composite system (ETICS) is a multi-layer insulation system that is attached to the external façade of a building to improve external insulation. This type of insulation is always used when the façade is to be plastered anyway. The components of the ETICS are divided into an adhesive layer on the existing external wall, the insulation panels attached to it, the reinforcement layer, and the final plaster.
   #### 3.2.1 Gedämmte Fläche [m²]
   #### 3.2.2 Dämmstoffdicke [cm]
+  
   ### 3.3 Bodenplatte
+  Insulating the floor slab is often a challenge, especially when the lowest floor, e.g. a basement, is heated and used. It is no longer possible to insulate from below as you would with a new building. Additional thermal insulation from above on the floor slab is usually difficult to implement, as it reduces the clear heights of the usable rooms.
+  #### 3.3.1 Gedämmte Fläche [m²]
+  #### 3.3.2 Dämmstoffdicke [cm]
+  
   ### 3.4 Dach
+  When renovating existing gable roofs, there is the option of installing insulation between the rafters, which can be implemented relatively easily. In order to achieve better U-values, additional insulation is often installed above the rafters. In most cases, additional insulation is installed directly on the outside of a flat roof.
+  #### 3.4.1 Dach Typ
+  #### 3.4.2 Gedämmte Fläche [m²]
+  #### 3.4.3 Dämmstoffdicke [cm]
+  
   ### 3.5 Dachflächenfenster
+  #### 3.5.1 Anzahl der Dachflächenfenster
+  
   ### 3.6 Einzelfensterfläche in Durchschnittliche Fenstergröße je Fenster
+  With thermal insulation glazing or new, tightly closing windows, heat loss through the frame and the glass surfaces can be reduced enormously.
+  #### 3.6.1 Einzelfensterfläche [m²]
+  #### 3.6.2 Anzahl der Fenster
+  #### 3.6.3 Fenster Typ
+  Eine Wärmeschutzverglasung kann mit einer Zwei- oder Dreifachverglasung ausgeführt werden, dabei reduzieren sich Wärmeverluste sukzessive.
+  
   ### 3.7 Innenwanddämmung
+  An Bauteilen, die nicht außenseitig gedämmt werden können, wie z.B. Bei Kellerwänden kann eine Innenwanddämmung die Wärmeverluste reduzieren. Die ordnungsgemäße Ausführung der Innendämmung erfordert die Gewährleistung ausreichender Luft- und Dampfdichtheit, um das Eindringen von Feuchtigkeit aus der Raumluft in die Bausubstanz zu verhindern. Aus diesem Grund ist die Innendämmung im Vergleich zur Außendämmung nur in geringer Dicke (ca. 8 cm) möglich, wodurch sich die Wärmeverluste nicht so gut wie bei der Außendämmung reduzieren lassen. Darüber hinaus sind Innenwanddämmungen anfällig gegen physische Einwirkung.
+  #### 3.7.1 Gedämmte Fläche [m²]
+  #### 3.7.2 Dämmstoffdicke [cm]
+  
+  
   ### 3.8 Kellerdecke
+  In nicht beheizten und nicht genutzten Kellerräumen bietet sich eine deckenunterseitige Dämmung an. Diese können mit geringem Aufwand umgesetzt werden.
+  #### 3.8.1 Art der Dämmung
+  Eine oberseitige Dämmung der Kellerdecke empfiehlt sich nur, wenn im Erdgeschoss der Bodenaufbau erneuert wird, z.B. beim Einbau einer Fußbodenheizung. Dabei ist jedoch zu beachten, dass sich die lichte Höhe des Nutzraumes verringert. Die Kosten repräsentieren jedoch nur die Kosten des Dämmmaterials und keine weiteren Maßnahmen. Bei einem genutzten Erdgeschoss ist die oberseitige Dämmung der Kellerdecke ohne zusätzliche Maßnahmen damit sehr unwahrscheinlich.
+  #### 3.8.2 Gedämmte Fläche [m²]
+  #### 3.8.3 Dämmstoffdicke [cm]
+  
   ### 3.9 Oberste Geschossdecke
+  Ist ein Dachraum nicht genutzt und unbeheizt, empfiehlt es sich aus Kostengründen, die oberste Geschossdecke oberseitig zu dämmen, anstatt die Dachkonstruktion zu dämmen. Eine unterseitige Dämmung ist in besonderen Fällen ebenfalls möglich. Bauphysikalisch wäre dieser Fall als Innendämmung zu betrachten, wodurch nur geringe Dämmstoffdicken (ca. 8 cm) möglich sind. Dennoch verringert sich dadurch die lichte Raumhöhe.
+  #### 3.9.1 Art der Dämmung
+  Die Erbringung einer nicht begehbaren Dämmung ist technisch sehr niederschwellig und entsprechend kostengünstig umsetzbar.
+  #### 3.9.2 Gedämmte Fläche [m²]
+  #### 3.9.3 Dämmstoffdicke [cm]
+
   ### 3.10 Neue Steildachgauben
+  The costs relate to the addition of a new dormer on the roof.
+  #### 3.10.1 Fläche der Gaube [m²]
+  #### 3.10.2 Anzahl der Gauben
+  
   ### 3.11 Türen
+  Tightly closing doors with low U-values ​​can reduce heat loss enormously.
+  #### 3.11.1 Fläche Haustür [m²]
+  #### 3.11.2 Anzahl der Fenster
+  
   ### 3.12 Rollladen
+  Well-insulated roller shutter boxes with low U-values ​​located in the insulation layer (front-mounted roller shutters) can reduce heat loss enormously.
+  #### 3.12.1 Fläche Rollladen [m²]
+  #### 3.12.2 Rollladen Typ
+  Roller shutters can be made of plastic or aluminum and can be operated either manually via a belt or controlled electrically.
+  
 </details>
 
