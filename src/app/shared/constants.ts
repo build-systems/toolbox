@@ -34,11 +34,11 @@ export class neubau {
   };
   public gestehungskostenBase = 2436;
   public nrKredit = {
-    lessThan11: 0.0247, // 4 bis 10 Jahre
-    between11And25: 0.0292, // 11 bis 25 Jahre
-    moreThan25: 0.0298, // 26 bis 35 Jahre
+    lessThan11: 0.0206, // 4 bis 10 Jahre
+    between11And25: 0.0256, // 11 bis 25 Jahre
+    moreThan25: 0.0264, // 26 bis 35 Jahre
   };
-  public zinssatzKfw_Endfälliges = 0.0303; // Endfälliges Darlehen
+  public zinssatzKfw_Endfälliges = 0.0269; // Endfälliges Darlehen
   public kfwKreditLimit = {
     lower: 100_000,
     higher: 150_000,
@@ -64,11 +64,11 @@ export class sanierung {
   // Seriellen Sanierung
   serSanBonusPossible = 0.15;
   public nrKredit = {
-    lessThan11: 0.0193, // 4 bis 10 Jahre
-    between11And20: 0.0249, // 11 bis 20 Jahre
-    moreThan20: 0.0263, // 21 bis 30 Jahre
+    lessThan11: 0.0106, // 4 bis 10 Jahre
+    between11And20: 0.0181, // 11 bis 20 Jahre
+    moreThan20: 0.0199, // 21 bis 30 Jahre
   };
-  sollzinsKfw_Endfälliges = 0.0273; // Endfälliges Darlehen
+  sollzinsKfw_Endfälliges = 0.0208; // Endfälliges Darlehen
   public kfwKreditLimit = {
     lower: 120_000,
     higher: 150_000,
